@@ -1,0 +1,16 @@
+
+.navbar_box:hover ul{ display: block; }
+.navbar_box{
+    padding: 0.5em;
+    .nav_links_style{
+        color: $white_txt;
+        font-size: 1rem;
+        font-weight: 500;
+        :hover,:focus,:active{
+            color:$white_txt;
+        }
+    }
+}
+.drop_down_menu{
+    background-color: #34485b;
+}

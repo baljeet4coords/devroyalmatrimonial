@@ -1,0 +1,91 @@
+@import "../../styles/constants.scss";
+ 
+.Home_Page_Wrapper{
+    margin-top: -25rem;
+    span{
+        color: $lightGrey_txt;
+        letter-spacing: 1.75px;
+        font-size: 0.875rem;
+    }
+    h1{
+        font-size: 1.75rem;
+        font-weight: $fw400;
+        padding-top: 0.5rem;
+        padding-bottom: 1rem;
+        strong{
+            color: $red_txt;
+        }
+    }
+    h3{
+        font-weight: $fw600;
+        font-size: 1rem;
+        padding-top: 1rem;
+    }
+    .Home_heading {
+            h1{
+            font-family: 'Noto Serif',"serif";
+            font-style: normal;
+            font-weight: 900;
+            font-size: 3rem;
+            line-height: 3.25rem;
+            letter-spacing: -0.03em;
+            color: $white_txt;
+            text-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+        }
+        span{
+            color: $white_txt;
+            font-size: 1.25rem;
+            text-shadow: 0px 4px 4px rgb(0 0 0 / 75%);
+            margin-top: 0.375rem;
+        }
+    }
+    .Home_white_body{
+        background-color: $milkWhite_bg;
+        padding: 3rem;
+        box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
+        border-radius: 0.25rem;
+        img{
+            width: 14%;
+        }
+        .services_border{
+            border-right: 1px solid $light_border;
+            border-left: 1px solid $light_border;
+        }
+    }
+    .Home_dark_body{
+        background-color: $darkWhite_bg;
+        padding: 3rem;
+        box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
+        border-radius: 0.25rem;
+        .landing_scroll_images{
+            max-height: 50vh;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none; 
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                display: none;
+                width: 0px;
+                background: transparent;
+            }
+        }
+    }
+    .card_bottom{
+        height: 232px;
+        background-color: $darkGrey_bg;
+        margin-top: -10rem;
+    }
+    .services_box{
+        background-image: url(../../public/Images/landing_page_talk.png);
+        text-align: center;
+        background-color: $darkWhite_bg;
+        background-repeat: no-repeat;
+        background-position: bottom left;
+        width: 851px;
+        height: 490px;
+        padding: 2rem 0;
+        border-radius: 12px;
+        margin: auto;
+    }
+    
+}
