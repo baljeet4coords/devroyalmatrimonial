@@ -1,16 +1,17 @@
 import HomeImage from "../../components/HomeImage/HomeImage";
 import { Col, Container, Row, Image } from "react-bootstrap";
-import classes from "./LandingPage.module.scss"
+import classes from "./LandingPage.module.scss";
 import { Header } from "../../components";
 import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
+import Footer from "../../components/Footer/importFooter"
 
 const LandingPage = () => {
     return (
         <>
-         <Header /> 
-         <HomeImage />
+        <Header /> 
+        <HomeImage />
         <Container className={`${classes.Home_Page_Wrapper} w-75`}>
             <Row className="mb-2">
             <Col sm={12} md={6}>
@@ -131,6 +132,7 @@ const LandingPage = () => {
             <h1>Impress them Over the <strong>Distance</strong></h1>
             </Row>
         </Container>
+        <Footer/>
         </>
     )
 }
