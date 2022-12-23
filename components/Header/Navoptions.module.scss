@@ -1,16 +1,39 @@
+@import "../../styles/constants.scss";
 
-.navbar_box:hover ul{ display: block; }
-.navbar_box{
-    padding: 0.5em;
-    .nav_links_style{
-        color: $white_txt;
-        font-size: 1rem;
-        font-weight: 500;
-        :hover,:focus,:active{
-            color:$white_txt;
-        }
+.sideBar {
+    background: rgba(52, 73, 94, 0.80);
+    color: #fff;
+    height: -webkit-fill-available;
+    width: 400px;
+    position: absolute;
+    top: 0;
+    left: 220px;
+    box-shadow: 2px 2px 5px 0px rgb(0 0 0 / 75%);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: flex-start;
+    >a{
+        color: #fff;
+        font-size: 14px;
+        /* width: 133px; */
+        display: block;
+        line-height: 35px;
+        /* padding-left: 10px; */
+        white-space: nowrap;
+        overflow: hidden;
+        /* text-overflow: ellipsis; */
+        padding: 0.5rem 0.5rem !important;
+        height: fit-content;
+        min-width: 100px;
+    }
+    :hover{
+        background-color: $red_bg;
     }
 }
-.drop_down_menu{
-    background-color: #34485b;
-}
+.dropdownItem:hover {
+    background: #d9475c url(../../public/Images/nav_icon_bg.png) no-repeat;
+    background-position: right 1em bottom 15px;
+  }
+
+  
