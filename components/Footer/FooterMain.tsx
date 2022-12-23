@@ -1,8 +1,8 @@
-import {Container, Row, Col, Image, ListGroup} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import classes from "./Footer.module.scss";
-import Footer_Client from "./Footer_Client";
-import Footer_Social from "./Footer_Social";
-import Footer_Rights from "./Footer_Rights";
+import FooterClient from "./FooterClient";
+import FooterSocial from "./FooterSocial";
+import FooterRights from "./FooterRights";
 
 const Footer = () => {
     return(
@@ -54,9 +54,9 @@ const Footer = () => {
                 </Row>
                 </Container>
             </div>
-            <Footer_Social/>
-            <Footer_Client/>
-            <Footer_Rights/>
+            <FooterSocial/>
+            <FooterClient/>
+            <FooterRights/>
     </>
     )
 }

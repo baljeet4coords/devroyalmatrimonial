@@ -2,7 +2,7 @@ import Carousel from "react-bootstrap/Carousel";
 import {Image, Container, Row, Col} from "react-bootstrap";
 import classes from "./Footer.module.scss";
 
-const Footer_Client = () => {
+const FooterClient = () => {
     return (
         <>
         <Container>
@@ -10,9 +10,9 @@ const Footer_Client = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
                         </Col>
                     </Row>
                 </Carousel.Item>
@@ -20,9 +20,9 @@ const Footer_Client = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
                         </Col>
                     </Row>
                 </Carousel.Item>
@@ -30,9 +30,9 @@ const Footer_Client = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
-                            <Image src="./Images/office-paperclip.png" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
                         </Col>
                     </Row>
                 </Carousel.Item>
@@ -42,4 +42,4 @@ const Footer_Client = () => {
     )
 }
 
-export default Footer_Client;
+export default FooterClient;

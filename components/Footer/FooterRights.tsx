@@ -1,7 +1,7 @@
 import {Container, Row, Col} from "react-bootstrap";
 import classes from "./Footer.module.scss";
 
-const Footer_Rights = () => {
+const FooterRights = () => {
     return (
         <>
         <div className={`${classes.All_Rights} w-100`}>
@@ -17,4 +17,4 @@ const Footer_Rights = () => {
     )
 }
 
-export default Footer_Rights;
+export default FooterRights;

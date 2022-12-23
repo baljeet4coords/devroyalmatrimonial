@@ -5,15 +5,15 @@ import { Header } from "../../components";
 import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
-import Footer from "../../components/Footer/importFooter"
+import Footer from "../../components/Footer/FooterMain"
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
     return (
         <>
         <Header /> 
         <HomeImage />
-        <Container className={`${classes.Home_Page_Wrapper} w-75`}>
-            <Row className="mb-2">
+        <Container className={`${classes.Home_Page_Wrapper} w-75 px-0`}>
+            <Row className="mb-5">
             <Col sm={12} md={6}>
             <div className={classes.Home_heading}>
                 <h1>Now, chat for free!</h1>
