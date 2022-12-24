@@ -23,3 +23,19 @@ a {
     background: black;
   }
 }
+
+
+// Footer Clients Carousel
+.carousel-indicators{
+  display: none;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon{
+  filter: invert(1);
+}
+
+// footer social email link
+.Footer_lg_col{
+  a{
+      color: #fff !important;
+  }
+}

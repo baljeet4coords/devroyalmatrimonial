@@ -1,18 +1,19 @@
 import HomeImage from "../../components/HomeImage/HomeImage";
 import { Col, Container, Row, Image } from "react-bootstrap";
-import classes from "./LandingPage.module.scss"
+import classes from "./LandingPage.module.scss";
 import { Header } from "../../components";
 import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
+import Footer from "../../components/Footer/FooterMain"
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
     return (
         <>
-         <Header /> 
-         <HomeImage />
-        <Container className={`${classes.Home_Page_Wrapper} w-75`}>
-            <Row className="mb-2">
+        <Header /> 
+        <HomeImage />
+        <Container className={`${classes.Home_Page_Wrapper} w-75 px-0`}>
+            <Row className="mb-5">
             <Col sm={12} md={6}>
             <div className={classes.Home_heading}>
                 <h1>Now, chat for free!</h1>
@@ -71,9 +72,9 @@ const LandingPage = () => {
             </Col>
             <Col sm={12} md={6}>
                 <div className={classes.landing_scroll_images}>
-                <Image src="./Images/landing_image_1.svg" />
-                <Image src="./Images/landing_image_2.svg" />
-                <Image src="./Images/landing_image_3.svg" />
+                <Image src="./Images/landing_image_1.svg" alt="pic"/>
+                <Image src="./Images/landing_image_2.svg" alt="pic"/>
+                <Image src="./Images/landing_image_3.svg" alt="pic"/>
                 </div>
             </Col>
             </Row>
@@ -81,15 +82,15 @@ const LandingPage = () => {
             <span>THREE SIMPLE STEPS TO</span>
             <h1>Find the <strong>One for You</strong></h1>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <CustomButton onClick={() => console.log("tab")}>Get Started</CustomButton>
@@ -131,6 +132,7 @@ const LandingPage = () => {
             <h1>Impress them Over the <strong>Distance</strong></h1>
             </Row>
         </Container>
+        <Footer/>
         </>
     )
 }
