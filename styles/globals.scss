@@ -1,3 +1,6 @@
+@import "./constants.scss";
+
+
 html,
 body {
   margin: 0;
@@ -23,6 +26,28 @@ a {
     background: black;
   }
 }
+
+
+////////////////////////////navbar///////////////////////////////////
+
+.dropdown-menu[data-bs-popper] {
+  border-radius: 0;
+}
+.dropdown-menu{
+  background-color: $darkGrey_bg;
+  .dropdown-item{
+    padding: 6px 22px 6px 20px;
+    font-size: 16px;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .dropdown-item:hover {
+    background-color: #d9475c;
+    
+  }
+
 
 
 // Footer Clients Carousel
