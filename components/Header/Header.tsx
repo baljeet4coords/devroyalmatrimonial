@@ -1,15 +1,30 @@
-
+import { useState, useEffect } from "react";
 import { Navbar, Container, Nav, NavDropdown, Image } from "react-bootstrap";
 import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
 
-const Header = () => {
+const Header: React.FC = () => {
+  const [show, setShow] = useState(false);
+  const [stateSize, setSize] = useState(false);
+
+  const showDropdown = () =>{
+    setShow(!show);
+}
+const hideDropdown = () => {
+    setShow(false);
+}
+
+useEffect(() => {
+  window.addEventListener('resize', () => {
+    setSize(window.innerWidth <= 992);
+  });
+}, []);
     return (
         <>
         <Navbar collapseOnSelect expand="lg" className={"p-0 color-light"} fixed="top">
       <Container className={`${classes.Navbar_Wrapper} w-75`}>
-        <Navbar.Brand>
+        <Navbar.Brand className="p-0">
         <Link href="/">
               <div className={classes.navBar_logo}>
                 <Image
@@ -19,20 +34,25 @@ const Header = () => {
               </div>
             </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Nav className={`${stateSize ? classes.show : classes.hide}`}>
+            <Nav.Link href="#deets" className=" text-light">LOGIN</Nav.Link>
+          </Nav>
+        {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
         <Navbar.Collapse id="responsive-navbar-nav" className={classes.nav_links_style}>
           <Nav className="me-auto">
           <NavOptions/>
         
-            <NavDropdown title="SEARCH" id="collasible-nav-dropdown" menuVariant="dark">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
+            <NavDropdown 
+            title="SEARCH" 
+            id="collasible-nav-dropdown" 
+            menuVariant="dark"
+            show={show}
+            onMouseEnter={showDropdown} 
+            onMouseLeave={hideDropdown}
+            >
+              <NavDropdown.Item href="#action/3.3">Search</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.4">
-                Separated link
+              Search by Profile ID
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="#Help">HELP</Nav.Link>
