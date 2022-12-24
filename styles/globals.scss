@@ -1,10 +1,9 @@
 @import "./constants.scss";
 
-
 html,
 body {
   margin: 0;
-  font-family: 'Cabin',sans-serif;
+  font-family: "Cabin", sans-serif;
   font-weight: 400;
 }
 
@@ -17,25 +16,14 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
-
-
 ////////////////////////////navbar///////////////////////////////////
 
 .dropdown-menu[data-bs-popper] {
   border-radius: 0;
 }
-.dropdown-menu{
+.dropdown-menu {
   background-color: $darkGrey_bg;
-  .dropdown-item{
+  .dropdown-item {
     padding: 6px 22px 6px 20px;
     font-size: 16px;
     display: block;
@@ -45,22 +33,21 @@ a {
   }
   .dropdown-item:hover {
     background-color: #d9475c;
-    
   }
-
-
+}
 
 // Footer Clients Carousel
-.carousel-indicators{
+.carousel-indicators {
   display: none;
 }
-.carousel-control-prev-icon, .carousel-control-next-icon{
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
   filter: invert(1);
 }
 
 // footer social email link
-.Footer_lg_col{
-  a{
-      color: #fff !important;
+.Footer_lg_col {
+  a {
+    color: #fff !important;
   }
 }

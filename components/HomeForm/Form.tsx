@@ -4,7 +4,7 @@ import classes from "./Form.module.scss";
 
 const HomeForm = () => {
   return (
-    <Form className={`${classes.Form_Wrapper} w-75 ms-auto`}>
+    <Form className={`${classes.Form_Wrapper} ms-auto`}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Create Profle For</Form.Label>
         <Form.Control type="email" placeholder="" className={classes.Form_input} />
