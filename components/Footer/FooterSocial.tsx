@@ -1,4 +1,4 @@
-import {Container, Row, Col, Image} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import classes from "./Footer.module.scss";
 import {FaFacebookSquare, FaApple, FaInstagram, FaTwitter} from "react-icons/fa";
 

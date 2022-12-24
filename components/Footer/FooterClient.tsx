@@ -10,9 +10,9 @@ const FooterClient = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
                         </Col>
                     </Row>
                 </Carousel.Item>
@@ -20,9 +20,9 @@ const FooterClient = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
                         </Col>
                     </Row>
                 </Carousel.Item>
@@ -30,9 +30,9 @@ const FooterClient = () => {
                 <Carousel.Item>
                     <Row>
                         <Col sm={12} className="d-flex justify-content-center">
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
-                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image}/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
+                            <Image src="./Images/99acres-logo.jpg" className={classes.client_Image} alt="clients"/>
                         </Col>
                     </Row>
                 </Carousel.Item>

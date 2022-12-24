@@ -72,9 +72,9 @@ const LandingPage: React.FC = () => {
             </Col>
             <Col sm={12} md={6}>
                 <div className={classes.landing_scroll_images}>
-                <Image src="./Images/landing_image_1.svg" />
-                <Image src="./Images/landing_image_2.svg" />
-                <Image src="./Images/landing_image_3.svg" />
+                <Image src="./Images/landing_image_1.svg" alt="pic"/>
+                <Image src="./Images/landing_image_2.svg" alt="pic"/>
+                <Image src="./Images/landing_image_3.svg" alt="pic"/>
                 </div>
             </Col>
             </Row>
@@ -82,15 +82,15 @@ const LandingPage: React.FC = () => {
             <span>THREE SIMPLE STEPS TO</span>
             <h1>Find the <strong>One for You</strong></h1>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <Col sm={12} md={4}>
-                <Image src="./Images/office-paperclip.png"/>
+                <Image src="./Images/office-paperclip.png" alt="pic"/>
                 <p><strong>01.</strong> Define Your Partner Preferences</p>
             </Col>
             <CustomButton onClick={() => console.log("tab")}>Get Started</CustomButton>
