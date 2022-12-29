@@ -6,7 +6,7 @@ const FooterSocial = () =>{
     return(
         <>
         <div className={classes.Footer_dark_strip}>
-                <Container className="w-75 px-0">
+                <Container className={`${classes.footer_box} px-0`}>
                     <Row>
                         <Col sm={12} md={4}>
                             <h4>App available on</h4>

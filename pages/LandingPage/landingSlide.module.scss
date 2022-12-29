@@ -1,0 +1,124 @@
+@import "../../styles/constants.scss";
+.containerCarousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carouselContent {
+    width: 100%;
+    max-width: 1440px;
+  }
+  
+  .divImage {
+    background-color: #fff;
+    width: 100%;
+    max-width: 310px; 
+    margin: auto;
+    position: relative;
+    // height: 280px;
+    // margin: 0 10px;
+    &::after {
+      background: #d52741a3;
+      content: '';
+      height: 100%;
+      opacity: 0;
+      position: absolute;
+      transition: all 300ms ease-in;
+      width: 100%;
+      top: 0;
+      right: 0; 
+    }
+    &:hover::after, &:hover .cardTitle{
+      opacity: 0;
+    }
+    &:hover::after, &:hover .cardDetails{
+      opacity: 1;
+    }
+    .dropdownItem {
+      background: url(../../public/Images/nav_icon_bg.png) no-repeat;
+      background-position: right 14em bottom 6px;
+      cursor: pointer;
+    } 
+    .cardTitle{
+      text-shadow: 0 1px 1px rgb(0 0 0 / 24%);
+      font-family: "sarah-script","sans-serif";
+      color: $white_txt;
+      opacity: 1;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      margin-top: 65%;
+      filter: drop-shadow(2px 4px 6px black);
+    }
+    .cardDetails {
+      color: white;
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0;
+      z-index: 1;
+      position: absolute;
+      padding: 1rem;
+      top: 0;
+      margin-top: 1%;
+      text-align: left;
+    }
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7);
+    border-radius: 7px;
+  }
+  
+  .divInfos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .infoTitle {
+    font-family: Alliance2;
+    color: #000;
+    line-height: 0.76;
+    font-size: 2.5rem;
+    letter-spacing: normal;
+    font-style: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    margin: 24px 0 20px 0;
+  }
+  
+  .infoSubtitle {
+    font-family: Alliance2;
+    color: #000;
+    line-height: 0.76;
+    font-size: 1rem;
+    letter-spacing: normal;
+    font-style: normal;
+    font-weight: 500;
+    font-stretch: normal;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  
+  .carousel .slide {
+    background-color: transparent !important;
+  }
+  
+/* For all other screen sizes, display 3 items */
+.slide {
+  min-width: 33% !important;
+}
+
+/* For screens with width < 600px, display 2 items */
+@media only screen and (max-width: 600px) {
+  .slide {
+    min-width: 50% !important;
+  }
+}

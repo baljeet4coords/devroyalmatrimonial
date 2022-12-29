@@ -8,7 +8,7 @@ const Footer = () => {
     return(
     <>
             <div className={classes.Footer_dark}>
-                <Container className={`${classes.Home_white_body} w-75 px-0`}>
+                <Container className={`${classes.footer_box} px-0`}>
                 <Row>
                         <Col sm={12} md={3}>
                             <h4>Explore</h4>
