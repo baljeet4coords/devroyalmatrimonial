@@ -2,8 +2,11 @@ import classes from "./Form.module.scss";
 import { Form, Button } from "react-bootstrap";
 import Link from "next/link";
 
+type ModalLoginProps =  {
+    onCloseModal: () => void;
+}
 
-const ModalForm: React.FC = () => {
+const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
     return (
         <div className={classes.modal_form}>
             <Form>
@@ -21,6 +24,7 @@ const ModalForm: React.FC = () => {
                 <Button variant="danger" type="submit" className={`${classes.Form_btn} p-3 mt-2 w-100`}>
                     Register Free
                 </Button>
+                <Button onClick={onCloseModal}>x</Button>
             </Form>
         </div>
     )
