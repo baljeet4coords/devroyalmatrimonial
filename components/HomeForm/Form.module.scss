@@ -25,6 +25,46 @@
   }
 }
 
+
+// Search
+.background_banner{
+  background: url(../../public/Images/cover_img_free_chat.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 50px 0;
+}
+.bg_gray{
+  background-color: #e7e6e6;
+  padding-top: 50px;
+.Search_body{
+  border-radius: 2px ;
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 3.5rem 0 0 0;
+
+  .search_group{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    .input_search{
+      border-radius: 0px;
+      border: 1px solid #d1d1d1;
+      width: 54%;
+      padding: 0.7rem;
+      box-shadow: 0.5px 0.5px 3px #d1d1d1;
+    }
+    .input_select{
+      width: 27%;
+      border: 1px solid #d1d1d1;
+      border-radius: 0px;
+      padding: 0.7rem;
+      box-shadow: 0.5px 0.5px 3px #d1d1d1;
+    }
+    
+  }
+}
+}
 @media screen and (max-width: 767px) {
   .Form_Wrapper {
     width: 100%;
