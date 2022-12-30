@@ -9,6 +9,7 @@ import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
 import Footer from "../../components/Footer/FooterMain"
 import { cardItems } from "../../components/Cards/card";
+
 const LandingPage: React.FC = () => {
 
     return (
@@ -166,6 +167,5 @@ const LandingPage: React.FC = () => {
         </>
     )
 }
-
 
 export default LandingPage;
