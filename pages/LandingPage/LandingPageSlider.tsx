@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import classes from "./landingSlide.module.scss";
+import { Image } from "react-bootstrap";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
@@ -36,14 +37,14 @@ const images = [
     return (
       <div key={img.id}>
         <div className={classes.divImage}>
-          <img className={classes.image} src={img.url} alt="" />
+          <Image className={classes.image} src={img.url} alt={img.url} />
 
           <div className={classes.cardTitle}>
                 <h2>Mayank & Prayasha</h2>
                 <small>MARRIAGE DATE 08, DECEMBER 2020</small>
                 </div>
-                <div className={classes.cardDetails}><strong>Mayank Banga & Prayasha Kapoor</strong><br /><br />
-                She accepted my interest. We exchanged messages on JS only. Things were ok and we exchanged our contact numbers. But we didn't talk. We just exchanged more messages
+                <div className={classes.cardDetails}><strong>Mayank Banga &#38; Prayasha Kapoor</strong><br /><br />
+                She accepted my interest. We exchanged messages on JS only. Things were ok and we exchanged our contact numbers. But we didnt talk. We just exchanged more messages
                 <br /><br />
                 <p className={classes.dropdownItem}>View More</p>
             </div>
