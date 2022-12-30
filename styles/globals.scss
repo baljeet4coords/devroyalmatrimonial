@@ -51,6 +51,7 @@ a {
     color: #fff !important;
   }
 }
+
 p{
   font-size: 0.875rem;
 }
@@ -68,4 +69,11 @@ p{
     width: 100%;
   }
  
+
+.default-anchor {
+  text-decoration: none;
+  color: #fff;
+  &:hover{
+    color: inherit;
+  }
 }
