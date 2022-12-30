@@ -5,3 +5,16 @@
     background-repeat: no-repeat;
     height: 622px;
 }
+
+
+@media only screen and (max-width: 500px) {
+
+    .homeImage{
+        background: url(../../public/Images/responsive_header_image.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 360px;
+        height: auto;
+    }
+   
+  }
