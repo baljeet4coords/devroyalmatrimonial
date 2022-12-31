@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown, Image } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Image, Button } from "react-bootstrap";
 import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
+import ModalForm from "../HomeForm/ModalLogin";
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(false);
   const [stateSize, setSize] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const showDropdown = () => {
     setShow(!show);
@@ -40,9 +42,9 @@ const Header: React.FC = () => {
             </Link>
           </Navbar.Brand>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <Nav.Link href="#deets" className=" text-light">
+            <Button className=" text-light" onClick={() => setShowLoginModal(true)}>
               LOGIN
-            </Nav.Link>
+            </Button>
           </Nav>
           {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
           <Navbar.Collapse
@@ -68,11 +70,16 @@ const Header: React.FC = () => {
               <Nav.Link href="#Help">HELP</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">LOGIN</Nav.Link>
+            <Button variant="link" className="default-anchor" onClick={() => setShowLoginModal(true)}>
+              LOGIN
+            </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      {
+        showLoginModal && <ModalForm onCloseModal={() => setShowLoginModal(false)}/>
+      }
     </>
   );
 };

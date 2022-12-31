@@ -65,6 +65,38 @@
   }
 }
 }
+// Modal Form
+
+.modal_form{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  Form{
+    width: 35vw;
+    position: absolute;
+    padding: 45px;
+    background: #e7e7e6;
+    .Form_btn{
+      border-radius: 0px;
+      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
+    }
+    .modal_links{color:#065ad8d3;}
+    Input{
+      border-radius: 0px;
+      margin-bottom: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
+      background-color: #e7e7e6;
+      border: 1px solid gray;    
+    }
+  }
+}
+
 @media screen and (max-width: 767px) {
   .Form_Wrapper {
     width: 100%;

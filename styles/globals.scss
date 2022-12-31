@@ -56,3 +56,29 @@ a {
 
 .form-label{margin-right: 25px; color: #bfbfbf; align-self: center;}
 .accordion-item{background-color: #ededed !important;}
+p{
+  font-size: 0.875rem;
+}
+.list-group-item{
+  border: none;
+}
+@media only screen and (max-width: 500px) {
+  h1{font-size: 1.5rem !important;}
+  h2{font-size: 0.875rem !important;}
+  h3{font-size: 0.875rem !important;}
+  span{font-size: 0.75rem !important;}
+  p{font-size: 0.75rem !important;}
+
+  .Home_Page_Wrapper{
+    width: 100%;
+  }
+
+}
+
+.default-anchor {
+  text-decoration: none;
+  color: #fff;
+  &:hover{
+    color: inherit;
+  }
+}

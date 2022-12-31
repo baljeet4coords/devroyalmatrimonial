@@ -2,6 +2,7 @@
  
 .Home_Page_Wrapper{
     margin-top: -34rem;
+    width: 75%;
     span{
         color: $lightGrey_txt;
         letter-spacing: 1.75px;
@@ -57,6 +58,9 @@
         padding: 3rem;
         box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
         border-radius: 0.25rem;
+        p{
+            text-align: justify;
+        }
         .landing_scroll_images{
             max-height: 50vh;
             overflow-y: scroll;
@@ -87,4 +91,55 @@
         border-radius: 12px;
         margin: auto;
     }
+    .Home_colord_body{
+        background-color: $darkGrey_bg;
+        color: $white_txt;
+        .content{
+            padding: 3rem;
+        }
+        h1{
+            font-size: 1.75rem;
+            font-weight: 400;
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
+        p{
+            line-height: 27px;
+        }
+        img{
+            width: 76%;
+        }
+    }
 }
+
+@media only screen and (max-width: 500px) {
+    .Home_Page_Wrapper{
+      width: 90%;
+      margin-top: 0;
+    }
+   .firstTopBox{
+    display: none;
+   }
+   .Home_dark_body {
+    padding: 2.62rem 0.5rem !important;
+   }
+   .Home_white_body {
+    padding: 2.62rem 0.5rem !important;
+   }
+   .Home_colord_body {
+    .content{
+        padding: 2.62rem 0.5rem !important;
+    }
+   }
+   .services_box{
+    background-size: cover;
+    height: auto !important;
+   }
+   .Home_colord_body{
+    img{
+        width: 100% !important;
+    }
+}
+  }
+
+ 

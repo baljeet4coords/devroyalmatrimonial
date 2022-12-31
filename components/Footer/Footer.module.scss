@@ -24,6 +24,15 @@
         line-height: 25px;
         text-shadow: 1px 1px 1px #222;
     }
+    
+}
+.footer_box{
+    width: 75%;
+}
+@media only screen and (max-width: 500px) {
+    .footer_box{
+        width: 90%;
+    }
 }
 
 // Footer Social

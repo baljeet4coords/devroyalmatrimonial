@@ -1,12 +1,11 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Form, Button} from 'react-bootstrap';
 import classes from "./Form.module.scss";
 
 const HomeForm = () => {
   return (
     <Form className={`${classes.Form_Wrapper} ms-auto`}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Create Profle For</Form.Label>
+        <Form.Label>Create Profile For</Form.Label>
         <Form.Control type="email" placeholder="" className={classes.Form_input} />
         {/* <Form.Text className="text-muted">
         Please choose whose profile is being created.
