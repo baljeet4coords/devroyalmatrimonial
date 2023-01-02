@@ -1,10 +1,10 @@
 
 import LandingPage from './LandingPage/LandingPage'
-import Search from '../components/HomeForm/SearchForm';
+import Search from '../pages/SearchPage/Search';
 
 const Home = () => {
   // return <LandingPage />
-  return <Search/>
+  return <LandingPage/>
 }
 
 
