@@ -1,0 +1,84 @@
+// Help Categories
+.bg_gray {
+    background-color: #e7e6e6;
+    padding: 2rem 0;
+
+    .Help_wrapper {
+        border: 1px solid #fff;
+        background: #fff;
+        padding: 0 2rem;
+        font-size: 14px;
+        .b_right {
+            border-right: 1px solid #bdbaba !important;
+        }
+            .header_Help{
+                display: flex;
+                justify-content: center;
+                font-size: 22px;
+                margin-top: 3rem;
+                margin-bottom: 10px;
+
+                a{
+                    color: #da3a3a;
+                }
+            }
+            span {
+                
+                display: block;
+                color: #615f5f;
+            }
+
+            input {
+                width: 70%;
+                padding: 0.5rem;
+                margin-bottom: 50px;
+                border-radius: 0px;
+                border: 1px solid #aca5a5;
+                margin-top: 20px;
+            }
+
+            button {
+                background-color: #da3a3a;
+                width: 20%;
+                height:39px;
+                border: none;
+                border-radius: 0px;
+                margin-top: 20px;
+            }
+
+            .categories {
+                padding: 10px 10px 20px 10px;
+                color: #da3a3a;
+
+            }
+
+            .email_help{
+                color: #da3a3a;
+                display: flex;
+                justify-content: center;
+                font-size: 18px;
+                margin-bottom: 1rem;
+            }
+            .callback_btn{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-top: 1px solid #aca5a5;
+
+                button{
+                    width: 150px;
+                    color: hsl(0, 9%, 90%);
+                    margin-bottom: 1rem;
+                }
+            }
+    }
+}
+
+// HelpMain scss
+.banner_bg{
+    background-image: url('../../public/Images/cover_img_free_chat.png');
+    background-position: center;
+    position:static;
+    padding: 3rem;
+}

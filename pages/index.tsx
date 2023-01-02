@@ -1,8 +1,9 @@
 
-import LandingPage from './LandingPage/LandingPage'
+import LandingPage from './LandingPage/LandingPage';
+import HelpMain from './HelpPage/HelpMain';
 
 const Home = () => {
-  return <LandingPage />
+  return <HelpMain />
 }
 
 
