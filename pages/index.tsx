@@ -1,9 +1,11 @@
-
-import LandingPage from './LandingPage/LandingPage';
-import HelpMain from './HelpPage/HelpMain';
+import HelpCallback from './HelpPage/HelpCallback';
 
 const Home = () => {
-  return <HelpMain />
+  return (
+    <>
+      <HelpCallback/>
+    </>
+  )
 }
 
 
