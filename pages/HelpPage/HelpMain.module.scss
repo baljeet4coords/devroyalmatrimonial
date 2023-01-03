@@ -85,7 +85,7 @@
 
 // Modal
 .modal_form{
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background: rgb(0, 0, 0, 0.95);
@@ -93,6 +93,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    top: 0;
     Form{
       width: 35vw;
       position: absolute;
@@ -102,14 +103,60 @@
         border-radius: 0px;
         box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
       }
-      .modal_links{color:#065ad8d3;}
-      Input{
-        border-radius: 0px;
+      .modal_input{
         margin-bottom: 1.5rem;
-        padding: 0.8rem 1.5rem;
-        box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
         background-color: #e7e7e6;
-        border: 1px solid gray;    
+
+        input{
+            border-radius: 0px;
+            padding: 0.5rem;
+
+            &::placeholder{
+                font-size: 16px;
+    
+            }
+        }
+
       }
     }
+    .closeModal{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #dc3545;
+        border-radius: 0px;
+        border: none;
+        font-size: 18px;
+    }
   }
+
+//PostQuery
+.post_query{
+    padding: 1rem 0;
+    text-align: center;
+
+    .Query_input{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+
+        label{
+            align-self: center;
+            margin-right: 1rem;
+            width: 20%;
+            text-align: right;
+        }
+
+        input{
+            margin: 0;
+            width: 50%;
+        }
+
+    }
+
+    button{
+        margin-bottom: 1rem;
+    }
+    
+}

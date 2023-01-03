@@ -1,9 +1,9 @@
-import HelpCallback from './HelpPage/HelpCallback';
+import HelpMain from './HelpPage/HelpMain';
 
 const Home = () => {
   return (
     <>
-      <HelpCallback/>
+      <HelpMain/>
     </>
   )
 }

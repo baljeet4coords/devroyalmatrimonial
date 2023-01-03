@@ -1,8 +1,13 @@
 import { Col, Container, Row, Image, Form } from "react-bootstrap";
 import classes from './HelpMain.module.scss';
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import HelpCallback from "./HelpCallback";
+import PostQuery from "./PostQuery";
 
 const HelpCategories: React.FC = () => {
+    const [HelpModal, setHelpModal] = useState(false);
+    const [PostForm, setPostForm] = useState(false);
     return (
         <>
             <div className={`${classes.bg_gray}`}>
@@ -85,19 +90,25 @@ const HelpCategories: React.FC = () => {
                                     <Link href="/">View all Questions</Link>
                                 </Col>
                             </Row>
-                            <span className={classes.header_Help}><a href="/">Post your query_</a> and we will get back to you</span>
+                            <span className={classes.header_Help}><a onClick={() => setPostForm(true)}>Post your query_</a> and we will get back to you</span>
+                            {
+                                PostForm && <PostQuery />
+                            }
                         </Col>
                         <Col sm={4}>
                         <span className={classes.header_Help}>Write to us</span>
                         <Link className={classes.email_help} href="/">help@jeevanSathi.com</Link>
                         <div className={classes.callback_btn}>
-                            <button type="submit">Request Callback</button>
+                            <button type="submit" onClick={() => setHelpModal(true) }>Request Callback</button>
                             <span>Our Customer will get back to you</span>
                         </div>
                         </Col>
                     </Row>
                 </Container>
             </div>
+            {
+            HelpModal && <HelpCallback onCloseModal={() => setHelpModal(false)}/>
+            }
         </>
     )
 }
