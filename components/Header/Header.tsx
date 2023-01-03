@@ -67,7 +67,7 @@ const Header: React.FC = () => {
                   Search by Profile ID
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#Help">HELP</Nav.Link>
+              <Link href="/HelpPage">HELP</Link>
             </Nav>
             <Nav>
             <Button variant="link" className="default-anchor" onClick={() => setShowLoginModal(true)}>
