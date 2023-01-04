@@ -1,8 +1,7 @@
 import classes from "./Search.module.scss";
-import { Container, Row, Col, Form, Accordion } from "react-bootstrap"
-import Header from "../../components/Header/Header"
-import Footer from "../../components/Footer/FooterMain";
-import SearchByData from "./SearchByData"
+import { Container, Row, Col, Form, Accordion } from "react-bootstrap";
+import { Header, Footer } from "../../components/";
+import SearchByData from "./SearchByData";
 import SearchById from "./SearchByProfile";
 import React, { useState } from 'react';
 
