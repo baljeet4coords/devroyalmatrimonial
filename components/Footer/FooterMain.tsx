@@ -25,7 +25,7 @@ const Footer = () => {
                             <h4>Services</h4>
                             <ul className={classes.Footer_lg_list}>
                                 <li><a href="#">Membership Options</a></li>
-                                <li><a href="#">Jeevansathi Careers</a></li>
+                                <li><a href="#">Royal Matrimonial Careers</a></li>
                             </ul>
                         </Col>
 
@@ -34,7 +34,7 @@ const Footer = () => {
                             <ul className={classes.Footer_lg_list}>
                                 <li><a href="#">Contact us</a></li>
                                 <li><a href="#">Feedback / Queries</a></li>
-                                <li><a href="#">Jeevansathi Centers</a></li>
+                                <li><a href="#">Royal Matrimonial Centers</a></li>
                             </ul>
                         </Col>
 

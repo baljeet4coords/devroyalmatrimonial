@@ -20,7 +20,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
                 <Button variant="primary" type="submit" className={`${classes.Form_btn} p-3 mb-5 w-100`}>
                     Login
                 </Button>
-                <Link className={`${classes.modal_links} d-flex justify-content-center`} href="/">New On JeevanSathi?</Link>
+                <Link className={`${classes.modal_links} d-flex justify-content-center`} href="/">New On Royal Matrimonial?</Link>
                 <Button variant="danger" type="submit" className={`${classes.Form_btn} p-3 mt-2 w-100`}>
                     Register Free
                 </Button>

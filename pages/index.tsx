@@ -1,8 +1,12 @@
 
-import Search from './SearchPage/index'
+import LandingPage from './LandingPage/LandingPage';
 
 const Home = () => {
-  return <Search />
+  return (
+    <>
+      <LandingPage/>
+    </>
+  )
 }
 
 

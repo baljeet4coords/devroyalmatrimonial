@@ -16,13 +16,18 @@ a {
   box-sizing: border-box;
 }
 
+.white-bg-button {
+  border: 0;
+  background-color: #fff;
+  color: #92243c !important;
+}
 ////////////////////////////navbar///////////////////////////////////
 
 .dropdown-menu[data-bs-popper] {
   border-radius: 0;
 }
 .dropdown-menu {
-  background-color: $darkGrey_bg;
+  background-color: $transparent_maroon;
   .dropdown-item {
     padding: 6px 22px 6px 20px;
     font-size: 16px;
@@ -51,30 +56,44 @@ a {
     color: #fff !important;
   }
 }
-p{
+
+p {
   font-size: 0.875rem;
 }
-.list-group-item{
+.list-group-item {
   border: none;
 }
 @media only screen and (max-width: 500px) {
-  h1{font-size: 1.5rem !important;}
-  h2{font-size: 0.875rem !important;}
-  h3{font-size: 0.875rem !important;}
-  span{font-size: 0.75rem !important;}
-  p{font-size: 0.75rem !important;}
-
-  .Home_Page_Wrapper{
-    width: 100%;
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  h2 {
+    font-size: 0.875rem !important;
+  }
+  h3 {
+    font-size: 0.875rem !important;
+  }
+  span {
+    font-size: 0.75rem !important;
+  }
+  p {
+    font-size: 0.75rem !important;
   }
 
+  .Home_Page_Wrapper {
+    width: 100%;
+  }
 }
 
 .default-anchor {
   text-decoration: none;
   color: #fff;
-  &:hover{
+  &:hover {
     color: inherit;
   }
 }
 
+// Global
+.b_right {
+  border-right: 1px solid #bdbaba !important;
+}

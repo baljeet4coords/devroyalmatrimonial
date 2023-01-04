@@ -1,6 +1,7 @@
-// Footer MAin menu
+@import "../../styles/constants.scss";
+// Footer Main menu
 .Footer_dark{
-    background-color: #34495e;
+    background-color: $transparent_maroon;
     padding: 25px 0;
 
     .Footer_lg_list{
@@ -37,7 +38,7 @@
 
 // Footer Social
 .Footer_dark_strip{
-    background-color: #2E4154;
+    background-color: $dark_maroon_bg;
     padding: 15px 0;
 
     h4{

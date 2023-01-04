@@ -35,14 +35,14 @@ const Header: React.FC = () => {
             <Link href="/">
               <div className={classes.navBar_logo}>
                 <Image
-                  src="/Images/desktopLogo.svg"
+                  src="/Images/Royal-Logo.png"
                   alt="Royal Matrimorial logo"
                 />
               </div>
             </Link>
           </Navbar.Brand>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <Button className=" text-light" onClick={() => setShowLoginModal(true)}>
+            <Button className="white-bg-button" onClick={() => setShowLoginModal(true)}>
               LOGIN
             </Button>
           </Nav>
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
                   Search by Profile ID
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#Help">HELP</Nav.Link>
+              <Link href="/HelpPage">HELP</Link>
             </Nav>
             <Nav>
             <Button variant="link" className="default-anchor" onClick={() => setShowLoginModal(true)}>
