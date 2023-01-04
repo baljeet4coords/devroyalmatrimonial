@@ -10,7 +10,7 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./BrowseProfile.module.scss";
 import Link from "next/link";
 import ImageCard from "../../components/ImageCard/ImageCard";
-import { BrowseInfo } from "../../../types/BrowseInfo"
+// import { BrowseInfo } from "../../../types/BrowseInfo"
 import { AiOutlineDoubleRight } from "react-icons/ai";
 
 
@@ -24,32 +24,32 @@ const BrowseProfile: NextPage = () => {
   
   const { BrowseProfile } = router.query;
  
-  const productData: BrowseInfo[] = [
-    {
-      id: 1,
-      title: "YWAX0343",
-      uri: "/images/jeansProduct.jpg",
-      desc: "32 Years, 5' 4 | Hindu / Tamil | Senai Thalaivar | Shanmuga(Gotra)| B.E/B.Tech| No Income| Student| Chennai/ Madras",
-    },
-    {
-      id: 2,
-      title: "ZSZV0643",
-      uri: "/images/jeansProduct.jpg",
-      desc: "33 Years, 5' 3 | Hindu / Hindi-Delhi | Bania| kashyap(Gotra)| MBA/PGDM| Rs. 15 - 20 Lakh| Operations Management| Chennai/ Madras"
-    },
-    {
-      id: 3,
-      title: "ZVUY0391",
-      uri: "/images/jeansProduct.jpg",
-      desc: "28 Years, 5' 5 | Jain / Hindi-Rajasthan | Shwetamber | CA| No Income, Accounting Professional | Chennai/ Madras"
-    },
-    {
-      id: 4,
-      title: "XWXT5207",
-      uri: "/images/jeansProduct.jpg",
-      desc: "33 Years, 5' 7 | Hindu / Hindi-Delhi | Brahmin| B.A| Rs. 7.5 - 10 Lakh| Marketing Professional| Bangalore"
-    },
-  ];
+  // const productData: BrowseInfo[] = [
+  //   {
+  //     id: 1,
+  //     title: "YWAX0343",
+  //     uri: "/images/jeansProduct.jpg",
+  //     desc: "32 Years, 5' 4 | Hindu / Tamil | Senai Thalaivar | Shanmuga(Gotra)| B.E/B.Tech| No Income| Student| Chennai/ Madras",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "ZSZV0643",
+  //     uri: "/images/jeansProduct.jpg",
+  //     desc: "33 Years, 5' 3 | Hindu / Hindi-Delhi | Bania| kashyap(Gotra)| MBA/PGDM| Rs. 15 - 20 Lakh| Operations Management| Chennai/ Madras"
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "ZVUY0391",
+  //     uri: "/images/jeansProduct.jpg",
+  //     desc: "28 Years, 5' 5 | Jain / Hindi-Rajasthan | Shwetamber | CA| No Income, Accounting Professional | Chennai/ Madras"
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "XWXT5207",
+  //     uri: "/images/jeansProduct.jpg",
+  //     desc: "33 Years, 5' 7 | Hindu / Hindi-Delhi | Brahmin| B.A| Rs. 7.5 - 10 Lakh| Marketing Professional| Bangalore"
+  //   },
+  // ];
 
   return (
    <React.Fragment>
