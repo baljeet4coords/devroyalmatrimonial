@@ -24,13 +24,13 @@ const SearchByData: React.FC = () => {
                     <Form.Group className={classes.search_group}>
                         <Form.Label>Height</Form.Label>
                         <Form.Select aria-label="Default select example" className={classes.input_select}>
-                            <option>4' 0''(1.22 mts)</option>
+                            <option>4&#39; 0&#39;(1.22 mts)</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </Form.Select>
                         <Form.Select aria-label="Default select example" className={classes.input_select}>
-                            <option>7' (2.13 mts) plus</option>
+                            <option>7&#39; (2.13 mts) plus</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>

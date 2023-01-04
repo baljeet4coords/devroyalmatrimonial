@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Navbar, Container, Nav, NavDropdown, Image, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  NavDropdown,
+  Image,
+  Button,
+} from "react-bootstrap";
 import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
@@ -42,7 +49,10 @@ const Header: React.FC = () => {
             </Link>
           </Navbar.Brand>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <Button className="white-bg-button" onClick={() => setShowLoginModal(true)}>
+            <Button
+              className="white-bg-button"
+              onClick={() => setShowLoginModal(true)}
+            >
               LOGIN
             </Button>
           </Nav>
@@ -62,24 +72,30 @@ const Header: React.FC = () => {
                 onMouseEnter={showDropdown}
                 onMouseLeave={hideDropdown}
               >
-                <NavDropdown.Item href="#action/3.3">Search</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">
-                  Search by Profile ID
+                <NavDropdown.Item>
+                  <Link href="/SearchPage">Search</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link href="/SearchPage">Search by Profile ID</Link>
                 </NavDropdown.Item>
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
             <Nav>
-            <Button variant="link" className="default-anchor" onClick={() => setShowLoginModal(true)}>
-              LOGIN
-            </Button>
+              <Button
+                variant="link"
+                className="default-anchor"
+                onClick={() => setShowLoginModal(true)}
+              >
+                LOGIN
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {
-        showLoginModal && <ModalForm onCloseModal={() => setShowLoginModal(false)}/>
-      }
+      {showLoginModal && (
+        <ModalForm onCloseModal={() => setShowLoginModal(false)} />
+      )}
     </>
   );
 };
