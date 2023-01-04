@@ -1,11 +1,14 @@
 import React from "react";
+import Link from 'next/link'
+import { NextPage } from "next";
+import router from "next/router";
 import { NavDropdown } from "react-bootstrap";
 import { useState } from "react";
 import { navOptionsList } from "./NavoptionLinks";
 import classes from "./Navoptions.module.scss";
 import { NavOptions as NavOptionsType, SubCategory } from "./types";
 
-const NavOptions: React.FC = () => {
+const NavOptions: NextPage = () => {
   const [show, setShow] = useState(false);
   const [navState, setNavState] = useState<SubCategory[]>([]);
 
@@ -51,9 +54,11 @@ const NavOptions: React.FC = () => {
         <div className={classes.sideBar}>
           {navState.map((item) => {
             return (
-              <a href={item.uri} key={item.title}>
+              <span 
+               onClick={() => router.push(`/BrowseProfile/${item.title}`)}
+               key={item.title}>
                 {item.title}
-              </a>
+              </span>
             );
           })}
         </div>
