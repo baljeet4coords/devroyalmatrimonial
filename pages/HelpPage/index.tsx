@@ -1,5 +1,4 @@
-import Footer from "../../components/Footer/FooterMain";
-import Header from "../../components/Header/Header";
+import { Header, Footer } from "../../components";
 import HelpCategories from "./HelpCategoies";
 import { Col, Container, Row, Image, Form } from "react-bootstrap";
 import classes from "./HelpMain.module.scss";

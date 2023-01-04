@@ -4,7 +4,7 @@ import classes from "./Form.module.scss";
 const HomeForm = () => {
   return (
     <Form className={`${classes.Form_Wrapper} ms-auto`}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-2" controlId="formBasicEmail">
         <Form.Label>Create Profile For</Form.Label>
         <Form.Control type="email" placeholder="" className={classes.Form_input} />
         {/* <Form.Text className="text-muted">
@@ -12,7 +12,7 @@ const HomeForm = () => {
         </Form.Text> */}
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-2" controlId="formBasicEmail">
         <Form.Label>Email</Form.Label>
         <Form.Control type="email" placeholder="Enter email" className={classes.Form_input} />
         {/* <Form.Text className="text-muted">
@@ -20,12 +20,12 @@ const HomeForm = () => {
         </Form.Text> */}
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-2" controlId="formBasicEmail">
         <Form.Label>Phone Number</Form.Label>
         <Form.Control type="tel" placeholder="Enter Number" className={classes.Form_input} />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" className={classes.Form_input} />
       </Form.Group>

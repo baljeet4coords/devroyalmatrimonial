@@ -25,6 +25,7 @@ a {
 
 .dropdown-menu[data-bs-popper] {
   border-radius: 0;
+  top: 98%;
 }
 .dropdown-menu {
   background-color: $transparent_maroon;
@@ -93,6 +94,15 @@ p {
   }
 }
 
+.nav-tabs .nav-link.active {
+  /* color: var(--bs-nav-tabs-link-active-color); */
+  /* background-color: var(--bs-nav-tabs-link-active-bg); */
+  /* border-color: var(--bs-nav-tabs-link-active-border-color); */
+  border-bottom: 2px solid #d9475c;
+}
+.nav-tabs .nav-link{
+  color: $lightGrey_txt;
+}
 // Global
 .b_right {
   border-right: 1px solid #bdbaba !important;
