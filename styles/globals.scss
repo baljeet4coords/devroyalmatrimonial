@@ -20,6 +20,7 @@ a {
 
 .dropdown-menu[data-bs-popper] {
   border-radius: 0;
+  top: 98%;
 }
 .dropdown-menu {
   background-color: $darkGrey_bg;
@@ -77,4 +78,14 @@ p{
   &:hover{
     color: inherit;
   }
+}
+
+.nav-tabs .nav-link.active {
+  /* color: var(--bs-nav-tabs-link-active-color); */
+  /* background-color: var(--bs-nav-tabs-link-active-bg); */
+  /* border-color: var(--bs-nav-tabs-link-active-border-color); */
+  border-bottom: 2px solid #d9475c;
+}
+.nav-tabs .nav-link{
+  color: $lightGrey_txt;
 }

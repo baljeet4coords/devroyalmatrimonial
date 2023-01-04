@@ -1,24 +1,24 @@
-import HomeImage from "../../components/HomeImage/HomeImage";
+
 import { Col, Container, Row, Image } from "react-bootstrap";
 import classes from "./LandingPage.module.scss";
-import { Header } from "../../components";
+import { Header, Footer, HomeImage } from "../../components";
 import DemoCarousel from "./LandingPageSlider";
 import BrowserLink from "../../components/BrowserLink/BrowserLinks";
 import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
-import Footer from "../../components/Footer/FooterMain"
+
 import { cardItems } from "../../components/Cards/card";
 
 const LandingPage: React.FC = () => {
-
+    const headimage = "cover_img_free_chat.png";
     return (
         <>
         <Header /> 
-        <HomeImage />
+        <HomeImage addBackground={headimage} />
         <Container className={`${classes.Home_Page_Wrapper} px-0`}>
-            <Row className={`${classes.firstTopBox} mb-5`}>
-            <Col sm={12} md={6}>
+            <Row className={`${classes.firstTopBox} pb-4`}>
+            <Col sm={12} md={6} className="d-flex align-items-end">
             <div className={classes.Home_heading}>
                 <h1>Now, chat for free!</h1>
                 <span>Finding your perfect match just became easier</span>

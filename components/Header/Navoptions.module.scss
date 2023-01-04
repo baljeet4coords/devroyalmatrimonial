@@ -13,8 +13,9 @@
     flex-wrap: wrap;
     flex-direction: row;
     align-content: flex-start;
-    >a{
+    >span{
         color: #fff;
+        cursor: pointer;
         font-size: 14px;
         /* width: 133px; */
         display: block;
