@@ -8,7 +8,7 @@ const FooterRights = () => {
             <Container>
                 <Row>
                     <Col sm={12}>
-                        <p>All rights reserved © 2016 Jeevansathi Internet Services.</p>
+                        <p>All rights reserved © 2023 Royal Matrimonial.</p>
                     </Col>
                 </Row>
             </Container>
