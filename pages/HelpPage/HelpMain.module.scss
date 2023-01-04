@@ -1,170 +1,165 @@
 // Help Categories
 .bg_gray {
-    background-color: #e7e6e6;
-    padding: 2rem 0;
+  background-color: #e7e6e6;
+  padding: 2rem 0;
 
-    .Help_wrapper {
-        border: 1px solid #fff;
-        background: #fff;
-        padding: 0 2rem;
-        font-size: 14px;
-
-        .b_right {
-            border-right: 1px solid #bdbaba !important;
-        }
-
-        .header_Help {
-            display: flex;
-            justify-content: center;
-            font-size: 22px;
-            margin-top: 3rem;
-            margin-bottom: 10px;
-
-            a {
-                color: #da3a3a;
-            }
-        }
-
-        span {
-
-            display: block;
-            color: #615f5f;
-        }
-
-        input {
-            width: 70%;
-            padding: 0.5rem;
-            margin-bottom: 50px;
-            border-radius: 0px;
-            border: 1px solid #aca5a5;
-            margin-top: 20px;
-        }
-
-        button {
-            background-color: #da3a3a;
-            width: 20%;
-            height: 39px;
-            border: none;
-            border-radius: 0px;
-            margin-top: 20px;
-        }
-
-        .categories {
-            padding: 10px 10px 20px 10px;
-            color: #da3a3a;
-
-        }
-
-        .email_help {
-            color: #da3a3a;
-            display: flex;
-            justify-content: center;
-            font-size: 18px;
-            margin-bottom: 1rem;
-        }
-
-        .callback_btn {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-top: 1px solid #aca5a5;
-
-            button {
-                width: 150px;
-                color: hsl(0, 9%, 90%);
-                margin-bottom: 1rem;
-            }
-        }
+  .Help_wrapper {
+    border: 1px solid #fff;
+    background: #fff;
+    padding: 0 2rem;
+    font-size: 14px;
+    @media screen and (min-width: 991px) {
+      .b_right {
+        border-right: 1px solid #bdbaba !important;
+      }
     }
+
+    .header_Help {
+      display: flex;
+      justify-content: center;
+      font-size: 22px;
+      margin-top: 3rem;
+      margin-bottom: 10px;
+
+      a {
+        color: #da3a3a;
+      }
+    }
+
+    span {
+      display: block;
+      color: #615f5f;
+    }
+
+    input {
+      width: 70%;
+      padding: 0.5rem;
+      margin-bottom: 50px;
+      border-radius: 0px;
+      border: 1px solid #aca5a5;
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #da3a3a;
+      width: 20%;
+      height: 39px;
+      border: none;
+      border-radius: 0px;
+      margin-top: 20px;
+    }
+
+    .categories {
+      padding: 10px 10px 20px 10px;
+      color: #da3a3a;
+    }
+
+    .email_help {
+      color: #da3a3a;
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 1rem;
+    }
+
+    .callback_btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-top: 1px solid #aca5a5;
+
+      button {
+        width: 150px;
+        color: hsl(0, 9%, 90%);
+        margin-bottom: 1rem;
+      }
+    }
+  }
 }
 
 // HelpMain scss
 .banner_bg {
-    background-image: url('../../public/Images/cover_img_free_chat.png');
-    background-position: center;
-    position: static;
-    height: 150px;
+  background-image: url("../../public/Images/cover_img_free_chat.png");
+  background-position: center;
+  position: static;
+  height: 150px;
 }
 
 // Modal
 .modal_form {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgb(0, 0, 0, 0.95);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
 
-    Form {
-        width: 35vw;
-        position: absolute;
-        padding: 45px;
-        background: #e7e7e6;
+  Form {
+    width: 35vw;
+    position: absolute;
+    padding: 45px;
+    background: #e7e7e6;
 
-        .Form_btn {
-            border-radius: 0px;
-            box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
-        }
-
-        .modal_input {
-            margin-bottom: 1.5rem;
-            background-color: #e7e7e6;
-
-            input {
-                border-radius: 0px;
-                padding: 0.5rem;
-
-                &::placeholder {
-                    font-size: 16px;
-
-                }
-            }
-
-        }
+    .Form_btn {
+      border-radius: 0px;
+      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
     }
 
-    .closeModal {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: #dc3545;
+    .modal_input {
+      margin-bottom: 1.5rem;
+      background-color: #e7e7e6;
+
+      input {
         border-radius: 0px;
-        border: none;
-        font-size: 18px;
+        padding: 0.5rem;
+
+        &::placeholder {
+          font-size: 16px;
+        }
+      }
     }
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #dc3545;
+    border-radius: 0px;
+    border: none;
+    font-size: 18px;
+  }
 }
 
 //PostQuery
 .post_query {
-    padding: 1rem 0;
-    text-align: center;
+  padding: 1rem 0;
+  text-align: center;
 
-    .Query_input {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-bottom: 1.5rem;
+  .Query_input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1.5rem;
 
-        label {
-            align-self: center;
-            margin-right: 1rem;
-            width: 20%;
-            text-align: right;
-        }
-
-        input {
-            margin: 0;
-            width: 50%;
-        }
-
+    label {
+      align-self: center;
+      margin-right: 1rem;
+      width: 20%;
+      text-align: right;
     }
 
-    button {
-        margin-bottom: 1rem;
+    input {
+      margin: 0;
+      width: 50%;
     }
+  }
 
+  button {
+    margin-bottom: 1rem;
+  }
 }
