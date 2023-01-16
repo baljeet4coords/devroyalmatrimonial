@@ -16,19 +16,19 @@ useEffect(() => {
 const images = [
     {
         id: 1,
-        url: "https://imagecdn.jeevansathi.com/21738/12/434772741-1610092828.jpg",
+        url: "images/HomePageSlider1.jpg",
         title: "title",
         subtile: "subtitle"
     },
     {
         id: 1,
-        url: "https://imagecdn.jeevansathi.com/21738/12/434772741-1610092828.jpg",
+        url: "images/HomePageSlider2.jpg",
         title: "title",
         subtile: "subtitle"
     },
     {
         id: 1,
-        url: "https://imagecdn.jeevansathi.com/21738/12/434772741-1610092828.jpg",
+        url: "images/HomePageSlider3.jpg",
         title: "title",
         subtile: "subtitle"
     }

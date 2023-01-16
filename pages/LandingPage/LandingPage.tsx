@@ -11,7 +11,7 @@ import CustomButton from "../../components/Button/CustomButton";
 import { cardItems } from "../../components/Cards/card";
 
 const LandingPage: React.FC = () => {
-    const headimage = "cover_img_free_chat.png";
+    const headimage = "cover_img_free_chat.jpg";
     return (
         <>
         <Header /> 
@@ -60,25 +60,25 @@ const LandingPage: React.FC = () => {
             <Row className={classes.Home_dark_body}>
             <span>MEET FROM HOME</span>
             <h1>Impress them Over the <strong>Distance</strong></h1>
-            <Col sm={12} md={6}>
-                <div className="mb-5">
+            <Col sm={12} md={6} className="py-5 pe-5">
+                <div className="mb-5 me-5">
                 <h3>Royal Matrimonial Match Hour</h3>
-                <p>Register to join an online event to connect with members of your community in a short time</p>
+                <p className="me-5">Register to join an online event to connect with members of your community in a short time</p>
                 </div>
-                <div className="mb-5">
+                <div className="mb-5 me-5">
                 <h3>Royal Matrimonial Match Hour</h3>
-                <p>Register to join an online event to connect with members of your community in a short time</p>
+                <p className="me-5">Register to join an online event to connect with members of your community in a short time</p>
                 </div>
-                <div className="mb-5">
+                <div className="mb-5 me-5">
                 <h3>Royal Matrimonial Match Hour</h3>
-                <p>Register to join an online event to connect with members of your community in a short time</p>
+                <p className="me-5">Register to join an online event to connect with members of your community in a short time</p>
                 </div>
             </Col>
             <Col sm={12} md={6}>
                 <div className={classes.landing_scroll_images}>
-                <Image src="./Images/landing_image_1.svg" alt="pic"/>
-                <Image src="./Images/landing_image_2.svg" alt="pic"/>
-                <Image src="./Images/landing_image_3.svg" alt="pic"/>
+                <Image src="./Images/landing_image_1.jpg" alt="pic"/>
+                <Image src="./Images/landing_image_2.jpg" alt="pic"/>
+                <Image src="./Images/landing_image_3.jpg" alt="pic"/>
                 </div>
             </Col>
             </Row>
@@ -103,12 +103,12 @@ const LandingPage: React.FC = () => {
             <Row className={classes.Home_dark_body}>
             <h1 className="text-center"><strong>Membership</strong> Plans</h1>
             <p className="text-center">Upgrade your plan as per your customized requirements. With a paid membership, you can seamlessly connect with your prospects and get more responses. Here are some key benefits:</p>
-                <Col sm={12} md={6} className="mb-2">
-                <HomeCard onTitle={cardItems[0]}/>
-                </Col>
-                <Col sm={12} md={6} className="mb-2">
-                <HomeCard onTitle={cardItems[1]}/>
-                </Col>
+                    <Col sm={12} md={6} className="mb-2 d-flex justify-content-end align-self-center">
+                    <HomeCard onTitle={cardItems[0]}/>
+                    </Col>
+                    <Col sm={12} md={6} className="mb-2">
+                    <HomeCard onTitle={cardItems[1]} onlistHeight={1.25}/>
+                    </Col>
             </Row>
             <Row><div className={classes.card_bottom}></div></Row>
             <Row className={classes.Home_white_body}>

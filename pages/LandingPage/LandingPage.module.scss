@@ -62,7 +62,7 @@
             text-align: justify;
         }
         .landing_scroll_images{
-            max-height: 50vh;
+            max-height: 70vh;
             overflow-y: scroll;
             scroll-behavior: smooth;
             -ms-overflow-style: none; 
@@ -72,6 +72,20 @@
                 width: 0px;
                 background: transparent;
             }
+            img{
+                height: auto;
+                max-width: 100%;
+            }
+        }
+        .cardBox{
+            position: relative;
+            width: 16em;
+            min-height: 12.5em;
+            padding: 1.25em;
+            color: var(--text-color, #586875);
+            background-color: var(--card-bg, #f4f7f7);
+            border-radius: 0.125em;
+            box-shadow: 0 0.625em 1.25em #0006;
         }
     }
     .card_bottom{
@@ -80,7 +94,7 @@
         margin-top: -10rem;
     }
     .services_box{
-        background-image: url(../../public/Images/landing_page_talk.png);
+        background-image: url(../../public/Images/landing_page_talk.jpg);
         text-align: center;
         background-color: $darkWhite_bg;
         background-repeat: no-repeat;
@@ -90,6 +104,13 @@
         padding: 2rem 0;
         border-radius: 12px;
         margin: auto;
+        /////////////
+        background-repeat:no-repeat;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        background-size:cover;
+        background-position:center;
     }
     .Home_colord_body{
         background-color: $dark_maroon_bg;
