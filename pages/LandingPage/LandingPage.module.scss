@@ -1,5 +1,6 @@
 @import "../../styles/constants.scss";
- 
+
+
 .Home_Page_Wrapper{
     margin-top: -34rem;
     width: 75%;
@@ -62,7 +63,7 @@
             text-align: justify;
         }
         .landing_scroll_images{
-            max-height: 70vh;
+            max-height: 60vh;
             overflow-y: scroll;
             scroll-behavior: smooth;
             -ms-overflow-style: none; 
@@ -75,6 +76,7 @@
             img{
                 height: auto;
                 max-width: 100%;
+                width: 80%;
             }
         }
         .cardBox{
@@ -87,6 +89,18 @@
             border-radius: 0.125em;
             box-shadow: 0 0.625em 1.25em #0006;
         }
+        .scrollBox{
+            transition: opacity .1s linear;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        :hover{
+            opacity: 1;
+        }
+        .toggle{
+            opacity: 1;
+          }
+      
     }
     .card_bottom{
         height: 232px;
@@ -94,7 +108,7 @@
         margin-top: -10rem;
     }
     .services_box{
-        background-image: url(../../public/Images/landing_page_talk.jpg);
+        background-image: url("../../public/Images/landing_page_talk.jpg");
         text-align: center;
         background-color: $darkWhite_bg;
         background-repeat: no-repeat;
@@ -104,6 +118,8 @@
         padding: 2rem 0;
         border-radius: 12px;
         margin: auto;
+        text-align: left;
+        padding: inherit;
         /////////////
         background-repeat:no-repeat;
         -webkit-background-size:cover;

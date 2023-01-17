@@ -1,10 +1,11 @@
 // Search
 .background_banner {
-  background: url(../../public/Images/cover_img_free_chat.png);
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("../../public/Images/cover_img_free_chat.jpg");
+  // background-position: center;
+  // background-repeat: no-repeat;
   background-size: cover;
-  padding: 50px 0;
+  height: 60vh;
+  background-position-y: top;
 }
 
 .bg_gray {
