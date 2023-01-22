@@ -37,6 +37,7 @@ const NavOptions: NextPage = () => {
         show={show}
         onMouseEnter={showDropdown}
         onMouseLeave={hideDropdown}
+        className="ps-3"
       >
         {navOptionsList.map((item) => {
           if (item.subCategory.length !== 0) {

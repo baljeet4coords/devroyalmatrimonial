@@ -1,11 +1,35 @@
+@import "../../styles/constants.scss";
 .card {
   position: relative;
   width: 75%;
   padding: 1.25em;
   box-shadow: 0 0.625em 1.25em #0006;
   margin-right: -75px;
+  border: none;
   @media screen and (max-width: 991px) {
     width: 100%;
     margin-right: 0;
   }
 }
+.redParent{
+    background-color: $dark_maroon_bg;
+    position: relative;
+    width: 75%;
+    padding: 1.25em;
+    box-shadow: 0 0.625em 1.25em #0006;
+    margin-right: -75px;
+    border: none;
+    color:$white_txt;
+    .redCard{
+        padding-bottom: 1.25rem;
+        background-color: $dark_maroon_bg;
+        color:$white_txt;
+      }
+    @media screen and (max-width: 991px) {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+   
+
+

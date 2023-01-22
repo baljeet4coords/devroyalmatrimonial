@@ -5,17 +5,17 @@ import CustomButton from "../Button/CustomButton";
 
 const HomeCard = (props: any) => {
   let items = props.onTitle.subCategory;
-  let padd = props.onlistHeight;
+  let condition = props.onlistHeight;
 
   return (
-    <Card className={classes.card}>
+    <Card className={`${classes.card} ${condition ? classes.redParent : ""}`}>
       <Card.Body>
         <Card.Title>{props.onTitle.category}</Card.Title>
       </Card.Body>
       <ListGroup className="list-group-flush">
         {items.map((val: string) => {
           return (
-            <ListGroup.Item key={val} style={{ paddingBottom: `${padd}rem` }}>
+            <ListGroup.Item key={val} className={condition ? classes.redCard : ""}>
               {val}
             </ListGroup.Item>
           );

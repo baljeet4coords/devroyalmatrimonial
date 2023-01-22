@@ -1,8 +1,8 @@
+import DemoCarousel from "../../components/Carousel/DemoCarousel";
 import React, { useState } from "react";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import BrowserLink from "../../components/BrowserLink/BrowserLinks";
-import DemoCarousel from "../LandingPage/LandingPageSlider";
 import { NextPage } from "next";
 import { Header, Footer, HomeImage, HomeForm } from "../../components";
 import { useRouter } from "next/router";
