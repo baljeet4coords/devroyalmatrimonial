@@ -35,4 +35,4 @@ jobs:
     - run: yarn run build
     - run: pm2 delete "rm-nextjs"
     - run: pm2 start npm --name "rm-nextjs" -- start
-#     - run: pm2 reload "snap-website"
+##     - run: pm2 reload "snap-website"
