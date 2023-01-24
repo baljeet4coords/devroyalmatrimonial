@@ -33,5 +33,4 @@ jobs:
           npm i
           fi
     - run: yarn run build
-    - run: pm2 delete "snap-website"
-    - run: pm2 start npm --name "snap-website" -- start
+#     - run: pm2 start npm --name "rm-website" -- start
