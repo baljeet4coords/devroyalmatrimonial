@@ -55,7 +55,6 @@ const Footer = () => {
                 </Container>
             </div>
             <FooterSocial/>
-            <FooterClient/>
             <FooterRights/>
     </>
     )

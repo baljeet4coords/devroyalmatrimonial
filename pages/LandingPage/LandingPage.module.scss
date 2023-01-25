@@ -10,6 +10,8 @@
     color: $lightGrey_txt;
     letter-spacing: 1.75px;
     font-size: 0.875rem;
+    width: 50%;
+    display: block;
   }
   h1 {
     font-size: 1.75rem;
@@ -73,6 +75,9 @@
         max-width: 100%;
         width: 100%;
       }
+      @media screen and (max-width: 767px) {
+        display: none;
+      }
     }
     .cardBox {
       position: relative;
@@ -87,7 +92,21 @@
     .scrollBox {
       transition: opacity 0.1s linear;
       opacity: 0.5;
+      width: 70%;
       cursor: pointer;
+      .responsiveImage {
+        display: none;
+      }
+      @media screen and (max-width: 767px) {
+        * {
+          text-align: center;
+        }
+        width: 100%;
+        .responsiveImage {
+          width: 100%;
+          display: block;
+        }
+      }
     }
     :hover {
       opacity: 1;
@@ -101,26 +120,32 @@
     background-color: $dark_maroon_bg;
     margin-top: -10rem;
   }
-  .services_box {
-    background-image: url("../../public/Images/landing_page_talk.jpg");
-    text-align: center;
+  .services_box_container {
     background-color: $darkWhite_bg;
-    background-repeat: no-repeat;
-    background-position: bottom left;
-    width: 851px;
-    height: 490px;
-    padding: 2rem 0;
-    border-radius: 12px;
-    margin: auto;
-    text-align: left;
-    padding: inherit;
-    /////////////
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center;
+    padding-top: 10px;
+    text-align: center;
+    .services_box {
+      background-image: url("../../public/Images/landing_page_talk.jpg");
+      text-align: center;
+      background-color: $darkWhite_bg;
+      background-repeat: no-repeat;
+      background-position: bottom left;
+      width: 100%;
+      height: 490px;
+      padding: 2rem 0;
+      border-radius: 12px;
+      margin: auto;
+      text-align: left;
+      padding: inherit;
+      /////////////
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 1rem;
+    }
   }
   .Home_colord_body {
     background-color: $dark_maroon_bg;
@@ -163,8 +188,7 @@
     }
   }
   .services_box {
-    background-size: cover;
-    height: auto !important;
+    background-size: contain;
   }
   .Home_colord_body {
     img {

@@ -17,8 +17,8 @@ const LandingPage: React.FC = () => {
   console.log(activeId);
 
   const refineScroll = (scrollVal: any) => {
-    const refCapture:any= ref.current;
-    refCapture.scroll({top: scrollVal, behavior: 'smooth'});
+    const refCapture: any = ref.current;
+    refCapture.scroll({ top: scrollVal, behavior: "smooth" });
   };
   const headimage = "cover_img_free_chat.jpg";
   return (
@@ -40,7 +40,7 @@ const LandingPage: React.FC = () => {
         <Row className={classes.Home_white_body}>
           <span>MORE THAN 20 YEARS OF</span>
           <h1>
-            Bringing People <strong>Together</strong>
+            Uniting Compatible <strong>Soulmates</strong>
           </h1>
           <Col sm={12} md={4} className="text-center">
             <Image
@@ -72,46 +72,70 @@ const LandingPage: React.FC = () => {
         </Row>
 
         <Row className={classes.Home_dark_body}>
-          <span>MEET FROM HOME</span>
-          <h1>Overcome the distance on our <strong>Platform</strong></h1>
-          <Col sm={12} md={6} className="py-5 pe-5">
+          <h1>
+            Overcome the distance on our <strong>Platform</strong>
+          </h1>
+          <Col sm={12} md={6}>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "0" ? classes.active : " "}`}
+              className={`${classes.scrollBox} ${
+                activeId === "0" ? classes.active : " "
+              }`}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
+              <Image
+                src="./Images/landing_image_1.png"
+                alt="pic"
+                className={classes.responsiveImage}
+              />
               <h3>RMS matchmaking Events in hotels </h3>
-              <p className="me-5">
+              <p>
                 Register and participate in our real time matchmaking events,
                 organized in hotels. Success rate 90%.{" "}
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "476" ? classes.active : ""}`}
+              className={`${classes.scrollBox} ${
+                activeId === "476" ? classes.active : ""
+              }`}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
+              <Image
+                src="./Images/landing_image_2.png"
+                alt="pic"
+                className={classes.responsiveImage}
+              />
               <h3>RMS matchmaking Online Events </h3>
-              <p className="me-5">
+              <p>
                 Register and interact with members of your community in our real
                 time online matchmaking events through video conferences.
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "1029" ? classes.active : ""}`}
+              className={`${classes.scrollBox} ${
+                activeId === "1029" ? classes.active : ""
+              }`}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
+              <Image
+                src="./Images/landing_image_3.png"
+                alt="pic"
+                className={classes.responsiveImage}
+              />
               <h3>Real-time communications </h3>
-              <p className="me-5">
+              <p>
                 Our voice and video calling facilities enable you to conduct
                 secure conversations without disclosing your contact details.{" "}
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "906" ? classes.active : ""}`}
+              className={`${classes.scrollBox} ${
+                activeId === "906" ? classes.active : ""
+              }`}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
               <h3>Intro Video</h3>
-              <p className="me-5">
+              <p>
                 Enhance your profile with a video introduction to talk about
                 yourself, your hobbies, interests and partner preferences.
               </p>
@@ -158,11 +182,11 @@ const LandingPage: React.FC = () => {
           </p>
           <Col
             lg={6}
-            className="mb-2 d-flex justify-content-end align-self-center"
+            className="mb-2 d-flex justify-content-end align-self-center homeCardScroll"
           >
             <HomeCard onTitle={cardItems[0]} />
           </Col>
-          <Col lg={6} className="mb-2">
+          <Col lg={6} className="mb-2 homeCardScroll">
             <HomeCard onTitle={cardItems[1]} onlistHeight={true} />
           </Col>
         </Row>
@@ -170,19 +194,20 @@ const LandingPage: React.FC = () => {
           <div className={classes.card_bottom}></div>
         </Row>
         <Row className={classes.Home_white_body}>
-          <div className={classes.services_box}>
-            <span>
+          <div className={classes.services_box_container}>
+            <div className={classes.services_box}></div>
+            <p>
               Customised Matchmaking Mediator Service through dedicated
               Relationship Manager
-            </span>
+            </p>
             <h1>
               Introducing <strong>Exclusive</strong>
             </h1>
             <CustomButton onClick={() => console.log("tab")}>
               Exclusive
-            </CustomButton>
-          </div>
-          <Col sm={12} md={4} className="text-center py-5">
+              </CustomButton>
+            </div>
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/relationship-manager.gif" alt="pic" />
             <h3>Your Relationship Manager is waiting for you</h3>
             <p>
@@ -191,7 +216,7 @@ const LandingPage: React.FC = () => {
             </p>
           </Col>
 
-          <Col sm={12} md={4} className="text-center py-5">
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/express-yourself.gif" alt="pic" />
             <h3>Express your preferences</h3>
             <p>
@@ -199,7 +224,7 @@ const LandingPage: React.FC = () => {
               your sentiments and partner preferences.
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center py-5">
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/schedule-meeting.gif" alt="pic" />
             <h3>Schedule meetings</h3>
             <p>
