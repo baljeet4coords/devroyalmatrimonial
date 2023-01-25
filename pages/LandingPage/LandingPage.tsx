@@ -1,34 +1,24 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import classes from "./LandingPage.module.scss";
 import { Header, Footer, HomeImage } from "../../components";
-import DemoCarousel from "./LandingPageSlider";
+import DemoCarousel from "../../components/Carousel/DemoCarousel";
 import BrowserLink from "../../components/BrowserLink/BrowserLinks";
 import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
-import { useInView, InView } from "react-intersection-observer";
-
 import { cardItems } from "../../components/Cards/card";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
-  console.log(refTab);
 
-  // const listenScrollEvent = (event:any) => {
-  //     console.log('scrollTop: ', event.currentTarget.scrollTop);
-  //     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
-  // }
-  const [isActive, setActive] = useState(false);
-  // const ToggleClass = () => {
-  //   setActive(!isActive);
-  //  };
+  const [activeId, setActiveId] = useState<string>("0");
+  console.log(activeId);
+
   const refineScroll = (scrollVal: any) => {
-    // to run scroll uncomment below line
-    // ref.current.scroll({top: scrollVal, behavior: 'smooth'});
-    setActive(!isActive);
-    // this.currentTarget.classList.toggle('toggle');
+    const refCapture:any= ref.current;
+    refCapture.scroll({top: scrollVal, behavior: 'smooth'});
   };
   const headimage = "cover_img_free_chat.jpg";
   return (
@@ -83,12 +73,12 @@ const LandingPage: React.FC = () => {
 
         <Row className={classes.Home_dark_body}>
           <span>MEET FROM HOME</span>
-          <h1>Overcome the distance on our platform</h1>
+          <h1>Overcome the distance on our <strong>Platform</strong></h1>
           <Col sm={12} md={6} className="py-5 pe-5">
             <div
-              className={`mb-5 me-5 ${classes.scrollBox}`}
+              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "0" ? classes.active : " "}`}
               ref={refTab}
-              onClick={() => refineScroll(0)}
+              onClick={() => [refineScroll(0), setActiveId("0")]}
             >
               <h3>RMS matchmaking Events in hotels </h3>
               <p className="me-5">
@@ -97,8 +87,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox}`}
-              onClick={() => refineScroll(476)}
+              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "476" ? classes.active : ""}`}
+              onClick={() => [refineScroll(476), setActiveId("476")]}
             >
               <h3>RMS matchmaking Online Events </h3>
               <p className="me-5">
@@ -107,8 +97,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox}`}
-              onClick={() => refineScroll(906)}
+              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "1029" ? classes.active : ""}`}
+              onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
               <h3>Real-time communications </h3>
               <p className="me-5">
@@ -117,8 +107,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`mb-5 me-5 ${classes.scrollBox}`}
-              onClick={() => refineScroll(906)}
+              className={`mb-5 me-5 ${classes.scrollBox} ${activeId === "906" ? classes.active : ""}`}
+              onClick={() => [refineScroll(0), setActiveId("0")]}
             >
               <h3>Intro Video</h3>
               <p className="me-5">
@@ -127,7 +117,7 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
           </Col>
-          <Col sm={12} md={6}>
+          <Col sm={12} md={6} className="align-self-center">
             <div className={classes.landing_scroll_images} ref={ref}>
               <Image src="./Images/landing_image_1.png" alt="pic" />
               <Image src="./Images/landing_image_2.png" alt="pic" />
@@ -173,7 +163,7 @@ const LandingPage: React.FC = () => {
             <HomeCard onTitle={cardItems[0]} />
           </Col>
           <Col lg={6} className="mb-2">
-            <HomeCard onTitle={cardItems[1]} onlistHeight={1.25} />
+            <HomeCard onTitle={cardItems[1]} onlistHeight={true} />
           </Col>
         </Row>
         <Row>
@@ -235,15 +225,6 @@ const LandingPage: React.FC = () => {
                 and enjoy an excellent user experience. Join us now and take
                 advantage of our best rated matrimonial society.
               </p>
-              {/* <Image
-                src="./Images/store_icons.png"
-                className="img-fluid"
-                alt="pic"
-              /> */}
-              {/* 
-              <p>
-                <strong>Click here</strong> to view more about Apps
-              </p> */}
             </div>
           </Col>
           <Col sm={12} md={6}>

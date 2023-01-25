@@ -3,7 +3,8 @@
   background: $transparent_maroon;
   padding: 0;
   height: 63px;
-  width: 75%;
+  width: 76%;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%);
   .navBar_logo {
     width: 163px;
     background-color: $milkWhite_bg;
@@ -22,11 +23,23 @@
     font-weight: $fw500;
     margin-right: 1.5rem;
     padding: 1.1rem;
+    position: relative;
+    overflow: hidden;
   }
   :hover,
   :focus,
   :active {
     color: $white_txt !important;
+  }
+  .navLoginTabs{
+    position: absolute;
+    right: -160px;
+    top: 0px;
+    display: flex;
+    transition: all 0.75s;
+  }
+  .active{
+    right: 0px;
   }
 }
 .show {

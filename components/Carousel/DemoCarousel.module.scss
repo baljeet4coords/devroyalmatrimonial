@@ -13,11 +13,9 @@
   .divImage {
     background-color: #fff;
     width: 100%;
-    max-width: 310px; 
+    max-width: 335px; 
     margin: auto;
     position: relative;
-    // height: 280px;
-    // margin: 0 10px;
     &::after {
       background: #d52741a3;
       content: '';
@@ -30,6 +28,7 @@
       right: 0; 
     }
     &:hover::after, &:hover .cardTitle{
+      transition: all 300ms ease-in;
       opacity: 0;
     }
     &:hover::after, &:hover .cardDetails{
@@ -45,11 +44,17 @@
       font-family: "sarah-script","sans-serif";
       color: $white_txt;
       opacity: 1;
-      z-index: 1;
+    //   z-index: 1;
       position: absolute;
-      top: 0;
+      // top: 0;
       margin-top: 65%;
       filter: drop-shadow(2px 4px 6px black);
+      transition: all 100ms ease-in;
+      left: 50%;
+      bottom: 0px;
+      transform: translate(-50%, -50%);
+      margin: 0 auto;
+      width: max-content;
     }
     .cardDetails {
       color: white;
@@ -63,6 +68,7 @@
       top: 0;
       margin-top: 1%;
       text-align: left;
+      transition: all 300ms ease-in;
     }
   }
   
@@ -120,5 +126,8 @@
 @media only screen and (max-width: 600px) {
   .slide {
     min-width: 50% !important;
+  }
+  .divImage{
+    max-width:100%;
   }
 }

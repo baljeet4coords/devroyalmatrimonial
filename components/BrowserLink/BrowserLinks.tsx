@@ -4,18 +4,12 @@ import classes from "./Browser.module.scss";
 import { NavOptions as NavOptionsType, SubCategory } from "../Header/types";
 
 const BrowserLink = () => {
-  const [show, setShow] = useState(false);
-  const [navState, setNavState] = useState<SubCategory[]>([]);
-
-  const showDropdown = () => {
-    setShow(!show);
-  };
-  const hideDropdown = () => {
-    setShow(false);
-  };
+  const [navState, setNavState] = useState<SubCategory[]>(navOptionsList[0].subCategory);
+  const [activeId, setActiveId] = useState<string>("Mother Tongue");
 
   const getLinkValue = (val: string) => {
     const newSubCategory: SubCategory[] = [];
+    
     navOptionsList.map((linkVal: NavOptionsType) => {
       if (linkVal.category === val)
         linkVal.subCategory.map((subVal: SubCategory) => {
@@ -32,9 +26,8 @@ const BrowserLink = () => {
         if (item.subCategory.length !== 0) {
             return (
                 <span key={item.category} 
-            // onClick={showDropdown}
-            onClick={() => [getLinkValue(item.category), showDropdown()]}
-            >{item.category}</span>
+            onClick={() => [getLinkValue(item.category), setActiveId(item.category)]}
+            className={activeId === item.category ? classes.active : ""}>{item.category}</span>
             );
             }
         })} 
