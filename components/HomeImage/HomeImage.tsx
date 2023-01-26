@@ -4,8 +4,7 @@ import Image from 'next/legacy/image'
 
 const HomeImage = (prop:any) => {
     const background = prop.addBackground;
-    // console.log(background);
-    
+    const cssRes = prop.onRes;
     return (
         <>
             <div 

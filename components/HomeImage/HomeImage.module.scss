@@ -1,6 +1,5 @@
 
 .homeImage {
-    // background: url(../../public/Images/cover_img_free_chat.png);
     background-size: cover;
     background-repeat: no-repeat;
     height: 622px;
@@ -15,6 +14,8 @@
         background-size: cover;
         min-height: 360px;
         height: auto;
+        background-position: center center;
+        margin-top: 3.8rem;
     }
    
   }

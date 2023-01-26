@@ -3,6 +3,10 @@
 
 .browserTopBox{
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 115px;
+    flex-direction: column;
     span{
         color: #405765;
         margin-right: 14px;
