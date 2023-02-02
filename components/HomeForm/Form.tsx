@@ -33,7 +33,7 @@ const HomeForm = () => {
       {/* <Form.Group className={`${classes.form_style} mb-3`} controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group> */}
-      <Button variant="danger" type="submit" className={`${classes.Form_btn} mt-2 w-100`}>
+      <Button variant="danger" href='/Register/RegisterDetails' type="submit" className={`${classes.Form_btn} mt-2 w-100`}>
         Register Free
       </Button>
     </Form>
