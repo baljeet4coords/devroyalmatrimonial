@@ -10,7 +10,6 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./BrowseProfile.module.scss";
 import Link from "next/link";
 import ImageCard from "../../components/ImageCard/ImageCard";
-// import { BrowseInfo } from "../../../types/BrowseInfo"
 import { AiOutlineDoubleRight } from "react-icons/ai";
 
 

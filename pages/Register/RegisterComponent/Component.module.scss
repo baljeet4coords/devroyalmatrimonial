@@ -1,0 +1,85 @@
+@import "../../../styles/constants.scss";
+
+.profile_Container{
+    background: rgb(231, 230, 230);
+    padding-bottom: 10rem;
+    h1{
+        font-size: 1.375rem;
+        text-align: center;
+        padding: 1.875rem 0;
+    }
+    small{
+        text-align: end;
+        display: block;
+        padding-bottom: 1rem;
+    }
+    small::after{
+        content: " *";
+        color: #F00;
+        font-size: 18px;
+    }
+    .inputCover{
+        border: 1px solid #d9d9d9;
+        input{
+            border-radius: 2px;
+            padding: 14px 10px;
+            margin-bottom: 1em;
+        }
+    }
+}
+.right_section{
+    padding-top: 8rem;
+    @media screen and (max-width: 768px) {
+        padding-top: 4rem;
+    }
+    h3{
+        font-size: 1.0625rem;
+        font-weight: 700;
+        border-bottom: 1px solid #666;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+    i{
+        background-image: url("../../../public/Images/reg-spirite.png");
+        background-repeat: no-repeat;
+        display: block;
+        margin: auto;
+
+    }
+    span{
+        display: block;
+        width: 90%;
+        text-align: center;
+        margin: auto;
+    }
+    .icon1{
+        background-position: 1px 1px;
+        width: 39px;
+        height: 44px;
+        margin: 1rem auto;
+    }
+    .icon2{
+        background-position: 1px -48px;
+        width: 47px;
+        height: 44px;
+        margin: 1rem auto;
+    }
+    .icon3{
+        background-position: 1px -94px;
+        width: 47px;
+        height: 44px;
+        margin: 1rem auto;
+    }
+    .icon4{
+        background-position: 1px -140px;
+        width: 47px;
+        height: 44px;
+        margin: 1rem auto;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .register_header_Links, .register_header_Links a {
+      width: 100%;
+    }
+  }
