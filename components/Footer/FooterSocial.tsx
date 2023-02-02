@@ -25,7 +25,7 @@ const FooterSocial = () =>{
                         </Col>
                         <Col sm={12} md={4}>
                             <h4>Customer Service</h4>
-                            <a href="#">help@matrimonial.com</a>
+                            <a href="#">help@royalmatrimonial.com</a>
                         </Col>
                     </Row>
                 </Container>

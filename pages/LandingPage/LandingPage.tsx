@@ -1,5 +1,5 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useState, useRef } from "react";
+import { useState, useRef , useEffect } from "react";
 import classes from "./LandingPage.module.scss";
 import { Header, Footer, HomeImage } from "../../components";
 import DemoCarousel from "../../components/Carousel/DemoCarousel";
@@ -13,9 +13,10 @@ const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
 
-  const [activeId, setActiveId] = useState<string>("0");
-  console.log(activeId);
+  const [activeId, setActiveId] = useState<string>();
 
+  console.log(activeId);
+  
   const refineScroll = (scrollVal: any) => {
     const refCapture: any = ref.current;
     refCapture.scroll({ top: scrollVal, behavior: "smooth" });
@@ -24,7 +25,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <Header />
-      <HomeImage addBackground={headimage} />
+      <HomeImage addBackground={headimage}/>
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>
           <Col sm={12} md={6} className="d-flex align-items-center">
@@ -77,9 +78,8 @@ const LandingPage: React.FC = () => {
           </h1>
           <Col sm={12} md={6}>
             <div
-              className={`${classes.scrollBox} ${
-                activeId === "0" ? classes.active : " "
-              }`}
+              className={`${classes.scrollBox}`}
+              style={{opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5}`}}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
@@ -95,9 +95,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`${classes.scrollBox} ${
-                activeId === "476" ? classes.active : ""
-              }`}
+              className={`${classes.scrollBox} `}
+              style={{opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5}`}}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
               <Image
@@ -112,9 +111,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`${classes.scrollBox} ${
-                activeId === "1029" ? classes.active : ""
-              }`}
+              className={`${classes.scrollBox} `}
+              style={{opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5}`}}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
               <Image
@@ -129,9 +127,8 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div
-              className={`${classes.scrollBox} ${
-                activeId === "906" ? classes.active : ""
-              }`}
+              className={`${classes.scrollBox}`}
+              style={{opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5}`}}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
               <h3>Intro Video</h3>
@@ -180,6 +177,7 @@ const LandingPage: React.FC = () => {
             requirements. Get more responses and hassle-free interaction with
             paid packages. Perks of Paid Membership is as follows:{" "}
           </p>
+          <Row className={classes.carResponsive}>
           <Col
             lg={6}
             className="mb-2 d-flex justify-content-end align-self-center homeCardScroll"
@@ -189,6 +187,7 @@ const LandingPage: React.FC = () => {
           <Col lg={6} className="mb-2 homeCardScroll">
             <HomeCard onTitle={cardItems[1]} onlistHeight={true} />
           </Col>
+          </Row>
         </Row>
         <Row>
           <div className={classes.card_bottom}></div>
@@ -201,10 +200,10 @@ const LandingPage: React.FC = () => {
               Relationship Manager
             </p>
             <h1>
-              Introducing <strong>Exclusive</strong>
+              Mediator <strong>Service</strong>
             </h1>
             <CustomButton onClick={() => console.log("tab")}>
-              Exclusive
+              Get Connected
               </CustomButton>
             </div>
           <Col sm={12} md={4} className="text-center py-3">

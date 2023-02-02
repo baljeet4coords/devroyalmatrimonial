@@ -11,7 +11,7 @@
     letter-spacing: 1.75px;
     font-size: 0.875rem;
     @media screen and (max-width: 576px) {
-      width: 100%;
+      // width: 100%;
       display: block;
     }
   }
@@ -93,7 +93,7 @@
     }
     .scrollBox {
       transition: opacity 0.1s linear;
-      opacity: 0.5;
+      opacity: 1;
       width: 70%;
       cursor: pointer;
       .responsiveImage {
@@ -113,9 +113,12 @@
     :hover {
       opacity: 1;
     }
-    .active {
-      opacity: 1;
-    }
+    // .active {
+    //   opacity: 1;
+    // }
+    // .deactive{
+    //   opacity: 0.5;
+    // }
   }
   .card_bottom {
     height: 232px;
@@ -176,7 +179,8 @@
     margin-top: 0;
   }
   .firstTopBox {
-    display: none;
+    // display: none;
+    margin-top: -16rem;
   }
   .Home_dark_body {
     padding: 2.62rem 0.5rem !important;
@@ -196,5 +200,13 @@
     img {
       width: 100% !important;
     }
+  }
+}
+@media only screen and (max-width: 991px) {
+  .carResponsive{
+    display: flex;
+      overflow-x: scroll;
+      flex-wrap: nowrap;
+      padding-right: 2.5rem;
   }
 }

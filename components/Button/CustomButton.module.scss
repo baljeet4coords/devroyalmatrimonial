@@ -10,10 +10,11 @@
     transition: 0.5s ease-in-out;
     width: auto;
     margin: 1rem auto;
-    &:hover{
+    &:hover {
         color: $red_txt;
         background-color: $milkWhite_bg;
         outline: 3px solid $red_txt;
         transition: 0.5s ease-in-out;
     }
+   
 }
