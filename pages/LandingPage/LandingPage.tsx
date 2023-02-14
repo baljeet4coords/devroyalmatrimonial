@@ -1,5 +1,5 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useState, useRef , useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import classes from "./LandingPage.module.scss";
 import { Header, Footer, HomeImage } from "../../components";
 import DemoCarousel from "../../components/Carousel/DemoCarousel";
@@ -8,24 +8,36 @@ import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
 import { cardItems } from "../../components/Cards/card";
+import { FormValues } from "../../components/HomeForm/types";
+import { useDispatch, useSelector } from "react-redux";
+import { SIGN_UP } from "../../ducks/signUp/constants";
+import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
+import { RootState } from "../../ducks/rootReducer";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
-
+  const dispatch = useDispatch();
+  const selector = useSelector(selectSignUpSuccess);
+  console.log(selector, 'redux');
   const [activeId, setActiveId] = useState<string>();
 
-  console.log(activeId);
-  
   const refineScroll = (scrollVal: any) => {
     const refCapture: any = ref.current;
     refCapture.scroll({ top: scrollVal, behavior: "smooth" });
   };
   const headimage = "cover_img_free_chat.jpg";
+
+  const onSubmitForm = (values: FormValues) => {
+    dispatch({
+      type: SIGN_UP,
+      payload: values,
+    });
+  };
   return (
     <>
       <Header />
-      <HomeImage addBackground={headimage}/>
+      <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>
           <Col sm={12} md={6} className="d-flex align-items-center">
@@ -35,7 +47,7 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6}>
-            <HomeForm />
+            <HomeForm onSubmitForm={onSubmitForm} />
           </Col>
         </Row>
         <Row className={classes.Home_white_body}>
@@ -79,7 +91,11 @@ const LandingPage: React.FC = () => {
           <Col sm={12} md={6}>
             <div
               className={`${classes.scrollBox}`}
-              style={{opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5}`}}
+              style={{
+                opacity: `${
+                  activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
+              }}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
@@ -96,7 +112,11 @@ const LandingPage: React.FC = () => {
             </div>
             <div
               className={`${classes.scrollBox} `}
-              style={{opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5}`}}
+              style={{
+                opacity: `${
+                  activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
+              }}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
               <Image
@@ -112,7 +132,11 @@ const LandingPage: React.FC = () => {
             </div>
             <div
               className={`${classes.scrollBox} `}
-              style={{opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5}`}}
+              style={{
+                opacity: `${
+                  activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
+              }}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
               <Image
@@ -128,7 +152,11 @@ const LandingPage: React.FC = () => {
             </div>
             <div
               className={`${classes.scrollBox}`}
-              style={{opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5}`}}
+              style={{
+                opacity: `${
+                  activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
+              }}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
               <h3>Intro Video</h3>
@@ -178,15 +206,15 @@ const LandingPage: React.FC = () => {
             paid packages. Perks of Paid Membership is as follows:{" "}
           </p>
           <Row className={classes.carResponsive}>
-          <Col
-            lg={6}
-            className="mb-2 d-flex justify-content-end align-self-center homeCardScroll"
-          >
-            <HomeCard onTitle={cardItems[0]} />
-          </Col>
-          <Col lg={6} className="mb-2 homeCardScroll">
-            <HomeCard onTitle={cardItems[1]} onlistHeight={true} />
-          </Col>
+            <Col
+              lg={6}
+              className="mb-2 d-flex justify-content-end align-self-center homeCardScroll"
+            >
+              <HomeCard onTitle={cardItems[0]} />
+            </Col>
+            <Col lg={6} className="mb-2 homeCardScroll">
+              <HomeCard onTitle={cardItems[1]} onlistHeight={true} />
+            </Col>
           </Row>
         </Row>
         <Row>
@@ -204,8 +232,8 @@ const LandingPage: React.FC = () => {
             </h1>
             <CustomButton onClick={() => console.log("tab")}>
               Get Connected
-              </CustomButton>
-            </div>
+            </CustomButton>
+          </div>
           <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/relationship-manager.gif" alt="pic" />
             <h3>Your Relationship Manager is waiting for you</h3>

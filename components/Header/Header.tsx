@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 
-
   const showDropdown = () => {
     setShow(!show);
   };
@@ -34,12 +33,11 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      if(window.scrollY > 500){
+      if (window.scrollY > 500) {
         setActive(true);
-      }else{
+      } else {
         setActive(false);
       }
-      console.log("yes");
     });
   }, []);
   return (
@@ -52,14 +50,14 @@ const Header: React.FC = () => {
       >
         <Container fluid className={`${classes.Navbar_Wrapper}`}>
           {/* <Navbar.Brand className="p-0"> */}
-            <Link href="/">
-              <div className={classes.navBar_logo}>
-                <Image
-                  src="/Images/Royal-Logo.png"
-                  alt="Royal Matrimorial logo"
-                />
-              </div>
-            </Link>
+          <Link href="/">
+            <div className={classes.navBar_logo}>
+              <Image
+                src="/Images/Royal-Logo.png"
+                alt="Royal Matrimorial logo"
+              />
+            </div>
+          </Link>
           {/* </Navbar.Brand> */}
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
             <Button
@@ -94,27 +92,31 @@ const Header: React.FC = () => {
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
-              <div className={`${classes.navLoginTabs} ${isActive ? classes.active : " "}`} >
-                <Nav className="pe-3">
-                  <Button
-                    variant="link"
-                    className="default-anchor p-3"
-                    onClick={() => setShowLoginModal(true)}
-                  >
-                    LOGIN
-                  </Button>
-                </Nav>
-                <Nav className="pe-3">
-                  <Button
-                    variant="link"
-                    className="default-anchor p-3"
-                    onClick={() => setShowLoginModal(true)}
-                    style={{opacity : `${isActive ? 1: 0}`}}
-                  >
-                    REGISTER FREE
-                  </Button>
-                </Nav>
-              </div>
+            <div
+              className={`${classes.navLoginTabs} ${
+                isActive ? classes.active : " "
+              }`}
+            >
+              <Nav className="pe-3">
+                <Button
+                  variant="link"
+                  className="default-anchor p-3"
+                  onClick={() => setShowLoginModal(true)}
+                >
+                  LOGIN
+                </Button>
+              </Nav>
+              <Nav className="pe-3">
+                <Button
+                  variant="link"
+                  className="default-anchor p-3"
+                  onClick={() => setShowLoginModal(true)}
+                  style={{ opacity: `${isActive ? 1 : 0}` }}
+                >
+                  REGISTER FREE
+                </Button>
+              </Nav>
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

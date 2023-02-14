@@ -1,43 +1,117 @@
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button, Row, Col } from "react-bootstrap";
 import classes from "./Form.module.scss";
+import { useFormik } from "formik";
+import { countryCodesObj } from "../../utils/countryCodes";
+import { SignupSchema } from "../../schemas/signupSchema";
+import { FormValues, SignUpForm } from "./types";
+import Errors from "../Errors/signUpErrors";
 
-const HomeForm = () => {
+const HomeForm: React.FC<SignUpForm> = ({onSubmitForm}) => {
+  const callingCodes = [];
+  for (const [key, value] of Object.entries(countryCodesObj)) {
+    callingCodes.push({ countryName: key, callingCode: value });
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      emailid: "",
+      mobile: "",
+      password: "",
+      countryCode: "+91",
+    },
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      onSubmitForm(values);
+    },
+  });
+
   return (
-    <Form className={`${classes.Form_Wrapper} ms-auto`}>
-      <Form.Group className="mb-2" controlId="formBasicEmail">
-        <Form.Label>Create Profile For</Form.Label>
-        <Form.Control type="email" placeholder="" className={classes.Form_input} />
-        {/* <Form.Text className="text-muted">
-        Please choose whose profile is being created.
-        </Form.Text> */}
-      </Form.Group>
-
-      <Form.Group className="mb-2" controlId="formBasicEmail">
+    <Form
+      className={`${classes.Form_Wrapper} ms-auto`}
+      onSubmit={formik.handleSubmit}
+    >
+      <Form.Group className="mb-2">
         <Form.Label>Email</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" className={classes.Form_input} />
-        {/* <Form.Text className="text-muted">
-        Please choose whose profile is being created.
-        </Form.Text> */}
+        <Form.Control
+          type="email"
+          name="emailid"
+          placeholder="Enter email"
+          className={classes.Form_input}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        />
+        {formik.touched.emailid && formik.errors.emailid ? (
+          <div className="pt-1">
+            <Errors error={formik.errors.emailid} />
+          </div>
+        ) : null}
       </Form.Group>
 
-      <Form.Group className="mb-2" controlId="formBasicEmail">
+      <Form.Group className="mb-2">
         <Form.Label>Phone Number</Form.Label>
-        <Form.Control type="tel" placeholder="Enter Number" className={classes.Form_input} />
+        <Row>
+          <Col xs={3} className="mx-0 pe-0">
+            <Form.Select
+              className={classes.Form_input}
+              name="countryCode"
+              onChange={formik.handleChange}
+              defaultValue={formik.initialValues.countryCode}
+            >
+              {callingCodes.map(
+                (codes: { countryName: any; callingCode: any }) => {
+                  return (
+                    <option value={codes.callingCode} key={codes.countryName}>
+                      {codes.callingCode}
+                    </option>
+                  );
+                }
+              )}
+            </Form.Select>
+          </Col>
+          <Col xs={9} className="mx-0 ps-0">
+            <Form.Control
+              type="tel"
+              name="mobile"
+              placeholder="Enter Number"
+              className={classes.Form_input}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+          </Col>
+        </Row>
+        {formik.touched.mobile && formik.errors.mobile ? (
+          <div className="pt-1">
+            <Errors error={formik.errors.mobile} />
+          </div>
+        ) : null}
       </Form.Group>
 
       <Form.Group className="mb-2" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" className={classes.Form_input} />
+        <Form.Control
+          type="password"
+          name="password"
+          placeholder="Password"
+          className={classes.Form_input}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        />
+        {formik.touched.password && formik.errors.password ? (
+          <div className="pt-1">
+            <Errors error={formik.errors.password} />
+          </div>
+        ) : null}
       </Form.Group>
-
-      {/* <Form.Group className={`${classes.form_style} mb-3`} controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group> */}
-      <Button variant="danger" href='/Register/RegisterDetails' type="submit" className={`${classes.Form_btn} mt-2 w-100`}>
+      <Button
+        variant="danger"
+        // href="/Register/RegisterDetails"
+        type="submit"
+        className={`${classes.Form_btn} mt-2 w-100`}
+      >
         Register Free
       </Button>
     </Form>
   );
-}
+};
 
 export default HomeForm;
