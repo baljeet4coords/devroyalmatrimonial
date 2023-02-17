@@ -8,18 +8,21 @@ import HomeForm from "../../components/HomeForm/Form";
 import HomeCard from "../../components/Cards/Cards";
 import CustomButton from "../../components/Button/CustomButton";
 import { cardItems } from "../../components/Cards/card";
-import { FormValues } from "../../components/HomeForm/types";
+import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP } from "../../ducks/signUp/constants";
 import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
-import { RootState } from "../../ducks/rootReducer";
+import { useRouter } from "next/router";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const selector = useSelector(selectSignUpSuccess);
-  console.log(selector, 'redux');
+  const router = useRouter();
+  const isSignUp = useSelector(selectSignUpSuccess);
+  if (isSignUp && isSignUp?.message === "ok") {
+    router.push("/Register/RegisterDetails");
+  }
   const [activeId, setActiveId] = useState<string>();
 
   const refineScroll = (scrollVal: any) => {
@@ -28,7 +31,7 @@ const LandingPage: React.FC = () => {
   };
   const headimage = "cover_img_free_chat.jpg";
 
-  const onSubmitForm = (values: FormValues) => {
+  const onSubmitForm = (values: SignUpFormValues) => {
     dispatch({
       type: SIGN_UP,
       payload: values,

@@ -1,10 +1,10 @@
-export interface FormValues {
-  emailid: string;
-  mobile: string;
-  password: string;
-  countryCode: string;
+export interface SignUpFormValues {
+  emailid?: string;
+  mobile?: string;
+  password?: string;
+  countryCode?: string;
 }
 
 export interface SignUpForm {
-  onSubmitForm: (values: FormValues) => void;
+  onSubmitForm: (values: SignUpFormValues) => void;
 }

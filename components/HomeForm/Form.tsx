@@ -3,7 +3,7 @@ import classes from "./Form.module.scss";
 import { useFormik } from "formik";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { SignupSchema } from "../../schemas/signupSchema";
-import { FormValues, SignUpForm } from "./types";
+import { SignUpFormValues, SignUpForm } from "./types";
 import Errors from "../Errors/signUpErrors";
 
 const HomeForm: React.FC<SignUpForm> = ({onSubmitForm}) => {
