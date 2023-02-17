@@ -12,7 +12,7 @@ function* signUpSaga(action: SignUpActions): any {
         `${process.env.NEXT_PUBLIC_URL}/auth/signUp`,
         action.payload
       );
-      const responseData = yield response.json();
+      const responseData = response.data;
       yield put({ type: SIGN_UP_SUCCESS, response: responseData });
     }
   } catch (error) {
