@@ -147,10 +147,10 @@ const DesiredProfilePage: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Container fluid className={classes.background_header} ref={containerRef}>
+      <Container fluid className={classes.background_header} >
         <LoginrHeader />
       </Container>
-      <div className={classes.DesiredWrapper}>
+      <div className={classes.DesiredWrapper} ref={containerRef}>
         <Container className={classes.innerWrapper}>
           <Row>
             <h1>Desired Partner Profile</h1>
