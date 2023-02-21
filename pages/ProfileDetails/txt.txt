@@ -1,0 +1,60 @@
+const item1Ref = useRef(null);
+const item2Ref = useRef(null);
+const item3Ref = useRef(null);
+
+
+useEffect(() => {
+  const handleScroll = () => {
+    if (item1Ref.current) {
+      const top = item1Ref.current.getBoundingClientRect().top;
+      const bottom = item1Ref.current.getBoundingClientRect().bottom;
+
+      if (top <= window.innerHeight && bottom >= 0) {
+        item1Ref.current.classList.add("active");
+      } else {
+        item1Ref.current.classList.remove("active");
+      }
+    }
+
+    if (item2Ref.current) {
+      const top = item2Ref.current.getBoundingClientRect().top;
+      const bottom = item2Ref.current.getBoundingClientRect().bottom;
+
+      if (top <= window.innerHeight && bottom >= 0) {
+        item2Ref.current.classList.add("active");
+      } else {
+        item2Ref.current.classList.remove("active");
+      }
+    }
+
+    if (item3Ref.current) {
+      const top = item3Ref.current.getBoundingClientRect().top;
+      const bottom = item3Ref.current.getBoundingClientRect().bottom;
+
+      if (top <= window.innerHeight && bottom >= 0) {
+        item3Ref.current.classList.add("active");
+      } else {
+        item3Ref.current.classList.remove("active");
+      }
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
+
+
+<div ref={item1Ref} className={isActive1 ? "item active" : "item"}>
+  // Item 1 content here
+</div>
+
+<div ref={item2Ref} className={isActive2 ? "item active" : "item"}>
+  // Item 2 content here
+</div>
+
+<div ref={item3Ref} className={isActive3 ? "item active" : "item"}>
+  // Item 3 content here
+</div>

@@ -135,7 +135,8 @@ const DesiredProfilePage: React.FC = () => {
   }
   const handleClickOutside = () => {
     if (containerRef.current) {     
-      setActiveList({...activeList, visible: false});
+      setActiveList({type: '', visible: false});
+      console.log(activeList);
     };
   }
   useEffect(() => {
@@ -147,10 +148,10 @@ const DesiredProfilePage: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Container fluid className={classes.background_header} >
+      <Container fluid className={classes.background_header} ref={containerRef}>
         <LoginrHeader />
       </Container>
-      <div className={classes.DesiredWrapper} ref={containerRef}>
+      <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <Row>
             <h1>Desired Partner Profile</h1>
