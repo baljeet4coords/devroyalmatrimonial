@@ -1,0 +1,35 @@
+@import "../../../../styles/constants.scss";
+
+.rghtSec {
+    background-color: $milkWhite_bg;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #34495e;
+
+    .gunaNo {
+        font-size: 1.6rem;
+    }
+
+    p {
+        text-align: left;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    ul {
+        list-style-type: none;
+        font-size: 0.875rem;
+        text-align: left;
+        padding: 2rem 0 0 0;
+        border-top: 1px solid #34495e;
+
+        li {
+            :nth-last-child(2) {
+                color: #999;
+                margin-bottom: 0.2rem;
+            }
+        }
+    }
+}

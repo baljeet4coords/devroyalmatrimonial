@@ -10,7 +10,7 @@ import {ImShare, ImBlocked} from "react-icons/im";
 
 
 
-const ProfileCard: React.FC = () => {
+const ProfilePageCard: React.FC = () => {
     return(
             <Container className={classes.cardWrapper}>
                 <Row>
@@ -54,4 +54,4 @@ const ProfileCard: React.FC = () => {
 }
 
 
-export default ProfileCard;
+export default ProfilePageCard;

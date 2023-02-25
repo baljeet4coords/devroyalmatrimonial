@@ -1,7 +1,7 @@
 
 import { Container, Row  } from "react-bootstrap";
 import RegisterHeader from "./RegisterHeader/RegisterHeader";
-import {  Footer } from "../../components/";
+import {  Footer } from "../../components";
 import React, { useState } from 'react';
 import classes from "./RegisterDetails.module.scss";
 import Link from "next/link";
