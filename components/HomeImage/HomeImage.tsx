@@ -9,7 +9,7 @@ const HomeImage = (prop:any) => {
         <>
             <div 
             style={{ backgroundImage: `url(/Images/${background})` }}
-            className={classes.homeImage}></div>
+            className={classes.homeImage} />
         </>
     )
 }
