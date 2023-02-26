@@ -1,13 +1,7 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
 import { useState, useRef, useEffect } from "react";
 import classes from "./LandingPage.module.scss";
-import { Header, Footer, HomeImage } from "../../components";
-import DemoCarousel from "../../components/Carousel/DemoCarousel";
-import BrowserLink from "../../components/BrowserLink/BrowserLinks";
-import HomeForm from "../../components/HomeForm/Form";
-import HomeCard from "../../components/Cards/Cards";
-import CustomButton from "../../components/Button/CustomButton";
-import { cardItems } from "../../components/Cards/card";
+import { Header, Footer, HomeImage,HomeForm,CustomButton,DemoCarousel,BrowserLink,HomeCard,cardItems } from "../../components";
 import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP } from "../../ducks/signUp/constants";
@@ -337,7 +331,7 @@ const LandingPage: React.FC = () => {
         <Row className={`${classes.Home_white_body} text-center`}>
           <span>BROWSE</span>
           <h1>
-            <strong>Matrimonial</strong>Profiles by
+            <strong>Matrimonial </strong>Profiles by
           </h1>
           <BrowserLink />
         </Row>
