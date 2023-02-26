@@ -1,0 +1,33 @@
+@import "../../../../styles/constants.scss";
+.content{
+    padding: 30px 27px 20px 55px;
+    background-color: $milkWhite_bg;
+    margin-right: 10px;
+    font-size: 0.938rem;
+    border-bottom: 1px solid #c2c8ce;
+    span{
+        font-size: 1.063rem;
+        color: $red_txt;
+        svg{
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+    }
+    .aboutCont{
+        font-size: 0.938rem;
+        margin: 0 3rem;
+        :first-child{
+            color: #34495e;
+            padding-top: 0.938rem;
+        }
+        h4{
+            color: #999;
+            line-height: 1.3rem;
+            padding-top: 0.938rem;
+        }
+        p{
+            margin: 1rem 0;
+            color: #34495e;
+        }
+    }
+}

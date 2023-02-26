@@ -1,0 +1,74 @@
+@import "../../../../styles/constants.scss";
+.cardWrapper{
+    margin-top: -3rem;
+    width: 75%;
+    img{
+        width: 284px;
+    }
+    SVG{
+        cursor: pointer;
+    }
+    .cardInfo{
+        padding: 20px 34px 10px 34px;
+        background-color: $light_grey_bg;
+        span{
+            font-size: 24px;
+            color: $darkGrey_bg;
+        }
+        small{
+            font-size: 12px;
+            color: $darkGrey_bg;
+        }
+        small:nth-child(4){
+            float: right;
+        }
+       .lockIcon{
+        svg{
+            color: $red_bg; 
+            cursor: pointer;
+        }
+       }
+       .tickIcon{
+        svg{
+           color: #2e97ea;  
+           cursor: pointer;    
+         }
+        }
+        ul{
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            height: 130px;
+            padding-top: 1rem;
+            li{
+                color: $darkGrey_bg;
+                margin-bottom: 3px;
+            }
+        }
+    }
+    .rightBox{
+        background-color: rgb(52 73 94);;
+        color: $white_txt;
+        text-align: start;
+        padding: 0;
+        p{
+            line-height: 55px;
+            padding-left: 24px;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 0;
+        }
+        :hover{
+            background-color: $red_bg;
+        }
+        svg{
+            margin-right: 20px;
+            font-size: 1.5rem;
+        }
+    }
+}
+.bg{
+    background: rgb(231, 230, 230);
+}   

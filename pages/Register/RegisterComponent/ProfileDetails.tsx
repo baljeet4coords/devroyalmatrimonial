@@ -94,7 +94,7 @@ const ProfileDetails:React.FC<ProfileDetailsProps> = ({chooseMessage}:any) => {
 
   const handleClickOutside = () => {
     if (containerRef.current) {     
-      setActiveList({...activeList, visible: false});
+      setActiveList({type: '', visible: false});
     };
   }
   useEffect(() => {
