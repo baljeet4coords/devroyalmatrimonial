@@ -5,12 +5,15 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 const DemoCarousel = () => {
-const [stateSize, setSize] = useState(33.33);
+const [stateSize, setSize] = useState(window.innerWidth <= 992 ? 100 :33.33);
 
 useEffect(() => {
     window.addEventListener("resize", () => {
-        if (window.innerWidth <= 992) 
+        if (window.innerWidth <= 992){
         setSize(100);
+        }else{
+          setSize(33.33)
+        }
     });
 }, [stateSize]);
 const images = [
