@@ -1,4 +1,6 @@
-export const maritalStatusLinks = ["Never Married", "Awaiting Divorce", "Divorced", "Widowed", "Annulled"];
+import { MotherTongue } from "../types/enums";
+
+export const MaritalStatusList = ["Never Married", "Awaiting Divorce", "Divorced", "Widowed", "Annulled"];
 
 export const ResidentialList = ["Citizen", "Permanent Resident", "Work Permit", "Student Visa", "Temporary Visa"];
 
@@ -8,7 +10,7 @@ export const AgeToYearList = ['18','19','20','21','22','23','24','25','26','27',
 export const ReligionList = ["Hindu","Muslim","Sikh","Christian","Buddhist","Jain","Parsi","Jewish","Bahai","Other"];
 
 
-export const countryList = [
+export const CountryList = [
 	"Afghanistan",
 	"Albania",
 	"Algeria",
@@ -372,15 +374,25 @@ export const HeightToList = [
 // "7' (2.13 mts)"
 // ]
 
- 
-export const MotherTongue = [  "Hindi- All",  "Hindi-UP/UK",  "Hindi-Bihar/Jharkhand",  "Haryanvi",  "Himachali",  "Kashmiri",  "Marathi",  "Gujarati",  "Kutchi",  "Hindi-MP/CG",  "Konkani",  "Sindhi",  "Tamil",  "Telugu",  "Kannada",  "Malayalam",  "Tulu",  "Urdu",  "Bengali",  "Oriya",  "Assamese",  "Sikkim/ Nepali",  "English"]
 
 export const ManglikList = ["Manglik", "Non Manglik", "Angshik"];
 
 export const HighestEducationList = ["Diploma", "Bachelor's", "B.Ed", "Master's", "M.Ed", "MBA", "M.Tech","PhD", "PG Diploma", "Adv. Diploma", "Cert. ECE", "Cert. SE", "Cert. Ed Tech","Cert. Ed Lead", "Cert. Curr. Inst.", "Cert. Adult Ed", "Diploma Ed", "TEFL",                         "Diploma Montessori", "Adv. Diploma Ed", "PG Cert. Ed", "M.Phil", "PhD Ed",                         "Postdoctoral", "Exec. MBA"];
 
-
-
+export const city = [
+	{
+		name: "Pitampura",
+		state: "Delhi",
+	},
+	{
+		name: "Ramesh Nagar",
+		state: "Delhi",
+	},
+	{
+		name: "Ookhla",
+		state: "Delhi",
+	}
+]
 
 
 

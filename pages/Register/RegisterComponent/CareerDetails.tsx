@@ -1,77 +1,95 @@
-import { Container, Row, Col  } from "react-bootstrap";
-import CustomButton from "../../../components/Button/CustomButton";
+import { Container, Row, Col } from "react-bootstrap";
+import { CustomButton, DropdownGridSingleSelect } from "../../../components";
 import classes from "./Component.module.scss";
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import FamilyDetails from "./Lifestyle&FamilyDetails";
-import { useState } from "react";
+import { FloatingLabel, Form } from "react-bootstrap";
+import RightSection from "./RightSection/RightSection";
+import {
+  CountryList,
+  HighestEducationList,
+} from "../../../constants/DesiredData";
+import { ReadyToSettleAbroad, ResidentialStatus } from "../../../types/enums";
 
 interface ProfileDetailsProps {
-  chooseMessage: (a:number) => void
+  chooseMessage: (a: number) => void;
 }
 
-const CareerDetails:React.FC<ProfileDetailsProps> = ({chooseMessage}:any) => {
-
-  const [checked, updateChecked] = useState<boolean>();
+const CareerDetails: React.FC<ProfileDetailsProps> = ({
+  chooseMessage,
+}: any) => {
   const checkFunction = () => {
-    updateChecked(true)
     chooseMessage(2);
-  }
-    return(
-      <>
-        {!checked && <div className={classes.profile_Container}>
+  };
+  return (
+    <>
+      <div className={classes.profile_Container}>
         <Container>
-         <Row className="justify-content-center">
-                <h1>Great! You are about to complete your Jeevansathi profile.</h1>
-                <Col sm={12} md={5}>
-                  <small>mandatory</small>
+          <Row className="justify-content-center">
+            <h1>Great! You are about to complete your profile.</h1>
+            <Col sm={12} md={5}>
+              <small>mandatory</small>
 
-                  <div className={`form-group ${classes.inputCover}`}>
-                  {/* <label htmlFor="text">Groom's Name</label> */}
-                    <input placeholder="Country" className="form-control" />
-                  </div>    
-                  <div className={`form-group ${classes.inputCover}`}>
-                    <input placeholder="Highest Degree" className="form-control" />
-                  </div>
-                  <div className={`form-group ${classes.inputCover}`}>
-                    <input placeholder="Religion" className="form-control" />
-                  </div>
-                  <div className={`form-group ${classes.inputCover}`}>
-                    <input placeholder="Employed In" className="form-control" />
-                  </div>
-                  <div className={`form-group ${classes.inputCover}`}>
-                    <input placeholder="Annual Income" className="form-control" />
-                  </div>
-                  <hr/>
-                  <h5 className="text-center p-3">Here is your chance to make your profile stand out!</h5>
-                  <FloatingLabel controlId="floatingTextarea2" label="Express Yourself!">
-                    <Form.Control
-                    as="textarea"
-                    placeholder="Express Yourself!"
-                    style={{ height: '200px' }}
-                    />
-                </FloatingLabel>
-                  <CustomButton onClick={() => checkFunction()}>
-                  Complete Registration
-                  </CustomButton>
-                </Col>
-                {/* <Col sm={12} md={2} className={classes.right_section}>
-                    <h3>WHY REGISTER</h3>
-                      <i className={classes.icon1}></i>
-                      <span>Lakhs of Genuine Profiles</span>
-                      <i className={classes.icon2}></i>
-                      <span>Many Verified by Personal Visit</span>
-                      <i className={classes.icon3}></i>
-                      <span>Secure & Family Friendly</span>
-                      <i className={classes.icon4}></i>
-                      <span>Strict Privacy Control</span>
-                </Col> */}
-              </Row>
-              </Container>
-            </div>}
-            {checked && <FamilyDetails />} 
-            </>
-    )
-}
+              <div className={`form-group ${classes.inputCover}`}>
+                <DropdownGridSingleSelect title="Country" data={CountryList} />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <label>State</label>
+                <input placeholder="State" className="form-control" />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <label>City</label>
+                <input placeholder="City" className="form-control" />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <DropdownGridSingleSelect
+                  title="Residential Status"
+                  data={ResidentialStatus}
+                />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <DropdownGridSingleSelect
+                  title="Ready to settle abroad"
+                  data={ReadyToSettleAbroad}
+                />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <DropdownGridSingleSelect
+                  title="Highest Degree"
+                  data={HighestEducationList}
+                />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <DropdownGridSingleSelect
+                  title="Employed In"
+                  data={HighestEducationList}
+                />
+              </div>
+              <div className={`form-group ${classes.inputCover}`}>
+                <input placeholder="Annual Income" className="form-control" />
+              </div>
+              <hr />
+              <h5 className="text-center p-3">
+                Here is your chance to make your profile stand out!
+              </h5>
+              <FloatingLabel
+                controlId="floatingTextarea2"
+                label="Express Yourself!"
+              >
+                <Form.Control
+                  as="textarea"
+                  placeholder="Express Yourself!"
+                  style={{ height: "200px" }}
+                />
+              </FloatingLabel>
+              <CustomButton onClick={() => checkFunction()}>
+                Complete Registration
+              </CustomButton>
+            </Col>
+            <RightSection />
+          </Row>
+        </Container>
+      </div>
+    </>
+  );
+};
 
 export default CareerDetails;

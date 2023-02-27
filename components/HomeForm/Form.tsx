@@ -104,7 +104,6 @@ const HomeForm: React.FC<SignUpForm> = ({onSubmitForm}) => {
       </Form.Group>
       <Button
         variant="danger"
-        // href="/Register/RegisterDetails"
         type="submit"
         className={`${classes.Form_btn} mt-2 w-100`}
       >

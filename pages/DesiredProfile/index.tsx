@@ -53,11 +53,11 @@ const DesiredProfilePage: React.FC = () => {
 
   const searchDataFunc = (query: string, idd: string) => {
     if(idd === "country"){
-    const searchedCountries = countryList.filter(country => country.toLowerCase().includes(query.toLowerCase()));
+    const searchedCountries = countryList.filter((country:string) => country.toLowerCase().includes(query.toLowerCase()));
     setSearchedCountry(searchedCountries);
     }
     if(idd === "MotherTongue"){
-    const searchedMotherTongues = MotherTongue.filter(country => country.toLowerCase().includes(query.toLowerCase()));
+    const searchedMotherTongues = MotherTongue.filter((country:string) => country.toLowerCase().includes(query.toLowerCase()));
     setSearchedMotherTongue(searchedMotherTongues);
     }
   }

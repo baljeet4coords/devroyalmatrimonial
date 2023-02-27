@@ -1,4 +1,4 @@
-enum PackageType {
+export enum PackageType {
   Free = "1",
   Silver = "2",
   Gold = "3",
@@ -7,7 +7,7 @@ enum PackageType {
   Blacklisted = "6",
 }
 
-enum ProfileFor {
+export enum ProfileFor {
   Self = "1",
   Son = "2",
   Daughter = "3",
@@ -17,12 +17,12 @@ enum ProfileFor {
   Friend = "7",
 }
 
-enum Gender {
-  M = "1",
-  F = "2",
+export enum Gender {
+  Male = "1",
+  Female = "2",
 }
 
-enum MaritalStatus {
+export enum MaritalStatus {
   DoesNotMarried = "0",
   NeverMarried = "1",
   AwaitingDivorce = "2",
@@ -32,14 +32,14 @@ enum MaritalStatus {
   Annulled = "6",
 }
 
-enum YeNoNA {
+export enum YeNoNA {
   DoesNotMarried = "0",
   Yes = "1",
   No = "2",
   NA = "3",
 }
 
-enum AnnualIncomeProfile {
+export enum AnnualIncomeProfile {
   Lakh_0_1 = "0",
   Lakhs_0_2 = "1",
   Lakhs_2_5 = "2",
@@ -53,7 +53,7 @@ enum AnnualIncomeProfile {
   CrAbove_2 = "10",
 }
 
-enum AnnualIncomeProfile {
+export enum AnnualIncomeProfile {
   Doesnotmatter = "0",
   Lessthan1lakh = "1",
   Greaterhtan1Lakhs = "2",
@@ -68,7 +68,7 @@ enum AnnualIncomeProfile {
   Greaterhtan2Cr = "11",
 }
 
-enum MotherTongue {
+export enum MotherTongue {
   Doesnotmatter = "1",
   Hindi_Delhi_Punjabi = "2",
   Hindi_MP_CG = "3",
@@ -97,7 +97,7 @@ enum MotherTongue {
   English = "28",
 }
 
-enum Occupation {
+export enum Occupation {
   Doesnotmatter = "0",
   GovernmentPublicSector = "1",
   CivilServices = "2",
@@ -127,7 +127,7 @@ enum Occupation {
   Others = "26",
 }
 
-enum Religion {
+export enum Religion {
   Doesnotmatter = "0",
   Hindu = "1",
   Muslim = "2",
@@ -141,7 +141,7 @@ enum Religion {
   Other = "10",
 }
 
-enum ResidentialStatus {
+export enum ResidentialStatus {
   Doesnotmatter = "0",
   Citizen = "1",
   PermanentResident = "2",
@@ -150,14 +150,15 @@ enum ResidentialStatus {
   TemporaryVisa = "5",
 }
 
-enum Manglik {
+export enum Manglik {
   Doesnotmatter = "0",
   Manglik = "1",
   NonManglik = "2",
   Angshik_partialmanglik = "3",
+  NA = "4",
 }
 
-enum Diet {
+export enum Diet {
   Doesnotmatter = "0",
   Vegetarian = "1",
   NonVegetarian = "2",
@@ -165,14 +166,14 @@ enum Diet {
   Eggetarian = "4",
 }
 
-enum SmokeDrink {
+export enum SmokeDrink {
   Doesnotmatter = "0",
   Yes = "1",
   No = "2",
   Occasionally = "3",
 }
 
-enum Challenged {
+export enum Challenged {
   None = "1",
   Physically_Frombirth = "2",
   Physically_Duetoaccident = "3",
@@ -180,13 +181,13 @@ enum Challenged {
   Mentally_Duetoaccident = "5",
 }
 
-enum FamilStatus {
+export enum FamilStatus {
   Rich_or_Affluent = "1",
   UpperMiddle = "2",
   MiddleClass = "3",
 }
 
-enum BortherSisterCount {
+export enum BortherSisterCount {
   None = "1",
   One = "2",
   Two = "3",
@@ -194,12 +195,12 @@ enum BortherSisterCount {
   Three_plus = "5",
 }
 
-enum FamilyType {
+export enum FamilyType {
   Joint = "1",
   Nuclear = "2",
 }
 
-enum BloodGroup {
+export enum BloodGroup {
   A_plus = "1",
   B_plus = "2",
   O_plus = "3",
@@ -210,20 +211,20 @@ enum BloodGroup {
   AB_negative = "8",
 }
 
-enum Thalassemia {
+export enum Thalassemia {
   No = "1",
   Major = "2",
   Minor = "3",
 }
 
-enum ChildrenStatus {
+export enum ChildrenStatus {
   Doesnotmatter = "0",
   No = "1",
   Yes_Livingtogether = "2",
   Yes_LivingSeparatly = "3",
 }
 
-enum ParentsProfession {
+export enum ParentsProfession {
   Housewife_or_Homemaker = "1",
   Business_or_Entrepreneur = "2",
   Service_or_Private = "3",
@@ -235,21 +236,49 @@ enum ParentsProfession {
   Expired = "9",
 }
 
-enum profile_platform {
+export enum profile_platform {
   laptop_website = "1",
   mobile_website = "2",
   android_app = "3",
   ios_app = "4",
 }
 
-enum EventType {
+export enum EventType {
   HinduPunjabi = "1",
   Sikh = "2",
   MaritalStatus = "3",
 }
 
-enum Privacy_Setting {
+export enum Privacy_Setting {
   public = "1",
   ShowntoInterestsent_accepted = "2",
   ShowntoInterestsent_rejected = "3",
+}
+
+export enum HeightInCm {
+  FOUR_FEET = 121.92,
+  FIVE_FEET = 152.4,
+  SIX_FEET = 182.88,
+  SEVEN_FEET = 213.36,
+  EIGHT_FEET = 243.84,
+  NINE_FEET = 274.32,
+  TEN_FEET = 304.8,
+}
+
+export enum Challenged {
+  Doesnotmatter="0",
+  Yes = "1",
+  No = "2",
+}
+
+export enum ReadyToSettleAbroad {
+  Doesnotmatter="0",
+  Yes = "1",
+  No = "2",
+}
+
+export enum isHiv {
+  Doesnotmatter="0",
+  yes = "1",
+  no = "2",
 }
