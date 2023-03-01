@@ -108,8 +108,8 @@ const ProfileDetails:React.FC<ProfileDetailsProps> = ({chooseMessage}:any) => {
       <>
         {!checked && <div className={classes.profile_Container} ref={containerRef}>
         <Container>
-         <Row className="justify-content-center">
-                <Col sm={12} md={5}>
+         <Row md={12} lg={10}>
+                <Col sm={12} md={9}>
                 <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
                   <small>mandatory</small>
                   <form className={classes.formEdit}>
@@ -185,7 +185,7 @@ const ProfileDetails:React.FC<ProfileDetailsProps> = ({chooseMessage}:any) => {
                   Continue
                   </CustomButton>
                 </Col>
-                <Col sm={12} md={2} className={classes.right_section}>
+                <Col sm={12} md={3} className={classes.right_section}>
                     <h3>WHY REGISTER</h3>
                       <i className={classes.icon1}></i>
                       <span>Lakhs of Genuine Profiles</span>

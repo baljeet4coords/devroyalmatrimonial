@@ -1,16 +1,20 @@
 // @import "../LandingPage/LandingPage.module.scss";
 @import "../../styles/constants.scss";
-.background_header{
+
+.background_header {
     background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
     padding-top: 2.1875rem;
     background-size: cover;
 }
-.register_header_Links{
+
+.register_header_Links {
     padding: 38px 80px 22px 80px;
     text-align: center;
     width: 75%;
     margin: auto;
-    a{
+
+    
+    a {
         border-bottom: 2px solid #fff;
         font-size: 17px;
         display: block;
@@ -19,10 +23,54 @@
         color: #fff;
         opacity: 0.5;
     }
-    .active{
+
+    .active {
         opacity: 1;
     }
 }
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .register_header_Links {
+        padding: 38px 0;
+    }
+}
+
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+    .register_header_Links {
+      padding: 38px 0;
+  }
+  }
+
+@media only screen and (max-width: 415px) {
+    .register_header_Links {
+        padding: 38px 0;
+        width: 100%;
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .register_header_Links, .register_header_Links a {
+      width: 100%;
+    }
+  }
+
+
+
+
+
+
+
+
+
 // .profile_Container{
 //     background: rgb(231, 230, 230);
 //     padding-bottom: 10rem;
