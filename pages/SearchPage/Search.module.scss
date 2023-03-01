@@ -21,6 +21,7 @@
       display: flex;
       justify-content: center;
       margin-bottom: 2rem;
+      gap: 10px;
 
       label {
         text-align: right;
@@ -28,6 +29,7 @@
         margin-right: 25px;
         color: #999595;
         align-self: center;
+        margin-bottom: 0%;
       }
 
       .input_search {
@@ -63,10 +65,71 @@
     box-shadow: 1px 1px 1px #d1d1d1;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       background-color: #d9475c;
       color: #fff;
       border-bottom: 2px solid #222;
     }
+  }
+}
+
+
+
+
+@media only screen and (max-width: 676px) {
+  .background_banner {
+    height: 36vh;
+  }
+  .bg_gray {
+    .Search_body {
+      width: 100% !important;
+      padding: 3.5rem 20px;
+      .search_group {
+        justify-content: space-between;
+        gap: 10px;
+
+
+        label {
+          text-align: start;
+          min-width: 135px;
+          margin: 0%;
+        }
+
+        .input_select {
+          font-size: 0.7rem;
+          width: 100%;
+        }
+        .input_search{
+          width: 100%;
+        }
+      }
     }
+  }
+
+}
+
+
+
+
+@media only screen and (max-width: 300px) {
+  .bg_gray {
+    .Search_body {
+
+      .search_group {
+        
+        label {
+          min-width: 75px;
+          font-size: 0.9rem;
+        }
+
+        .input_select {
+          width: 43%;
+        }
+        .input_search{
+          width: 100%;
+        }
+      }
+    }
+  }
+
 }

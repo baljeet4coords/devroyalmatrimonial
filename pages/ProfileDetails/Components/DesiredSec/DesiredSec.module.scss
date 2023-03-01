@@ -1,22 +1,24 @@
 @import "../../../../styles/constants.scss";
 
-.content{
+.content {
     padding: 30px 27px 20px 55px;
     background-color: $milkWhite_bg;
     margin-right: 10px;
     font-size: 0.938rem;
     border-bottom: 1px solid #c2c8ce;
-    span{
+
+    span {
         font-size: 1.063rem;
         color: $red_txt;
-        svg{
+
+        svg {
             margin-right: 0.5rem;
             font-size: 2rem;
         }
     }
 
-    .desiredCont{
-        ul{
+    .desiredCont {
+        ul {
             list-style-type: none;
             font-size: 0.875rem;
             text-align: left;
@@ -25,21 +27,79 @@
             flex-direction: row;
             flex-wrap: wrap;
             margin: 0 3rem;
+
             li {
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
                 padding: 15px 0;
                 border-bottom: 1px dashed #f1f1f1;
+
                 :nth-last-child(3) {
                     color: #999;
                     margin-bottom: 0.2rem;
                 }
-                svg{
+
+                svg {
                     font-size: 1.063rem;
                     color: $red_txt;
                 }
             }
         }
-    } 
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 676px) {
+    .content {
+        margin: 0%;
+        padding: 25px;
+
+        .desiredCont {
+            margin: 0%;
+
+            ul {
+                margin: 0%;
+
+                li {
+                    p {
+                        &:first-child {
+                            min-width: 100px;
+                        }
+                        &:nth-child(2) {
+                           padding: 0 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 300px) {
+    .content {
+       
+        .desiredCont {
+       
+            ul {
+
+                li {
+                    p {
+                        &:first-child {
+                            min-width: 50px;
+                        }
+                        &:nth-child(2) {
+                           padding: 0 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

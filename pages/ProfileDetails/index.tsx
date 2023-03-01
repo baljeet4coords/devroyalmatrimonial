@@ -90,19 +90,19 @@ const desirLink = useRef<HTMLDivElement>(null);
                     <Row>
                         <Col sm={9} className="p-0">
                             <div className={classes.tabsStyle}>
-                                <div ref={aboutLink} onClick={() => window.scrollTo(0, 600)}>
+                                <div className={classes.profileNavbar} ref={aboutLink} onClick={() => window.scrollTo(0, 600)}>
                                     <CgProfile />
                                     <span>About Her</span>
                                 </div>
-                                <div ref={eduLink} onClick={() => window.scrollTo(0, 1180)}>
+                                <div className={classes.profileNavbar} ref={eduLink} onClick={() => window.scrollTo(0, 1180)}>
                                     <MdOutlineSchool />
                                     <span>Education & Career</span>
                                 </div>
-                                <div ref={familyLink} onClick={() => window.scrollTo(0, 1650)}>
+                                <div className={classes.profileNavbar} ref={familyLink} onClick={() => window.scrollTo(0, 1650)}>
                                     <CgProfile />
                                     <span>FamilyCont</span>
                                 </div>
-                                <div ref={desirLink} onClick={() => window.scrollTo(0, 2830)}>
+                                <div className={classes.profileNavbar} ref={desirLink} onClick={() => window.scrollTo(0, 2830)}>
                                     <SlPeople />
                                     <span>Desired Partner</span>
                                 </div>
