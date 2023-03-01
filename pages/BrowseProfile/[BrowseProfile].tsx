@@ -57,13 +57,13 @@ const BrowseProfile: NextPage = () => {
     <HomeImage addBackground={headimage} />
     <Container className={`${classes.Home_Page_Wrapper} px-0`}>
     <Row className={`${classes.firstTopBox} pb-4`}>
-            <Col sm={12} md={6} className="d-flex align-items-end">
+            <Col sm={12} md={5} lg={6} className="d-flex align-items-end">
             <div className={classes.Home_heading}>
                 <h1>Now, chat for free!</h1>
                 <span>Finding your perfect match just became easier</span>
             </div>
       </Col>
-      <Col sm={12} md={6}>
+      <Col sm={12}  md={7} lg={6}>
       <HomeForm/>
       </Col> 
       <Row className={classes.Browse_colord_body}>
@@ -117,9 +117,8 @@ const BrowseProfile: NextPage = () => {
               </p>
               <p>{BrowseProfile}</p>
             </div>
-         <Row>
-           <Col sm={12} md={10} className="pb-5">
-           
+         <Row className={classes.Home_Body_Main}>
+           <Col sm={12} md={9} xl={10} className={`pb-5 ${classes.BridesGroup}`}>
             <Tabs
               activeKey={key}
               onSelect={(k:any) => setKey(k)}
@@ -138,7 +137,7 @@ const BrowseProfile: NextPage = () => {
             </Tabs>
 
             </Col>
-            <Col sm={12} md={2}>
+            <Col sm={12} md={3} xl={2} className={classes.filterProfileSection}>
               <h3>Filter profiles by</h3>
               <span className="mt-5 d-block">Gender</span>
               <div className={classes.button}>

@@ -1,21 +1,25 @@
 @import "../LandingPage/LandingPage.module.scss";
-.Browse_colord_body{
+
+.Browse_colord_body {
     background-color: $transparent_maroon;
     color: $white_txt;
     padding: 0 1rem;
     margin-top: 1rem;
     border-radius: 4px;
-    h3{
+
+    h3 {
         font-size: 1rem;
         font-weight: 600;
         padding: 0;
 
     }
-    p{
+
+    p {
         font-size: 14px;
         margin: 0;
     }
-    img{
+
+    img {
         // width: 14%;
         width: 41px;
         height: 24px;
@@ -23,16 +27,18 @@
         margin-right: 0.5rem;
     }
 }
-.breadCrum{
+
+.breadCrum {
     display: flex;
     padding: 1.8rem 0;
     color: $lightGrey_txt;
 }
-.button{
+
+.button {
     display: flex;
     flex-direction: column;
 
-    Button{
+    Button {
         margin-left: 5px;
         margin-top: 6px;
         margin-bottom: 6px;
@@ -43,11 +49,70 @@
         color: $lightGrey_txt;
         background: none;
     }
-    :hover{
+
+    :hover {
         transition: background-color 1s;
         transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
         background: #f7f7f7;
         color: $lightGrey_txt;
         border: 1px solid #B3BAC5;
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+    .firstTopBox {
+        width: 100%;
+        margin: 0;
+        padding: 1rem;
+    }
+
+    .Browse_colord_body {
+        margin: 0%;
+
+        img {
+            height: 41px;
+            margin-right: 30px;
+        }
+    }
+
+    .Home_white_body {
+        width: 100%;
+        margin: 0%;
+
+    }
+
+    .breadCrum {
+        padding-left: 2rem;
+    }
+
+    .Home_Body_Main {
+        width: 100%;
+        margin: 0;
+
+        .BridesGroup {
+            padding: 0% 2rem;
+        }
+
+        .filterProfileSection {
+            padding: 0 2rem;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    }
+    .Home_dark_body{
+        width: 100%;
+        margin: 0%;
+    }
+}
+
+@media only screen and (max-width: 415px) {
+    .filterProfileSection {
+        margin-bottom: 3rem;
     }
 }

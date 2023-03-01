@@ -8,7 +8,7 @@ const ImageCard = (props: any) => {
     <>
       {data.map((item) => {
         return (
-          <Col key={item.heading} lg={3} md={4} style={{ paddingTop: '0.75rem' }}>
+          <Col key={item.heading} lg={4} md={6} style={{ paddingTop: '0.75rem' }}>
             <Card>
               <Card.Img variant="top" src="/Images/dummyGirlImage.jpg" />
               <Card.Body>

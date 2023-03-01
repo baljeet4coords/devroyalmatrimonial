@@ -23,7 +23,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
         <React.Fragment>
             <Container fluid  className={classes.background_header} >
             <RegisterHeader />
-            <Row className={classes.register_header_Links}>
+            <Row md={8} className={classes.register_header_Links}>
                 <Link className={`${active === 0 ? classes.active : " "}`} href="#">Profile Details</Link>
                 <Link className={`${active === 1 ? classes.active : " "}`} href="#">Career Details</Link>
                 <Link className={`${active === 2 ? classes.active : " "}`} href="#">Lifestyle & Family</Link>

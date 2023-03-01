@@ -3,7 +3,8 @@
     margin-top: 3rem;
     width: 75%;
     img{
-        width: 255px;
+        // width: 255px;
+        width: 100%;
     }
     SVG{
         cursor: pointer;
@@ -52,9 +53,9 @@
         background-color: $light_grey_bg;
         // color: $white_txt;
         color: #c3c3c3;
-        text-align: start;
+        text-align: center;
         padding: 0;
-        width: auto;
+        // width: auto;
         transition: all 0.75s;
         &:hover{
             background-color: rgb(52 73 94);
@@ -78,3 +79,117 @@
 .bg{
     background: rgb(231, 230, 230);
 }   
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .cardWrapper{
+        margin-top: 3rem;
+        img{
+            width: 100%;
+            object-fit: cover;
+        }
+        .cardInfo{
+            .UserName_Section{
+                min-height: 60px;
+            }
+
+        }
+
+        .rightBox{
+            display: flex;
+            width: 100%;
+            justify-content: end;
+            gap: 20px;
+            padding: 0% 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+    .cardWrapper{
+        margin-top: 3rem;
+        img{
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .cardInfo{
+            .UserName_Section{
+                min-height: 60px;
+            }
+
+        }
+        .rightBox{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0rem 2rem;
+            p{
+                padding: 0;
+                text-align: center;
+                padding: 0rem 1rem;
+                svg{
+                    margin: 0%;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 415px) {
+    .bg{
+        background-color: #2e97ea;
+    }
+    .cardWrapper{
+        margin-top: 3rem;
+        width: 85%;
+        img{
+            width: 100%;
+        }
+
+        .cardInfo{
+            .UserName_Section{
+                min-height: 50px;
+            }
+
+        }
+        .rightBox{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0rem 2rem;
+            p{
+                padding: 0;
+                text-align: center;
+                padding: 0rem 1rem;
+                svg{
+                    margin: 0%;
+                }
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .cardWrapper{
+
+        .cardInfo{
+            ul{
+                height: auto;
+            }
+        }
+        .rightBox{
+            p{
+                padding: 0rem 0.5rem;
+            }
+        }
+    }
+}
