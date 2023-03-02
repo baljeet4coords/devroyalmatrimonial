@@ -14,7 +14,7 @@ import ModalForm from "../HomeForm/ModalLogin";
 
 const Header: React.FC = () => {
   const [show, setShow] = useState(false);
-  const [stateSize, setSize] = useState(false);
+  const [stateSize, setSize] = useState(window.innerWidth <=992 ? true :false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -24,12 +24,17 @@ const Header: React.FC = () => {
   const hideDropdown = () => {
     setShow(false);
   };
+  
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      setSize(window.innerWidth <= 992);
+      if(window.innerWidth <=992){
+        setSize(true)
+      }else{
+        setSize(false)
+      }
     });
-  }, []);
+  },[]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -38,6 +43,7 @@ const Header: React.FC = () => {
       } else {
         setActive(false);
       }
+      
     });
   }, []);
   return (

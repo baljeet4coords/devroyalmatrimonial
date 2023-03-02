@@ -14,6 +14,16 @@
       width: 100%;
     }
   }
+  .circleImg{
+    height: 46px;
+    width: 46px;
+    border-radius: 23px;
+  }
+  svg{
+    height: 46px;
+    width: 30px;
+
+  }
 }
 
 .nav_links_style {
@@ -51,6 +61,11 @@
 .hide {
   display: none;
 }
+
+
+
+
+
 
 @media screen and (max-width: 767px) {
   .Navbar_Wrapper {

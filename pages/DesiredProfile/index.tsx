@@ -135,7 +135,8 @@ const DesiredProfilePage: React.FC = () => {
   }
   const handleClickOutside = () => {
     if (containerRef.current) {     
-      setActiveList({...activeList, visible: false});
+      setActiveList({type: '', visible: false});
+      console.log(activeList);
     };
   }
   useEffect(() => {
