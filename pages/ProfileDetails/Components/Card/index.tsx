@@ -18,7 +18,7 @@ const ProfilePageCard: React.FC = () => {
                         <Image src="./Images/profile_image.webp"/>
                     </Col>
                     <Col sm={6} className={classes.cardInfo}>
-                        <div className="border-bottom border-dark pb-2">
+                        <div className={`${classes.NameDetails} border-bottom border-dark pb-2`}>
                             <span>Sweta Singh </span>
                             <small className="pe-2">(WSYY4227)</small>
                             {/* <span className={classes.lockIcon}><AiFillLock/></span>  */}
@@ -35,11 +35,11 @@ const ProfilePageCard: React.FC = () => {
                             <li>Hindi-Delhi</li>
                             <li>Never Married</li>
                         </ul>
-                        <div>
+                        <div className={classes.profileCardIiconSection}>
                             <span><TbHistory/></span>
-                            <span className="ps-3"><ImShare/></span>
-                            <span className="ps-3"><ImBlocked/></span>
-                            <span className="ps-3"><BsFlag/></span>
+                            <span><ImShare/></span>
+                            <span><ImBlocked/></span>
+                            <span><BsFlag/></span>
                         </div>
                     </Col>
                     <Col sm={3} className={classes.rightBox}>

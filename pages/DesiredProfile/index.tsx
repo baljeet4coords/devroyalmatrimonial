@@ -580,7 +580,7 @@ const DesiredProfilePage: React.FC = () => {
                 </CustomButton>
               </form>
             </Col>
-            <hr />
+            {/* <hr /> */}
           </Row>
         </Container>
       </div>
