@@ -24,6 +24,7 @@
     font-style: bold;
   }
 }
+
 // Modal Form
 .modal_form {
   height: 100vh;
@@ -36,22 +37,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   Form {
     width: 35vw;
     position: absolute;
     padding: 45px;
     background: #e7e7e6;
+
     @media screen and (max-width: 500px) {
       width: auto;
       padding: 40px;
     }
+
     .Form_btn {
       border-radius: 0px;
       box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
     }
+
     .modal_links {
       color: #065ad8d3;
     }
+
     Input {
       border-radius: 0px;
       margin-bottom: 1.5rem;
@@ -61,6 +67,7 @@
       border: 1px solid gray;
     }
   }
+
   .modal_closeBtn {
     position: absolute;
     top: 2rem;
@@ -74,10 +81,23 @@
   .Form_Wrapper {
     width: 100%;
     margin-top: 1rem;
+
     .modal_form {
       label {
         display: block;
       }
     }
   }
+}
+
+
+@media only screen and (max-width: 300px) {
+  .Form_Wrapper {
+    .Form_input {
+      padding: 4px 5px;
+      background-position: right 0.1rem center !important;
+      font-size: 0.8rem;
+    }
+  }
+
 }

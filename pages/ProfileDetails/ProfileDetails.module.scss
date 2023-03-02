@@ -60,7 +60,7 @@
                     font-size: 1.5rem;
                 }
 
-                span{
+                span {
                     font-size: xx-small !important;
                 }
             }
@@ -99,4 +99,33 @@
     width: 25%;
     position: absolute;
     bottom: 0;
+}
+
+
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .detailsWrapper {
+        padding: 0%;
+
+        .tabsStyle{
+            .profileNavbar{
+                justify-content: flex-start;
+                text-align: center;
+                svg {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+@media only screen and (max-width: 415px) {
+    .detailsWrapper{
+        width: 100%;
+    }
 }

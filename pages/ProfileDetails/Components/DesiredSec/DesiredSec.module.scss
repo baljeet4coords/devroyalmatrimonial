@@ -52,6 +52,36 @@
 
 
 
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+
+    .content {
+        padding: 30px 20px;
+
+        .desiredCont {
+            margin: 0%;
+
+            ul {
+                margin: 0 1rem;
+
+                li {
+                    padding-right: 10px;
+                    p {
+                        &:first-child {
+                            min-width: 100px;
+                        }
+                        &:nth-child(2) {
+                           padding-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
 
 
 

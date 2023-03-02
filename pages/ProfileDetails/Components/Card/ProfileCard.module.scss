@@ -18,7 +18,7 @@
 
         @media only screen and (max-width: 676px) {
             .NameDetails {
-                min-height: 50px;
+                min-height: 60px;
             }
         }
 
@@ -110,4 +110,80 @@
 
 .bg {
     background: rgb(231, 230, 230);
+}
+
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+
+    .cardWrapper {
+        padding: 0%;
+
+        img {
+            object-fit: cover;
+        }
+
+        .cardInfo {
+            padding: 1rem;
+
+            ul {
+                height: 150px;
+                padding-top: 1rem;
+                gap: 8px;
+            }
+        }
+
+        .rightBox {
+            display: flex;
+            justify-content: space-evenly;
+
+            p {
+                padding: 0%;
+
+                svg {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+
+
+}
+
+
+
+
+@media only screen and (max-width: 415px) {
+    .cardWrapper {
+        width: 100%;
+
+        .cardInfo {
+            padding: 20px;
+
+            .NameDetails {
+                min-height: auto;
+            }
+        }
+
+        .rightBox {
+            display: grid;
+            justify-content: space-evenly;
+            align-items: center;
+            grid-template-columns: repeat(2, 50%);
+            place-items: flex-start;
+            padding: 0 30px;
+        }
+
+        p {
+            display: flex;
+            padding: 0;
+            align-items: center;
+            gap: 7px;
+
+            svg {
+                margin: 0%;
+            }
+        }
+    }
 }

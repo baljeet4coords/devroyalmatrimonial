@@ -9,15 +9,14 @@ import {TbHistory} from "react-icons/tb";
 import {ImShare, ImBlocked} from "react-icons/im";
 
 
-
 const ProfilePageCard: React.FC = () => {
     return(
             <Container className={classes.cardWrapper}>
                 <Row>
-                    <Col sm={3} className="p-0 d-flex justify-content-end">
+                    <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
                         <Image src="./Images/profile_image.webp"/>
                     </Col>
-                    <Col sm={6} className={classes.cardInfo}>
+                    <Col sm={6} md={8} lg={6} className={classes.cardInfo}>
                         <div className={`${classes.NameDetails} border-bottom border-dark pb-2`}>
                             <span>Sweta Singh </span>
                             <small className="pe-2">(WSYY4227)</small>
@@ -42,7 +41,7 @@ const ProfilePageCard: React.FC = () => {
                             <span><BsFlag/></span>
                         </div>
                     </Col>
-                    <Col sm={3} className={classes.rightBox}>
+                    <Col sm={3} md={12} lg={3} className={classes.rightBox}>
                         <p><BiMessageCheck/>Send Interest</p>
                         <p><MdContactPhone/>View Contacts</p>
                         <p><BsChat/>Chat</p>
