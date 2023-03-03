@@ -40,6 +40,25 @@
 
 
 
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .content{
+        padding: 30px 20px;
+        .eduCont{
+            margin: 0rem;
+            ul{
+                margin: 0 1rem;
+
+                li{
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+
+}
+
+
+
 
 
 
@@ -60,14 +79,15 @@
         }
     }
 }
+
+
 @media only screen and (max-width: 300px) {
     .content{
-        padding: 0px;
+        padding: 20px;
+        margin: 0%;
 
         .eduCont{
             margin: 0%;
-
-
             ul{
                 margin: 0%;
             }

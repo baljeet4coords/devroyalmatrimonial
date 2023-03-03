@@ -88,7 +88,7 @@ const desirLink = useRef<HTMLDivElement>(null);
                 <ProfilePageCard />
                 <Container className={classes.detailsWrapper}>
                     <Row>
-                        <Col sm={9} className="p-0">
+                        <Col sm={9} md={8} className="p-0">
                             <div className={classes.tabsStyle}>
                                 <div className={classes.profileNavbar} ref={aboutLink} onClick={() => window.scrollTo(0, 600)}>
                                     <CgProfile />
@@ -115,7 +115,7 @@ const desirLink = useRef<HTMLDivElement>(null);
                                 <p>Last updated on 15th Feb, 2023</p>
                             </div>
                         </Col>
-                        <Col sm={3} className="p-0">
+                        <Col sm={3} md={4} className="p-0">
                             <RightSection/>
                         </Col>
                     </Row>

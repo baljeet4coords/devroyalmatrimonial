@@ -3,32 +3,39 @@
 .Home_Page_Wrapper {
   margin-top: -34rem;
   width: 75%;
+
   @media screen and (max-width: 767px) {
     width: 100%;
   }
+
   span {
     color: $lightGrey_txt;
     letter-spacing: 1.75px;
     font-size: 0.875rem;
+
     @media screen and (max-width: 576px) {
       // width: 100%;
       display: block;
     }
   }
+
   h1 {
     font-size: 1.75rem;
     font-weight: $fw400;
     padding-top: 0.5rem;
     padding-bottom: 1rem;
+
     strong {
       color: $red_txt;
     }
   }
+
   h3 {
     font-weight: $fw600;
     font-size: 1rem;
     padding-top: 1rem;
   }
+
   .Home_heading {
     h1 {
       font-family: "Noto Serif", "serif";
@@ -40,6 +47,7 @@
       color: $white_txt;
       text-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     }
+
     span {
       color: $white_txt;
       font-size: 1.25rem;
@@ -47,40 +55,48 @@
       margin-top: 0.375rem;
     }
   }
+
   .Home_white_body {
     background-color: $milkWhite_bg;
     padding: 3rem;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
   }
+
   .Home_dark_body {
     background-color: $darkWhite_bg;
     padding: 3rem;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
+
     p {
       text-align: justify;
     }
+
     .landing_scroll_images {
       max-height: 70vh;
       overflow-y: scroll;
       scroll-behavior: smooth;
       -ms-overflow-style: none;
       scrollbar-width: none;
+
       &::-webkit-scrollbar {
         display: none;
         width: 0px;
         background: transparent;
       }
+
       img {
         height: auto;
         max-width: 100%;
         width: 100%;
       }
+
       @media screen and (max-width: 767px) {
         display: none;
       }
     }
+
     .cardBox {
       position: relative;
       width: 16em;
@@ -91,28 +107,35 @@
       border-radius: 0.125em;
       box-shadow: 0 0.625em 1.25em #0006;
     }
+
     .scrollBox {
       transition: opacity 0.1s linear;
       opacity: 1;
       width: 70%;
       cursor: pointer;
+
       .responsiveImage {
         display: none;
       }
+
       @media screen and (max-width: 767px) {
         * {
           text-align: center;
         }
+
         width: 100%;
+
         .responsiveImage {
           width: 100%;
           display: block;
         }
       }
     }
+
     :hover {
       opacity: 1;
     }
+
     // .active {
     //   opacity: 1;
     // }
@@ -120,15 +143,18 @@
     //   opacity: 0.5;
     // }
   }
+
   .card_bottom {
     height: 232px;
     background-color: $dark_maroon_bg;
     margin-top: -10rem;
   }
+
   .services_box_container {
     background-color: $darkWhite_bg;
     padding-top: 10px;
     text-align: center;
+
     .services_box {
       background-image: url("../../public/Images/landing_page_talk.jpg");
       text-align: center;
@@ -152,21 +178,26 @@
       margin-bottom: 1rem;
     }
   }
+
   .Home_colord_body {
     background-color: $dark_maroon_bg;
     color: $white_txt;
+
     .content {
       padding: 3rem;
     }
+
     h1 {
       font-size: 1.75rem;
       font-weight: 400;
       padding-top: 0.5rem;
       padding-bottom: 1rem;
     }
+
     p {
       line-height: 27px;
     }
+
     img {
       width: 76%;
     }
@@ -178,35 +209,63 @@
     width: 90%;
     margin-top: 0;
   }
+
   .firstTopBox {
     // display: none;
     margin-top: -16rem;
   }
+
   .Home_dark_body {
     padding: 2.62rem 0.5rem !important;
   }
+
   .Home_white_body {
     padding: 2.62rem 0.5rem !important;
   }
+
   .Home_colord_body {
     .content {
       padding: 2.62rem 0.5rem !important;
     }
   }
+
   .services_box {
     background-size: contain;
   }
+
   .Home_colord_body {
     img {
       width: 100% !important;
     }
   }
 }
+
 @media only screen and (max-width: 991px) {
-  .carResponsive{
+  .carResponsive {
     display: flex;
-      overflow-x: scroll;
-      flex-wrap: nowrap;
-      padding-right: 2.5rem;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    padding-right: 2.5rem;
   }
 }
+
+
+
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+  .firstTopBox {
+    padding: 2rem;
+    width: 100%;
+    margin: 0;
+  }
+
+  .Home_white_body,
+  .Home_dark_body,
+  .Home_colord_body,
+  .card_bottom_Row {
+    width: 100%;
+    margin: 0%;
+  }
+}
+
+
+

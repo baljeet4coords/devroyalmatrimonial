@@ -6,6 +6,10 @@
   background-size: cover;
   height: 60vh;
   background-position-y: top;
+
+  @media only screen and (max-width: 990px) and (min-width: 768px) {
+    height: 30vh;
+  }
 }
 
 .bg_gray {
@@ -15,17 +19,50 @@
     border-radius: 2px;
     border: 1px solid #ddd;
     background: #fff;
-    padding: 3.5rem 0 0 0;
+    padding: 3.5rem 0;
+    text-align: center;
+
+    .SectionHeading {
+      text-align: center;
+      margin-bottom: 1rem;
+
+      h6 {
+        font-weight: 600;
+        color: #1d1b1b87;
+      }
+    }
 
     .search_group {
       display: flex;
       justify-content: center;
       margin-bottom: 2rem;
-      gap: 10px;
+
+      // gap: 10px;
+      .Button_Group {
+        width: 54%;
+
+        .Search_For_button {
+          background-color: transparent;
+          color: #1d1b1b;
+          width: 30%;
+          border: none;
+          border-radius: 0;
+          border: 2px solid #e7e6e6;
+          padding: 0.6rem;
+        }
+
+        .Search_For_button_Active {
+          background-color: #d9475c;
+          border-right: 0;
+          width: 30%;
+          border: none;
+          border-radius: 0%;
+        }
+      }
 
       label {
         text-align: right;
-        width: 150px;
+        width: 190px;
         margin-right: 25px;
         color: #999595;
         align-self: center;
@@ -40,20 +77,55 @@
         box-shadow: 0.5px 0.5px 3px #d1d1d1;
       }
 
+      .Input_With_text {
+        width: 40%;
+        border-radius: 0px;
+        border: 1px solid #d1d1d1;
+        padding: 0.7rem;
+        box-shadow: 0.5px 0.5px 3px #d1d1d1;
+      }
+
+      .Input_With_text_Button {
+        width: 14%;
+        border-radius: 0px;
+        border: 1px solid #d1d1d1;
+        padding: 0.7rem;
+        box-shadow: 0.5px 0.5px 3px #d1d1d1;
+      }
+
       .input_select {
         width: 27%;
         border: 1px solid #d1d1d1;
         border-radius: 0px;
         padding: 0.7rem;
         box-shadow: 0.5px 0.5px 3px #d1d1d1;
+
+        @media only screen and (max-width: 990px) and (min-width: 768px) {
+          padding-right: 2rem;
+        }
       }
     }
   }
 }
 
 .search_main {
+  background-color: #f2f1f1;
+  text-align: center;
+
+  // padding: 1rem;
   .accordion-item:first-of-type .accordion-button {
     background-color: #d9475c;
+  }
+
+  .activeSearchType {
+    background-color: #f2f1f1;
+    text-align: center;
+    padding: 1rem 2rem;
+    border-right: 1px solid #d1d1d1;
+    border-left: 1px solid #d1d1d1;
+    box-shadow: 1px 1px 1px #d1d1d1;
+    cursor: pointer;
+    border-bottom: 2px solid #1d1b1b;
   }
 
   .search_box {
@@ -80,14 +152,31 @@
   .background_banner {
     height: 36vh;
   }
+
   .bg_gray {
     .Search_body {
       width: 100% !important;
       padding: 3.5rem 20px;
+
       .search_group {
         justify-content: space-between;
-        gap: 10px;
 
+        .Button_Group {
+          width: 100%;
+
+          .Search_For_button,
+          .Search_For_button_Active {
+            width: 6rem;
+          }
+        }
+
+        .Input_With_text {
+          width: 100%;
+        }
+
+        .Input_With_text_Button {
+          width: auto;
+        }
 
         label {
           text-align: start;
@@ -98,14 +187,42 @@
         .input_select {
           font-size: 0.7rem;
           width: 100%;
+          padding-right: 2rem;
         }
-        .input_search{
+
+        .input_search {
           width: 100%;
         }
       }
     }
   }
 
+}
+
+
+@media only screen and (max-width: 415px) {
+  .bg_gray {
+    .Search_body {
+      .search_group {
+        .Button_Group {
+          width: 100%;
+
+          .Search_For_button,
+          .Search_For_button_Active {
+            width: 6rem;
+          }
+        }
+
+        .Input_With_text {
+          width: 100%;
+        }
+
+        .Input_With_text_Button {
+          width: auto;
+        }
+      }
+    }
+  }
 }
 
 
@@ -116,7 +233,24 @@
     .Search_body {
 
       .search_group {
-        
+
+        .Button_Group {
+          width: 100%;
+
+          .Search_For_button,
+          .Search_For_button_Active {
+            width: 5rem;
+            padding: 0.31rem;
+          }
+        }
+
+        .Input_With_text {
+          width: 100%;
+        }
+
+        .Input_With_text_Button {
+          width: auto;
+        }
         label {
           min-width: 75px;
           font-size: 0.9rem;
@@ -125,7 +259,8 @@
         .input_select {
           width: 43%;
         }
-        .input_search{
+
+        .input_search {
           width: 100%;
         }
       }

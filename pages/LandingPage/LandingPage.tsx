@@ -214,7 +214,7 @@ const LandingPage: React.FC = () => {
             </Col>
           </Row>
         </Row>
-        <Row>
+        <Row className={classes.card_bottom_Row}>
           <div className={classes.card_bottom}></div>
         </Row>
         <Row className={classes.Home_white_body}>

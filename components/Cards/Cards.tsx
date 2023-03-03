@@ -21,7 +21,7 @@ const HomeCard = (props: any) => {
           );
         })}
       </ListGroup>
-      <Card.Body>
+      <Card.Body className={classes.cardBtuoonTab}>
         <CustomButton onClick={() => console.log("tab")}>
           {props.onTitle.category === "Free"
             ? "Register For Free"
