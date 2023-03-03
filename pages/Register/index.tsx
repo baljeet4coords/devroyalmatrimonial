@@ -11,53 +11,52 @@ import {
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
+const topHeading = [
+  "Profile Details",
+  "Career Details",
+  "Lifestyle",
+  "Family",
+  "Highlight Yourself",
+];
+
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const [active, setActive] = useState<number>(0);
   const chooseMessage = (message: number) => {
     setActive(message);
   };
+  const Components = [
+    <ProfileDetails key={0} nextPage={chooseMessage} />,
+    <CareerDetails key={1} nextPage={chooseMessage} />,
+    <LifestyleFamilyDetails key={2} />,
+  ];
 
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
         <RegisterHeader />
         <Row className={classes.register_header_Links}>
-          <Col
-            xs={4}
-            className={`${active === 0 ? classes.active : " "} ${
-              classes.topButtons
-            }`}
-            onClick={() => chooseMessage(0)}
-          >
-            Profile Details
-          </Col>
-          <Col
-            xs={4}
-            className={`${active === 1 ? classes.active : " "} ${
-              classes.topButtons
-            }`}
-            onClick={() => chooseMessage(1)}
-          >
-            Career Details
-          </Col>
-          <Col
-            xs={4}
-            className={`${active === 2 ? classes.active : " "} ${
-              classes.topButtons
-            }`}
-            onClick={() => chooseMessage(2)}
-          >
-            Lifestyle & Family
-          </Col>
+          {topHeading.map((heading, index) => {
+            return (
+              <Col
+                key={index}
+                className={`${active === index ? classes.active : " "} ${
+                  classes.topButtons
+                }`}
+                onClick={() => chooseMessage(index)}
+              >
+                {heading}
+              </Col>
+            );
+          })}
         </Row>
       </Container>
-      {active === 0 ? (
-        <ProfileDetails nextPage={chooseMessage} />
-      ) : active === 1 ? (
-        <CareerDetails chooseMessage={chooseMessage} />
-      ) : (
-        <LifestyleFamilyDetails />
-      )}
+      {Components.map((component, index) => {
+        if (index === active) {
+          return component;
+        } else {
+          return null;
+        }
+      })}
 
       <Footer />
     </React.Fragment>

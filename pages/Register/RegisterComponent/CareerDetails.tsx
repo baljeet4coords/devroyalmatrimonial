@@ -10,14 +10,14 @@ import {
 import { ReadyToSettleAbroad, ResidentialStatus } from "../../../types/enums";
 
 interface ProfileDetailsProps {
-  chooseMessage: (a: number) => void;
+  nextPage: (a: number) => void;
 }
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({
-  chooseMessage,
+  nextPage,
 }: any) => {
   const checkFunction = () => {
-    chooseMessage(2);
+    nextPage(2);
   };
   return (
     <>

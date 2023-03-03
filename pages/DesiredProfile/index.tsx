@@ -4,8 +4,8 @@ import LoginrHeader from "../../components/LoginHeader/Loginheader";
 import { Footer } from "../../components";
 import React, { useState, useRef, useEffect } from 'react';
 import classes from "./DesiredProfile.module.scss";
-import { maritalStatusLinks, countryList, ResidentialList, AgeFromYearList, AgeToYearList, 
-HeightFromList, HeightToList, ReligionList, MotherTongue, ManglikList, HighestEducationList } from "../../constents/DesiredData";
+import { MaritalStatusList, CountryList, ResidentialList, AgeFromYearList, AgeToYearList, 
+HeightFromList, HeightToList, ReligionList, MotherTongue, ManglikList, HighestEducationList } from "../../constants/DesiredData";
 import { FaEdit } from "react-icons/fa";
 import { SlArrowDown } from "react-icons/sl";
 import { IoClose } from "react-icons/io5";
@@ -48,12 +48,12 @@ const DesiredProfilePage: React.FC = () => {
   const [HighestEduArray, updateHighestEduArray] = useState<string[]>([]);
 
 
-  const [searchedCountry, setSearchedCountry] = useState<string[]>(countryList);
-  const [searchedMotherTongue, setSearchedMotherTongue] = useState<string[]>(countryList);
+  const [searchedCountry, setSearchedCountry] = useState<string[]>(CountryList);
+  const [searchedMotherTongue, setSearchedMotherTongue] = useState<string[]>(CountryList);
 
   const searchDataFunc = (query: string, idd: string) => {
     if(idd === "country"){
-    const searchedCountries = countryList.filter((country:string) => country.toLowerCase().includes(query.toLowerCase()));
+    const searchedCountries = CountryList.filter((country:string) => country.toLowerCase().includes(query.toLowerCase()));
     setSearchedCountry(searchedCountries);
     }
     if(idd === "MotherTongue"){

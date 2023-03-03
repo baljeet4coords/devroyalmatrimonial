@@ -53,7 +53,7 @@ export enum AnnualIncomeProfile {
   CrAbove_2 = "10",
 }
 
-export enum AnnualIncomeProfile {
+export enum AnnualIncomeProfile0 {
   Doesnotmatter = "0",
   Lessthan1lakh = "1",
   Greaterhtan1Lakhs = "2",
@@ -68,6 +68,7 @@ export enum AnnualIncomeProfile {
   Greaterhtan2Cr = "11",
 }
 
+export type AnnualIncomeProfile11 = Omit<AnnualIncomeProfile0, 'Doesnotmatter'>;
 export enum MotherTongue {
   Doesnotmatter = "1",
   Hindi_Delhi_Punjabi = "2",
