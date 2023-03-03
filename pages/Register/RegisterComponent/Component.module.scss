@@ -1,4 +1,5 @@
 @import "../../../styles/constants.scss";
+@import "../../../components//GenderRadioButtons/GenderInput.module.scss";
 
 .profile_Container {
   background: rgb(231, 230, 230);
@@ -33,7 +34,9 @@
     }
   }
 }
+
 @media only screen and (max-width: 950px) {
+
   .register_header_Links,
   .register_header_Links a {
     width: 100%;
@@ -44,17 +47,36 @@
 
 .formEdit {
   text-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  label {
+    margin: 0rem 0 0 -11rem;
+    text-align: start;
+    position: absolute;
+  }
+
   .singleBox {
     display: flex;
     justify-content: end;
+    position: relative;
+
     div {
       width: 70%;
       text-align: center;
+
       svg {
         position: absolute;
         right: 15px;
         top: 40%;
       }
+    }
+
+    label {
+      text-align: start;
+      position: absolute;
+      left: 0rem;
     }
 
     .inputBox {
@@ -69,6 +91,9 @@
       position: relative;
       min-width: 275px;
       background-color: $milkWhite_bg;
+      width: 100%;
+      margin: 0;
+
 
       .inputBoxVal {
         visibility: hidden;
@@ -128,6 +153,7 @@
       border: none !important;
       background: transparent !important;
       list-style: none;
+
       input {
         padding: 0;
         outline: 0;
@@ -147,24 +173,28 @@
     width: -webkit-fill-available;
   }
 
-  label {
-    margin: 1rem 0 0 -9rem;
-    text-align: start;
-  }
-
   input {
     border: 1px solid #d9d9d9;
     border-radius: 2px;
     padding: 0.875rem 2.5rem;
     text-align: center;
-    margin: 0.6em;
 
     &:focus {
       outline: none;
     }
   }
-}
 
+
+  input[type=radio] {
+    padding: 0.5rem;
+  }
+
+}
+.formEdit{
+  +button{
+    margin-top: 3rem;
+  }
+}
 .active {
   visibility: visible !important;
 }
@@ -196,6 +226,7 @@
           padding: 0%;
           text-align: start;
           width: -webkit-fill-available;
+
           input {
             text-align: start;
           }

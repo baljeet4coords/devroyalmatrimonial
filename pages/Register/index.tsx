@@ -7,6 +7,7 @@ import {
   ProfileDetails,
   LifestyleFamilyDetails,
   CareerDetails,
+  ExpressYourself,
 } from "./RegisterComponent";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
@@ -16,7 +17,7 @@ const topHeading = [
   "Career Details",
   "Lifestyle",
   "Family",
-  "Highlight Yourself",
+  "Express Yourself",
 ];
 
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
@@ -28,6 +29,8 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <ProfileDetails key={0} nextPage={chooseMessage} />,
     <CareerDetails key={1} nextPage={chooseMessage} />,
     <LifestyleFamilyDetails key={2} />,
+    <LifestyleFamilyDetails key={3} />,
+    <ExpressYourself key={4} />,
   ];
 
   return (

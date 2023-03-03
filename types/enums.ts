@@ -266,11 +266,11 @@ export enum HeightInCm {
   TEN_FEET = 304.8,
 }
 
-export enum Challenged {
-  Doesnotmatter="0",
-  Yes = "1",
-  No = "2",
-}
+// export enum Challenged {
+//   Doesnotmatter="0",
+//   Yes = "1",
+//   No = "2",
+// }
 
 export enum ReadyToSettleAbroad {
   Doesnotmatter="0",
