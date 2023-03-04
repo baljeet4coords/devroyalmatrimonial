@@ -1,12 +1,14 @@
 import CareerDetails from "./CareerDetails";
-import LifestyleFamilyDetails from "./LifestyleFamilyDetails";
+import FamilyDetails from "./FamilyDetails";
 import ProfileDetails from "./ProfileDetails";
 import ExpressYourself from "./ExpressYourself";
+import LifeStyle from "./LfieStyle";
 
 export {
     CareerDetails,
-    LifestyleFamilyDetails,
+    FamilyDetails,
     ProfileDetails,
-    ExpressYourself
+    ExpressYourself,
+    LifeStyle
 
 }
