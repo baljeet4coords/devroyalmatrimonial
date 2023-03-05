@@ -173,6 +173,16 @@ export enum SmokeDrink {
   No = "2",
   Occasionally = "3",
 }
+export enum Pets {
+  Doesnotmatter = "0",
+  Yes = "1",
+  No = "2",
+}
+export enum OwnHouseCar {
+  Doesnotmatter = "0",
+  Yes = "1",
+  No = "2",
+}
 
 export enum Challenged {
   None = "1",
@@ -272,6 +282,43 @@ export enum HeightInCm {
 //   No = "2",
 // }
 
+export enum BrotherSister{
+  Doesnotmatter="0",
+  No = "1",
+  Yes = "2",
+  More = "2+"
+}
+
+export enum FamilyIncomem{
+  Doesnotmatter="0",
+  High = "1",
+  Mid = "2",
+  Low = "3",
+  FamilyIncomem = "4"
+}
+export enum FamilyNativeCountry{
+  Doesnotmatter="0",
+  India = "1",
+  Other = "2",
+  FamilyNativeCountry = "3"
+}
+export enum FamilyNativeState{
+  Doesnotmatter="0",
+  Delhi = "1",
+  Punjab = "2",
+  Haryana = "3"
+}
+export enum FamilyNativeCity{
+  Doesnotmatter="0",
+  Gurgaon = "1",
+  Rohatak = "2",
+  Hisar = "3"
+}
+export enum LivingWithParrents{
+  Doesnotmatter="0",
+  Yes = "1",
+  No = "2",
+}
 export enum ReadyToSettleAbroad {
   Doesnotmatter="0",
   Yes = "1",

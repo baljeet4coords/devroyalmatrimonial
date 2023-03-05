@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
@@ -7,6 +8,14 @@ import { useState } from "react";
 import { city } from "../../../constants/DesiredData";
 
 const ExpressYourself: React.FC = () => {
+  //To scroll on top whan submit butotn is clicked on  previous page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const formik = useFormik({
     initialValues: {
       boutcareer: "",
@@ -16,18 +25,9 @@ const ExpressYourself: React.FC = () => {
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
-        
+      console.log(JSON.stringify(values, null, 1));
     },
   });
-  const [gender, setGender] = useState<string>("");
-  const [date, onDateChange] = useState(new Date());
-  const [dateP, setDateP] = useState(new Date());
-  const onChangeGender = (gender: string) => {
-    setGender(gender);
-  };
-
-  const cityList = city;
 
   return (
     <>
@@ -92,7 +92,7 @@ const ExpressYourself: React.FC = () => {
                 </Button>
               </Form>
             </Col>
-            <RightSection />
+            {/* <RightSection /> */}
           </Row>
         </Container>
       </div>
