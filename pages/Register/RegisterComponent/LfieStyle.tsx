@@ -1,4 +1,5 @@
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import CustomButton from "../../../components/Button/CustomButton";
 import classes from "./Component.module.scss";
 import Form from "react-bootstrap/Form";
@@ -7,21 +8,58 @@ import { DropdownGridSingleSelect } from "../../../components";
 import {
   BloodGroup,
   Diet,
+  OwnHouseCar,
+  Pets,
   SmokeDrink,
   Thalassemia,
 } from "../../../types/enums";
+import { useFormik } from "formik";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+  //To scroll on top whan submit butotn is clicked on  previous page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
+  //form state
+  const formik = useFormik({
+    initialValues: {
+      diet: "",
+      smoking: "",
+      drinking: "",
+      love_pets: "",
+      own_house: "",
+      own_car: "",
+      blood_group: "",
+      thalassemia: "",
+      religious_belief: "",
+    },
+    // validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 1));
+      checkFunction();
+    },
+  });
+
+  const checkFunction = () => {
+    nextPage(3);
+    
+  };
   return (
     <div className={classes.profile_Container}>
       <Container>
         <Row className="justify-content-center">
           <Col sm={12} md={5}>
             <h1>We would love to know about your Lifestyle.</h1>
-            <Form className={classes.formEdit}>
+            <small>mandatory</small>
+            <Form className={classes.formEdit} onSubmit={formik.handleSubmit} >
               <div className=" text-start d-flex flex-column gap-4">
                 {/* <h4 className="text-center">Lifestyle</h4> */}
                 <DropdownGridSingleSelect
@@ -41,17 +79,17 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 />
                 <DropdownGridSingleSelect
                   title="Love Pets"
-                  data={Diet}
+                  data={Pets}
                   nameid="love_pets"
                 />
                 <DropdownGridSingleSelect
                   title="Owns House"
-                  data={Diet}
+                  data={OwnHouseCar}
                   nameid="own_house"
                 />
                 <DropdownGridSingleSelect
                   title="Owns Car"
-                  data={Diet}
+                  data={OwnHouseCar}
                   nameid="own_car"
                 />
                 <DropdownGridSingleSelect
@@ -71,27 +109,21 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     name="religious_belief"
                     rows={3}
                     placeholder="Abotu Religious Belief"
-                    // onBlur={formik.handleBlur}
-                    // onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
                 </div>
-                {/* <FloatingLabel
-                controlId="floatingTextarea2"
-                label="About My Family"
-              >
-                <Form.Control
-                  as="textarea"
-                  placeholder="About My Family"
-                  style={{ height: "200px" }}
-                />
-              </FloatingLabel> */}
               </div>
-              <CustomButton onClick={() => nextPage(3)}>
+              <Button
+                variant="danger"
+                type="submit"
+                className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+              >
                 Add to my profile
-              </CustomButton>
+              </Button>
             </Form>
           </Col>
-          <RightSection />
+          {/* <RightSection /> */}
         </Row>
       </Container>
     </div>

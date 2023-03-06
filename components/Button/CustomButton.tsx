@@ -7,7 +7,7 @@ interface CustomButtonProps {
 
 const CustomButton:React.FC<CustomButtonProps> = ({ children, onClick }) => {
   return (
-    <button className={classes.customButton} onClick={onClick}>{children}</button>
+    <button type="submit" className={classes.customButton} onClick={onClick}>{children}</button>
   )
 };
 

@@ -12,7 +12,7 @@ const GenderRadioButtons: React.FC<GenderRadioButtons> = ({
   selectedGender,
 }) => {
   return (
-    <Form.Group>
+    <Form.Group className={classes.gender_Section_Mob}>
       <Form.Label>Gender</Form.Label>
       <div className={`${classes.gender_main}  d-flex`}>
         <Form.Check

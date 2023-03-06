@@ -32,6 +32,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     initialValues: {
       profilefor: "",
       datepic: "",
+      selectgender: "",
       groomIbrid: "",
       profilepic: "",
       cast: "",
@@ -40,12 +41,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       religion: "",
       addmanglic: "",
       maritalstatus: "",
-      childrenstatus: "11111",
+      childrenstatus: "",
       height: "",
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      checkFunction();
     },
   });
   const [gender, setGender] = useState<string>("");
@@ -53,15 +55,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const [dateP, setDateP] = useState(new Date());
   const onChangeGender = (gender: string) => {
     setGender(gender);
+    if (gender === "1") {
+      formik.values.selectgender = "Male";
+    } else {
+      formik.values.selectgender = "Female";
+    }
   };
 
-  const cityList = city;
-  // cityList.map((item, index) => {
-  //   console.log({
-  //     ...item,
-  //     id: index + 1,
-  //   });
-  // });
+  const checkFunction = () => {
+    nextPage(1);
+  };
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -75,7 +79,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   title="Profile For"
                   data={ProfileFor}
                   nameid="profilefor"
-                  // formicfun={formik}
                 />
                 <GenderRadioButtons
                   selectedGender={gender}
@@ -86,8 +89,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Form.Control
                     type="date"
                     name="datepic"
+                    max="2001-01-02"
                     placeholder="DateRange"
-                    // value={dateP}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
@@ -183,7 +186,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-                  onClick={() => nextPage(1)}
                 >
                   Continue
                 </Button>
