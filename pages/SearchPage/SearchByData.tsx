@@ -14,6 +14,11 @@ import { useState } from "react";
 
 const SearchByData: React.FC = () => {
   const [searchFor, setsearchFor] = useState<String>("bride");
+  const [astro, setastro] = useState<Boolean>(false);
+
+  const handleAstro = () => {
+    setastro(!astro);
+  };
 
   return (
     <>
@@ -36,11 +41,11 @@ const SearchByData: React.FC = () => {
               </Button>
               <Button
                 className={`${
-                    searchFor == "groom"
-                      ? (classes.Search_For_button,
-                        classes.Search_For_button_Active)
-                      : classes.Search_For_button
-                  }`}
+                  searchFor == "groom"
+                    ? (classes.Search_For_button,
+                      classes.Search_For_button_Active)
+                    : classes.Search_For_button
+                }`}
                 value="groom"
                 onClick={(event) => setsearchFor(event?.target.value)}
               >
@@ -167,32 +172,37 @@ const SearchByData: React.FC = () => {
             </ButtonGroup>
           </Form.Group>
           <hr className="mb-4" />
-          <div className={classes.SectionHeading}>
-            <h6>Astro -</h6>
+          <div className={classes.SectionHeading} onClick={handleAstro}>
+            <h6>Astro <span>{astro ? " -" : " +"}</span> </h6>
           </div>
-          <Form.Group className={classes.search_group}>
-            <Form.Label>Marital Status</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Doesn't Matter"
-              className={classes.input_search}
-            />
-          </Form.Group>
-          <Form.Group className={classes.search_group}>
-            <Form.Label>Horoscope Available ?</Form.Label>
-            <ButtonGroup className={classes.Button_Group}>
-              <Button
-                className={`${
-                  (classes.Search_For_button, classes.Search_For_button_Active)
-                }  `}
-              >
-                Yes
-              </Button>
-              <Button className={classes.Search_For_button}>
-                Doesn't Matter
-              </Button>
-            </ButtonGroup>
-          </Form.Group>
+          {astro && (
+            <div>
+              <Form.Group className={classes.search_group}>
+                <Form.Label>Marital Status</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Doesn't Matter"
+                  className={classes.input_search}
+                />
+              </Form.Group>
+              <Form.Group className={classes.search_group}>
+                <Form.Label>Horoscope Available ?</Form.Label>
+                <ButtonGroup className={classes.Button_Group}>
+                  <Button
+                    className={`${
+                      (classes.Search_For_button,
+                      classes.Search_For_button_Active)
+                    }  `}
+                  >
+                    Yes
+                  </Button>
+                  <Button className={classes.Search_For_button}>
+                    Doesn't Matter
+                  </Button>
+                </ButtonGroup>
+              </Form.Group>
+            </div>
+          )}
 
           <hr className="mb-4" />
           <div className={classes.SectionHeading}>
@@ -282,19 +292,20 @@ const SearchByData: React.FC = () => {
           </Form.Group>
           <Form.Group className={classes.search_group}>
             <Form.Label>Search by keyword</Form.Label>
-            <Form.Control
-            type="text"
-              className={classes.Input_With_text}
-            />
-            <Button className={`${classes.Input_With_text_Button}`} variant="light">Match all words</Button>
+            <Form.Control type="text" className={classes.Input_With_text} />
+            <Button
+              className={`${classes.Input_With_text_Button}`}
+              variant="light"
+            >
+              Match all words
+            </Button>
           </Form.Group>
 
-
-          <CustomButton onClick={()=> console.log('Search')} >
+          <CustomButton onClick={() => console.log("Search")}>
             Search
           </CustomButton>
 
-          {/* <Accordion defaultActiveKey={["0"]} className={classes.accordion}>
+          <Accordion defaultActiveKey={["0"]} className={classes.accordion}>
             <Accordion.Item eventKey="0">
               <Accordion.Header>Accordion Item #1</Accordion.Header>
               <Accordion.Body>
@@ -427,7 +438,7 @@ const SearchByData: React.FC = () => {
                 </Form.Group>
               </Accordion.Body>
             </Accordion.Item>
-          </Accordion> */}
+          </Accordion>
         </Form>
       </Container>
     </>

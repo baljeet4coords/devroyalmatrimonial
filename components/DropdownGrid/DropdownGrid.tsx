@@ -1,4 +1,6 @@
+import { FormikConsumer } from "formik";
 import { useRef, useState } from "react";
+import { Form } from "react-bootstrap";
 import classes from "./Dropdown.module.scss";
 
 interface Data {
@@ -8,10 +10,12 @@ interface Data {
 interface DropdownGridProps {
   title: string;
   data: {};
+  nameid: string;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
   data,
+  nameid,
 }) => {
   const combinedData = Object.entries(data).map(
     ([key, value]) => `${key}-${value}`
@@ -19,7 +23,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState<string[]>(combinedData);
   const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
-  console.log(selectedData);
+  // console.log(selectedData);
   const ref = useRef<any>();
 
   const searchDataFunc = (query: any) => {
@@ -35,17 +39,19 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   };
   return (
     <div className={classes.singleBox}>
-      <label>{title}</label>
+      <Form.Label>{title}</Form.Label>
       <div
         className={classes.inputBox}
         onClick={() => setActiveList(!activeList)}
       >
         <li className={classes.blankInput}>
-          <input
+          <Form.Control
             type="text"
+            name={nameid}
             placeholder={selectedData.val || "Select Some Options"}
             ref={ref}
-            onChange={(e) => searchDataFunc(e.target.value)}
+            // onBlur={formik.handleBlur}
+            // onChange={formik.handleChange}
           />
         </li>
         <div
@@ -56,6 +62,8 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <ul>
             {searchedData.map((item) => {
               const id = item.split("-")[1];
+              // console.log(item);
+
               return (
                 <li
                   key={id}

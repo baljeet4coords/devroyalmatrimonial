@@ -1,0 +1,25 @@
+@import "../../styles/constants.scss";
+
+.gender_main {
+  gap: 10px;
+  .Gender_from_input {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    position: relative;
+    padding: 0;
+    gap: 10px;
+
+    input{
+      margin: 0;
+      cursor: pointer;
+    }
+
+    label{
+      margin: 0;
+      position: initial;
+      cursor: pointer;
+      display: inline-block;
+    }
+  }
+}
