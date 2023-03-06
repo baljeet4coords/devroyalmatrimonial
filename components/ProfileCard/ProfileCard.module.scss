@@ -1,6 +1,6 @@
 @import "../../styles/constants.scss";
 .cardWrapper{
-    margin-top: 3rem;
+    margin: 3rem auto;
     width: 75%;
     img{
         // width: 255px;
@@ -98,7 +98,7 @@
         .rightBox{
             display: flex;
             width: 100%;
-            justify-content: end;
+            justify-content: flex-end;
             gap: 20px;
             padding: 0% 2rem;
         }

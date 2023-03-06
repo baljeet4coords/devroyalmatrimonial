@@ -1,0 +1,52 @@
+@import "../../styles/constants.scss";
+
+.cardWrapper {
+    margin: 3rem auto;
+    width: 75%;
+    height: 10rem;
+
+    .maincard {
+        min-height: 15rem;
+        width: 100%;
+        background-color: #fff;
+        position: absolute;
+        top: -7rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+        h1 {
+            color: #dc3545;
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: inherit;
+        }
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 300px) {
+
+    .cardWrapper {
+        width: 95%;
+
+        .maincard {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: inherit;
+            }
+        }
+    }
+
+
+}

@@ -3,6 +3,7 @@ import LoginrHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileMatch.module.scss";
 import React from 'react';
+import { Footer } from "../../components";
 
 
 
@@ -15,6 +16,7 @@ const ProfileMatch: React.FC = () => {
                     <LoginrHeader />
                 </Container>
                 <ProfileCard />
+                <Footer />
             </div>
         </React.Fragment>
     )
