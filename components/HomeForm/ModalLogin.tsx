@@ -37,7 +37,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
           ) : (
             <Form.Group>
               <Row>
-                <Col xs={3} className="mx-0 pe-0">
+                <Col xs={4} className="mx-0 pe-0">
                   <Form.Select
                     className={classes.MobileCode}
                     name="countryCode"
@@ -58,7 +58,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
                     )}
                   </Form.Select>
                 </Col>
-                <Col xs={9} className="mx-0 ps-0">
+                <Col xs={8} className="mx-0 ps-0">
                   <Form.Control
                     type="tel"
                     name="mobile"

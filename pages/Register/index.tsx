@@ -5,9 +5,10 @@ import React, { useState } from "react";
 import classes from "./RegisterDetails.module.scss";
 import {
   ProfileDetails,
-  LifestyleFamilyDetails,
   CareerDetails,
   ExpressYourself,
+  LifeStyle,
+  FamilyDetails,
 } from "./RegisterComponent";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
@@ -28,8 +29,8 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const Components = [
     <ProfileDetails key={0} nextPage={chooseMessage} />,
     <CareerDetails key={1} nextPage={chooseMessage} />,
-    <LifestyleFamilyDetails key={2} />,
-    <LifestyleFamilyDetails key={3} />,
+    <LifeStyle key={2} nextPage={chooseMessage}  />,
+    <FamilyDetails key={3} nextPage={chooseMessage} />,
     <ExpressYourself key={4} />,
   ];
 

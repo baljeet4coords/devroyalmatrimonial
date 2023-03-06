@@ -13,9 +13,7 @@ interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 
-const CareerDetails: React.FC<ProfileDetailsProps> = ({
-  nextPage,
-}: any) => {
+const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const checkFunction = () => {
     nextPage(2);
   };
@@ -24,12 +22,17 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
       <div className={classes.profile_Container}>
         <Container>
           <Row className="justify-content-center">
-            <h1>Great! You are about to complete your profile.</h1>
             <Col sm={12} md={5}>
+              <h1>Great! You are about to complete your profile.</h1>
               <small>mandatory</small>
+              <Form className={classes.formEdit} >
 
               <div className={`form-group ${classes.inputCover}`}>
-                <DropdownGridSingleSelect title="Country" data={CountryList} />
+                <DropdownGridSingleSelect
+                  title="Country"
+                  data={CountryList}
+                  nameid="country"
+                />
               </div>
               <div className={`form-group ${classes.inputCover}`}>
                 <label>State</label>
@@ -43,24 +46,28 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                 <DropdownGridSingleSelect
                   title="Residential Status"
                   data={ResidentialStatus}
+                  nameid="residential_status"
                 />
               </div>
               <div className={`form-group ${classes.inputCover}`}>
                 <DropdownGridSingleSelect
                   title="Ready to settle abroad"
                   data={ReadyToSettleAbroad}
+                  nameid="abroad_settle"
                 />
               </div>
               <div className={`form-group ${classes.inputCover}`}>
                 <DropdownGridSingleSelect
                   title="Highest Degree"
                   data={HighestEducationList}
+                  nameid="higest_degree"
                 />
               </div>
               <div className={`form-group ${classes.inputCover}`}>
                 <DropdownGridSingleSelect
                   title="Employed In"
                   data={HighestEducationList}
+                  nameid="employed_in"
                 />
               </div>
               <div className={`form-group ${classes.inputCover}`}>
@@ -83,6 +90,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
               <CustomButton onClick={() => checkFunction()}>
                 Complete Registration
               </CustomButton>
+              </Form>
             </Col>
             <RightSection />
           </Row>

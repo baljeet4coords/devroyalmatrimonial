@@ -17,6 +17,7 @@ const ExpressYourself: React.FC = () => {
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
       console.log(values);
+        
     },
   });
   const [gender, setGender] = useState<string>("");
@@ -81,11 +82,10 @@ const ExpressYourself: React.FC = () => {
                     onChange={formik.handleChange}
                   />
                 </div>
-
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 text-center`}
+                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                   // onClick={() => nextPage(1)}
                 >
                   Upadate

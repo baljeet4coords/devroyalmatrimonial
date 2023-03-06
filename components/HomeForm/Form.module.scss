@@ -44,11 +44,6 @@
     padding: 45px;
     background: #e7e7e6;
 
-    @media screen and (max-width: 500px) {
-      width: auto;
-      padding: 40px;
-    }
-
     .Form_btn {
       border-radius: 0px;
       box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
@@ -80,6 +75,7 @@
         font-size: 0.9rem;
       }
     }
+
     .Form_Login_checkDis {
       margin-bottom: 2rem;
 
@@ -114,15 +110,58 @@
   }
 }
 
+
+@media screen and (max-width: 991px)and (min-width : 678px) {
+  .modal_form {
+    Form {
+      // min-width: 50%;
+      // max-width: 50%;
+      width: 50%;
+      padding: 40px;
+
+      .MobileCode {
+        padding: 0.8rem 0.4rem;
+        background-position: right 0.5rem center;
+      }
+
+    }
+  }
+}
+
+
 @media screen and (max-width: 767px) {
   .Form_Wrapper {
     width: 100%;
     margin-top: 1rem;
 
     .modal_form {
-      label {
-        display: block;
+      Form {
+        width: 35vw;
+
+        .MobileCode {
+          padding: 0.8rem 1rem;
+        }
+
+        label {
+          display: block;
+        }
       }
+    }
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .modal_form {
+    Form {
+      width: 80%;
+      padding: 20px;
+
+      .MobileCode {
+        padding: 0.8rem 0.4rem;
+        background-position: right 0.5rem center;
+      }
+
     }
   }
 }
@@ -134,6 +173,19 @@
       padding: 4px 5px;
       background-position: right 0.1rem center !important;
       font-size: 0.8rem;
+    }
+  }
+
+  .modal_form {
+    Form {
+      width: 80%;
+      padding: 20px;
+
+      .MobileCode {
+        padding: 0.8rem 0.4rem;
+        background-position: right 0.1rem center;
+      }
+
     }
   }
 
