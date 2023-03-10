@@ -1,12 +1,24 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
 import { useState, useRef, useEffect } from "react";
 import classes from "./LandingPage.module.scss";
-import { Header, Footer, HomeImage,HomeForm,CustomButton,DemoCarousel,BrowserLink,HomeCard,cardItems } from "../../components";
+import {
+  Header,
+  Footer,
+  HomeImage,
+  HomeForm,
+  CustomButton,
+  DemoCarousel,
+  BrowserLink,
+  HomeCard,
+  cardItems,
+  LoginrHeader,
+} from "../../components";
 import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP } from "../../ducks/signUp/constants";
 import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
 import { useRouter } from "next/router";
+import { isLogin } from "../api/hello";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
@@ -31,9 +43,10 @@ const LandingPage: React.FC = () => {
       payload: values,
     });
   };
+
   return (
     <>
-      <Header />
+      {!isLogin ?  <Header /> : <LoginrHeader />}
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>

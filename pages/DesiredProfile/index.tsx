@@ -233,7 +233,7 @@ const DesiredProfilePage: React.FC = () => {
                     </ul>
                     <div className={`${activeList.type === "Marital" ? classes.active : ''} ${classes.inputBoxVal}`}>
                       <ul>
-                        {maritalStatusLinks.map((val, idd) => {
+                        {MaritalStatusList.map((val, idd) => {
                           return (
                             <li key={idd} onClick={() => getClickedData({ val: val, idd: idd, selectedInputQuery: "Marital" })} className={myMaritalArray.includes(val) ? classes.tabActive : ""}><span>{val}</span></li>
                           )

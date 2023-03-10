@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {FiBell} from "react-icons/fi";
+import { FiBell } from "react-icons/fi";
 import {
   Navbar,
   Container,
@@ -16,7 +16,7 @@ const LoginrHeader: React.FC = () => {
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
 
-  const showDropdown = (indx:number) => {
+  const showDropdown = (indx: number) => {
     setShow(indx);
   };
   const hideDropdown = () => {
@@ -35,23 +35,20 @@ const LoginrHeader: React.FC = () => {
         collapseOnSelect
         expand="lg"
         className={"p-0 color-light"}
-    
       >
         <Container fluid className={`${classes.Navbar_Wrapper}`}>
-            <Link href="/">
-              <div className={classes.navBar_logo}>
-                <Image
-                  src="/Images/Royal-Logo.png"
-                  alt="Royal Matrimorial logo"
-                />
-              </div>
-            </Link>
+          <Link href="/">
+            <div className={classes.navBar_logo}>
+              <Image
+                src="/Images/Royal-Logo.png"
+                alt="Royal Matrimorial logo"
+              />
+            </div>
+          </Link>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-                <Button
-                    variant="link"
-                    className="default-anchor p-3">
-                     LIVE CHAT
-                  </Button>
+            <Button variant="link" className="default-anchor p-3">
+              LIVE CHAT
+            </Button>
           </Nav>
           <Navbar.Collapse
             id="responsive-navbar-nav"
@@ -71,10 +68,10 @@ const LoginrHeader: React.FC = () => {
                   <Link href="/ProfileMatch">All Matches</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
-                  <Link href="/SearchPage">Shortlisted Profiles</Link>
+                  <Link href="/ShortListedProfile">Shortlisted Profiles</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
-                  <Link href="/SearchPage">Profile Visitors</Link>
+                  <Link href="/ProfileVisitor">Profile Visitors</Link>
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown
@@ -94,11 +91,38 @@ const LoginrHeader: React.FC = () => {
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
-            <Nav className="ms-auto">          
-                  <Link href="/SearchPage"><FiBell/></Link>
-
-                  <Link href="/SearchPage"><Image className={classes.circleImg} src="/Images/circle_header_icon.jpg"/></Link>
-              </Nav>
+            <Nav className="ms-auto">
+              <Link href="/SearchPage">
+                <FiBell />
+              </Link>
+              <NavDropdown
+                title={
+                  <Link href="/SearchPage">
+                    <Image
+                      className={classes.circleImg}
+                      src="/Images/circle_header_icon.jpg"
+                    />
+                  </Link>
+                }
+                id="ProfileDropdown"
+                menuVariant="dark"
+                show={show === 2 ? true : false}
+                onMouseEnter={() => showDropdown(2)}
+                onMouseLeave={hideDropdown}
+                className={classes.profileAvtarDrop}
+                align="end"
+              >
+                <NavDropdown.Item as="li">
+                  <Link href="/ProfileMatch">My Profile</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item as="li">
+                  <Link href="/DesiredProfile">Desired Partner Profile</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item as="li" className="text-center">
+                  <Link href="/">Sign Out</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
