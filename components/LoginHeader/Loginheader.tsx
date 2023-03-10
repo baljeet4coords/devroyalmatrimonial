@@ -113,7 +113,7 @@ const LoginrHeader: React.FC = () => {
                 align="end"
               >
                 <NavDropdown.Item as="li">
-                  <Link href="/ProfileMatch">My Profile</Link>
+                  <Link href="/MyProfile">My Profile</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
                   <Link href="/DesiredProfile">Desired Partner Profile</Link>

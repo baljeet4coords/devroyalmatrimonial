@@ -1,0 +1,253 @@
+@import "../../styles/constants.scss";
+
+.cardWrapper {
+    margin: -3rem auto;
+    width: 75%;
+
+    img {
+        // width: 255px;
+        width: 100%;
+    }
+
+    SVG {
+        cursor: pointer;
+    }
+
+    .cardInfo {
+        background-color: $light_grey_bg;
+        border-right: 1px solid gainsboro;
+
+        .MyProfileMiddle {
+            height: 100%;
+            display: flex;
+            padding: 2rem;
+            gap: 3rem;
+            color: dimgray;
+            font-weight: 500;
+
+            .MiddleLeft {
+                height: 100%;
+
+                .MiddleIconSecMain {
+                    display: flex;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                    .MiddleIconSec {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        gap: 0.4rem;
+                        align-items: center;
+
+                        svg {
+                            font-size: 4rem;
+                            color: rgb(10, 11, 29);
+                        }
+                    }
+                }
+
+                .PreviewAlbum{
+                    color: red;
+                    cursor: pointer;
+                    font-weight: 500;
+                }
+                .AddDetailsHeading{
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: black;
+    
+                }
+                .AddDetailsSubHeading{
+                    font-size: 14px;
+                    color: grey;
+                    margin-bottom: 1rem;
+                    text-transform: capitalize;
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .profileCardIiconSection{
+            
+            .AddDetailsHeading{
+                font-size: 20px;
+                font-weight: 600;
+                color: black;
+
+            }
+        }
+    }
+
+    .rightBox {
+        background-color: $light_grey_bg;
+        // color: $white_txt;
+        color: #c3c3c3;
+        text-align: center;
+        padding: 0;
+        // width: auto;
+        transition: all 0.75s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .RightPrograss{
+            border: 1rem solid rgb(14, 14, 63);
+            border-radius: 50%;
+            height: 6rem;
+            width: 6rem;
+            border-bottom-left-radius: 0%;
+            border-bottom-right-radius: 0%;
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+        }
+        .CompleteProfileHEd {
+            line-height: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0;
+            color: #383535;
+            margin-bottom: 1rem;
+        }
+
+        svg {
+            margin-right: 20px;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.bg {
+    background: rgb(231, 230, 230);
+}
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .cardWrapper {
+        margin-top: 3rem;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .cardInfo {
+            .UserName_Section {
+                min-height: 60px;
+            }
+
+        }
+
+        .rightBox {
+            display: flex;
+            width: 100%;
+            justify-content: flex-end;
+            gap: 20px;
+            padding: 0% 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+    .cardWrapper {
+        margin-top: 3rem;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .cardInfo {
+            .UserName_Section {
+                min-height: 60px;
+            }
+
+        }
+
+        .rightBox {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0rem 2rem;
+
+            p {
+                padding: 0;
+                text-align: center;
+                padding: 0rem 1rem;
+
+                svg {
+                    margin: 0%;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 415px) {
+    .bg {
+        background-color: #2e97ea;
+    }
+
+    .cardWrapper {
+        margin-top: 3rem;
+        width: 85%;
+
+        img {
+            width: 100%;
+        }
+
+        .cardInfo {
+            .UserName_Section {
+                min-height: 50px;
+            }
+
+        }
+
+        .rightBox {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0rem 2rem;
+
+            p {
+                padding: 0;
+                text-align: center;
+                padding: 0rem 1rem;
+
+                svg {
+                    margin: 0%;
+                }
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .cardWrapper {
+
+        .cardInfo {
+            ul {
+                height: auto;
+            }
+        }
+
+        .rightBox {
+            p {
+                padding: 0rem 0.5rem;
+            }
+        }
+    }
+}
