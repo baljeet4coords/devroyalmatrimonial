@@ -8,9 +8,8 @@ import React, { useState } from "react";
 const Search: React.FC = () => {
   const [searchData, setSearchData] = useState<string>("searchByData");
 
-  const DataOnclick = (searchtype: String) => {
+  const DataOnclick = (searchtype: string) => {
     setSearchData(searchtype);
-    console.log(searchtype);
   };
   return (
     <>

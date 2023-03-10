@@ -68,9 +68,9 @@ export enum AnnualIncomeProfile0 {
   Greaterhtan2Cr = "11",
 }
 
-export type AnnualIncomeProfile11 = Omit<AnnualIncomeProfile0, 'Doesnotmatter'>;
-export enum MotherTongue {
-  Doesnotmatter = "1",
+export enum MotherTongueWith0 {
+  Doesnotmatter = "0",
+  Hindi = "1",
   Hindi_Delhi_Punjabi = "2",
   Hindi_MP_CG = "3",
   Hindi_UP_UK = "4",
@@ -98,7 +98,36 @@ export enum MotherTongue {
   English = "28",
 }
 
-export enum Occupation {
+export enum MotherTongue {
+  Hindi = "1",
+  Hindi_Delhi_Punjabi = "2",
+  Hindi_MP_CG = "3",
+  Hindi_UP_UK = "4",
+  Punjabi = "5",
+  Hindi_Bihar_Jharkhand = "6",
+  Hindi_Rajasthan = "7",
+  Haryanvi = "8",
+  Himachali = "9",
+  Kashmiri = "10",
+  Sindhi = "11",
+  Urdu = "12",
+  Marathi = "13",
+  Gujarati = "14",
+  Kutchi = "15",
+  Konkani = "16",
+  Tamil = "18",
+  Telugu = "19",
+  Kannada = "20",
+  Malayalam = "21",
+  Tulu = "22",
+  Bengali = "24",
+  Oriya = "25",
+  Assamese = "26",
+  Sikkim_or_Nepali = "27",
+  English = "28",
+}
+
+export enum OccupationWith0 {
   Doesnotmatter = "0",
   GovernmentPublicSector = "1",
   CivilServices = "2",
@@ -128,7 +157,36 @@ export enum Occupation {
   Others = "26",
 }
 
-export enum Religion {
+export enum Occupation {
+  GovernmentPublicSector = "1",
+  CivilServices = "2",
+  Defense = "3",
+  BusinessSelfEmployed = "4",
+  NotWorking = "5",
+  Administration = "6",
+  AdvertisingMediaEntertainment = "7",
+  Agricultural = "8",
+  AirlineAviation = "9",
+  Architecture = "10",
+  ArmedForces = "11",
+  BankingFinance = "12",
+  BPOCustomerService = "13",
+  CorporateManagementProfessionals = "14",
+  Doctor = "15",
+  TeacherEducationTraining = "16",
+  Engineering = "17",
+  Hospitality = "18",
+  LawEnforcement = "19",
+  Legal = "20",
+  MerchantNavy = "21",
+  OtherMedicalHealthcare = "22",
+  ScienceResearch = "23",
+  SoftwareIT = "24",
+  TopManagement = "25",
+  Others = "26",
+}
+
+export enum ReligionWith0 {
   Doesnotmatter = "0",
   Hindu = "1",
   Muslim = "2",
@@ -142,7 +200,28 @@ export enum Religion {
   Other = "10",
 }
 
+export enum Religion {
+  Hindu = "1",
+  Muslim = "2",
+  Sikh = "3",
+  Christian = "4",
+  Buddhist = "5",
+  Jain = "6",
+  Parsi = "7",
+  Jewish = "8",
+  Bahai = "9",
+  Other = "10",
+}
+
 export enum ResidentialStatus {
+  Citizen = "1",
+  PermanentResident = "2",
+  WorkPermit = "3",
+  StudentVisa = "4",
+  TemporaryVisa = "5",
+}
+
+export enum ResidentialStatusWith0 {
   Doesnotmatter = "0",
   Citizen = "1",
   PermanentResident = "2",
@@ -152,6 +231,13 @@ export enum ResidentialStatus {
 }
 
 export enum Manglik {
+  Manglik = "1",
+  NonManglik = "2",
+  Angshik_partialmanglik = "3",
+  NA = "4",
+}
+
+export enum ManglikWith0 {
   Doesnotmatter = "0",
   Manglik = "1",
   NonManglik = "2",
@@ -159,7 +245,7 @@ export enum Manglik {
   NA = "4",
 }
 
-export enum Diet {
+export enum DietWith0 {
   Doesnotmatter = "0",
   Vegetarian = "1",
   NonVegetarian = "2",
@@ -167,19 +253,44 @@ export enum Diet {
   Eggetarian = "4",
 }
 
-export enum SmokeDrink {
+export enum Diet {
+  Vegetarian = "1",
+  NonVegetarian = "2",
+  Jain = "3",
+  Eggetarian = "4",
+}
+
+export enum SmokeDrinkWith0 {
   Doesnotmatter = "0",
   Yes = "1",
   No = "2",
   Occasionally = "3",
 }
-export enum Pets {
+
+export enum SmokeDrink {
+  Yes = "1",
+  No = "2",
+  Occasionally = "3",
+}
+
+export enum PetsWith0 {
   Doesnotmatter = "0",
   Yes = "1",
   No = "2",
 }
-export enum OwnHouseCar {
+
+export enum Pets {
+  Yes = "1",
+  No = "2",
+}
+
+export enum OwnHouseCarWith0 {
   Doesnotmatter = "0",
+  Yes = "1",
+  No = "2",
+}
+
+export enum OwnHouseCar {
   Yes = "1",
   No = "2",
 }
@@ -266,67 +377,102 @@ export enum Privacy_Setting {
   ShowntoInterestsent_rejected = "3",
 }
 
-export enum HeightInCm {
-  FOUR_FEET = 121.92,
-  FIVE_FEET = 152.4,
-  SIX_FEET = 182.88,
-  SEVEN_FEET = 213.36,
-  EIGHT_FEET = 243.84,
-  NINE_FEET = 274.32,
-  TEN_FEET = 304.8,
-}
-
-// export enum Challenged {
-//   Doesnotmatter="0",
-//   Yes = "1",
-//   No = "2",
-// }
-
-export enum BrotherSister{
-  Doesnotmatter="0",
-  No = "1",
-  Yes = "2",
-  More = "2+"
-}
-
-export enum FamilyIncomem{
-  Doesnotmatter="0",
-  High = "1",
-  Mid = "2",
-  Low = "3",
-  FamilyIncomem = "4"
-}
-export enum FamilyNativeCountry{
-  Doesnotmatter="0",
-  India = "1",
-  Other = "2",
-  FamilyNativeCountry = "3"
-}
-export enum FamilyNativeState{
-  Doesnotmatter="0",
-  Delhi = "1",
-  Punjab = "2",
-  Haryana = "3"
-}
-export enum FamilyNativeCity{
-  Doesnotmatter="0",
-  Gurgaon = "1",
-  Rohatak = "2",
-  Hisar = "3"
-}
-export enum LivingWithParrents{
-  Doesnotmatter="0",
+export enum ChallengedWith0 {
+  Doesnotmatter = "0",
   Yes = "1",
   No = "2",
 }
+
+export enum BrotherSister {
+  Doesnotmatter = "0",
+  No = "1",
+  Yes = "2",
+  More = "2+",
+}
+
+export enum FamilyIncomeWith0 {
+  Doesnotmatter = "0",
+  High = "1",
+  Mid = "2",
+  Low = "3",
+  FamilyIncomem = "4",
+}
+
+export enum FamilyIncome {
+  High = "1",
+  Mid = "2",
+  Low = "3",
+  FamilyIncomem = "4",
+}
+
+export enum FamilyNativeCountryWith0 {
+  Doesnotmatter = "0",
+  India = "1",
+  Other = "2",
+  FamilyNativeCountry = "3",
+}
+
+export enum FamilyNativeCountry {
+  India = "1",
+  Other = "2",
+  FamilyNativeCountry = "3",
+}
+
+export enum FamilyNativeStateWith0 {
+  Doesnotmatter = "0",
+  Delhi = "1",
+  Punjab = "2",
+  Haryana = "3",
+}
+
+export enum FamilyNativeState {
+  Delhi = "1",
+  Punjab = "2",
+  Haryana = "3",
+}
+
+export enum FamilyNativeCityWith0 {
+  Doesnotmatter = "0",
+  Gurgaon = "1",
+  Rohatak = "2",
+  Hisar = "3",
+}
+
+export enum FamilyNativeCity {
+  Gurgaon = "1",
+  Rohatak = "2",
+  Hisar = "3",
+}
+
+export enum LivingWithParrentsWith0 {
+  Doesnotmatter = "0",
+  Yes = "1",
+  No = "2",
+}
+
+export enum LivingWithParrents {
+  Yes = "1",
+  No = "2",
+}
+
+export enum ReadyToSettleAbroadWith0 {
+  Doesnotmatter = "0",
+  Yes = "1",
+  No = "2",
+}
+
 export enum ReadyToSettleAbroad {
-  Doesnotmatter="0",
+  Yes = "1",
+  No = "2",
+}
+
+export enum isHivWith0 {
+  Doesnotmatter = "0",
   Yes = "1",
   No = "2",
 }
 
 export enum isHiv {
-  Doesnotmatter="0",
-  yes = "1",
-  no = "2",
+  Yes = "1",
+  No = "2",
 }

@@ -15,7 +15,7 @@ const LandingPage: React.FC = () => {
   const router = useRouter();
   const isSignUp = useSelector(selectSignUpSuccess);
   if (isSignUp && isSignUp?.message === "ok") {
-    router.push("/Register/RegisterDetails");
+    router.push("/Register/");
   }
   const [activeId, setActiveId] = useState<string>();
 

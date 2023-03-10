@@ -1,5 +1,4 @@
-import { FormikConsumer } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import classes from "./Dropdown.module.scss";
 
@@ -11,11 +10,13 @@ interface DropdownGridProps {
   title: string;
   data: {};
   nameid: string;
+  selectedDataFn: (val: Data) => void;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
   data,
   nameid,
+  selectedDataFn,
 }) => {
   const combinedData = Object.entries(data).map(
     ([key, value]) => `${key}-${value}`
@@ -23,7 +24,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState<string[]>(combinedData);
   const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
-  // console.log(selectedData);
+  
   const ref = useRef<any>();
 
   const searchDataFunc = (query: any) => {
@@ -35,8 +36,10 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
 
   const getClickedData = (data: Data) => {
     setSelectedData(data);
+    selectedDataFn(data);
     ref.current.value = "";
   };
+  
   return (
     <div className={classes.singleBox}>
       <Form.Label>{title}</Form.Label>
@@ -48,10 +51,9 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <Form.Control
             type="text"
             name={nameid}
-            placeholder={selectedData.val || "Select Some Options"}
+            placeholder={selectedData.val.split("-")[0] || "Select Some Options"}
             ref={ref}
-            // onBlur={formik.handleBlur}
-            // onChange={formik.handleChange}
+            onChange={e => searchDataFunc(e.target.value)}
           />
         </li>
         <div
@@ -61,9 +63,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
         >
           <ul>
             {searchedData.map((item) => {
-              const id = item.split("-")[1];
-              // console.log(item);
-
+              const [name, id] = item.split("-");
               return (
                 <li
                   key={id}
@@ -75,7 +75,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                   }
                   className={selectedData.val === item ? classes.tabActive : ""}
                 >
-                  <span>{item}</span>
+                  <span>{name}</span>
                 </li>
               );
             })}
