@@ -1,0 +1,117 @@
+@import "../../../styles/constants.scss";
+
+.emptyDiv {
+    height: 1rem;
+}
+
+.rghtSec {
+    background-color: $milkWhite_bg;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #34495e;
+
+    hr {
+        color: inherit;
+        border: 0;
+        border-top: 1px solid;
+        opacity: .25;
+        margin: unset;
+        width: fit-content;
+    }
+
+    .DetailsTypeSec {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #d82020;
+        margin-bottom: 1.5rem;
+
+        .DetailsTypeLeft {
+            display: flex;
+            gap: 0.3rem;
+            align-items: baseline;
+            font-size: 20px;
+
+            svg {
+                font-size: 21px;
+            }
+
+            .DetailsTypeLeft_subHeading {
+                color: #999;
+                font-size: 14px;
+            }
+        }
+
+        .Edit {
+            font-size: 17px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    }
+
+    button {
+        width: 100%;
+    }
+
+    ul {
+        list-style-type: none;
+        font-size: 0.875rem;
+        text-align: left;
+        padding: 2rem 0 0 0;
+        border-top: 1px solid #34495e;
+
+        li {
+            :nth-last-child(2) {
+                color: #999;
+                margin-bottom: 0.2rem;
+            }
+
+            .verify {
+                display: flex;
+                justify-content: space-between;
+
+                .isverifyTrued {
+                    color: #d82020;
+                    cursor: pointer;
+                }
+
+                .isverifyFalse {
+                    color: #999;
+                    cursor: pointer;
+                }
+            }
+
+            .input_Value {
+                color: #979090;
+                font-weight: 600;
+                margin: 0.5rem 0;
+            }
+
+            .input_Value_NotFilled {
+                color: #ed2d2d;
+                font-weight: 500;
+                margin: 0.5rem 0;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+
+    .rghtSec {
+
+        button {
+            padding: 0.7rem 1rem;
+        }
+    }
+}

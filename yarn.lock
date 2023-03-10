@@ -333,6 +333,57 @@
   dependencies:
     tslib "^2.4.0"
 
+"@syncfusion/ej2-base@~20.4.48", "@syncfusion/ej2-base@~20.4.51":
+  version "20.4.51"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-base/-/ej2-base-20.4.51.tgz#93a551c1ee092815233d4fa06200318ffd9e9fbc"
+  integrity sha512-nVyqylTXFuEMZARmqAtGQVadqDwwqgKSC4r1IYwSEc8FoEa2mBxlhQWPjBN7SucwAGAh9aQvnkqIJjSCy8jZiA==
+  dependencies:
+    "@syncfusion/ej2-icons" "~20.4.48"
+
+"@syncfusion/ej2-data@~20.4.48":
+  version "20.4.48"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-data/-/ej2-data-20.4.48.tgz#2a266459d9f261884c0a23b9e78c233d924720ea"
+  integrity sha512-RQ0bplZ20GmmBuJYXSMKVGUGpap0Sx7Zls4tL7+IBIIq+jdGNat80b6pemJAKxyZfy3iCB0+L4L2LVAlfN+KTw==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.48"
+
+"@syncfusion/ej2-icons@~20.4.48":
+  version "20.4.48"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-icons/-/ej2-icons-20.4.48.tgz#f8f4930a0c08414f97d1b082d782afe5f57a541d"
+  integrity sha512-uPV4RzwxQ3cj6Zx4h6VvsEmrCGL9ssKG62Pa12k1fow915QSSQkJ0WZ6dBHIdXbk5nSDp2J2wDlV+5h3Ici+sg==
+
+"@syncfusion/ej2-progressbar@20.4.48":
+  version "20.4.48"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-progressbar/-/ej2-progressbar-20.4.48.tgz#306136807b0b6867c6e57f3490bf9f87002a6efe"
+  integrity sha512-DCbk9KnHhFo39P13ytQomlbOhcn1Lfkmwvw5TNQWiSFRkmapdKfv81iXtznpNkmsqtMDsgbUh9lrarw+9yVG0Q==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.48"
+    "@syncfusion/ej2-data" "~20.4.48"
+    "@syncfusion/ej2-svg-base" "~20.4.48"
+
+"@syncfusion/ej2-react-base@~20.4.48":
+  version "20.4.48"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-react-base/-/ej2-react-base-20.4.48.tgz#d67416be751299bc026e44c641e3f1d656932434"
+  integrity sha512-hm12BxvIFkdArD/v7w+yeymY4tQl/8lGQcXp3cgja/RLSjt5FNTVYS3mRRmy++HIocqdiYGhTXnEW8V4PLy+QQ==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.48"
+
+"@syncfusion/ej2-react-progressbar@^20.4.48":
+  version "20.4.48"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-react-progressbar/-/ej2-react-progressbar-20.4.48.tgz#20b0a40eb75f766b1517c348534d69057d524535"
+  integrity sha512-KnGl4qNZbFBx8uPvc4rK/RRfAH3g3LcSQCsO5z93vnoOZ/pyleS5ja1QiP4ZfaZj7MdldfWgv+4y30mKQkjPWg==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.48"
+    "@syncfusion/ej2-progressbar" "20.4.48"
+    "@syncfusion/ej2-react-base" "~20.4.48"
+
+"@syncfusion/ej2-svg-base@~20.4.48":
+  version "20.4.53"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-svg-base/-/ej2-svg-base-20.4.53.tgz#d2087688552a1fb29bc04bbf644e90424b7bf6f3"
+  integrity sha512-YWsywHf1JW7k1EqQVZS+HONR8RksToTG40sQc0uVnjrpFm4d3cLE94ANYcn6PXQEoJ1qSuYdQ8BdenYuqkGx4w==
+  dependencies:
+    "@syncfusion/ej2-base" "~20.4.51"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
