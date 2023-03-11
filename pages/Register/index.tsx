@@ -3,13 +3,11 @@ import RegisterHeader from "./RegisterComponent/RegisterHeader/RegisterHeader";
 import { Footer } from "../../components";
 import React, { useState } from "react";
 import classes from "./RegisterDetails.module.scss";
-import {
-  ProfileDetails,
-  CareerDetails,
-  ExpressYourself,
-  LifeStyle,
-  FamilyDetails,
-} from "./RegisterComponent";
+import ProfileDetails from "../ProfileDetails";
+import CareerDetails from "./RegisterComponent/CareerDetails";
+import ExpressYourself from "./RegisterComponent/ExpressYourself";
+import FamilyDetails from "./RegisterComponent/FamilyDetails";
+import LifeStyle from "./RegisterComponent/LfieStyle";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
