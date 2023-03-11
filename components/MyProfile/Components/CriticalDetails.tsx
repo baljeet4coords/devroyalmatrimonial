@@ -1,7 +1,11 @@
 import { FiUserX } from "react-icons/fi";
+import { FC } from "react";
 import classes from "./GlobalDetails.module.scss";
 
-const CriticalDetials: React.FC = () => {
+interface MyComponentProps {
+  setCriticalDetails: (details: boolean) => void;
+}
+const CriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
   return (
     <>
       <div className={classes.content}>
@@ -13,7 +17,12 @@ const CriticalDetials: React.FC = () => {
               - Can be edit only once in lifetime
             </span>
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setCriticalDetails(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.Userdetails}>
           <div className={classes.UserdetailsSec}>

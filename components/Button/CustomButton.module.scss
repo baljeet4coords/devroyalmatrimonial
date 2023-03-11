@@ -19,3 +19,20 @@
         transition: 0.5s ease-in-out;
     }
 }
+
+
+
+    .editcustomButton {
+        padding: 0.75rem 2.5rem;
+        font-weight: $fw500;
+        outline: none;
+        border: 0;
+        background-color: $red_bg;
+        color: $white_txt;
+        transition: 0.5s ease-in-out;
+        width: auto;
+    }
+
+    .editcustomButtonGray {
+        background-color: $darkGrey_bg;
+    }

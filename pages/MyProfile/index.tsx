@@ -14,8 +14,13 @@ import {
   LikeDetails,
   MyProfileRightSec,
 } from "../../components/MyProfile/Components";
+import { EditCriticalDetials } from "../../components/EditMyProfile";
+import EditBasicDetials from "../../components/EditMyProfile/EditBasicDetails";
 
 const MyProfile: React.FC = () => {
+  const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
+  const [basicDetails, setBasicDetails] = useState<boolean>(false);
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
@@ -35,9 +40,17 @@ const MyProfile: React.FC = () => {
         <Container className={classes.detailsWrapper}>
           <Row>
             <Col sm={9} md={8} className="p-0">
-              <CriticalDetials />
+              {criticalDetails ? (
+                <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
+              ) : (
+                <CriticalDetials setCriticalDetails={setCriticalDetails} />
+              )}
               <hr />
-              <BasicDetails />
+              {basicDetails ? (
+                <EditBasicDetials setBasicDetails={setBasicDetails} />
+              ) : (
+                <BasicDetails setBasicDetails={setBasicDetails} />
+              )}
               <hr />
               <AboutMeDetails />
               <hr />

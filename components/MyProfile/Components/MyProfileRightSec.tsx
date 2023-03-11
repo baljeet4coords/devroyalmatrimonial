@@ -64,23 +64,30 @@ const MyProfileRightSec: React.FC = () => {
     ],
     NotMatch: [
       {
-        name: "Landline No.",
+        name: "Sun Sign",
         value: "NA",
       },
       {
-        name: "Suitable time to call",
+        name: "Rashi/Moon sign",
         value: "NA",
       },
       {
-        name: "Contact Address",
+        name: "Nakshatra",
         value: "NA",
       },
       {
-        name: "Parent's Address",
+        name: "Manglic",
+        value: "Non-Manglic",
+      },
+      {
+        name: "Horoscope Privacy",
         value: "NA",
       },
     ],
   };
+  // const HoroScopreNotNecessary = {
+
+  // }
   return (
     <>
       <div className={classes.rghtSec}>
@@ -145,6 +152,36 @@ const MyProfileRightSec: React.FC = () => {
         <CustomButton onClick={() => console.log("tab")}>
           Unlock Janampatri
         </CustomButton>
+      </div>
+      <hr />
+      <div className={classes.rghtSec}>
+        <div className={classes.DetailsTypeSec}>
+          <div className={classes.input_Value}>
+            Horoscope match is not necessary
+          </div>
+          <span className={classes.Edit}> Edit</span>
+        </div>
+        <ul>
+          {HoroScopeD.NotMatch.map((item) => {
+            return (
+              <li key={item.name}>
+                <p>{item.name}</p>
+                <p
+                  className={
+                    item.value === "NA"
+                      ? classes.input_Value_NotFilled
+                      : classes.input_Value
+                  }
+                >
+                  {item.value === "NA" ? "Not Field in" : item.value}{" "}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+        {/* <CustomButton onClick={() => console.log("tab")}>
+          Unlock Janampatri
+        </CustomButton> */}
       </div>
     </>
   );

@@ -50,8 +50,9 @@
             }
         }
     }
-    .userDiscription{
-        p{
+
+    .userDiscription {
+        p {
             font-size: 14px;
             color: #979090;
             margin: 1rem auto;
@@ -60,7 +61,7 @@
         }
     }
 
-    .UserVerified{
+    .UserVerified {
         display: flex;
         background-color: #e3e3e3;
         align-items: center;
@@ -69,12 +70,13 @@
         gap: 0.5rem;
         color: lightslategray;
         font-size: 14px;
-    
-        svg{
+
+        svg {
             font-size: 20px;
             color: rgb(73, 73, 248);
         }
-        span{
+
+        span {
             color: #ed2d2d;
             font-weight: 600;
             text-transform: capitalize;
@@ -100,6 +102,7 @@
                 font-weight: 600;
                 margin: 0%;
             }
+
             .input_Value_NotFilled {
                 color: #ed2d2d;
                 font-weight: 500;
@@ -109,16 +112,72 @@
         }
     }
 
-    .pin{
+    .pin {
         color: #ed2d2d;
         display: flex;
         justify-content: flex-end;
         align-items: baseline;
         margin: 1rem 0;
-        svg{
+
+        svg {
             margin-right: 2px;
             font-size: 22px;
             color: #999;
+        }
+    }
+}
+
+
+
+
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+
+
+    .content {
+        padding: 1rem;
+
+        .DetailsTypeSec {
+
+            .DetailsTypeLeft {
+                padding-right: 0.5rem;
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .content {
+        padding: 1rem;
+        margin-right: 0px;
+
+        .DetailsTypeSec {
+
+            .DetailsTypeLeft {
+                display: flex;
+                gap: 0.3rem;
+                align-items: baseline;
+                font-size: 16px;
+
+                svg {
+                    font-size: 21px;
+                }
+
+                .DetailsTypeLeft_subHeading {
+                    color: #999;
+                    font-size: 14px;
+                }
+            }
+        }
+        .UserVerified{
+            font-size: 10px;
+
+            span{
+                font-size: 10px !important;
+            }
         }
     }
 }

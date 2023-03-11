@@ -1,8 +1,13 @@
+import { FC } from "react";
 import { FiUser } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 import classes from "./GlobalDetails.module.scss";
 
-const BasicDetails: React.FC = () => {
+
+interface MyComponentProps {
+  setBasicDetails: (details: boolean) => void;
+}
+const BasicDetails:FC<MyComponentProps> = ({ setBasicDetails }) => {
   const BasicDetails = [
     {
       name: "Height",
@@ -41,7 +46,12 @@ const BasicDetails: React.FC = () => {
             <FiUser />
             Basic Details
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setBasicDetails(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.Username}>
           <p>

@@ -110,8 +110,70 @@
 
     .rghtSec {
 
+        ul{
+            li{
+                p{
+                    flex-wrap: wrap;
+                }
+            }
+        }
         button {
             padding: 0.7rem 1rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 540px) and (min-width:423px) {
+    .rghtSec {
+        padding: 2rem;
+
+        ul {
+            padding: 2rem;
+            padding-bottom: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 415px) {
+
+    .rghtSec {
+        padding: 2rem;
+
+        ul {
+            padding: 2rem;
+            padding-bottom: 0;
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .cardWrapper {
+
+        .cardInfo {
+            ul {
+                height: auto;
+            }
+        }
+
+    }
+    .rghtSec {
+        padding: 1rem;
+
+        ul {
+            padding: 1.5rem;
+            padding-bottom: 0;
         }
     }
 }
