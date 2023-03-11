@@ -333,7 +333,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@syncfusion/ej2-base@~20.4.48", "@syncfusion/ej2-base@~20.4.51":
+"@syncfusion/ej2-base@^20.4.51", "@syncfusion/ej2-base@~20.4.48", "@syncfusion/ej2-base@~20.4.51":
   version "20.4.51"
   resolved "https://registry.yarnpkg.com/@syncfusion/ej2-base/-/ej2-base-20.4.51.tgz#93a551c1ee092815233d4fa06200318ffd9e9fbc"
   integrity sha512-nVyqylTXFuEMZARmqAtGQVadqDwwqgKSC4r1IYwSEc8FoEa2mBxlhQWPjBN7SucwAGAh9aQvnkqIJjSCy8jZiA==

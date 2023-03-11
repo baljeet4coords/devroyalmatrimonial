@@ -86,7 +86,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       height: "",
     },
     onSubmit: (values) => {
-      const data = JSON.stringify({ actionType, userId, ...values }, null, 1);
+      const data = JSON.stringify(
+        { actionType: "c", userId: "1", ...values },
+        null,
+        1
+      );
       post(data);
       checkFunction();
     },

@@ -1,25 +1,25 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "./constants";
+import { STEP_1, STEP_1_SUCCESS, STEP_1_FAILURE } from "./constants";
 import axios from "axios";
 
-import { SignUpActions } from "./actions";
+import { Step1Actions } from "./actions";
 
-function* signUpSaga(action: SignUpActions): any {
+function* signUpSaga(action: Step1Actions): any {
   try {
-    if (action.type === SIGN_UP) {
+    if (action.type === STEP_1) {
       const response = yield call(
         axios.post,
         `${process.env.NEXT_PUBLIC_URL}/auth/signUp`,
         action.payload
       );
       const responseData = response.data;
-      yield put({ type: SIGN_UP_SUCCESS, response: responseData });
+      yield put({ type: STEP_1_SUCCESS, response: responseData });
     }
   } catch (error) {
-    yield put({ type: SIGN_UP_FAILURE, error });
+    yield put({ type: STEP_1_FAILURE, error });
   }
 }
 
 export default function* rootSaga() {
-  yield takeEvery(SIGN_UP, signUpSaga);
+  yield takeEvery(STEP_1, signUpSaga);
 }

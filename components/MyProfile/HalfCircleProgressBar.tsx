@@ -12,9 +12,8 @@ import {
   ProgressTheme,
   ILoadedEventArgs,
 } from "@syncfusion/ej2-react-progressbar";
-import { Browser } from "@syncfusion/ej2-base";
+import { Browser, EmitType } from "@syncfusion/ej2-base";
 // import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
-import { EmitType } from "@syncfusion/ej2-base";
 
 const SAMPLE_CSS = `
      .control-fluid {

@@ -50,7 +50,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
 
   const checkFunction = () => {
     nextPage(3);
-    
   };
   return (
     <div className={classes.profile_Container}>
@@ -59,45 +58,53 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           <Col sm={12} md={5}>
             <h1>We would love to know about your Lifestyle.</h1>
             <small>mandatory</small>
-            <Form className={classes.formEdit} onSubmit={formik.handleSubmit} >
+            <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
               <div className=" text-start d-flex flex-column gap-4">
                 {/* <h4 className="text-center">Lifestyle</h4> */}
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Diet"
                   data={Diet}
                   nameid="diet"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Smoking"
                   data={SmokeDrink}
                   nameid="smoking"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Drinking"
                   data={SmokeDrink}
                   nameid="drinking"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Love Pets"
                   data={Pets}
                   nameid="love_pets"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Owns House"
                   data={OwnHouseCar}
                   nameid="own_house"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Owns Car"
                   data={OwnHouseCar}
                   nameid="own_car"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Blood Group"
                   data={BloodGroup}
                   nameid="blood_group"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Thalassemia "
                   data={Thalassemia}
                   nameid="thalassemia"

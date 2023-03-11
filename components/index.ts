@@ -8,7 +8,7 @@ import HomeCard from "./Cards/Cards";
 import DemoCarousel from "./Carousel/DemoCarousel";
 import ModalForm from "./HomeForm/ModalLogin";
 import ImageCard from "./ImageCard/ImageCard";
-import LoginrHeader from "./LoginHeader/Loginheader";
+import LoginHeader from "./LoginHeader/Loginheader";
 import { cardItems } from "./Cards/card";
 import CustomCalendar from "./Calendar/CustomCalendar";
 import DropdownGridSingleSelect from "./DropdownGrid/DropdownGrid";
@@ -25,7 +25,7 @@ export {
   DemoCarousel,
   ModalForm,
   ImageCard,
-  LoginrHeader,
+  LoginHeader,
   cardItems,
   CustomCalendar,
   DropdownGridSingleSelect,

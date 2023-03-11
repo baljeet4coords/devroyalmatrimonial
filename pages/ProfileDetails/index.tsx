@@ -1,5 +1,5 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
-import LoginrHeader from "../../components/LoginHeader/Loginheader";
+import LoginHeader from "../../components/LoginHeader/Loginheader";
 import React, { useState, useRef, useEffect } from 'react';
 import classes from "./ProfileDetails.module.scss";
 import ProfilePageCard from "./Components/Card";
@@ -83,7 +83,7 @@ const desirLink = useRef<HTMLDivElement>(null);
         <React.Fragment>
             <div className={classes.bg}>
                 <Container fluid className={classes.background_header}>
-                    <LoginrHeader />
+                    <LoginHeader />
                 </Container>
                 <ProfilePageCard />
                 <Container className={classes.detailsWrapper}>

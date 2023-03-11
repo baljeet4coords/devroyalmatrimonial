@@ -30,13 +30,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     initialValues: {
       country: "",
       state: "",
-      city:"",
+      city: "",
       residential_status: "",
-      abroad_settle:"",
-      higest_degree:"",
-      employed_in:"",
-      annual_income:"",
-      express_yourself:"",
+      abroad_settle: "",
+      higest_degree: "",
+      employed_in: "",
+      annual_income: "",
+      express_yourself: "",
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
@@ -59,6 +59,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
+                    selectedDataFn={() => {}}
                     title="Country"
                     data={CountryList}
                     nameid="country"
@@ -86,6 +87,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </div>
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
+                    selectedDataFn={() => {}}
                     title="Residential Status"
                     data={ResidentialStatus}
                     nameid="residential_status"
@@ -93,6 +95,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </div>
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
+                    selectedDataFn={() => {}}
                     title="Ready to settle abroad"
                     data={ReadyToSettleAbroad}
                     nameid="abroad_settle"
@@ -100,6 +103,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </div>
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
+                    selectedDataFn={() => {}}
                     title="Highest Degree"
                     data={HighestEducationList}
                     nameid="higest_degree"
@@ -107,6 +111,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </div>
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
+                    selectedDataFn={() => {}}
                     title="Employed In"
                     data={Employed_In}
                     nameid="employed_in"

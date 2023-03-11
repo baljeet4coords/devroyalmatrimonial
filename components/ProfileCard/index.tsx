@@ -58,7 +58,7 @@ const ProfileCard: React.FC = () => {
           <>
             <Row sm={12} lg={12} className="mb-3">
               <Col sm={3} md={4} lg={4} xl={3} className="p-0 d-flex justify-content-end">
-                <Image src={e.details.img} />
+                <Image src={e.details.img} alt={e.details.id}/>
               </Col>
               <Col sm={8}  md={8} lg={7} xl={8}  className={classes.cardInfo}>
                 <div className={`${classes.UserName_Section} border-bottom border-dark pb-2`}>
