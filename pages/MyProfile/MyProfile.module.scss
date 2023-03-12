@@ -47,6 +47,7 @@
             color: #777;
         }
     }
+
     hr {
         color: inherit;
         border: 0;
@@ -72,39 +73,55 @@
 
 }
 
-.activeLine {
-    background-color: $lighter_text;
-    height: 3px;
-    width: 25%;
-    position: absolute;
-    bottom: 0;
-}
 
 
 
 
 @media only screen and (max-width: 990px) and (min-width: 768px) {
-    .detailsWrapper {
-        padding: 0%;
-
-        .tabsStyle {
-            .profileNavbar {
-                justify-content: flex-start;
-                text-align: center;
-
-                svg {
-                    font-size: 2rem;
-                }
-            }
+    .background_header {
+        p {
+            max-width: 75%;
+            margin: 7rem auto 2rem;
         }
+    }
+}
+
+
+@media only screen and (max-width: 540px) and (min-width:423px) {
+    .detailsWrapper {
+        width: 100%;
     }
 }
 
 
 
 
-
 @media only screen and (max-width: 415px) {
+    .background_header {
+        .changeBackground {
+            margin: 0 5rem;
+            float: inherit;
+            justify-content: center;
+        }
+    }
+
+    .detailsWrapper {
+        width: 100%;
+    }
+}
+
+
+
+@media only screen and (max-width: 300px) {
+    .background_header {
+        .changeBackground {
+            margin: 0 1rem;
+            float: inherit;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+    }
+
     .detailsWrapper {
         width: 100%;
     }

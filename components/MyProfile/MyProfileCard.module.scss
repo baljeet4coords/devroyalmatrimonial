@@ -5,7 +5,6 @@
     width: 75%;
 
     img {
-        // width: 255px;
         width: 100%;
     }
 
@@ -32,6 +31,7 @@
                     display: flex;
                     gap: 1rem;
                     margin-bottom: 1rem;
+
                     .MiddleIconSec {
                         display: flex;
                         flex-direction: column;
@@ -46,18 +46,20 @@
                     }
                 }
 
-                .PreviewAlbum{
+                .PreviewAlbum {
                     color: red;
                     cursor: pointer;
                     font-weight: 500;
                 }
-                .AddDetailsHeading{
+
+                .AddDetailsHeading {
                     font-size: 15px;
                     font-weight: 600;
                     color: black;
-    
+
                 }
-                .AddDetailsSubHeading{
+
+                .AddDetailsSubHeading {
                     font-size: 14px;
                     color: grey;
                     margin-bottom: 1rem;
@@ -67,9 +69,9 @@
             }
         }
 
-        .profileCardIiconSection{
-            
-            .AddDetailsHeading{
+        .profileCardIiconSection {
+
+            .AddDetailsHeading {
                 font-size: 20px;
                 font-weight: 600;
                 color: black;
@@ -91,7 +93,7 @@
         justify-content: center;
         align-items: center;
 
-        .RightPrograss{
+        .RightPrograss {
             border: 1rem solid rgb(14, 14, 63);
             border-radius: 50%;
             height: 6rem;
@@ -106,6 +108,7 @@
             align-items: center;
             font-size: 22px;
         }
+
         .CompleteProfileHEd {
             line-height: 25px;
             cursor: pointer;
@@ -137,8 +140,9 @@
         }
 
         .cardInfo {
-            .UserName_Section {
-                min-height: 60px;
+            .MyProfileMiddle {
+                padding: 2rem 1rem;
+                gap: 1rem;
             }
 
         }
@@ -147,8 +151,9 @@
             display: flex;
             width: 100%;
             justify-content: flex-end;
-            gap: 20px;
+            gap: 0px;
             padding: 0% 2rem;
+            padding-top: 1rem;
         }
     }
 }
@@ -156,6 +161,7 @@
 @media only screen and (max-width: 540px) and (min-width: 423px) {
     .cardWrapper {
         margin-top: 3rem;
+        width: 100%;
 
         img {
             width: 100%;
@@ -201,35 +207,40 @@
 
     .cardWrapper {
         margin-top: 3rem;
-        width: 85%;
+        width: 100%;
 
         img {
             width: 100%;
         }
 
         .cardInfo {
-            .UserName_Section {
-                min-height: 50px;
+
+            // .UserName_Section {
+            //     min-height: 50px;
+            // }
+            .MyProfileMiddle {
+                padding: 2rem 1rem;
+                gap: 2rem;
             }
 
         }
 
-        .rightBox {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            padding: 0rem 2rem;
+        // .rightBox {
+        //     display: flex;
+        //     width: 100%;
+        //     justify-content: space-between;
+        //     padding: 0rem 2rem;
 
-            p {
-                padding: 0;
-                text-align: center;
-                padding: 0rem 1rem;
+        //     p {
+        //         padding: 0;
+        //         text-align: center;
+        //         padding: 0rem 1rem;
 
-                svg {
-                    margin: 0%;
-                }
-            }
-        }
+        //         svg {
+        //             margin: 0%;
+        //         }
+        //     }
+        // }
     }
 }
 
@@ -237,17 +248,18 @@
 
 @media only screen and (max-width: 300px) {
     .cardWrapper {
-
         .cardInfo {
-            ul {
-                height: auto;
+
+            .MyProfileMiddle {
+                padding: 2rem 1rem;
+                gap: 2rem;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
+
         }
 
-        .rightBox {
-            p {
-                padding: 0rem 0.5rem;
-            }
-        }
+
     }
 }
