@@ -16,11 +16,11 @@ const Family: React.FC = () => {
                         <span><MdPeopleAlt />familyCont</span>
                         <ul>
                             <li>
-                                <p>Mother's Occupation</p>
+                                <p>Mother&apos;s Occupation</p>
                                 <p>Housewife</p>
                             </li>
                             <li>
-                                <p>Father's Occupation</p>
+                                <p>Father&apos;s Occupation</p>
                                 <p>Army/Armed Forces</p>
                             </li>
                             <li>
@@ -68,7 +68,7 @@ const Family: React.FC = () => {
                         <ul>
                             <li>
                                 <p>Habits</p>
-                                <p>Non Vegetarian, Doesn't drink, Doesn't smoke</p>
+                                <p>Non Vegetarian, Doesn&apos;t drink, Doesn&apos;t smoke</p>
                             </li>
                             <li>
                                 <p>Assets</p>

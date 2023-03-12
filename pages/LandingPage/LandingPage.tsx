@@ -11,7 +11,7 @@ import {
   BrowserLink,
   HomeCard,
   cardItems,
-  LoginrHeader,
+  LoginHeader,
 } from "../../components";
 import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +46,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
-      {!isLogin ?  <Header /> : <LoginrHeader />}
+      {!isLogin ?  <Header /> : <LoginHeader />}
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>

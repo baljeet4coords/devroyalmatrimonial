@@ -12,7 +12,7 @@ import {
 import classes from "./LoginHeader.module.scss";
 import Link from "next/link";
 
-const LoginrHeader: React.FC = () => {
+const LoginHeader: React.FC = () => {
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
 
@@ -101,6 +101,7 @@ const LoginrHeader: React.FC = () => {
                     <Image
                       className={classes.circleImg}
                       src="/Images/circle_header_icon.jpg"
+                      alt="avatar"
                     />
                   </Link>
                 }
@@ -130,4 +131,4 @@ const LoginrHeader: React.FC = () => {
   );
 };
 
-export default LoginrHeader;
+export default LoginHeader;

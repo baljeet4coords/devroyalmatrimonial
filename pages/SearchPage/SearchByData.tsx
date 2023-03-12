@@ -13,8 +13,8 @@ import { CustomButton } from "../../components";
 import { useState } from "react";
 
 const SearchByData: React.FC = () => {
-  const [searchFor, setsearchFor] = useState<String>("bride");
-  const [astro, setastro] = useState<Boolean>(false);
+  const [searchFor, setsearchFor] = useState<string>("bride");
+  const [astro, setastro] = useState<boolean>(false);
 
   const handleAstro = () => {
     setastro(!astro);
@@ -35,7 +35,7 @@ const SearchByData: React.FC = () => {
                     : classes.Search_For_button
                 }`}
                 value="bride"
-                onClick={(event) => setsearchFor(event?.target.value)}
+                onClick={(event: any) => setsearchFor(event?.target.value)}
               >
                 Bride
               </Button>
@@ -47,7 +47,7 @@ const SearchByData: React.FC = () => {
                     : classes.Search_For_button
                 }`}
                 value="groom"
-                onClick={(event) => setsearchFor(event?.target.value)}
+                onClick={(event: any) => setsearchFor(event?.target.value)}
               >
                 Groom
               </Button>
@@ -173,7 +173,9 @@ const SearchByData: React.FC = () => {
           </Form.Group>
           <hr className="mb-4" />
           <div className={classes.SectionHeading} onClick={handleAstro}>
-            <h6>Astro <span>{astro ? " -" : " +"}</span> </h6>
+            <h6>
+              Astro <span>{astro ? " -" : " +"}</span>{" "}
+            </h6>
           </div>
           {astro && (
             <div>
@@ -197,7 +199,7 @@ const SearchByData: React.FC = () => {
                     Yes
                   </Button>
                   <Button className={classes.Search_For_button}>
-                    Doesn't Matter
+                    Does not Matter
                   </Button>
                 </ButtonGroup>
               </Form.Group>

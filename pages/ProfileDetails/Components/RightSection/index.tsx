@@ -43,7 +43,7 @@ const RightSection: React.FC = () => {
                     </li>
                     <li>
                         <p>Nakshatra</p>
-                        <p>Don't Know Nakshatra</p>
+                        <p>Do not Know Nakshatra</p>
                     </li>
                     <li>
                         <p>Manglik</p>

@@ -1,14 +1,13 @@
-import { Header, Footer } from "../../components";
+import { Header, Footer, LoginHeader } from "../../components";
 import HelpCategories from "./HelpCategoies";
-import { Col, Container, Row, Image, Form } from "react-bootstrap";
 import classes from "./HelpMain.module.scss";
-import Link from "next/link";
+import { isLogin } from "../api/hello";
 
 const HelpMain: React.FC = () => {
   return (
     <>
       <div className={classes.banner_bg}>
-        <Header />
+        {isLogin ? <LoginHeader /> : <Header />}
       </div>
       <HelpCategories />
       <Footer />

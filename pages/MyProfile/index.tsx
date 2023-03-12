@@ -1,5 +1,5 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
-import LoginrHeader from "../../components/LoginHeader/Loginheader";
+import LoginHeader from "../../components/LoginHeader/Loginheader";
 import React, { useState, useRef, useEffect } from "react";
 import classes from "./MyProfile.module.scss";
 import { ImImage } from "react-icons/im";
@@ -25,7 +25,7 @@ const MyProfile: React.FC = () => {
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
-          <LoginrHeader />
+          <LoginHeader />
 
           <p>
             Make your profile more intersting by adding cover photo to your

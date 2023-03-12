@@ -8,7 +8,7 @@ const MyProfilePageCard: React.FC = () => {
     <Container className={classes.cardWrapper}>
       <Row>
         <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
-          <Image src="https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf" />
+          <Image src="https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf" alt="avatar"/>
         </Col>
         <Col sm={5} md={8} lg={6} className={classes.cardInfo}>
           <div className={`${classes.MyProfileMiddle} `}>

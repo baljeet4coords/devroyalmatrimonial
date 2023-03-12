@@ -10,7 +10,7 @@ const DesiredSec: React.FC = () => {
                     <span><AiFillEye />Desired Partner</span>
                     <ul>
                         <li><p>Age</p> <p>29 to 31 Years</p> <p><AiOutlineMinus /></p></li>
-                        <li><p>Height</p> <p>5' 8" to 6' 0"</p> <p><AiOutlineMinus /></p></li>
+                        <li><p>Height</p> <p>5&apos; 8&quot; to 6&apos; 0&quot; </p> <p><AiOutlineMinus /></p></li>
                         <li><p>Marital Status</p> <p>Never Married</p> <p><AiOutlineMinus /></p></li>
                         <li><p>Religion</p> <p>Hindu</p> <p><AiOutlineMinus /></p></li>
                         <li><p>Caste</p> <p>Chandravanshi Kahar, Kahar</p> <p><AiOutlineMinus /></p></li>

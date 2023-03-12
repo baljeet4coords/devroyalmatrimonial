@@ -1,5 +1,5 @@
 
-import classes from "./edu.module.scss";
+import classes from "./Edu.module.scss";
 import { ImBook } from "react-icons/im";
 
 const Education: React.FC = () => {

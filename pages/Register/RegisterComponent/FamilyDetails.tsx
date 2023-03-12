@@ -9,7 +9,7 @@ import {
   BrotherSister,
   Diet,
   FamilStatus,
-  FamilyIncomem,
+  FamilyIncome,
   FamilyNativeCity,
   FamilyNativeCountry,
   FamilyNativeState,
@@ -69,21 +69,25 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
               <div className=" text-start d-flex flex-column gap-4">
                 {/* <h4 className="text-center">Lifestyle</h4> */}
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Father"
                   data={Diet}
                   nameid="father"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Mother"
                   data={Diet}
                   nameid="mother"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Sister"
                   data={BrotherSister}
                   nameid="sister"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Brother"
                   data={BrotherSister}
                   nameid="brother"
@@ -100,36 +104,43 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   />
                 </div>
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Status "
                   data={FamilStatus}
                   nameid="family_status"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Income"
-                  data={FamilyIncomem}
+                  data={FamilyIncome}
                   nameid="family_income"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Type"
                   data={FamilyType}
                   nameid="family_type"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Native Country"
                   data={FamilyNativeCountry}
                   nameid="family_native_country"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Native State"
                   data={FamilyNativeState}
                   nameid="family_native_state"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Family Native City"
                   data={FamilyNativeCity}
                   nameid="family_native_city"
                 />
                 <DropdownGridSingleSelect
+                  selectedDataFn={() => {}}
                   title="Living With Parents"
                   data={LivingWithParrents}
                   nameid="living_with_parents"

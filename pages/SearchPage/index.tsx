@@ -1,9 +1,10 @@
 import classes from "./Search.module.scss";
 import { Container, Row, Col, Form, Accordion } from "react-bootstrap";
-import { Header, Footer } from "../../components/";
+import { Header, Footer, LoginHeader } from "../../components/";
 import SearchByData from "./SearchByData";
 import SearchById from "./SearchByProfile";
 import React, { useState } from "react";
+import { isLogin } from "../api/hello";
 
 const Search: React.FC = () => {
   const [searchData, setSearchData] = useState<string>("searchByData");
@@ -14,7 +15,7 @@ const Search: React.FC = () => {
   return (
     <>
       <div className={classes.background_banner}>
-        <Header />
+        {isLogin ? <LoginHeader /> : <Header />}
       </div>
       <div className={`${classes.bg_gray} w-100 pb-5`}>
         <Container className={`${classes.search_main} w-75`}>

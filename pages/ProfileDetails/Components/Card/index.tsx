@@ -14,7 +14,7 @@ const ProfilePageCard: React.FC = () => {
             <Container className={classes.cardWrapper}>
                 <Row>
                     <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
-                        <Image src="https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"/>
+                        <Image src="https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf" alt="avatar"/>
                     </Col>
                     <Col sm={6} md={8} lg={6} className={classes.cardInfo}>
                         <div className={`${classes.NameDetails} border-bottom border-dark pb-2`}>
@@ -25,7 +25,7 @@ const ProfilePageCard: React.FC = () => {
                             <small>1Last seen on 19-Feb-23</small>
                         </div>
                         <ul>
-                            <li>29, 5' 5"</li>
+                            <li>29, 5&apos; 5&quot;</li>
                             <li>MBA/PGDM, B.E/B.Tech</li>
                             <li>New Delhi</li>
                             <li>Analyst</li>

@@ -1,7 +1,7 @@
 import DemoCarousel from "../../components/Carousel/DemoCarousel";
 import React, { useState } from "react";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import BrowserLink from "../../components/BrowserLink/BrowserLinks";
 import { NextPage } from "next";
 import { Header, Footer, HomeImage, HomeForm } from "../../components";
@@ -11,18 +11,16 @@ import classes from "./BrowseProfile.module.scss";
 import Link from "next/link";
 import ImageCard from "../../components/ImageCard/ImageCard";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-
-
+import { SignUpFormValues } from "../../components/HomeForm/types";
 
 const BrowseProfile: NextPage = () => {
   const router = useRouter();
-  const [key, setKey] = useState('Brides');
-  
-  
+  const [key, setKey] = useState("Brides");
+
   const headimage = "browseProfile.jpg";
-  
+
   const { BrowseProfile } = router.query;
- 
+
   // const productData: BrowseInfo[] = [
   //   {
   //     id: 1,
@@ -51,91 +49,97 @@ const BrowseProfile: NextPage = () => {
   // ];
 
   return (
-   <React.Fragment>
-    <div style={{background: '#e7e6e6'}}>
-    <Header /> 
-    <HomeImage addBackground={headimage} />
-    <Container className={`${classes.Home_Page_Wrapper} px-0`}>
-    <Row className={`${classes.firstTopBox} pb-4`}>
+    <React.Fragment>
+      <div style={{ background: "#e7e6e6" }}>
+        <Header />
+        <HomeImage addBackground={headimage} />
+        <Container className={`${classes.Home_Page_Wrapper} px-0`}>
+          <Row className={`${classes.firstTopBox} pb-4`}>
             <Col sm={12} md={5} lg={6} className="d-flex align-items-end">
-            <div className={classes.Home_heading}>
+              <div className={classes.Home_heading}>
                 <h1>Now, chat for free!</h1>
                 <span>Finding your perfect match just became easier</span>
-            </div>
-      </Col>
-      <Col sm={12}  md={7} lg={6}>
-      <HomeForm/>
-      </Col> 
-      <Row className={classes.Browse_colord_body}>
-                <Col sm={12} md={4}>
-                        <div className="py-3 d-flex justify-content-start">
-                        <Image 
-                        src="/Images/group_pic.png" 
-                        alt="group_pice"
-                        />
-                        <div>
-                        <h3>100% Manually Screened Profiles</h3>
-                        <p>Search by location, community, profession & more from lakhs of active profiles</p>
-                        </div>
-                        </div>
-                    </Col>
+              </div>
+            </Col>
+            <Col sm={12} md={7} lg={6}>
+              <HomeForm onSubmitForm={() => {}} />
+            </Col>
+            <Row className={classes.Browse_colord_body}>
               <Col sm={12} md={4}>
-                        <div className="py-3 d-flex justify-content-start">
-                        <Image 
-                        src="/Images/group_pic.png" 
-                        alt="group_pice"
-                        />
-                        <div>
-                        <h3>100% Manually Screened Profiles</h3>
-                        <p>Search by location, community, profession & more from lakhs of active profiles</p>
-                        </div>
-                        </div>
-                    </Col>
+                <div className="py-3 d-flex justify-content-start">
+                  <Image src="/Images/group_pic.png" alt="group_pice" />
+                  <div>
+                    <h3>100% Manually Screened Profiles</h3>
+                    <p>
+                      Search by location, community, profession & more from
+                      lakhs of active profiles
+                    </p>
+                  </div>
+                </div>
+              </Col>
               <Col sm={12} md={4}>
-                        <div className="py-3 d-flex justify-content-start">
-                        <Image 
-                        src="/Images/group_pic.png" 
-                        alt="group_pice"
-                        />
-                        <div>
-                        <h3>100% Manually Screened Profiles</h3>
-                        <p>Search by location, community, profession & more from lakhs of active profiles</p>
-                        </div>
-                        </div>
-                    </Col>
-        </Row>
-    </Row>
-        <Row className={`text-center ${classes.Home_white_body}`}>
-            <h1>{BrowseProfile} <strong>Matrimonial</strong></h1>
-        </Row>
-        <div className={classes.breadCrum}>
-              <p>
-                <Link href="/" legacyBehavior>
-                  <a>Home</a>
-                </Link>{" "}
-                <AiOutlineDoubleRight className="mx-2"/>
-              </p>
-              <p>{BrowseProfile}</p>
-            </div>
-         <Row className={classes.Home_Body_Main}>
-           <Col sm={12} md={9} xl={10} className={`pb-5 ${classes.BridesGroup}`}>
-            <Tabs
-              activeKey={key}
-              onSelect={(k:any) => setKey(k)}
-              className="mb-3"
+                <div className="py-3 d-flex justify-content-start">
+                  <Image src="/Images/group_pic.png" alt="group_pice" />
+                  <div>
+                    <h3>100% Manually Screened Profiles</h3>
+                    <p>
+                      Search by location, community, profession & more from
+                      lakhs of active profiles
+                    </p>
+                  </div>
+                </div>
+              </Col>
+              <Col sm={12} md={4}>
+                <div className="py-3 d-flex justify-content-start">
+                  <Image src="/Images/group_pic.png" alt="group_pice" />
+                  <div>
+                    <h3>100% Manually Screened Profiles</h3>
+                    <p>
+                      Search by location, community, profession & more from
+                      lakhs of active profiles
+                    </p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Row>
+          <Row className={`text-center ${classes.Home_white_body}`}>
+            <h1>
+              {BrowseProfile} <strong>Matrimonial</strong>
+            </h1>
+          </Row>
+          <div className={classes.breadCrum}>
+            <p>
+              <Link href="/" legacyBehavior>
+                <a>Home</a>
+              </Link>{" "}
+              <AiOutlineDoubleRight className="mx-2" />
+            </p>
+            <p>{BrowseProfile}</p>
+          </div>
+          <Row className={classes.Home_Body_Main}>
+            <Col
+              sm={12}
+              md={9}
+              xl={10}
+              className={`pb-5 ${classes.BridesGroup}`}
             >
-              <Tab eventKey="Brides" title={`${BrowseProfile} Brides`}>
-                <Row>
-                <ImageCard onProfile={BrowseProfile} />
-                </Row>
-              </Tab>
-              <Tab eventKey="Grooms" title={`${BrowseProfile} Grooms`}>
-                <Row>
-                <ImageCard onProfile={BrowseProfile} />
-                </Row>
-              </Tab>
-            </Tabs>
-
+              <Tabs
+                activeKey={key}
+                onSelect={(k: any) => setKey(k)}
+                className="mb-3"
+              >
+                <Tab eventKey="Brides" title={`${BrowseProfile} Brides`}>
+                  <Row>
+                    <ImageCard onProfile={BrowseProfile} />
+                  </Row>
+                </Tab>
+                <Tab eventKey="Grooms" title={`${BrowseProfile} Grooms`}>
+                  <Row>
+                    <ImageCard onProfile={BrowseProfile} />
+                  </Row>
+                </Tab>
+              </Tabs>
             </Col>
             <Col sm={12} md={3} xl={2} className={classes.filterProfileSection}>
               <h3>Filter profiles by</h3>
@@ -160,18 +164,22 @@ const BrowseProfile: NextPage = () => {
           </Row>
           <Row className={classes.Home_dark_body}>
             <span>LAKHS OF HAPPY COUPLES</span>
-            <h1>Matched by <strong>Jeevansathi</strong></h1>
+            <h1>
+              Matched by <strong>Jeevansathi</strong>
+            </h1>
             <DemoCarousel />
-            </Row>
-            <Row className={`${classes.Home_white_body} text-center`}>
+          </Row>
+          <Row className={`${classes.Home_white_body} text-center`}>
             <span>BROWSE</span>
-            <h1><strong>Matrimonial</strong>Profiles by</h1>
-            <BrowserLink/>
-            </Row>
-    </Container>
-    <Footer/>
-    </div>
-   </React.Fragment>
+            <h1>
+              <strong>Matrimonial</strong>Profiles by
+            </h1>
+            <BrowserLink />
+          </Row>
+        </Container>
+        <Footer />
+      </div>
+    </React.Fragment>
   );
 };
 

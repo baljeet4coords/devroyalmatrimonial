@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container} from "react-bootstrap";
-import LoginrHeader from "../../components/LoginHeader/Loginheader";
+import LoginHeader from "../../components/LoginHeader/Loginheader";
 // import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileVisitor.module.scss";
 import { Footer, Header } from "../../components";
@@ -13,7 +13,7 @@ const ProfileVisitor: React.FC = () => {
         <React.Fragment>
             <div className={classes.bg}>
                 <Container fluid className={classes.background_header}>
-                   {!isLogin ? <LoginrHeader /> : <Header />}
+                   {isLogin ? <LoginHeader /> : <Header />}
                 </Container>
                 <ShortVisitorProfile title={"0 All Profile Visitors"} subtitle={"People who visited your profile in the last week will appear here"} />
                 <Footer />
