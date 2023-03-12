@@ -1,7 +1,11 @@
+import { FC } from "react";
 import { FiUser } from "react-icons/fi";
 import classes from "./GlobalDetails.module.scss";
 
-const AboutMeDetails: React.FC = () => {
+interface MyComponentProps {
+  setAboutMeDetails: (details: boolean) => void;
+}
+const AboutMeDetails:FC<MyComponentProps> = ({ setAboutMeDetails }) => {
   const BasicDetails = [
     {
       name: "Discribe yourself in 5 words",
@@ -30,7 +34,12 @@ const AboutMeDetails: React.FC = () => {
             <FiUser />
             About Me
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setAboutMeDetails(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.userDiscription}>
           <p>

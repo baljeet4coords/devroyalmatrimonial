@@ -1,8 +1,12 @@
+import { FC } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { FiUsers } from "react-icons/fi";
 import classes from "./GlobalDetails.module.scss";
 
-const FamilydetailsInfo: React.FC = () => {
+interface MyComponentProps {
+  setFamilyDetails: (details: boolean) => void;
+}
+const FamilydetailsInfo:FC<MyComponentProps> = ({ setFamilyDetails }) => {
   const BasicDetails = {
     pin: true,
     pinValue: "Living with Parents?",
@@ -61,7 +65,12 @@ const FamilydetailsInfo: React.FC = () => {
             <FiUsers />
             Family Details
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setFamilyDetails(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

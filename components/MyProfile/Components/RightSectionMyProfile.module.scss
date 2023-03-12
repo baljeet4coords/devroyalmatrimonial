@@ -94,6 +94,118 @@
             }
         }
     }
+
+    .contactEditSec {
+        font-size: 0.875rem;
+        text-align: left;
+        padding: 2rem 0 0 0;
+        border-top: 1px solid #34495e;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+
+        .singleBox {
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            position: relative;
+
+            label {
+                margin: 0%;
+            }
+
+
+            .EditInputSec {
+                border: 1px solid #d9d9d9;
+                position: relative;
+                padding: 0.6rem 1rem;
+
+                input {
+                    border: none;
+                    width: 100%;
+                    float: left;
+                    height: 100%;
+                    text-align: left;
+                    outline: none;
+                }
+
+                p {
+                    display: flex;
+                    margin: 0%;
+                    position: absolute;
+                    right: 10px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    align-items: center;
+                }
+            }
+
+            .UserVerified {
+                border: 1px solid #d9d9d9;
+                display: flex;
+                flex-direction: column;
+                padding: 0.5rem;
+                position: relative;
+                align-items: center;
+                justify-content: flex-start;
+
+                svg {
+                    color: rgb(111, 111, 250);
+                    position: initial !important;
+                    margin-right: 5px
+                }
+
+                p {
+                    color: #ff3b3b;
+                    font-size: 14px;
+                    cursor: pointer;
+                    margin: 0%;
+                }
+            }
+
+            .EditInputSecDisable {
+                border: 1px solid #d9d9d9;
+                position: relative;
+
+                input {
+                    padding: 0%;
+                    border: none;
+                    width: 100%;
+                    float: left;
+                    height: 100%;
+                    text-align: left;
+                    padding: 0.7rem 1rem;
+                }
+
+                span {
+                    position: absolute;
+                    right: 10px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                    align-items: center;
+                    background-color: $darkGrey_bg;
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                    display: grid;
+                    place-items: center;
+
+                    svg {
+                        position: initial !important;
+                        color: #fff;
+                    }
+                }
+            }
+
+
+        }
+        .EditbuttonGroup {
+            display: flex;
+            gap: 2rem;
+        }
+
+
+    }
 }
 
 
@@ -110,13 +222,14 @@
 
     .rghtSec {
 
-        ul{
-            li{
-                p{
+        ul {
+            li {
+                p {
                     flex-wrap: wrap;
                 }
             }
         }
+
         button {
             padding: 0.7rem 1rem;
         }
@@ -168,6 +281,7 @@
         }
 
     }
+
     .rghtSec {
         padding: 1rem;
 

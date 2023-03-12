@@ -147,6 +147,23 @@
     }
 }
 
+@media only screen and (max-width: 667px) {
+
+
+    .content {
+        padding: 2rem;
+        margin: 0%;
+
+        .DetailsTypeSec {
+
+            .DetailsTypeLeft {
+                flex-wrap: wrap;
+                row-gap: normal;
+            }
+        }
+    }
+}
+
 
 
 @media only screen and (max-width: 300px) {
@@ -172,10 +189,11 @@
                 }
             }
         }
-        .UserVerified{
+
+        .UserVerified {
             font-size: 10px;
 
-            span{
+            span {
                 font-size: 10px !important;
             }
         }

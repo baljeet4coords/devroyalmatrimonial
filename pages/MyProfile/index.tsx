@@ -16,10 +16,20 @@ import {
 } from "../../components/MyProfile/Components";
 import { EditCriticalDetials } from "../../components/EditMyProfile";
 import EditBasicDetials from "../../components/EditMyProfile/EditBasicDetails";
+import EditAboutMe from "../../components/EditMyProfile/EditAboutMe";
+import EditEducationAmdCareer from "../../components/EditMyProfile/EditEducationAndCareer";
+import EditFamilyDetails from "../../components/EditMyProfile/EditFamilyDetails";
+import EditLifeStyle from "../../components/EditMyProfile/EditLifeStyleDetails";
+import EditYourLikes from "../../components/EditMyProfile/EditYourLikesDetails";
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
   const [basicDetails, setBasicDetails] = useState<boolean>(false);
+  const [aboutMeDetails, setAboutMeDetails] = useState<boolean>(false);
+  const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
+  const [familyDetails, setFamilyDetails] = useState<boolean>(false);
+  const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
+  const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
 
   return (
     <React.Fragment>
@@ -52,15 +62,35 @@ const MyProfile: React.FC = () => {
                 <BasicDetails setBasicDetails={setBasicDetails} />
               )}
               <hr />
-              <AboutMeDetails />
+              {aboutMeDetails ? (
+                <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
+              ) : (
+                <AboutMeDetails setAboutMeDetails={setAboutMeDetails} />
+              )}
               <hr />
-              <EducationAndCareer />
+              {eudcationAndCareer ? (
+                <EditEducationAmdCareer setEudcationAndCareer={setEudcationAndCareer} />
+              ) : (
+                <EducationAndCareer setEudcationAndCareer={setEudcationAndCareer} />
+              )}
               <hr />
-              <FamilydetailsInfo />
+              {familyDetails ? (
+                <EditFamilyDetails setFamilyDetails={setFamilyDetails} />
+              ) : (
+                <FamilydetailsInfo setFamilyDetails={setFamilyDetails} />
+              )}
               <hr />
-              <LifeStyleDetails />
+              {lifeStyleDetails ? (
+                <EditLifeStyle setEditDetails={setLifeStyleDetails} />
+              ) : (
+                <LifeStyleDetails setEditDetails={setLifeStyleDetails} />
+              )}
               <hr />
-              <LikeDetails />
+              {yourLikesDetails ? (
+                <EditYourLikes setEditDetails={setYourLikesDetails} />
+              ) : (
+                <LikeDetails setEditDetails={setYourLikesDetails} />
+              )}
               <div className={classes.datecont}>
                 <p>Last updated on 15th Feb, 2023</p>
               </div>

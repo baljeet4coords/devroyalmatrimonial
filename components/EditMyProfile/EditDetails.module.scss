@@ -29,6 +29,51 @@
             }
         }
     }
+
+
+    //------------------ about me sec ----------------------
+
+    .typeInHindiSec {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        padding-left: 1.5rem;
+
+
+        p {
+            color: #ff3b3b;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0%;
+        }
+
+        .Form_Login_check {
+            input {
+                padding: 0;
+                cursor: pointer;
+            }
+
+            label {
+                font-size: 1.1rem;
+                margin-left: 0.3rem;
+            }
+        }
+
+        .Form_Login_checkDis {
+            input {
+                padding: 0;
+                cursor: pointer;
+            }
+
+            label {
+                font-size: 1.1rem;
+                color: #91918c;
+                margin-left: 0.3rem;
+            }
+        }
+    }
+
+
 }
 
 
@@ -150,7 +195,7 @@
     }
 
     label {
-        padding: 0.6rem;
+        // padding: 0.6rem;
         min-width: 140px;
         text-align: right;
     }
@@ -162,7 +207,7 @@
         position: relative;
 
         div {
-            width: 75%;
+            min-width: 75%;
             text-align: center;
 
             svg {
@@ -177,13 +222,6 @@
                 background: #d9475c;
             }
         }
-
-        //   label {
-        //     text-align: start;
-        //     position: absolute;
-        //     left: 0rem;
-        //     top: 0;
-        //   }
 
         .inputBox {
             border: 1px solid #d9d9d9;
@@ -277,7 +315,7 @@
         .EditInputSec {
             border: 1px solid #d9d9d9;
             position: relative;
-            padding: 0 1rem;
+            padding: .7rem 1rem;
 
             input {
                 padding: 0%;
@@ -316,7 +354,7 @@
                 float: left;
                 height: 100%;
                 text-align: left;
-                padding: 0 1rem;
+                padding: 0.7rem 1rem;
             }
 
             span {
@@ -338,6 +376,15 @@
                 }
             }
         }
+
+        label {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            position: absolute;
+            left: 0;
+            width: 145px;
+        }
     }
 
 
@@ -350,8 +397,9 @@
         border-radius: 2px;
         padding: 0.875rem 2.5rem;
         text-align: center;
-        width: 100%;
+        min-width: 75%;
         float: right;
+        width: auto;
 
         &:focus {
             outline: none;
@@ -405,6 +453,134 @@
             font-size: 14px;
             cursor: pointer;
             margin: 0%;
+        }
+    }
+
+
+
+
+    // ---------------------Edit About ME ------------------
+
+    .EditsingleBox {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        width: 96%;
+        margin: 0 auto;
+        margin-right: 0;
+        flex-direction: column;
+
+        textarea {
+            border-radius: 0;
+        }
+
+        label {
+            text-align: left;
+            color: #808080;
+            padding: 0%;
+        }
+
+        p {
+            position: absolute;
+            right: 1rem;
+            bottom: 3rem;
+            margin: 0;
+            color: #212529;
+        }
+
+        .TextareaDiscrip {
+            background-color: #d8dde2;
+            padding: 0.375rem 0.75rem;
+
+            span {
+                display: block;
+                color: #7e7e73;
+                font-size: 0.7rem;
+            }
+        }
+    }
+
+
+}
+
+
+
+
+@media only screen and (max-width: 990px) {
+
+    .content {
+        .typeInHindiSec {
+            padding: 0%;
+        }
+    }
+
+    .formEdit {
+        gap: 1rem;
+
+        .singleBox {
+            flex-direction: column;
+
+            label {
+                position: initial;
+                justify-content: flex-start;
+                width: auto;
+                margin-bottom: 0%;
+            }
+
+            .EditInputSec {
+                margin: 0.6rem 0;
+            }
+        }
+
+        .editDiscriptions {
+            width: 100%;
+        }
+
+        .EditsingleBox {
+            width: 100%;
+            margin: 0%;
+
+            textarea {
+                font-size: 0.8rem;
+            }
+
+            p {
+                bottom: 0%;
+            }
+
+        }
+
+        .EditbuttonGroup {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+}
+
+
+@media only screen and (max-width: 667px) {
+
+    .content {
+        margin: 0%;
+
+        .typeInHindiSec {
+            padding: 0%;
+        }
+        .DetailsTypeSec {
+
+            .DetailsTypeLeft {
+                flex-wrap: wrap;
+                row-gap: normal;
+            }
+        }
+    }
+
+    .formEdit {
+        gap: 1rem;
+
+        .singleBox {
+            flex-direction: column;
         }
     }
 

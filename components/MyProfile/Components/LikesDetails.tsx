@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiMoviePlay } from "react-icons/bi";
 import { BsBook, BsMusicNoteBeamed, BsPinAngle } from "react-icons/bs";
@@ -6,7 +7,10 @@ import { IoColorPaletteOutline } from "react-icons/io5";
 import { SlPlane } from "react-icons/sl";
 import classes from "./GlobalDetails.module.scss";
 
-const LikeDetails: React.FC = () => {
+interface MyComponentProps {
+  setEditDetails: (details: boolean) => void;
+}
+const LikeDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
   const BasicDetails = {
     pin: false,
     pinValue: "",
@@ -35,7 +39,6 @@ const LikeDetails: React.FC = () => {
         name: <CiBasketball />,
         value: "NA",
       },
-    
     ],
   };
   return (
@@ -44,12 +47,14 @@ const LikeDetails: React.FC = () => {
         <div className={classes.DetailsTypeSec}>
           <div className={classes.DetailsTypeLeft}>
             <AiOutlineHeart />
-             Your Likes
+            Your Likes
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span className={classes.Edit} onClick={() => setEditDetails(true)}>
+            Edit
+          </span>
         </div>
         <div className={classes.Userdetails}>
-          {BasicDetails.data.map((item,index) => {
+          {BasicDetails.data.map((item, index) => {
             return (
               <>
                 <div className={classes.UserdetailsSec} key={index}>
