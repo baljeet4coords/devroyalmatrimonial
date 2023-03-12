@@ -184,12 +184,12 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
-              children="Save"
+              childComponent="Save"
               setEditDetails={setBasicDetails}
               buttonType={1}
             />
             <EditCustomButton
-              children="Cancel"
+              childComponent="Cancel"
               setEditDetails={setBasicDetails}
               buttonType={0}
             />

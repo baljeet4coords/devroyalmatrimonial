@@ -72,12 +72,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
-              children="Save"
+              childComponent="Save"
               setEditDetails={setCriticalDetails}
               buttonType={1}
             />
             <EditCustomButton
-              children="Save"
+              childComponent="Save"
               setEditDetails={setCriticalDetails}
               buttonType={0}
             />
