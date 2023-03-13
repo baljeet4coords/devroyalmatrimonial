@@ -2,13 +2,9 @@ import React, { useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
-
 import RightSection from "./RightSection/RightSection";
-import { useState } from "react";
-import { city } from "../../../constants/DesiredData";
 
 const ExpressYourself: React.FC = () => {
-  //To scroll on top whan submit butotn is clicked on  previous page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -18,12 +14,11 @@ const ExpressYourself: React.FC = () => {
   }, []);
   const formik = useFormik({
     initialValues: {
-      boutcareer: "",
+      aboutcareer: "",
       aboutfamily: "",
       abouteducation: "",
       basicintor: "",
     },
-    // validationSchema: SignupSchema,
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 1));
     },
@@ -42,7 +37,7 @@ const ExpressYourself: React.FC = () => {
                   <Form.Label>About Career</Form.Label>
                   <Form.Control
                     as="textarea"
-                    name="boutcareer"
+                    name="aboutcareer"
                     rows={3}
                     placeholder="Abotu your career"
                     onBlur={formik.handleBlur}
@@ -92,7 +87,7 @@ const ExpressYourself: React.FC = () => {
                 </Button>
               </Form>
             </Col>
-            {/* <RightSection /> */}
+            <RightSection />
           </Row>
         </Container>
       </div>

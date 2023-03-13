@@ -9,7 +9,9 @@ interface SignUpAction {
 interface SignUpSuccessAction {
   type: typeof SIGN_UP_SUCCESS;
   response: {
+    output: number;
     message: string;
+    jsonResponse: {};
   };
 }
 

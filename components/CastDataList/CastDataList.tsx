@@ -1,14 +1,15 @@
-import React, { useState, ChangeEvent } from "react";
-import classes from "./CastDataList.module.scss";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
 interface CastDataListProps {
   options: { religion: string; list: { id: number; cast: string }[] }[];
   selectedOption: (id: string) => void;
+  defaultValue?: number;
 }
 const CastDataList: React.FC<CastDataListProps> = ({
   options,
   selectedOption,
+  defaultValue,
 }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -17,6 +18,23 @@ const CastDataList: React.FC<CastDataListProps> = ({
     selectedOption(event.target.value);
   };
 
+  const defaultResult = () => {
+    const result = options.find((obj) => {
+      return obj.list.some((item) => item.id === defaultValue);
+    });
+    if (result) {
+      const resultObj = result.list.find((item) => item.id === defaultValue);
+      return resultObj?.cast;
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    if (defaultResult()) {
+      setInputValue(defaultResult() ?? "");
+    }
+  }, [defaultResult()]);
+
   const matchingOptions = options.map((option) =>
     option.list.filter((item) =>
       item.cast.toLowerCase().includes(inputValue.toLowerCase())
@@ -24,7 +42,7 @@ const CastDataList: React.FC<CastDataListProps> = ({
   );
 
   return (
-    <div className={classes.singleBox}>
+    <>
       <Form.Control
         type="text"
         value={inputValue}
@@ -41,7 +59,7 @@ const CastDataList: React.FC<CastDataListProps> = ({
           return null;
         })}
       </datalist>
-    </div>
+    </>
   );
 };
 

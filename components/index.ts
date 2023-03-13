@@ -13,6 +13,7 @@ import { cardItems } from "./Cards/card";
 import CustomCalendar from "./Calendar/CustomCalendar";
 import DropdownGridSingleSelect from "./DropdownGrid/DropdownGrid";
 import GenderRadioButtons from "./GenderRadioButtons/GenderRadioButtons";
+import AvatarPicker from "./AvatarPicker/AvatarPicker";
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   CustomCalendar,
   DropdownGridSingleSelect,
   GenderRadioButtons,
+  AvatarPicker,
 };
