@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import CustomButton from "../../../components/Button/CustomButton";
 import classes from "./Component.module.scss";
@@ -14,15 +14,77 @@ import {
   FamilyNativeCountry,
   FamilyNativeState,
   FamilyType,
+  FathersProfession,
   LivingWithParrents,
+  MothersProfession,
 } from "../../../types/enums";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
+import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
+import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
-  //To scroll on top whan submit butotn is clicked on  previous page
+  const dispatch = useDispatch();
+  const stepOneDefaultValues = useSelector(selectStep4Success);
+  const userId = useSelector(selectSignUpSuccess)?.output;
+  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
+  useEffect(() => {
+    dispatch({
+      type: STEP_4,
+      payload: { actionType: "V", userId: userId },
+    });
+  }, []);
+  const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Father), val: "" });
+  const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Mother), val: "" });
+  const [selectedSelectedSister, setSelectedSister] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Sister), val: "" });
+  const [selectedSelectedBrother, setSelectedBrother] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Brother), val: "" });
+  const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Status), val: "" });
+  const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Income), val: "" });
+  const [selectedFamilyType, setSelectedFamilyType] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Type), val: "" });
+  const [selectedNativeState, setSelectedNativeState] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.family_native_state), val: "" });
+  const [selectedNativeCity, setSelectedNativeCity] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.family_native_city), val: "" });
+  const [selectedNativeCountry, setSelectedNativeCountry] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.family_native_country), val: "" });
+  const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.living_with_parents), val: "" });
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -30,24 +92,21 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       behavior: "smooth",
     });
   }, []);
-
-  // Form staet
   const formik = useFormik({
     initialValues: {
-      father: "",
-      mother: "",
-      sister: "",
-      brother: "",
-      gothra: "",
-      family_status: "",
-      family_income: "",
-      family_type: "",
-      family_native_country: "",
-      family_native_state: "",
-      family_native_city: "",
-      living_with_parents: "",
+      fathersProfession: jsonData?.Father,
+      mothersProfession: jsonData?.Mother,
+      sister: jsonData?.Sister,
+      brother: jsonData?.Brother,
+      gothra: jsonData?.Gothra,
+      familyStatus: jsonData?.Family_Status,
+      familyIncome: jsonData?.Family_Income,
+      familyType: jsonData?.Family_Type,
+      familyNativeCountry: jsonData?.family_native_country,
+      familyNativeState: jsonData?.family_native_state,
+      familyNativeCity: jsonData?.family_native_city,
+      livingWithParents: jsonData?.living_with_parents,
     },
-    // validationSchema: SignupSchema,
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 1));
       checkFunction();
@@ -67,30 +126,33 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
             <small>mandatory</small>
             <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
               <div className=" text-start d-flex flex-column gap-4">
-                {/* <h4 className="text-center">Lifestyle</h4> */}
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
-                  title="Father"
-                  data={Diet}
-                  nameid="father"
+                  selectedDataFn={setSelectedFathersOccupation}
+                  title="Father's Occupation"
+                  data={FathersProfession}
+                  nameid="fathersProfession"
+                  defaultValue={jsonData?.Father}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
-                  title="Mother"
-                  data={Diet}
-                  nameid="mother"
+                  selectedDataFn={setSelectedMothersOccupation}
+                  title="Mother's Occupation"
+                  data={MothersProfession}
+                  nameid="mothersProfession"
+                  defaultValue={jsonData?.Mother}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedSister}
                   title="Sister"
                   data={BrotherSister}
                   nameid="sister"
+                  defaultValue={jsonData?.Sister}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedBrother}
                   title="Brother"
                   data={BrotherSister}
                   nameid="brother"
+                  defaultValue={jsonData?.Brother}
                 />
                 <div className={classes.singleBox}>
                   <Form.Label>Gothra</Form.Label>
@@ -98,52 +160,59 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     as="textarea"
                     name="gothra"
                     rows={3}
-                    placeholder="Abotu Religious Belief"
+                    placeholder="About Gothra"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
                 </div>
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedFamilyStatus}
                   title="Family Status "
                   data={FamilStatus}
-                  nameid="family_status"
+                  nameid="familyStatus"
+                  defaultValue={jsonData?.Family_Status}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedFamilyIncome}
                   title="Family Income"
                   data={FamilyIncome}
-                  nameid="family_income"
+                  nameid="familyIncome"
+                  defaultValue={jsonData?.Family_Income}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedFamilyType}
                   title="Family Type"
                   data={FamilyType}
-                  nameid="family_type"
+                  nameid="familyType"
+                  defaultValue={jsonData?.Family_Type}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedNativeCountry}
                   title="Family Native Country"
                   data={FamilyNativeCountry}
-                  nameid="family_native_country"
+                  nameid="familyNativeCountry"
+                  defaultValue={jsonData?.family_native_country}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedNativeState}
                   title="Family Native State"
                   data={FamilyNativeState}
-                  nameid="family_native_state"
+                  nameid="familyNativeState"
+                  defaultValue={jsonData?.family_native_state}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedNativeCity}
                   title="Family Native City"
                   data={FamilyNativeCity}
-                  nameid="family_native_city"
+                  nameid="familyNativeCity"
+                  defaultValue={jsonData?.family_native_city}
                 />
                 <DropdownGridSingleSelect
-                  selectedDataFn={() => {}}
+                  selectedDataFn={setSelectedLivingWithParents}
                   title="Living With Parents"
                   data={LivingWithParrents}
-                  nameid="living_with_parents"
+                  nameid="livingWithParents"
+                  defaultValue={jsonData?.living_with_parents}
                 />
               </div>
               <Button
@@ -155,7 +224,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
               </Button>
             </Form>
           </Col>
-          {/* <RightSection /> */}
+          <RightSection />
         </Row>
       </Container>
     </div>

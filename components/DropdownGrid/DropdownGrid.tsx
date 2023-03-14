@@ -11,7 +11,7 @@ interface DropdownGridProps {
   data: {};
   nameid: string;
   selectedDataFn: (val: Data) => void;
-  defaultValue?: number;
+  defaultValue?: number | null;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,

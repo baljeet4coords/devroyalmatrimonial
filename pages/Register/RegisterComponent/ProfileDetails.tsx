@@ -334,7 +334,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                 >
-                  Continue
+                  Next
                 </Button>
               </Form>
             </Col>

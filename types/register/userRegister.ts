@@ -35,3 +35,50 @@ export interface IRegisterStep1Response {
   profile_handlername: string;
   religion: number;
 }
+
+export interface IRegisterStep5 {
+  actionType: string;
+  userId: string;
+  aboutCareer?: string;
+  aboutFamily?: string;
+  aboutEducation?: string;
+  basicIntro?: string;
+}
+
+export interface IRegisterStep5Response {
+  basic_intro: string | null;
+  about_career: string | null;
+  about_family: string | null;
+  about_education: string | null;
+}
+
+export interface IRegisterStep4 {
+  actionType: string;
+  userId: string;
+  fathersProfession?: string;
+  mothersProfession?: string;
+  sister?: string;
+  brother?: string;
+  gothra?: string;
+  familyStatus?: string;
+  familyIncome?: string;
+  familyType?: string;
+  familyNativeCountry?: string;
+  familyNativeState?: string;
+  familyNativeCity?: string;
+  livingWithParents?: string;
+}
+export interface IRegisterStep4Response {
+  Father: number | null;
+  Gothra: number | null;
+  Mother: number | null;
+  Sister: number | null;
+  Brother: number | null;
+  Family_Type: number | null;
+  Family_Income: number | null;
+  Family_Status: number | null;
+  family_native_city: number | null;
+  family_native_state: number | null;
+  living_with_parents: number | null;
+  family_native_country: number | null;
+}
