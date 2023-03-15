@@ -39,11 +39,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-          <div className={classes.singleDropdownContainer}>
+        <div className={classes.singleBox}>
+            <Form.Label>MaritalStatus</Form.Label>
             <DropdownGridSingleSelect
-              title="Marital Status"
+              title=""
               data={MaritalStatus}
-              nameid="maritalstatus"
+              nameid="mothertongue"
               selectedDataFn={setSelectedMaritalStatus}
             />
           </div>
@@ -72,12 +73,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
-              childComponent="Save"
+              title="Save"
               setEditDetails={setCriticalDetails}
               buttonType={1}
             />
             <EditCustomButton
-              childComponent="Save"
+              title="Cancel"
               setEditDetails={setCriticalDetails}
               buttonType={0}
             />

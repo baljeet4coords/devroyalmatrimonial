@@ -1,8 +1,13 @@
+import { FC } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
 
-const LifeStyleDetails: React.FC = () => {
+
+interface MyComponentProps {
+  setEditDetails: (details: boolean) => void;
+}
+const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
@@ -37,7 +42,12 @@ const LifeStyleDetails: React.FC = () => {
             <CiPillsBottle1 />
             LifeStyle
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setEditDetails(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

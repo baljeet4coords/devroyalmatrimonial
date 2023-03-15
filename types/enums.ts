@@ -220,6 +220,13 @@ export enum ResidentialStatus {
   StudentVisa = "4",
   TemporaryVisa = "5",
 }
+export enum DiscribeYourself {
+  Honnest = "1",
+  Positive = "2",
+  Hardwork = "3",
+  Impressive = "4",
+  PetLover = "5",
+}
 
 export enum ResidentialStatusWith0 {
   Doesnotmatter = "0",

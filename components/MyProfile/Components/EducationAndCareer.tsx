@@ -1,8 +1,14 @@
+import { FC } from "react";
 import { BiBook } from "react-icons/bi";
 import { BsPinAngle } from "react-icons/bs";
 import classes from "./GlobalDetails.module.scss";
 
-const EducationAndCareer: React.FC = () => {
+interface MyComponentProps {
+  setEudcationAndCareer: (details: boolean) => void;
+}
+const EducationAndCareer:FC<MyComponentProps> = ({ setEudcationAndCareer }) => {
+
+  
   const BasicDetails = {
     pin: true,
     pinValue: "Intersted in setting aborad?",
@@ -57,7 +63,12 @@ const EducationAndCareer: React.FC = () => {
             <BiBook />
             Education & Career
           </div>
-          <span className={classes.Edit}> Edit</span>
+          <span
+            className={classes.Edit}
+            onClick={() => setEudcationAndCareer(true)}
+          >
+            Edit
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

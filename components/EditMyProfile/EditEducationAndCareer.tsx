@@ -2,27 +2,20 @@ import { FC } from "react";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
-import { FiUser } from "react-icons/fi";
-import {
-  AnnualIncomeProfile,
-  MaritalStatus,
-  MotherTongue,
-} from "../../types/enums";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { MdVerified } from "react-icons/md";
-import { CiSettings } from "react-icons/ci";
-import { RiLockLine } from "react-icons/ri";
 import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
-import CastDataList from "../CastDataList/CastDataList";
-import { CastList } from "../../constants/CastList";
-import { CountryList } from "../../constants/DesiredData";
+import { Employed_In, HighestEducationList } from "../../constants/DesiredData";
+import { BiBook } from "react-icons/bi";
+import { AnnualIncomeProfile, Occupation } from "../../types/enums";
 
 interface MyComponentProps {
-  setBasicDetails: (details: boolean) => void;
+  setEudcationAndCareer: (details: boolean) => void;
 }
-const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
+const EditEducationAmdCareer: FC<MyComponentProps> = ({
+  setEudcationAndCareer,
+}) => {
   const formik = useFormik({
     initialValues: {
       dob: "",
@@ -55,124 +48,133 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
       <div className={classes.content}>
         <div className={classes.DetailsTypeSec}>
           <div className={classes.DetailsTypeLeft}>
-            <FiUser />
-            Basic Details
+            <BiBook />
+            Education & Career
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
-            <Form.Label>Profile Verification</Form.Label>
-            <div className={classes.UserVerified}>
-              <span>
-                <MdVerified />
-                your profile verification is pending
-              </span>
-              <p>Get verified NOW</p>
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Full Name</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Himanshu singh"}
-                placeholder="Full Name"
-              />
-              <p>
-                Show to all <CiSettings />{" "}
-              </p>
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Gender</Form.Label>
-            <div className={classes.EditInputSecDisable}>
-              <input
-                type="text"
-                value={"Male"}
-                disabled
-                placeholder="Enter Gender"
-              />
-              <span>
-                {" "}
-                <RiLockLine />{" "}
-              </span>
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Religion</Form.Label>
-            <div className={classes.EditInputSecDisable}>
-              <input
-                type="text"
-                value={"Hindu"}
-                disabled
-                placeholder="Enter Gender"
-              />
-              <span>
-                {" "}
-                <RiLockLine />{" "}
-              </span>
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>MotherTongue</Form.Label>
+            <Form.Label>Higest Educations</Form.Label>
             <DropdownGridSingleSelect
               title=""
-              data={MotherTongue}
+              data={HighestEducationList}
               nameid="mothertongue"
               selectedDataFn={setSelectedMotherTongue}
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Cast</Form.Label>
-            <CastDataList options={CastList} selectedOption={selectedCast} />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Country Living in</Form.Label>
+            <Form.Label>School Name</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"India"}
-                placeholder="Country Living in"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
               />
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>State Living in</Form.Label>
+            <Form.Label>UG Degree</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={HighestEducationList}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>UG College</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Delhi"}
-                placeholder="State Living in"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
               />
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>City Living in</Form.Label>
+            <Form.Label>PG Degree</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={HighestEducationList}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>PG College</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Ambikapur"}
-                placeholder="City Living in"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
+              />
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Other UG College</Form.Label>
+            <div className={classes.EditInputSec}>
+              <input
+                type="text"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
+              />
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Other PG College</Form.Label>
+            <div className={classes.EditInputSec}>
+              <input
+                type="text"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
+              />
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Employed in</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={Employed_In}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Occupation</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={Occupation}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Organization Name</Form.Label>
+            <div className={classes.EditInputSec}>
+              <input
+                type="text"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
               />
             </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Annual Income</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Rs. 1-2 Lakh"}
-                placeholder="Annual Income"
-              />
-            </div>
+            <DropdownGridSingleSelect
+              title=""
+              data={AnnualIncomeProfile}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
           </div>
+
           <div className={classes.singleBox}>
-            <Form.Label>Profile Managed By</Form.Label>
+            <Form.Label>Intersting in Setting Aboard</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Self"}
-                placeholder="Profile Managed By"
+                // value={"Not filed in"}
+                placeholder="Not filed in"
               />
             </div>
           </div>
@@ -180,12 +182,12 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
               title="Save"
-              setEditDetails={setBasicDetails}
+              setEditDetails={setEudcationAndCareer}
               buttonType={1}
             />
             <EditCustomButton
               title="Cancel"
-              setEditDetails={setBasicDetails}
+              setEditDetails={setEudcationAndCareer}
               buttonType={0}
             />
           </div>
@@ -195,4 +197,4 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
   );
 };
 
-export default EditBasicDetials;
+export default EditEducationAmdCareer;
