@@ -1,18 +1,18 @@
-import { IRegisterStep1Response } from "../../../types/register/userRegister";
-import { Step1Actions } from "./actions";
-import { STEP_1, STEP_1_SUCCESS, STEP_1_FAILURE } from "./constants";
+import { IRegisterStep5Response } from "../../../types/register/userRegister";
+import { Step5Actions } from "./actions";
+import { STEP_5, STEP_5_SUCCESS, STEP_5_FAILURE } from "./constants";
 
-interface Step1State {
+interface Step5State {
   isLoading: boolean;
   response: {
     output: number;
     message: string;
-    jsonResponse: IRegisterStep1Response;
+    jsonResponse: IRegisterStep5Response;
   } | null;
   error: string | null;
 }
 
-const initialState: Step1State = {
+const initialState: Step5State = {
   isLoading: false,
   response: null,
   error: null,
@@ -20,22 +20,22 @@ const initialState: Step1State = {
 
 export default function step1Reducer(
   state = initialState,
-  action: Step1Actions
-): Step1State {
+  action: Step5Actions
+): Step5State {
   switch (action.type) {
-    case STEP_1:
+    case STEP_5:
       return {
         ...state,
         isLoading: true,
       };
-    case STEP_1_SUCCESS:
+    case STEP_5_SUCCESS:
       return {
         ...state,
         isLoading: false,
         response: action.response,
         error: null,
       };
-    case STEP_1_FAILURE:
+    case STEP_5_FAILURE:
       return {
         ...state,
         isLoading: false,

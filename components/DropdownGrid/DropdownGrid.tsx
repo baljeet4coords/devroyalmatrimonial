@@ -11,20 +11,31 @@ interface DropdownGridProps {
   data: {};
   nameid: string;
   selectedDataFn: (val: Data) => void;
+  defaultValue?: number | null;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
   data,
   nameid,
   selectedDataFn,
+  defaultValue,
 }) => {
+  const findKeyByValue = (obj: any, value: number): string => {
+    for (let key in obj) {
+      if (obj[key] === String(value)) {
+        return key;
+      }
+    }
+    return "";
+  };
+
   const combinedData = Object.entries(data).map(
     ([key, value]) => `${key}-${value}`
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState<string[]>(combinedData);
   const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
-  
+
   const ref = useRef<any>();
 
   const searchDataFunc = (query: any) => {
@@ -39,7 +50,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     selectedDataFn(data);
     ref.current.value = "";
   };
-  
+
   return (
     <div className={classes.singleBox}>
       <Form.Label>{title}</Form.Label>
@@ -51,9 +62,13 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <Form.Control
             type="text"
             name={nameid}
-            placeholder={selectedData.val.split("-")[0] || "Select Some Options"}
+            placeholder={
+              selectedData.val.split("-")[0] ||
+              findKeyByValue(data, defaultValue) ||
+              "Select Some Options"
+            }
             ref={ref}
-            onChange={e => searchDataFunc(e.target.value)}
+            onChange={(e) => searchDataFunc(e.target.value)}
           />
         </li>
         <div

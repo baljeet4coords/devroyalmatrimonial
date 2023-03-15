@@ -27,7 +27,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const Components = [
     <ProfileDetails key={0} nextPage={chooseMessage} />,
     <CareerDetails key={1} nextPage={chooseMessage} />,
-    <LifeStyle key={2} nextPage={chooseMessage}  />,
+    <LifeStyle key={2} nextPage={chooseMessage} />,
     <FamilyDetails key={3} nextPage={chooseMessage} />,
     <ExpressYourself key={4} />,
   ];

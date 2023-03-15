@@ -353,7 +353,7 @@ export enum ChildrenStatus {
   Yes_LivingSeparatly = "3",
 }
 
-export enum ParentsProfession {
+export enum MothersProfession {
   Housewife_or_Homemaker = "1",
   Business_or_Entrepreneur = "2",
   Service_or_Private = "3",
@@ -390,13 +390,18 @@ export enum ChallengedWith0 {
   No = "2",
 }
 
-export enum BrotherSister {
+export enum BrotherSisterWith0 {
   Doesnotmatter = "0",
   No = "1",
   Yes = "2",
   More = "2+",
 }
 
+export enum BrotherSister {
+  No = "1",
+  Yes = "2",
+  More = "2+",
+}
 export enum FamilyIncomeWith0 {
   Doesnotmatter = "0",
   High = "1",
@@ -482,4 +487,15 @@ export enum isHivWith0 {
 export enum isHiv {
   Yes = "1",
   No = "2",
+}
+
+export enum FathersProfession {
+  Business_or_Entrepreneur = "1",
+  Service_or_Private = "2",
+  Service_or_Govt_PSU = "3",
+  Army = "4",
+  CivilServices = "5",
+  Teacher = "6",
+  Retired = "7",
+  Expired = "8",
 }

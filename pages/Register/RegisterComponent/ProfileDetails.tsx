@@ -12,6 +12,7 @@ import {
   Manglik,
 } from "../../../types/enums";
 import {
+  AvatarPicker,
   DropdownGridSingleSelect,
   GenderRadioButtons,
 } from "../../../components";
@@ -20,82 +21,107 @@ import { useEffect, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
 import { CastList } from "../../../constants/CastList";
 import CastDataList from "../../../components/CastDataList/CastDataList";
-import usePostData from "../../../hooks/utils/usePostData/usePostData";
-import { useSelector } from "react-redux";
+import { STEP_1 } from "../../../ducks/regiserUser/step1/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
+import axios from "axios";
+import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 
-const step1PostApi = `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`;
-
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+  const dispatch = useDispatch();
+  const stepOneDefaultValues = useSelector(selectStep1Success);
+  const userId = useSelector(selectSignUpSuccess)?.output;
+  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
+  useEffect(() => {
+    dispatch({
+      type: STEP_1,
+      payload: { actionType: "V", userId: userId },
+    });
+    setGender(jsonData?.gender === "M" ? "1" : "2");
+  }, []);
+
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
-  // const userId = useSelector();
-  const { isLoading, isError, responseData, post, reset } =
-    usePostData(step1PostApi);
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.profile_for), val: "" });
   const [selectedChallenged, setSelectedChallenged] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.challenged), val: "" });
   const [selectedIsHiv, setSelectedIsHiv] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.hiv), val: "" });
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.mother_tongue), val: "" });
   const [selectedReligion, setSelectedReligion] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.religion), val: "" });
   const [selectedManglik, setSelectedManglik] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.manglik), val: "" });
   const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.marital_status), val: "" });
   const [selectedChildrenStatus, setSelectedChildrenStatus] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
-
+  }>({ id: String(jsonData?.children_status), val: "" });
+  const [gender, setGender] = useState<string>("");
   const formik = useFormik({
     initialValues: {
-      profilefor: "",
-      profileHandlerName: "",
-      dob: "",
-      selectgender: "",
-      fullname: "",
-      profilepic: "",
-      cast: "",
-      challenged: "",
-      isHiv: "",
-      mothertongue: "",
-      religion: "",
-      isManglik: "",
-      maritalstatus: "",
-      childrenstatus: "",
-      height: "",
+      userId: userId,
+      profilefor: String(jsonData?.profile_for),
+      profileHandlerName: jsonData?.profile_handlername,
+      dob: jsonData?.dob,
+      selectgender: jsonData?.gender,
+      fullname: jsonData?.fullname,
+      cast: String(jsonData?.caste),
+      challenged: String(jsonData?.challenged),
+      isHiv: String(jsonData?.hiv),
+      mothertongue: String(jsonData?.mother_tongue),
+      religion: String(jsonData?.religion),
+      isManglik: String(jsonData?.manglik),
+      maritalstatus: String(jsonData?.marital_status),
+      childrenstatus: String(jsonData?.children_status),
+      height: String(jsonData?.height_cm),
+      profilepic: jsonData?.photo,
     },
-    onSubmit: (values) => {
-      const data = JSON.stringify(
-        { actionType: "c", userId: "1", ...values },
-        null,
-        1
-      );
-      post(data);
-      checkFunction();
+    onSubmit: async (values) => {
+      let response;
+      if (isReduxEmpty === undefined) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
+          {
+            actionType: "C",
+            ...values,
+          }
+        );
+      } else {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
+          {
+            actionType: "U",
+            ...values,
+          }
+        );
+      }
+      response.data.output === 1 && nextPage(1);
     },
   });
-  const [gender, setGender] = useState<string>("");
+  console.log(isReduxEmpty);
   const onChangeGender = (gender: string) => {
     setGender(gender);
     if (gender === "1") {
@@ -104,6 +130,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
+
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
@@ -144,10 +171,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     const id = string.split("-")[0];
     formik.values.cast = id;
   };
-  const checkFunction = () => {
-    nextPage(1);
+  const profilePicture = ({ name, image }: { name: string; image: string }) => {
+    formik.values.profilepic = name;
   };
-
   return (
     <>
       <div className={classes.profile_Container}>
@@ -162,6 +188,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   data={ProfileFor}
                   nameid="profilefor"
                   selectedDataFn={setSelectedProfileFor}
+                  defaultValue={jsonData?.profile_for}
                 />
                 {selectedProfileFor?.id !== "1" && (
                   <div className={classes.singleBox}>
@@ -174,6 +201,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                           placeholder="Enter your name"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
+                          defaultValue={jsonData?.profile_handlername}
                         />
                       </li>
                     </div>
@@ -192,6 +220,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="DateRange"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
+                    defaultValue={jsonData?.dob.split(" ")[0]}
                   />
                 </div>
                 <div className={classes.singleBox}>
@@ -206,6 +235,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder="Select Some Options"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
+                        defaultValue={jsonData?.fullname}
                       />
                     </li>
                   </div>
@@ -214,13 +244,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Form.Label>Upload Profile Picture</Form.Label>
                   <div className={classes.inputBox}>
                     <li className={classes.blankInput}>
-                      <Form.Control
-                        name="profilepic"
-                        type="file"
-                        placeholder="Upload Profile Pic"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                      />
+                      <AvatarPicker onGetAvatar={profilePicture} />
                     </li>
                   </div>
                 </div>
@@ -229,6 +253,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <CastDataList
                     options={CastList}
                     selectedOption={selectedCast}
+                    defaultValue={jsonData?.caste}
                   />
                 </div>
                 <div className={classes.singleBox}>
@@ -241,6 +266,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder={`${cm} in cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
+                        defaultValue={jsonData?.height_cm}
                       />
                       <Form.Control
                         name="height"
@@ -257,36 +283,42 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   data={Challenged}
                   nameid="challenged"
                   selectedDataFn={setSelectedChallenged}
+                  defaultValue={jsonData?.challenged}
                 />
                 <DropdownGridSingleSelect
                   title="HIV"
                   data={isHiv}
                   nameid="hiv"
                   selectedDataFn={setSelectedIsHiv}
+                  defaultValue={jsonData?.hiv}
                 />
                 <DropdownGridSingleSelect
                   title="Mother Tongue"
                   data={MotherTongue}
                   nameid="mothertongue"
                   selectedDataFn={setSelectedMotherTongue}
+                  defaultValue={jsonData?.mother_tongue}
                 />
                 <DropdownGridSingleSelect
                   title="Religion"
                   data={Religion}
                   nameid="religion"
                   selectedDataFn={setSelectedReligion}
+                  defaultValue={jsonData?.religion}
                 />
                 <DropdownGridSingleSelect
                   title="Add Manglik"
                   data={Manglik}
                   nameid="addmanglik"
                   selectedDataFn={setSelectedManglik}
+                  defaultValue={jsonData?.manglik}
                 />
                 <DropdownGridSingleSelect
                   title="Marital Status"
                   data={MaritalStatus}
                   nameid="maritalstatus"
                   selectedDataFn={setSelectedMaritalStatus}
+                  defaultValue={jsonData?.marital_status}
                 />
                 {selectedMaritalStatus.id >= "2" && (
                   <DropdownGridSingleSelect
@@ -294,6 +326,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     data={ChildrenStatus}
                     nameid="childrenstatus"
                     selectedDataFn={setSelectedChildrenStatus}
+                    defaultValue={jsonData?.children_status}
                   />
                 )}
                 <Button
@@ -301,7 +334,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                 >
-                  Continue
+                  Next
                 </Button>
               </Form>
             </Col>

@@ -1,4 +1,7 @@
-export const CastList = [
+export const CastList: {
+  religion: string;
+  list: { id: number; cast: string }[];
+}[] = [
   {
     religion: "Hindu",
     list: [
