@@ -1,9 +1,8 @@
-import { FC } from "react";
-import { useState } from "react";
-import { useFormik } from "formik";
+import React, { FC, useState } from "react";
 import { Form } from "react-bootstrap";
 import { FiUserX } from "react-icons/fi";
 import { MaritalStatus } from "../../types/enums";
+import { useFormik } from "formik";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
@@ -39,7 +38,7 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-        <div className={classes.singleBox}>
+          <div className={classes.singleBox}>
             <Form.Label>MaritalStatus</Form.Label>
             <DropdownGridSingleSelect
               title=""

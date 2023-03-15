@@ -5,6 +5,9 @@ import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import {
   AnnualIncomeProfile,
+  Challenged,
+  isHiv,
+  Manglik,
   MaritalStatus,
   MotherTongue,
 } from "../../types/enums";
@@ -18,11 +21,16 @@ import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
 import { CountryList } from "../../constants/DesiredData";
+import { useSelector } from "react-redux";
+import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
 }
 const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
+  const stepOneDefaultValues = useSelector(selectStep1Success);
+  const jsonData = stepOneDefaultValues?.jsonResponse;
+
   const formik = useFormik({
     initialValues: {
       dob: "",
@@ -33,6 +41,14 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     },
   });
 
+  const [selectedManglik, setSelectedManglik] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.manglik), val: "" });
+  const [selectedIsHiv, setSelectedIsHiv] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.hiv), val: "" });
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
     id: string;
     val: string;
@@ -99,6 +115,60 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             </div>
           </div>
           <div className={classes.singleBox}>
+            <Form.Label>Cast</Form.Label>
+            <CastDataList options={CastList} selectedOption={selectedCast} />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Height</Form.Label>
+            <div className={classes.inputBox}>
+              <li className={`${classes.blankInput} d-flex`}>
+                <Form.Control
+                  name="height"
+                  type="text"
+                  placeholder={`${cm} in cms`}
+                  onBlur={formik.handleBlur}
+                  onChange={handleCmChange}
+                  defaultValue={jsonData?.height_cm}
+                />
+                <Form.Control
+                  name="height"
+                  type="text"
+                  placeholder={`${feet} in ft.`}
+                  onBlur={formik.handleBlur}
+                  onChange={handleFeetChange}
+                />
+              </li>
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Challenged</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={Challenged}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>HIV</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={isHiv}
+              nameid="hiv"
+              selectedDataFn={setSelectedIsHiv}
+              defaultValue={jsonData?.hiv}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>MotherTongue</Form.Label>
+            <DropdownGridSingleSelect
+              title=""
+              data={MotherTongue}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
+          </div>
+          <div className={classes.singleBox}>
             <Form.Label>Religion</Form.Label>
             <div className={classes.EditInputSecDisable}>
               <input
@@ -113,58 +183,15 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
               </span>
             </div>
           </div>
+
           <div className={classes.singleBox}>
-            <Form.Label>MotherTongue</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={MotherTongue}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              title="Add Manglik"
+              data={Manglik}
+              nameid="addmanglik"
+              selectedDataFn={setSelectedManglik}
+              defaultValue={jsonData?.manglik}
             />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Cast</Form.Label>
-            <CastDataList options={CastList} selectedOption={selectedCast} />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Country Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"India"}
-                placeholder="Country Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>State Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Delhi"}
-                placeholder="State Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>City Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Ambikapur"}
-                placeholder="City Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Annual Income</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Rs. 1-2 Lakh"}
-                placeholder="Annual Income"
-              />
-            </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Profile Managed By</Form.Label>

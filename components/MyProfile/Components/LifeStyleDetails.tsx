@@ -13,24 +13,36 @@ const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
     pinValue: "Open to pets?",
     data: [
       {
-        name: "Habits",
-        value: "Dietary Habits? ,Drinking Habits? ,Smoking Habits?",
+        name: "Diet",
+        value: "Vegetarian",
       },
       {
-        name: "Assets",
-        value: "Own a house?, Own a Car?",
+        name: "Smoking",
+        value: "Occasionally",
       },
       {
-        name: "Languages Known",
+        name: "drinking",
         value: "NA",
       },
       {
-        name: "Blood Group",
+        name: "Love pets",
+        value: "yes",
+      },
+      {
+        name: "Owns House",
+        value: "no",
+      },
+      {
+        name: "Owns car",
+        value: "yes",
+      },
+      {
+        name: "Blood group",
         value: "NA",
       },
       {
-        name: "Special Cases",
-        value: "Challenged? ,Thalassemia?.HIV+ve?",
+        name: "Thalassemia",
+        value: "NA",
       }
     ],
   };
