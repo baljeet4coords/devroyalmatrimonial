@@ -4,12 +4,12 @@ import axios from "axios";
 
 import { Step1Actions } from "./actions";
 
-function* signUpSaga(action: Step1Actions): any {
+function* step1Saga(action: Step1Actions): any {
   try {
     if (action.type === STEP_1) {
       const response = yield call(
         axios.post,
-        `${process.env.NEXT_PUBLIC_URL}/auth/signUp`,
+        `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
         action.payload
       );
       const responseData = response.data;
@@ -21,5 +21,5 @@ function* signUpSaga(action: Step1Actions): any {
 }
 
 export default function* rootSaga() {
-  yield takeEvery(STEP_1, signUpSaga);
+  yield takeEvery(STEP_1, step1Saga);
 }

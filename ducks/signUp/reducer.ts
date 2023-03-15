@@ -4,7 +4,11 @@ import { SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "./constants";
 interface SignUpState {
   isLoading: boolean;
   response: {
+    output: number;
     message: string;
+    jsonResponse: {} | null;
+    status: number;
+    token: string;
   } | null;
   error: string | null;
 }

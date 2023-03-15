@@ -3,6 +3,7 @@ import RegisterHeader from "./RegisterComponent/RegisterHeader/RegisterHeader";
 import { Footer } from "../../components";
 import React, { useState } from "react";
 import classes from "./RegisterDetails.module.scss";
+// import ProfileDetails from "../ProfileDetails";
 import CareerDetails from "./RegisterComponent/CareerDetails";
 import ExpressYourself from "./RegisterComponent/ExpressYourself";
 import FamilyDetails from "./RegisterComponent/FamilyDetails";
@@ -27,7 +28,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const Components = [
     <ProfileDetails key={0} nextPage={chooseMessage} />,
     <CareerDetails key={1} nextPage={chooseMessage} />,
-    <LifeStyle key={2} nextPage={chooseMessage}  />,
+    <LifeStyle key={2} nextPage={chooseMessage} />,
     <FamilyDetails key={3} nextPage={chooseMessage} />,
     <ExpressYourself key={4} />,
   ];
