@@ -63,9 +63,9 @@ export interface IRegisterStep4 {
   familyStatus?: string;
   familyIncome?: string;
   familyType?: string;
-  familyNativeCountry?: string;
-  familyNativeState?: string;
-  familyNativeCity?: string;
+  familyNativeCountry?: number;
+  familyNativeState?: number;
+  familyNativeCity?: number;
   livingWithParents?: string;
 }
 export interface IRegisterStep4Response {

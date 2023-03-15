@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import CustomButton from "../../../components/Button/CustomButton";
 import classes from "./Component.module.scss";
 import Form from "react-bootstrap/Form";
 import RightSection from "./RightSection/RightSection";
-import { DropdownGridSingleSelect } from "../../../components";
+import {
+  CountryStateCitlyList,
+  DropdownGridSingleSelect,
+} from "../../../components";
 import {
   BrotherSister,
-  Diet,
   FamilStatus,
   FamilyIncome,
-  FamilyNativeCity,
-  FamilyNativeCountry,
-  FamilyNativeState,
   FamilyType,
   FathersProfession,
   LivingWithParrents,
@@ -23,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
 import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
+import { IRegisterStep4 } from "../../../types/register/userRegister";
+import axios from "axios";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -39,7 +39,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       type: STEP_4,
       payload: { actionType: "V", userId: userId },
     });
-  }, []);
+  }, [dispatch, userId]);
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
@@ -48,11 +48,11 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: string;
     val: string;
   }>({ id: String(jsonData?.Mother), val: "" });
-  const [selectedSelectedSister, setSelectedSister] = useState<{
+  const [selectedSister, setSelectedSister] = useState<{
     id: string;
     val: string;
   }>({ id: String(jsonData?.Sister), val: "" });
-  const [selectedSelectedBrother, setSelectedBrother] = useState<{
+  const [selectedBrother, setSelectedBrother] = useState<{
     id: string;
     val: string;
   }>({ id: String(jsonData?.Brother), val: "" });
@@ -68,23 +68,19 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: string;
     val: string;
   }>({ id: String(jsonData?.Family_Type), val: "" });
-  const [selectedNativeState, setSelectedNativeState] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.family_native_state), val: "" });
-  const [selectedNativeCity, setSelectedNativeCity] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.family_native_city), val: "" });
-  const [selectedNativeCountry, setSelectedNativeCountry] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.family_native_country), val: "" });
+  const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
+    jsonData?.family_native_country
+  );
+  const [selectedNativeState, setSelectedNativeState] = useState<number>(
+    jsonData?.family_native_state
+  );
+  const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
+    jsonData?.family_native_city
+  );
   const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
     id: string;
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -92,8 +88,11 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       behavior: "smooth",
     });
   }, []);
+  console.log(jsonData);
   const formik = useFormik({
     initialValues: {
+      actionType: "",
+      userId: userId,
       fathersProfession: jsonData?.Father,
       mothersProfession: jsonData?.Mother,
       sister: jsonData?.Sister,
@@ -107,15 +106,65 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       familyNativeCity: jsonData?.family_native_city,
       livingWithParents: jsonData?.living_with_parents,
     },
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 1));
-      checkFunction();
+    onSubmit: async (values: IRegisterStep4) => {
+      let response;
+      if (isReduxEmpty) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
+          {
+            ...values,
+            actionType: "C",
+          }
+        );
+      } else {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
+          {
+            ...values,
+            actionType: "U",
+          }
+        );
+      }
+      response.data.output === 1 && nextPage(4);
     },
   });
 
-  const checkFunction = () => {
-    nextPage(4);
+  const getSelectedCountry = (id: number) => {
+    setSelectedNativeCountry(id);
   };
+  const getSelectedCity = (id: number) => {
+    setSelectedNativeState(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedNativeCity(id);
+  };
+
+  useEffect(() => {
+    formik.values.fathersProfession = selectedFathersOccupation.id;
+    formik.values.mothersProfession = selectedMothersOccupation.id;
+    formik.values.sister = selectedSister.id;
+    formik.values.brother = selectedBrother.id;
+    formik.values.familyStatus = selectedFamilyStatus.id;
+    formik.values.familyIncome = selectedFamilyIncome.id;
+    formik.values.familyType = selectedFamilyType.id;
+    formik.values.familyNativeCountry = selectedNativeCountry;
+    formik.values.familyNativeState = selectedNativeState;
+    formik.values.familyNativeCity = selectedNativeCity;
+    formik.values.livingWithParents = selectedLivingWithParents.id;
+  }, [
+    formik.values,
+    selectedBrother.id,
+    selectedFamilyIncome.id,
+    selectedFamilyStatus.id,
+    selectedFamilyType.id,
+    selectedFathersOccupation.id,
+    selectedLivingWithParents.id,
+    selectedMothersOccupation.id,
+    selectedNativeCity,
+    selectedNativeCountry,
+    selectedNativeState,
+    selectedSister.id,
+  ]);
 
   return (
     <div className={classes.profile_Container}>
@@ -186,26 +235,14 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   nameid="familyType"
                   defaultValue={jsonData?.Family_Type}
                 />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedNativeCountry}
-                  title="Family Native Country"
-                  data={FamilyNativeCountry}
-                  nameid="familyNativeCountry"
-                  defaultValue={jsonData?.family_native_country}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedNativeState}
-                  title="Family Native State"
-                  data={FamilyNativeState}
-                  nameid="familyNativeState"
-                  defaultValue={jsonData?.family_native_state}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedNativeCity}
-                  title="Family Native City"
-                  data={FamilyNativeCity}
-                  nameid="familyNativeCity"
-                  defaultValue={jsonData?.family_native_city}
+                <CountryStateCitlyList
+                  title="Family Native"
+                  setSelectedCountry={getSelectedCountry}
+                  setSelectedState={getSelectedState}
+                  setSelectedCity={getSelectedCity}
+                  defaultValueCountry={0}
+                  defaultValueState={0}
+                  defaultValueCity={0}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedLivingWithParents}

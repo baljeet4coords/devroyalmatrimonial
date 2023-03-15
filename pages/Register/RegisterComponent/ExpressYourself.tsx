@@ -8,6 +8,7 @@ import { STEP_5 } from "../../../ducks/regiserUser/step5/constants";
 import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
 import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 import axios from "axios";
+import { IRegisterStep5 } from "../../../types/register/userRegister";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,13 +32,14 @@ const ExpressYourself: React.FC = () => {
   }, []);
   const formik = useFormik({
     initialValues: {
+      actionType: "",
       userId: userId,
       aboutCareer: jsonData?.about_career,
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,
       basicIntro: jsonData?.basic_intro,
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values: IRegisterStep5) => {
       let response;
       if (isReduxEmpty) {
         response = await axios.post(

@@ -1,5 +1,5 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import classes from "./LandingPage.module.scss";
 import {
   Header,
@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP } from "../../ducks/signUp/constants";
 import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
 import { useRouter } from "next/router";
-import { isLogin } from "../api/hello";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
@@ -46,7 +45,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
-      {!isLogin ?  <Header /> : <LoginHeader />}
+      <Header />
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>
