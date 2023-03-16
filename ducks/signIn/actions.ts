@@ -1,4 +1,4 @@
-import { SignInType } from "../../types/authentication";
+import { SignInJsonResponse, SignInType } from "./types";
 import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "./constants";
 
 interface SignInAction {
@@ -11,8 +11,10 @@ interface SignInSuccessAction {
   response: {
     output: number;
     message: string;
-    jsonResponse: {};
-  };
+    jsonResponse: SignInJsonResponse | null;
+    status: number;
+    token: string | null;
+  } | null;
 }
 
 interface SignInFailureAction {

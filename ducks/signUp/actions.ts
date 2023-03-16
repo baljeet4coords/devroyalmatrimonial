@@ -11,7 +11,9 @@ interface SignUpSuccessAction {
   response: {
     output: number;
     message: string;
-    jsonResponse: {};
+    status: number;
+    token: string;
+    jsonResponse: null;
   };
 }
 

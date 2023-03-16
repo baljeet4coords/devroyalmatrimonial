@@ -11,10 +11,17 @@ import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
 import ModalForm from "../HomeForm/ModalLogin";
+import { SignInType } from "../../ducks/signIn/types";
 
-const Header: React.FC = () => {
+type ModalLoginProps = {
+  onSubmitForm: (values: SignInType) => void;
+};
+
+const Header: React.FC<ModalLoginProps> = ({ onSubmitForm }) => {
   const [show, setShow] = useState(false);
-  const [stateSize, setSize] = useState(window.innerWidth <=992 ? true :false);
+  const [stateSize, setSize] = useState(
+    window.innerWidth <= 992 ? true : false
+  );
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -24,17 +31,16 @@ const Header: React.FC = () => {
   const hideDropdown = () => {
     setShow(false);
   };
-  
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      if(window.innerWidth <=992){
-        setSize(true)
-      }else{
-        setSize(false)
+      if (window.innerWidth <= 992) {
+        setSize(true);
+      } else {
+        setSize(false);
       }
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -43,7 +49,6 @@ const Header: React.FC = () => {
       } else {
         setActive(false);
       }
-      
     });
   }, []);
   return (
@@ -55,7 +60,6 @@ const Header: React.FC = () => {
         fixed="top"
       >
         <Container fluid className={`${classes.Navbar_Wrapper}`}>
-          {/* <Navbar.Brand className="p-0"> */}
           <Link href="/">
             <div className={classes.navBar_logo}>
               <Image
@@ -73,7 +77,6 @@ const Header: React.FC = () => {
               LOGIN
             </Button>
           </Nav>
-          {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
           <Navbar.Collapse
             id="responsive-navbar-nav"
             className={`position-relative ${classes.nav_links_style}`}
@@ -127,7 +130,10 @@ const Header: React.FC = () => {
         </Container>
       </Navbar>
       {showLoginModal && (
-        <ModalForm onCloseModal={() => setShowLoginModal(false)} />
+        <ModalForm
+          onCloseModal={() => setShowLoginModal(false)}
+          onSubmitForm={onSubmitForm}
+        />
       )}
     </>
   );

@@ -1,19 +1,20 @@
-import { SignUpActions } from "./actions";
-import { SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from "./constants";
+import { SignInActions } from "./actions";
+import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "./constants";
+import { SignInJsonResponse } from "./types";
 
-interface SignUpState {
+interface SignInState {
   isLoading: boolean;
   response: {
     output: number;
     message: string;
-    jsonResponse: {} | null;
+    jsonResponse: SignInJsonResponse | null;
     status: number;
-    token: string;
+    token: string | null;
   } | null;
   error: string | null;
 }
 
-const initialState: SignUpState = {
+const initialState: SignInState = {
   isLoading: false,
   response: null,
   error: null,
@@ -21,22 +22,22 @@ const initialState: SignUpState = {
 
 export default function signUpReducer(
   state = initialState,
-  action: SignUpActions
-): SignUpState {
+  action: SignInActions
+): SignInState {
   switch (action.type) {
-    case SIGN_UP:
+    case SIGN_IN:
       return {
         ...state,
         isLoading: true,
       };
-    case SIGN_UP_SUCCESS:
+    case SIGN_IN_SUCCESS:
       return {
         ...state,
         isLoading: false,
         response: action.response,
         error: null,
       };
-    case SIGN_UP_FAILURE:
+    case SIGN_IN_FAILURE:
       return {
         ...state,
         isLoading: false,

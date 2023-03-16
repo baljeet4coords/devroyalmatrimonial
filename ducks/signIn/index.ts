@@ -1,4 +1,4 @@
-import signUpReducer from "./reducer";
-import signUpSaga from "./saga";
+import signInReducer from "./reducer";
+import signInSaga from "./saga";
 
-export { signUpReducer, signUpSaga };
+export { signInReducer, signInSaga };

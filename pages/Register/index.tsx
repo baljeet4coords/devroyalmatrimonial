@@ -1,13 +1,18 @@
 import { Col, Container, Row } from "react-bootstrap";
 import RegisterHeader from "./RegisterComponent/RegisterHeader/RegisterHeader";
 import { Footer } from "../../components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./RegisterDetails.module.scss";
 import CareerDetails from "./RegisterComponent/CareerDetails";
 import ExpressYourself from "./RegisterComponent/ExpressYourself";
 import FamilyDetails from "./RegisterComponent/FamilyDetails";
 import LifeStyle from "./RegisterComponent/LfieStyle";
 import ProfileDetails from "./RegisterComponent/ProfileDetails";
+import { useSelector } from "react-redux";
+import { selectSignInSuccess } from "../../ducks/signIn/selectors";
+import router from "next/router";
+import { useDispatch } from "react-redux";
+import storage from "redux-persist/es/storage";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -21,6 +26,16 @@ const topHeading = [
 
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const [active, setActive] = useState<number>(0);
+  const isSignIn = useSelector(selectSignInSuccess);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const pageNo = isSignIn?.jsonResponse?.user_status;
+  //   if (pageNo && pageNo !== "R") {
+  //     setActive(+pageNo);
+  //   }
+  //   console.log(pageNo);
+  // }, []);
+
   const chooseMessage = (message: number) => {
     setActive(message);
   };
@@ -31,11 +46,14 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <FamilyDetails key={3} nextPage={chooseMessage} />,
     <ExpressYourself key={4} />,
   ];
-
+  const onLogout = () => {
+    storage.removeItem("persist:root");
+    router.push("/");
+  };
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
-        <RegisterHeader />
+        <RegisterHeader onLogout={onLogout} />
         <Row className={classes.register_header_Links}>
           {topHeading.map((heading, index) => {
             return (

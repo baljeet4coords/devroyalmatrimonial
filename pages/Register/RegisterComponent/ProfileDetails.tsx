@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
 import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
+import { selectSignInSuccess } from "../../../ducks/signIn/selectors";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -34,15 +35,19 @@ interface ProfileDetailsProps {
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
-  const userId = useSelector(selectSignUpSuccess)?.output;
+  const userIdSignUp = useSelector(selectSignUpSuccess)?.output;
+  const userIdSignIn = useSelector(selectSignInSuccess)?.jsonResponse?.userid;
+
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    dispatch({
-      type: STEP_1,
-      payload: { actionType: "V", userId: userId },
-    });
+    if (isReduxEmpty === undefined) {
+      dispatch({
+        type: STEP_1,
+        payload: { actionType: "V", userId: userIdSignUp ?? userIdSignIn },
+      });
+    }
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, []);
 
@@ -82,7 +87,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const [gender, setGender] = useState<string>("");
   const formik = useFormik({
     initialValues: {
-      userId: userId,
+      userId: userIdSignUp ?? userIdSignIn,
       profilefor: String(jsonData?.profile_for),
       profileHandlerName: jsonData?.profile_handlername,
       dob: jsonData?.dob,
@@ -100,28 +105,22 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       profilepic: jsonData?.photo,
     },
     onSubmit: async (values) => {
+      console.log(values);
       let response;
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          {
-            actionType: "C",
-            ...values,
-          }
+          { ...values, actionType: "C" }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          {
-            actionType: "U",
-            ...values,
-          }
+          { ...values, actionType: "U" }
         );
       }
       response.data.output === 1 && nextPage(1);
     },
   });
-  console.log(isReduxEmpty);
   const onChangeGender = (gender: string) => {
     setGender(gender);
     if (gender === "1") {

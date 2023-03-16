@@ -9,20 +9,22 @@ import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
 import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 import axios from "axios";
 import { IRegisterStep5 } from "../../../types/register/userRegister";
+import { selectSignInSuccess } from "../../../ducks/signIn/selectors";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep5Success);
-  const userId = useSelector(selectSignUpSuccess)?.output;
+  const userIdSignUp = useSelector(selectSignUpSuccess)?.output;
+  const userIdSignIn = useSelector(selectSignInSuccess)?.jsonResponse?.userid;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch({
       type: STEP_5,
-      payload: { actionType: "V", userId: userId },
+      payload: { actionType: "V", userId: userIdSignUp || userIdSignIn},
     });
-  }, []);
+  }, [dispatch, userIdSignIn, userIdSignUp]);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -33,7 +35,7 @@ const ExpressYourself: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       actionType: "",
-      userId: userId,
+      userId: userIdSignUp || userIdSignIn,
       aboutCareer: jsonData?.about_career,
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,
@@ -45,16 +47,16 @@ const ExpressYourself: React.FC = () => {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
           {
-            actionType: "C",
             ...values,
+            actionType: "C",
           }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
           {
-            actionType: "U",
             ...values,
+            actionType: "U",
           }
         );
       }

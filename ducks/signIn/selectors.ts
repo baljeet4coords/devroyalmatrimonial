@@ -1,5 +1,5 @@
 import { RootState } from '../rootReducer';
 
-export const selectSignUpLoading = (state: RootState) => state.signUp.isLoading;
-export const selectSignUpError = (state: RootState) => state.signUp.error;
-export const selectSignUpSuccess = (state: RootState) => state.signUp.response;
+export const selectSignInLoading = (state: RootState) => state.signIn.isLoading;
+export const selectSignInError = (state: RootState) => state.signIn.error;
+export const selectSignInSuccess = (state: RootState) => state.signIn.response;

@@ -1,5 +1,5 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import classes from "./LandingPage.module.scss";
 import {
   Header,
@@ -11,23 +11,46 @@ import {
   BrowserLink,
   HomeCard,
   cardItems,
-  LoginHeader,
 } from "../../components";
 import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
 import { SIGN_UP } from "../../ducks/signUp/constants";
 import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
-import { useRouter } from "next/router";
+import { SignInType } from "../../ducks/signIn/types";
+import { SIGN_IN } from "../../ducks/signIn/constants";
+import { selectSignInSuccess } from "../../ducks/signIn/selectors";
+import router from "next/router";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const router = useRouter();
   const isSignUp = useSelector(selectSignUpSuccess);
-  if (isSignUp && isSignUp?.message === "ok") {
-    router.push("/Register/");
-  }
+  const isSignIn = useSelector(selectSignInSuccess);
+
+  useEffect(() => {
+    console.log(isSignIn?.output);
+    if (isSignIn?.output === 1) {
+      router.push("/Register/");
+    }
+  }, [isSignIn]);
+
+  // if (isSignUp && isSignUp?.output) {
+  //   router.push("/Register/");
+  // }
+  // if (isSignIn && isSignIn?.output === 1) {
+  //   if (
+  //     isSignIn?.jsonResponse?.user_status === "1" ||
+  //     isSignIn?.jsonResponse?.user_status === "R"
+  //   ) {
+  //     router.push("/Register/");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }
+  // if (isSignIn && isSignIn?.output === 0) {
+  //   alert("Wrong Password");
+  // }
   const [activeId, setActiveId] = useState<string>();
 
   const refineScroll = (scrollVal: any) => {
@@ -43,9 +66,15 @@ const LandingPage: React.FC = () => {
     });
   };
 
+  const onSubmitLoginForm = (values: SignInType) => {
+    dispatch({
+      type: SIGN_IN,
+      payload: values,
+    });
+  };
   return (
     <>
-      <Header />
+      <Header onSubmitForm={onSubmitLoginForm} />
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>
