@@ -11,7 +11,7 @@ interface DropdownGridProps {
   data: {};
   nameid: string;
   selectedDataFn: (val: Data) => void;
-  defaultValue?: number | null;
+  defaultValue?: any | null;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
@@ -79,12 +79,13 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <ul>
             {searchedData.map((item) => {
               const [name, id] = item.split("-");
+              
               return (
                 <li
                   key={id}
                   onClick={() =>
                     getClickedData({
-                      val: item,
+                      val: name,
                       id,
                     })
                   }

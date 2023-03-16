@@ -1,11 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import { Employed_In, HighestEducationList } from "../../constants/DesiredData";
 import { BiBook } from "react-icons/bi";
 import {
@@ -23,30 +22,59 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      country: "",
+      state: "",
+      city: "",
+      residential_status: "",
+      setting_aboard: "",
+      highest_education: "",
+      annual_income: "",
+      employed_in: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setEudcationAndCareer(false);
     },
   });
 
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
+  const [selectedResidentialStatus, setSelectedResidentialStatus] = useState<{
     id: string;
     val: string;
   }>({ id: "", val: "" });
 
-  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
+  const [selectedSettingAboard, setSelectedSettingAboard] = useState<{
     id: string;
     val: string;
   }>({ id: "", val: "" });
 
-  const selectedCast = (string: string) => {
-    const id = string.split("-")[0];
-    // formik.values.cast = id;
-  };
+  const [selectedHigestEducations, setSelectedHigestEducations] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
 
-  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
+  const [selectedAnnualIncome, setSelectedAnnualIncome] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
+  const [SelectedEmployedIn, setSelectedEmployedIn] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
+
+  useEffect(() => {
+    formik.values.residential_status = selectedResidentialStatus.val,
+    formik.values.setting_aboard = selectedSettingAboard.val,
+    formik.values.highest_education = selectedHigestEducations.id,
+    formik.values.annual_income = selectedAnnualIncome.val,
+    formik.values.employed_in = SelectedEmployedIn.id
+  }, [selectedResidentialStatus.val,
+    selectedSettingAboard.val,
+    selectedHigestEducations.val,
+    selectedAnnualIncome.val,
+    SelectedEmployedIn.val,])
+  
 
   return (
     <>
@@ -63,8 +91,11 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"India"}
+                defaultValue={formik.initialValues.country}
+                name="country"
                 placeholder="Country Living in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -73,8 +104,11 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Delhi"}
+                name="state"
+                defaultValue={formik.initialValues.state}
                 placeholder="State Living in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -83,15 +117,18 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Ambikapur"}
+                name="city"
+                defaultValue={formik.initialValues.city}
                 placeholder="City Living in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
 
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedResidentialStatus}
               title="Residential Status"
               data={ResidentialStatus}
               nameid="residential_status"
@@ -99,46 +136,34 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedSettingAboard}
               title="Intersting in Setting Aboard"
               data={ReadyToSettleAbroad}
-              nameid="residential_status"
+              nameid="setting_aboard"
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Higest Educations</Form.Label>
             <DropdownGridSingleSelect
-              title=""
+              title="Higest Educations"
               data={HighestEducationList}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              nameid="highest_education"
+              selectedDataFn={setSelectedHigestEducations}
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Annual Income</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Rs. 1-2 Lakh"}
-                placeholder="Annual Income"
-              />
-            </div>
+            <DropdownGridSingleSelect
+              title="Annual Income"
+              data={AnnualIncomeProfile}
+              nameid="annual_income"
+              selectedDataFn={setSelectedAnnualIncome}
+            />
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedEmployedIn}
               title="Employed In"
               data={Employed_In}
               nameid="employed_in"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Annual Income</Form.Label>
-            <DropdownGridSingleSelect
-              title=""
-              data={AnnualIncomeProfile}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
             />
           </div>
 

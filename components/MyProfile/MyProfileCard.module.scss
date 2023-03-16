@@ -93,20 +93,43 @@
         justify-content: center;
         align-items: center;
 
-        .RightPrograss {
-            border: 1rem solid rgb(14, 14, 63);
-            border-radius: 50%;
-            height: 6rem;
-            width: 6rem;
-            border-bottom-left-radius: 0%;
-            border-bottom-right-radius: 0%;
-            border-bottom: none;
-            border-left: none;
-            border-right: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
+        // .RightPrograss {
+        //     border: 1rem solid rgb(14, 14, 63);
+        //     border-radius: 50%;
+        //     height: 6rem;
+        //     width: 6rem;
+        //     // border-bottom-left-radius: 0%;
+        //     // border-bottom-right-radius: 0%;
+        //     // border-bottom: none;
+        //     // border-left: none;
+        //     // border-right: none;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        //     font-size: 22px;
+        //     position: relative;
+
+        //     ::after{
+        //         content: "hwkkio";
+        //         position: absolute;
+        //         height: 150PX;
+        //         width: 150PX;
+        //         background-color: #c3c3c3;
+        //     }
+        // }
+
+        div {
+            position: relative;
+            margin-bottom: 1rem;
+
+            span {
+                bottom: 0px;
+                position: absolute;
+                color: rgb(255, 60, 60);
+                font-size: 1.5rem;
+                font-weight: 500;
+                line-height: normal;
+            }
         }
 
         .CompleteProfileHEd {
@@ -119,7 +142,7 @@
         }
 
         svg {
-            margin-right: 20px;
+            // margin-right: 20px;
             font-size: 1.5rem;
         }
     }
@@ -154,6 +177,12 @@
             gap: 0px;
             padding: 0% 2rem;
             padding-top: 1rem;
+
+            div {
+                span {
+                    font-size: 1.5rem;
+                }
+            }
         }
     }
 }
@@ -188,6 +217,12 @@
 
                 svg {
                     margin: 0%;
+                }
+            }
+
+            div {
+                span {
+                    font-size: 1.5rem;
                 }
             }
         }
@@ -225,22 +260,18 @@
 
         }
 
-        // .rightBox {
-        //     display: flex;
-        //     width: 100%;
-        //     justify-content: space-between;
-        //     padding: 0rem 2rem;
+        .rightBox {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0rem 2rem;
 
-        //     p {
-        //         padding: 0;
-        //         text-align: center;
-        //         padding: 0rem 1rem;
-
-        //         svg {
-        //             margin: 0%;
-        //         }
-        //     }
-        // }
+            div {
+                span {
+                    font-size: 1.5rem !important;
+                }
+            }
+        }
     }
 }
 

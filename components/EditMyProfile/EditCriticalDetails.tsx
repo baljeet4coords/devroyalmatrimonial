@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState , useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { FiUserX } from "react-icons/fi";
 import { MaritalStatus } from "../../types/enums";
@@ -17,7 +17,8 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
       maritalstatus: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values,null,1));
+      setCriticalDetails(false)
     },
   });
 
@@ -25,6 +26,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
     id: string;
     val: string;
   }>({ id: "", val: "" });
+
+  useEffect(() => {
+    formik.initialValues.maritalstatus = selectedMaritalStatus.val;
+  }, [selectedMaritalStatus])
+  
+
   return (
     <>
       <div className={classes.content}>

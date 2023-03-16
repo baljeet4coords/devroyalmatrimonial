@@ -229,7 +229,6 @@
             border-radius: 2px;
             padding: 0.875rem 5.5rem;
             text-align: center;
-            margin: 0.6em;
             margin-right: 0%;
             color: $browser_text;
             cursor: pointer;
@@ -238,7 +237,7 @@
             background-color: $milkWhite_bg;
             width: 75%;
             margin: 0;
-
+           
 
             .inputBoxVal {
                 visibility: hidden;
@@ -396,10 +395,9 @@
     input {
         border: 1px solid #d9d9d9;
         border-radius: 2px;
-        padding: 0.5rem 2.5rem;
-        text-align: center;
+        padding: 0.5rem 1rem;
+        text-align: left;
         min-width: 75%;
-        float: right;
         width: auto;
 
         &:focus {
@@ -530,6 +528,10 @@
 
             .EditInputSec {
                 margin: 0.6rem 0;
+            }
+            
+            .inputBox{
+                width: auto;
             }
         }
 

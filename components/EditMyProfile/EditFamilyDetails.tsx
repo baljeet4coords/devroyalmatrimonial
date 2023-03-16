@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { HighestEducationList } from "../../constants/DesiredData";
 import { FiUsers } from "react-icons/fi";
 import {
   BrotherSister,
@@ -28,20 +27,11 @@ interface MyComponentProps {
 const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep4Success);
-  const userId = useSelector(selectSignUpSuccess)?.output;
+  const id = useSelector(selectSignUpSuccess)?.output;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
-  // useEffect(() => {
-  //   dispatch({
-  //     type: STEP_4,
-  //     payload: { actionType: "V", userId: userId },
-  //   });
-  // }, [dispatch, userId]);
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
-    val: string;
-  }>({ id: "", val: "" });
+
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
@@ -70,6 +60,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
     id: string;
     val: string;
   }>({ id: String(jsonData?.Family_Type), val: "" });
+
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
     jsonData?.family_native_country
   );
@@ -85,43 +76,51 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
   }>({ id: String(jsonData?.living_with_parents), val: "" });
   const formik = useFormik({
     initialValues: {
-      actionType: "",
-      userId: userId,
-      fathersProfession: jsonData?.Father,
-      mothersProfession: jsonData?.Mother,
-      sister: jsonData?.Sister,
-      brother: jsonData?.Brother,
-      gothra: jsonData?.Gothra,
-      familyStatus: jsonData?.Family_Status,
-      familyIncome: jsonData?.Family_Income,
-      familyType: jsonData?.Family_Type,
-      familyNativeCountry: jsonData?.family_native_country,
-      familyNativeState: jsonData?.family_native_state,
-      familyNativeCity: jsonData?.family_native_city,
-      livingWithParents: jsonData?.living_with_parents,
+      fathersProfession: "",
+      mothersProfession: "",
+      sister: "",
+      brother: "",
+      gothra: "",
+      familyStatus: "",
+      familyIncome: "",
+      familyType: "",
+      nativeCountry: {},
+      nativeState: {},
+      nativeCity: {},
+      livingWithParents: "",
     },
-    // onSubmit: async (values: IRegisterStep4) => {
-    //   let response;
-    //   if (isReduxEmpty) {
-    //     response = await axios.post(
-    //       `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-    //       {
-    //         ...values,
-    //         actionType: "C",
-    //       }
-    //     );
-    //   } else {
-    //     response = await axios.post(
-    //       `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-    //       {
-    //         ...values,
-    //         actionType: "U",
-    //       }
-    //     );
-    //   }
-    //   // response.data.output === 1 && nextPage(4);
-    // },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 1));
+      setFamilyDetails(false);
+    },
   });
+
+  useEffect(() => {
+    formik.values.fathersProfession = selectedFathersOccupation.val;
+    formik.values.mothersProfession = selectedMothersOccupation.val;
+    formik.values.sister = selectedSister.val;
+    formik.values.brother = selectedBrother.val;
+    formik.values.familyStatus = selectedFamilyStatus.val;
+    formik.values.familyIncome = selectedFamilyIncome.val;
+    formik.values.familyType = selectedFamilyType.val;
+    formik.values.nativeCountry = selectedNativeCountry;
+    formik.values.nativeState = selectedNativeState;
+    formik.values.nativeCity = selectedNativeCity;
+    formik.values.livingWithParents = selectedLivingWithParents.val;
+  }, [
+    selectedFathersOccupation.val,
+    selectedMothersOccupation.val,
+    selectedSister.val,
+    selectedBrother.val,
+    selectedFamilyStatus.val,
+    selectedFamilyIncome.val,
+    selectedFamilyType.val,
+    selectedLivingWithParents.val,
+    selectedNativeCountry,
+    selectedNativeState,
+    selectedNativeCity,
+    formik.values,
+  ]);
 
   const getSelectedCountry = (id: number) => {
     setSelectedNativeCountry(id);
@@ -185,8 +184,11 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                // value={"Not filled in"}
+                name="gothra"
+                defaultValue={formik.initialValues.gothra}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -218,17 +220,15 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               defaultValue={jsonData?.Family_Type}
             />
           </div>
-            <CountryStateCitlyList
-              title="Family Native"
-              setSelectedCountry={getSelectedCountry}
-              setSelectedState={getSelectedState}
-              setSelectedCity={getSelectedCity}
-              defaultValueCountry={0}
-              defaultValueState={0}
-              defaultValueCity={0}
-            />
-          {/* <div className={classes.singleBox}>
-          </div> */}
+          <CountryStateCitlyList
+            title="Family Native"
+            setSelectedCountry={getSelectedCountry}
+            setSelectedState={getSelectedState}
+            setSelectedCity={getSelectedCity}
+            defaultValueCountry={0}
+            defaultValueState={0}
+            defaultValueCity={0}
+          />
 
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
@@ -239,25 +239,6 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               defaultValue={jsonData?.living_with_parents}
             />
           </div>
-          {/* <div className={classes.singleBox}>
-            <Form.Label>Family Values</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input type="text" placeholder="Not filled in" />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Family based out of</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input type="text" placeholder="Not filled in" />
-              <p className="text-decoration-underline">Not From india </p>
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Living with parents?</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input type="text" placeholder="Not filled in" />
-            </div>
-          </div> */}
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

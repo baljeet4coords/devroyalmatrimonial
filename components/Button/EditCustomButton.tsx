@@ -12,16 +12,14 @@ const EditCustomButton: React.FC<CustomButtonProps> = ({
   buttonType,
 }) => {
   return buttonType ? (
-    <button
-      type="submit"
-      className={classes.editcustomButton}
-      onClick={() => setEditDetails(false)}
-    >
-      {title}
-    </button>
+    <>
+      <button type="submit" className={classes.editcustomButton}>
+        {title}
+      </button>
+    </>
   ) : (
     <button
-      type="submit"
+      type="button"
       className={`${classes.editcustomButton} ${classes.editcustomButtonGray}`}
       onClick={() => setEditDetails(false)}
     >
