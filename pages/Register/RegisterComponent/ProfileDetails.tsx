@@ -41,11 +41,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    if (isReduxEmpty === undefined) {
-      dispatch(step1({ actionType: "V", userId: userId }));
-    }
+    dispatch(step1({ actionType: "v", userId: userId }));
     setGender(jsonData?.gender === "M" ? "1" : "2");
-  }, [dispatch, isReduxEmpty, jsonData?.gender, userId]);
+  }, [dispatch, jsonData?.gender, userId]);
 
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
@@ -105,12 +103,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "C" }
+          { ...values, actionType: "c" }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "U" }
+          { ...values, actionType: "u" }
         );
       }
       response.data.output === 1 && nextPage(1);

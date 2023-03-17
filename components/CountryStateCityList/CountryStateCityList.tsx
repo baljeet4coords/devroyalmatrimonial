@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import classes from './CountryStateCity.module.scss';
+import classes from "./CountryStateCity.module.scss";
 import {
   Country,
   State,
@@ -14,9 +14,9 @@ interface CountryStateCitlyListProps {
   setSelectedCountry: (id: number) => void;
   setSelectedState: (id: number) => void;
   setSelectedCity: (id: number) => void;
-  defaultValueCountry: number;
-  defaultValueState: number;
-  defaultValueCity: number;
+  defaultValueCountry?: number;
+  defaultValueState?: number;
+  defaultValueCity?: number;
 }
 const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
   title,
@@ -28,12 +28,20 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
   defaultValueCity,
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
-  const defaultIndiaCountry = countries.find((item) => item.isoCode === "IN");
+  const defaultCountry = countries.find(
+    (item) =>
+      (defaultValueCountry && countries[defaultValueCountry].isoCode) ||
+      item.isoCode === "IN"
+  );
 
-  const [countryCode, setCountryCode] = useState<string>("IN");
-  const [stateCode, setStateCode] = useState<string>("AS");
-  const [city, setCity] = useState<string>("");
+  const [countryCode, setCountryCode] = useState<string>(
+    (defaultValueCountry && countries[defaultValueCountry].isoCode) || "IN"
+  );
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  const [stateCode, setStateCode] = useState<string>(
+    (defaultValueState && stateOfCountry[defaultValueState]?.isoCode) || "AS"
+  );
+
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
   const countryFn = (e: any) => {
@@ -47,26 +55,18 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
     setSelectedState(+id);
   };
   const cityFn = (e: any) => {
-    const [id, name] = e.target.value.split("-");
-    setCity(name);
+    const [id] = e.target.value.split("-");
     setSelectedCity(+id);
   };
-
-  useEffect(() => {
-    setCountryCode("IN");
-    setSelectedCountry(100);
-    setStateCode("AN");
-    setSelectedState(0);
-    setCity("Bamboo Flat");
-    setSelectedCity(0);
-  }, []);
 
   return (
     <>
       <div className={classes.CSC_wrapper}>
         <label>{`${title} Country`}</label>
         <select onChange={(e) => countryFn(e)}>
-          <option value="100-IN">{defaultIndiaCountry?.name}</option>;
+          <option value={`${defaultValueCountry}-${defaultCountry?.isoCode}`}>
+            {defaultCountry?.name}
+          </option>
           {countries.map((country, index) => {
             return (
               <option key={index} value={`${index}-${country.isoCode}`}>

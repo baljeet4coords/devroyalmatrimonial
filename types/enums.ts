@@ -40,17 +40,17 @@ export enum YeNoNA {
 }
 
 export enum AnnualIncomeProfile {
-  Lakh_0_1 = "0",
-  Lakhs_0_2 = "1",
-  Lakhs_2_5 = "2",
-  Lakhs_5_10 = "3",
-  Lakhs_10_20 = "4",
-  Lakhs_20_30 = "5",
-  Lakhs_30_50 = "6",
-  Lakhs_50_70 = "7",
+  Lakh_0_1 = "1",
+  Lakhs_0_2 = "2",
+  Lakhs_2_5 = "3",
+  Lakhs_5_10 = "4",
+  Lakhs_10_20 = "5",
+  Lakhs_20_30 = "6",
+  Lakhs_30_50 = "7",
+  Lakhs_50_70 = "8",
   Cr_70_1 = "8",
-  Cr_1_2 = "9",
-  CrAbove_2 = "10",
+  Cr_1_2 = "10",
+  CrAbove_2 = "11",
 }
 
 export enum AnnualIncomeProfile0 {

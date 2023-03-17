@@ -18,83 +18,72 @@ import {
 } from "../../../types/enums";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
 import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
 import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
-import { selectAuthSuccess } from "../../../ducks/auth/selectors";
+import { getUserId } from "../../../ducks/auth/selectors";
+import { step4 } from "../../../ducks/regiserUser/step4/actions";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
-  const stepOneDefaultValues = useSelector(selectStep4Success);
-  const userIdSignUp = useSelector(selectAuthSuccess)?.output;
-  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
-  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const stepFourDefaultValues = useSelector(selectStep4Success);
+  const jsonData = stepFourDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
+  const userId = useSelector(getUserId);
+
   useEffect(() => {
-    dispatch({
-      type: STEP_4,
-      payload: { actionType: "V", userId: userIdSignUp || userIdSignIn },
-    });
-  }, [dispatch, userIdSignIn, userIdSignUp]);
+    dispatch(step4({ actionType: "V", userId: userId }));
+  }, [dispatch, isReduxEmpty, userId]);
 
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Father), val: "" });
+  }>({ id: "", val: "" });
   const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Mother), val: "" });
+  }>({ id: "", val: "" });
   const [selectedSister, setSelectedSister] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Sister), val: "" });
+  }>({ id: "", val: "" });
   const [selectedBrother, setSelectedBrother] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Brother), val: "" });
+  }>({ id: "", val: "" });
   const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Family_Status), val: "" });
+  }>({ id: "", val: "" });
   const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Family_Income), val: "" });
+  }>({ id: "", val: "" });
   const [selectedFamilyType, setSelectedFamilyType] = useState<{
     id: string;
     val: string;
-  }>({ id: String(jsonData?.Family_Type), val: "" });
+  }>({ id: "", val: "" });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
-    jsonData?.family_native_country
+    jsonData?.family_native_country || 0
   );
   const [selectedNativeState, setSelectedNativeState] = useState<number>(
-    jsonData?.family_native_state
+    jsonData?.family_native_state || 0
   );
   const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
-    jsonData?.family_native_city
+    jsonData?.family_native_city || 0
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
     id: string;
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }, []);
-  console.log(jsonData);
+
   const formik = useFormik({
     initialValues: {
-      actionType: "",
-      userId: userIdSignUp || userIdSignIn,
+      userId: userId,
       fathersProfession: jsonData?.Father,
       mothersProfession: jsonData?.Mother,
       sister: jsonData?.Sister,
@@ -114,16 +103,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
-            ...values,
             actionType: "C",
+            ...values,
           }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
-            ...values,
             actionType: "U",
+            ...values,
           }
         );
       }

@@ -24,13 +24,7 @@ const ExpressYourself: React.FC = () => {
       payload: { actionType: "V", userId: userIdauth || userIdSignIn},
     });
   }, [dispatch, userIdSignIn, userIdauth]);
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }, []);
+
   const formik = useFormik({
     initialValues: {
       actionType: "",
