@@ -1,5 +1,5 @@
 import { Col, Container, Row, Image } from "react-bootstrap";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import classes from "./LandingPage.module.scss";
 import {
   Header,
@@ -11,22 +11,36 @@ import {
   BrowserLink,
   HomeCard,
   cardItems,
-  LoginHeader,
 } from "../../components";
-import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
-import { SIGN_UP } from "../../ducks/signUp/constants";
-import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
-import { useRouter } from "next/router";
+import router from "next/router";
+import { SignUpType } from "../../types/authentication";
+import { getToken, selectAuthSuccess } from "../../ducks/auth/selectors";
+import { signupRequest, loginRequest } from "../../ducks/auth/actions";
+import { LoginType } from "../../ducks/auth/types";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const router = useRouter();
-  const isSignUp = useSelector(selectSignUpSuccess);
-  if (isSignUp && isSignUp?.message === "ok") {
-    router.push("/Register/");
+  const isAuthenticated = useSelector(getToken);
+  const authSuccess = useSelector(selectAuthSuccess);
+
+  if (isAuthenticated) {
+    router.push("/Register");
+  }
+  if (authSuccess && authSuccess?.output === 1) {
+    if (
+      authSuccess?.jsonResponse?.user_status === "1" ||
+      authSuccess?.jsonResponse?.user_status === "R"
+    ) {
+      router.push("/Register/");
+    } else {
+      router.push("/");
+    }
+  }
+  if (authSuccess && authSuccess?.output === 0) {
+    alert("Wrong Password");
   }
   const [activeId, setActiveId] = useState<string>();
 
@@ -36,16 +50,16 @@ const LandingPage: React.FC = () => {
   };
   const headimage = "cover_img_free_chat.jpg";
 
-  const onSubmitForm = (values: SignUpFormValues) => {
-    dispatch({
-      type: SIGN_UP,
-      payload: values,
-    });
+  const onSubmitForm = (values: SignUpType) => {
+    dispatch(signupRequest(values));
   };
 
+  const onSubmitLoginForm = (values: LoginType) => {
+    dispatch(loginRequest(values));
+  };
   return (
     <>
-      <Header />
+      <Header onSubmitForm={onSubmitLoginForm} />
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>

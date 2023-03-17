@@ -1,6 +1,6 @@
 export interface IRegisterStep1 {
-  actionType: string;
-  userId: string;
+  actionType: "V" | "C" | "U";
+  userId?: number;
   profilefor?: string;
   profileHandlerName?: string;
   dob?: string;
@@ -38,11 +38,11 @@ export interface IRegisterStep1Response {
 
 export interface IRegisterStep5 {
   actionType: string;
-  userId: string;
-  aboutCareer?: string;
-  aboutFamily?: string;
-  aboutEducation?: string;
-  basicIntro?: string;
+  userId?: number;
+  aboutCareer?: string | null;
+  aboutFamily?: string | null;
+  aboutEducation?: string | null;
+  basicIntro?: string | null;
 }
 
 export interface IRegisterStep5Response {
@@ -54,31 +54,31 @@ export interface IRegisterStep5Response {
 
 export interface IRegisterStep4 {
   actionType: string;
-  userId: string;
-  fathersProfession?: string;
-  mothersProfession?: string;
-  sister?: string;
-  brother?: string;
+  userId?: number;
+  fathersProfession?: number;
+  mothersProfession?: number;
+  sister?: number;
+  brother?: number;
   gothra?: string;
-  familyStatus?: string;
-  familyIncome?: string;
-  familyType?: string;
+  familyStatus?: number;
+  familyIncome?: number;
+  familyType?: number;
   familyNativeCountry?: number;
   familyNativeState?: number;
   familyNativeCity?: number;
-  livingWithParents?: string;
+  livingWithParents?: number;
 }
 export interface IRegisterStep4Response {
-  Father: number | null;
-  Gothra: number | null;
-  Mother: number | null;
-  Sister: number | null;
-  Brother: number | null;
-  Family_Type: number | null;
-  Family_Income: number | null;
-  Family_Status: number | null;
-  family_native_city: number | null;
-  family_native_state: number | null;
-  living_with_parents: number | null;
-  family_native_country: number | null;
+  Father: number;
+  Gothra: string;
+  Mother: number;
+  Sister: number;
+  Brother: number;
+  Family_Type: number;
+  Family_Income: number;
+  Family_Status: number;
+  family_native_country: number | (() => number);
+  family_native_state?: number | (() => number);
+  family_native_city: number | (() => number);
+  living_with_parents: number ;
 }

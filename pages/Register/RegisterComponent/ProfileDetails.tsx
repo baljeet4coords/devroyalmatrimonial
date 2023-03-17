@@ -25,7 +25,8 @@ import { STEP_1 } from "../../../ducks/regiserUser/step1/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
-import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
+import { getUserId } from "../../../ducks/auth/selectors";
+import { step1 } from "../../../ducks/regiserUser/step1/actions";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -34,17 +35,17 @@ interface ProfileDetailsProps {
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
-  const userId = useSelector(selectSignUpSuccess)?.output;
+  const userId = useSelector(getUserId);
+
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    dispatch({
-      type: STEP_1,
-      payload: { actionType: "V", userId: userId },
-    });
+    if (isReduxEmpty === undefined) {
+      dispatch(step1({ actionType: "V", userId: userId }));
+    }
     setGender(jsonData?.gender === "M" ? "1" : "2");
-  }, []);
+  }, [dispatch, isReduxEmpty, jsonData?.gender, userId]);
 
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
@@ -104,24 +105,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          {
-            actionType: "C",
-            ...values,
-          }
+          { ...values, actionType: "C" }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          {
-            actionType: "U",
-            ...values,
-          }
+          { ...values, actionType: "U" }
         );
       }
       response.data.output === 1 && nextPage(1);
     },
   });
-  console.log(isReduxEmpty);
   const onChangeGender = (gender: string) => {
     setGender(gender);
     if (gender === "1") {

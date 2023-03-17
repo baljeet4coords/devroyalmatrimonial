@@ -18,11 +18,11 @@ import {
 } from "../../../types/enums";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
 import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
 import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
+import { selectAuthSuccess } from "../../../ducks/auth/selectors";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -30,16 +30,18 @@ interface ProfileDetailsProps {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep4Success);
-  const userId = useSelector(selectSignUpSuccess)?.output;
+  const userIdSignUp = useSelector(selectAuthSuccess)?.output;
+  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch({
       type: STEP_4,
-      payload: { actionType: "V", userId: userId },
+      payload: { actionType: "V", userId: userIdSignUp || userIdSignIn },
     });
-  }, [dispatch, userId]);
+  }, [dispatch, userIdSignIn, userIdSignUp]);
+
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
@@ -92,7 +94,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const formik = useFormik({
     initialValues: {
       actionType: "",
-      userId: userId,
+      userId: userIdSignUp || userIdSignIn,
       fathersProfession: jsonData?.Father,
       mothersProfession: jsonData?.Mother,
       sister: jsonData?.Sister,
@@ -140,17 +142,17 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    formik.values.fathersProfession = selectedFathersOccupation.id;
-    formik.values.mothersProfession = selectedMothersOccupation.id;
-    formik.values.sister = selectedSister.id;
-    formik.values.brother = selectedBrother.id;
-    formik.values.familyStatus = selectedFamilyStatus.id;
-    formik.values.familyIncome = selectedFamilyIncome.id;
-    formik.values.familyType = selectedFamilyType.id;
+    formik.values.fathersProfession = +selectedFathersOccupation.id;
+    formik.values.mothersProfession = +selectedMothersOccupation.id;
+    formik.values.sister = +selectedSister.id;
+    formik.values.brother = +selectedBrother.id;
+    formik.values.familyStatus = +selectedFamilyStatus.id;
+    formik.values.familyIncome = +selectedFamilyIncome.id;
+    formik.values.familyType = +selectedFamilyType.id;
     formik.values.familyNativeCountry = selectedNativeCountry;
     formik.values.familyNativeState = selectedNativeState;
     formik.values.familyNativeCity = selectedNativeCity;
-    formik.values.livingWithParents = selectedLivingWithParents.id;
+    formik.values.livingWithParents = +selectedLivingWithParents.id;
   }, [
     formik.values,
     selectedBrother.id,

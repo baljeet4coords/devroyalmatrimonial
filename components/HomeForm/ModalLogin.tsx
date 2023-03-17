@@ -3,28 +3,49 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import { useState } from "react";
 import { countryCodesObj } from "../../utils/countryCodes";
+import { useFormik } from "formik";
+import { LoginType } from "../../ducks/auth/types";
 
 type ModalLoginProps = {
   onCloseModal: () => void;
+  onSubmitForm: (values: LoginType) => void;
 };
 
-const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
+const ModalForm: React.FC<ModalLoginProps> = ({
+  onCloseModal,
+  onSubmitForm,
+}) => {
   const [loginWithEmail, setLoginWithEmail] = useState(false);
-  const [mobilecode, setMobilecode] = useState("+91")
-
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
     callingCodes.push({ countryName: key, callingCode: value });
   }
 
+  const formik = useFormik({
+    initialValues: {
+      emailid: "",
+      mobile: "",
+      password: "",
+      isdCode: "+91",
+    },
+    // validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      onSubmitForm({ ...values, from: loginWithEmail ? "email" : "mobile" });
+    },
+  });
+  
   return (
     <div className={classes.modal_form}>
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Form.Check
           type="switch"
           id="login_with"
           label="Login with Email"
-          className={loginWithEmail ? classes.Form_Login_check :  classes.Form_Login_checkDis}
+          className={
+            loginWithEmail
+              ? classes.Form_Login_check
+              : classes.Form_Login_checkDis
+          }
           checked={loginWithEmail}
           onChange={() => setLoginWithEmail(!loginWithEmail)}
         />
@@ -33,16 +54,23 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
           controlId="formBasicEmail"
         >
           {loginWithEmail ? (
-            <Form.Control type="email" placeholder="Enter Email Address" />
+            <Form.Control
+              type="email"
+              name="emailid"
+              placeholder="Enter Email Address"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
           ) : (
             <Form.Group>
               <Row>
                 <Col xs={4} className="mx-0 pe-0">
                   <Form.Select
                     className={classes.MobileCode}
-                    name="countryCode"
-                    placeholder="Enter Mobile Number"
-                    defaultValue={mobilecode}
+                    name="isdCode"
+                    defaultValue="+91"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   >
                     {callingCodes.map(
                       (codes: { countryName: any; callingCode: any }) => {
@@ -64,6 +92,8 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
                     name="mobile"
                     placeholder="Enter Number"
                     className={classes.Form_input}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
                   />
                 </Col>
               </Row>
@@ -74,7 +104,13 @@ const ModalForm: React.FC<ModalLoginProps> = ({ onCloseModal }) => {
           className={`${classes.modal_input}`}
           controlId="formBasicEmail"
         >
-          <Form.Control type="text" placeholder="Password" />
+          <Form.Control
+            type="text"
+            name="password"
+            placeholder="Password"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
         </Form.Group>
         <Link
           className={`${classes.modal_links} d-flex justify-content-center mb-3`}

@@ -3,10 +3,14 @@ import classes from "./Form.module.scss";
 import { useFormik } from "formik";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { SignupSchema } from "../../schemas/signupSchema";
-import { SignUpFormValues, SignUpForm } from "./types";
 import Errors from "../Errors/signUpErrors";
+import { SignUpType } from "../../types/authentication";
 
-const HomeForm: React.FC<SignUpForm> = ({onSubmitForm}) => {
+export interface SignUpForm {
+  onSubmitForm: (values: SignUpType) => void;
+}
+
+const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm }) => {
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
     callingCodes.push({ countryName: key, callingCode: value });
