@@ -49,12 +49,10 @@ const AboutMeDetails:FC<MyComponentProps> = ({ setAboutMeDetails }) => {
         <div className={classes.Userdetails}>
           {BasicDetails.map((item) => {
             return (
-              <>
                 <div className={classes.UserdetailsSec} key={item.name}>
                   <p className={classes.input_Name}>{item.name}</p>
                   <p className={item.vlaue === "NA" ? classes.input_Value_NotFilled : classes.input_Value}>{item.vlaue === "NA" ? "Not Field in" : item.vlaue} </p>
                 </div>
-              </>
             );
           })}
         </div>

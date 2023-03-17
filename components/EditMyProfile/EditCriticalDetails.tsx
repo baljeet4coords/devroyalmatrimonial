@@ -46,11 +46,11 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
-            <Form.Label>MaritalStatus</Form.Label>
+            {/* <Form.Label>MaritalStatus</Form.Label> */}
             <DropdownGridSingleSelect
-              title=""
+              title="MaritalStatus"
               data={MaritalStatus}
-              nameid="mothertongue"
+              nameid="maritalstatus"
               selectedDataFn={setSelectedMaritalStatus}
             />
           </div>
