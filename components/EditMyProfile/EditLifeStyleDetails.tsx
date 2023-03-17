@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
@@ -19,23 +19,82 @@ interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
 }
 const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
+  const [selectedDiet, setSelectedDiet] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+  const [selectedSmoking, setSelectedSmoking] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+  const [selectedDrinking, setSelectedDrinking] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+  const [selectedLovePets, setSelectedLovePets] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+  const [selectedOwnsHouse, setSelectedOwnsHouse] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
+  const [selectedOwnsCar, setSelectedOwnsCar] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
+  const [selectedBloodGroup, setSelectedBloodGroup] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
+  const [selectedThalassemia, setSelectedThalassemia] = useState<{
+    id: string;
+    val: string;
+  }>({ id: "", val: "" });
+
   //form state
+
   const formik = useFormik({
     initialValues: {
-      diet: "",
-      smoking: "",
-      drinking: "",
-      love_pets: "",
-      own_house: "",
-      own_car: "",
-      blood_group: "",
-      thalassemia: "",
+      diet: selectedDiet?.val,
+      smoking: selectedSmoking?.val,
+      drinking: selectedDrinking?.val,
+      love_pets: selectedLovePets?.val,
+      own_house: selectedOwnsHouse?.val,
+      own_car: selectedOwnsCar?.val,
+      blood_group: selectedBloodGroup?.val,
+      thalassemia: selectedThalassemia?.val,
     },
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 1));
+      setEditDetails(false);
     },
   });
+
+  useEffect(() => {
+    formik.values.diet = selectedDiet.val;
+    formik.values.smoking = selectedSmoking.val;
+    formik.values.drinking = selectedDrinking.val;
+    formik.values.love_pets = selectedLovePets.val;
+    formik.values.own_house = selectedOwnsCar.val;
+    formik.values.own_car = selectedOwnsCar.val;
+    formik.values.blood_group = selectedBloodGroup.val;
+    formik.values.thalassemia = selectedThalassemia.val;
+  }, [
+    selectedDiet.id,
+    selectedSmoking.id,
+    selectedDrinking.id,
+    selectedLovePets.id,
+    selectedOwnsCar.id,
+    selectedOwnsCar.id,
+    selectedBloodGroup.id,
+    selectedThalassemia.id,
+    formik.values,
+  ]);
 
   return (
     <>
@@ -49,7 +108,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedDiet}
               title="Diet"
               data={Diet}
               nameid="diet"
@@ -57,7 +116,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedSmoking}
               title="Smoking"
               data={SmokeDrink}
               nameid="smoking"
@@ -65,7 +124,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedDrinking}
               title="Drinking"
               data={SmokeDrink}
               nameid="drinking"
@@ -73,7 +132,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedLovePets}
               title="Love Pets"
               data={Pets}
               nameid="love_pets"
@@ -81,7 +140,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedOwnsHouse}
               title="Owns House"
               data={OwnHouseCar}
               nameid="own_house"
@@ -89,7 +148,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedOwnsCar}
               title="Owns Car"
               data={OwnHouseCar}
               nameid="own_car"
@@ -97,7 +156,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedBloodGroup}
               title="Blood Group"
               data={BloodGroup}
               nameid="blood_group"
@@ -105,7 +164,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
           <div className={classes.singleBox}>
             <DropdownGridSingleSelect
-              selectedDataFn={() => {}}
+              selectedDataFn={setSelectedThalassemia}
               title="Thalassemia "
               data={Thalassemia}
               nameid="thalassemia"

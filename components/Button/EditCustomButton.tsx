@@ -1,31 +1,29 @@
 import classes from "./CustomButton.module.scss";
 
 interface CustomButtonProps {
-  children: any;
+  title: any;
   setEditDetails: (details: boolean) => void;
   buttonType: number;
 }
 
 const EditCustomButton: React.FC<CustomButtonProps> = ({
-  children,
+  title,
   setEditDetails,
   buttonType,
 }) => {
   return buttonType ? (
-    <button
-      type="submit"
-      className={classes.editcustomButton}
-      onClick={() => setEditDetails(false)}
-    >
-      {children}
-    </button>
+    <>
+      <button type="submit" className={classes.editcustomButton}>
+        {title}
+      </button>
+    </>
   ) : (
     <button
-      type="submit"
+      type="button"
       className={`${classes.editcustomButton} ${classes.editcustomButtonGray}`}
       onClick={() => setEditDetails(false)}
     >
-      {children}
+      {title}
     </button>
   );
 };

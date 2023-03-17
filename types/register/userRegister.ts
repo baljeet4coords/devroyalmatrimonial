@@ -34,8 +34,6 @@ export interface IRegisterStep1Response {
   profile_for: number;
   profile_handlername: string;
   religion: number;
-<<<<<<< HEAD
-=======
 }
 
 export interface IRegisterStep5 {
@@ -83,5 +81,4 @@ export interface IRegisterStep4Response {
   family_native_state: number | null;
   living_with_parents: number | null;
   family_native_country: number | null;
->>>>>>> bae73d8d983436ac8a8891803edfa618b3618596
 }

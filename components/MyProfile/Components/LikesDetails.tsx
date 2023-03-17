@@ -56,7 +56,6 @@ const LikeDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item, index) => {
             return (
-              <>
                 <div className={classes.UserdetailsSec} key={index}>
                   <p className={classes.input_Name}>{item.name}</p>
                   <p
@@ -66,10 +65,9 @@ const LikeDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
                         : classes.input_Value
                     }
                   >
-                    {item.value === "NA" ? "Not Field in" : item.value}{" "}
+                    {item.value === "NA" ? "Not Field in" : item.value}
                   </p>
                 </div>
-              </>
             );
           })}
         </div>

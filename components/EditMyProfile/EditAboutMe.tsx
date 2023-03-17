@@ -16,11 +16,15 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
 
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      intro: "",
+      DiscribeYourself: "",
+      Aboutmyfamily: "",
+      aboutmyeducation: "",
+      aboutmycareer: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setAboutMeDetails(false);
     },
   });
 
@@ -57,11 +61,11 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
           <div className={classes.EditsingleBox}>
             <Form.Control
               as="textarea"
-              name="boutcareer"
+              name="intro"
               rows={6}
               placeholder="I come from a middle-class family. The most important thing in my life is religious beliefs, moral values & respect for elders. I'm an easy-going, sincere,  caring person with a strong work ethic. I'm a modern thinker and follow good values given by our ancestors. I like Painting, love traveling with friends, writing, listening to classical music & watching the latest movies!"
-              // onBlur={formik.handleBlur}
-              // onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
             <p>Character Count : 122</p>
             <div className={classes.TextareaDiscrip}>
@@ -87,27 +91,33 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
             <Form.Label>About My Family</Form.Label>
             <Form.Control
               as="textarea"
-              name="boutcareer"
+              name="Aboutmyfamily"
               rows={5}
               placeholder="Write about your parents and brothers or sisters. Where do they live? What are they doing?"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
           </div>
           <div className={classes.EditsingleBox}>
             <Form.Label>About My Educations</Form.Label>
             <Form.Control
               as="textarea"
-              name="boutcareer"
+              name="aboutmyeducation"
               rows={5}
               placeholder="Which institutions have you attended? What course/specializations have you studied?"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
           </div>
           <div className={classes.EditsingleBox}>
             <Form.Label>About My Career</Form.Label>
             <Form.Control
               as="textarea"
-              name="boutcareer"
+              name="aboutmycareer"
               rows={5}
               placeholder="Where are you working currently? You may mention your current job and future career aspirations."
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
           </div>
 

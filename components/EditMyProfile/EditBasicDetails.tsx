@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
@@ -33,11 +33,21 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
 
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      profileVerification: false,
+      fullname: "Himanshu singh",
+      gender: "Male",
+      cast: "",
+      height: "",
+      challenged: "",
+      isHiv: "",
+      mothertongue: "",
+      religion: "",
+      isManglik: "",
+      profilefor: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setBasicDetails(false);
     },
   });
 
@@ -53,18 +63,34 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     id: string;
     val: string;
   }>({ id: "", val: "" });
-
-  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
+  const [selectedchallenged, setSelectedchallenged] = useState<{
     id: string;
     val: string;
   }>({ id: "", val: "" });
 
   const selectedCast = (string: string) => {
-    const id = string.split("-")[0];
-    // formik.values.cast = id;
+    // const id = string.split("-")[0];
+    const val = string.split("-")[1];
+    formik.values.cast = val;
   };
 
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
+
+  useEffect(() => {
+    (formik.values.height = cm),
+      (formik.values.challenged = selectedchallenged.val),
+      (formik.values.isHiv = selectedIsHiv.val),
+      (formik.values.mothertongue = selectedMotherTongue.val),
+      (formik.values.religion = selectedMotherTongue.val),
+      (formik.values.isManglik = selectedManglik.val);
+  }, [
+    cm,
+    selectedchallenged,
+    selectedIsHiv,
+    selectedMotherTongue,
+    selectedMotherTongue,
+    selectedManglik,
+  ]);
 
   return (
     <>
@@ -83,16 +109,23 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
                 <MdVerified />
                 your profile verification is pending
               </span>
-              <p>Get verified NOW</p>
+              {formik.initialValues.profileVerification ? (
+                <p>Verified</p>
+              ) : (
+                <p>Get verified NOW</p>
+              )}
             </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Full Name</Form.Label>
             <div className={classes.EditInputSec}>
               <input
+                name="fullname"
                 type="text"
-                value={"Himanshu singh"}
-                placeholder="Full Name"
+                placeholder="Enter Full Name"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                defaultValue={formik.initialValues.fullname}
               />
               <p>
                 Show to all <CiSettings />{" "}
@@ -104,9 +137,12 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={"Male"}
+                value={formik.initialValues.gender}
                 disabled
+                name="gender"
                 placeholder="Enter Gender"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
               />
               <span>
                 {" "}
@@ -141,18 +177,16 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Challenged</Form.Label>
             <DropdownGridSingleSelect
-              title=""
+              title="Challenged"
               data={Challenged}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              nameid="challenged"
+              selectedDataFn={setSelectedchallenged}
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>HIV</Form.Label>
             <DropdownGridSingleSelect
-              title=""
+              title="HIV"
               data={isHiv}
               nameid="hiv"
               selectedDataFn={setSelectedIsHiv}
@@ -160,9 +194,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>MotherTongue</Form.Label>
             <DropdownGridSingleSelect
-              title=""
+              title="MotherTongue"
               data={MotherTongue}
               nameid="mothertongue"
               selectedDataFn={setSelectedMotherTongue}
@@ -176,6 +209,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
                 value={"Hindu"}
                 disabled
                 placeholder="Enter Gender"
+                onBlur={formik.handleBlur}
+                onChange={handleCmChange}
               />
               <span>
                 {" "}
@@ -198,20 +233,23 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Self"}
+                defaultValue={formik.initialValues.profilefor}
                 placeholder="Profile Managed By"
+                name="profilefor"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
-              children="Save"
+              title="Save"
               setEditDetails={setBasicDetails}
               buttonType={1}
             />
             <EditCustomButton
-              children="Cancel"
+              title="Cancel"
               setEditDetails={setBasicDetails}
               buttonType={0}
             />

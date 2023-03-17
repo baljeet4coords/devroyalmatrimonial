@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState , useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { FiUserX } from "react-icons/fi";
 import { MaritalStatus } from "../../types/enums";
@@ -17,7 +17,8 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
       maritalstatus: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values,null,1));
+      setCriticalDetails(false)
     },
   });
 
@@ -25,6 +26,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
     id: string;
     val: string;
   }>({ id: "", val: "" });
+
+  useEffect(() => {
+    formik.initialValues.maritalstatus = selectedMaritalStatus.val;
+  }, [selectedMaritalStatus])
+  
+
   return (
     <>
       <div className={classes.content}>
@@ -39,9 +46,9 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
-            <Form.Label>MaritalStatus</Form.Label>
+            {/* <Form.Label>MaritalStatus</Form.Label> */}
             <DropdownGridSingleSelect
-              title=""
+              title="MaritalStatus"
               data={MaritalStatus}
               nameid="maritalstatus"
               selectedDataFn={setSelectedMaritalStatus}
@@ -72,12 +79,12 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
-              children="Save"
+              title="Save"
               setEditDetails={setCriticalDetails}
               buttonType={1}
             />
             <EditCustomButton
-              children="Cancel"
+              title="Cancel"
               setEditDetails={setCriticalDetails}
               buttonType={0}
             />

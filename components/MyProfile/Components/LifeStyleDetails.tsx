@@ -3,11 +3,10 @@ import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
 
-
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
 }
-const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
+const LifeStyleDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
@@ -43,7 +42,7 @@ const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
       {
         name: "Thalassemia",
         value: "NA",
-      }
+      },
     ],
   };
   return (
@@ -54,10 +53,7 @@ const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
             <CiPillsBottle1 />
             LifeStyle
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setEditDetails(true)}
-          >
+          <span className={classes.Edit} onClick={() => setEditDetails(true)}>
             Edit
           </span>
         </div>
