@@ -12,12 +12,12 @@ const FamilydetailsInfo:FC<MyComponentProps> = ({ setFamilyDetails }) => {
     pinValue: "Living with Parents?",
     data: [
       {
-        name: "Mother's Occupation",
-        value: "Service-Private",
-      },
-      {
         name: "Father's Occupation",
         value: "Retired",
+      },
+      {
+        name: "Mother's Occupation",
+        value: "Service-Private",
       },
       {
         name: "Sister(s)",
@@ -48,12 +48,12 @@ const FamilydetailsInfo:FC<MyComponentProps> = ({ setFamilyDetails }) => {
         value: "NA",
       },
       {
-        name: "Family Values",
-        value: "NA",
-      },
-      {
         name: "Family Based out of",
         value: "India",
+      },
+      {
+        name: "Living With Parents",
+        value: "Yes",
       },
     ],
   };

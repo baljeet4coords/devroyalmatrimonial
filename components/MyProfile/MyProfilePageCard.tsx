@@ -2,6 +2,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import classes from "./MyProfileCard.module.scss";
 import { RiComputerFill } from "react-icons/ri";
 import { AiFillFacebook } from "react-icons/ai";
+import HalfCircleProgressBar from "./HalfCircleProgressBar";
 
 const MyProfilePageCard: React.FC = () => {
   return (
@@ -47,9 +48,10 @@ const MyProfilePageCard: React.FC = () => {
           </div>
         </Col>
         <Col sm={4} md={12} lg={3} className={classes.rightBox}>
-        <div className={classes.RightPrograss}>
+        {/* <div className={classes.RightPrograss}>
             25%
-        </div>
+        </div> */}
+        <HalfCircleProgressBar />
         <p className={classes.CompleteProfileHEd}>Complete your profile</p>
         <p>Last edited on 06th Mar, 2023 </p>
         <p>Profile view : 0 </p>

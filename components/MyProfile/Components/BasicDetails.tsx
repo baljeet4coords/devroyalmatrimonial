@@ -10,29 +10,35 @@ interface MyComponentProps {
 const BasicDetails:FC<MyComponentProps> = ({ setBasicDetails }) => {
   const BasicDetails = [
     {
+      name: "Caste",
+      vlaue: "Adi Dravida",
+    },
+    {
       name: "Height",
       vlaue: "5'11",
     },
     {
-      name: "Religion",
-      vlaue: "Hindu",
+      name: "challenged",
+      vlaue: "NA",
+    },
+    {
+      name: "HIV",
+      vlaue: "NA",
     },
     {
       name: "mother tongue",
       vlaue: "Hindi-Delhi",
     },
     {
-      name: "anual income",
-      vlaue: "Rs 1-2 Lakh",
+      name: "Religion",
+      vlaue: "Hindu",
     },
+   
     {
-      name: "Location",
-      vlaue: "Ambikapur",
+      name: "Manglic",
+      vlaue: "NA",
     },
-    {
-      name: "Caste",
-      vlaue: "Adi Dravida",
-    },
+    
     {
       name: "Profile Manage by",
       vlaue: "His profile is managed by self",
@@ -70,7 +76,7 @@ const BasicDetails:FC<MyComponentProps> = ({ setBasicDetails }) => {
               <>
                 <div className={classes.UserdetailsSec} key={item.name}>
                   <p className={classes.input_Name}>{item.name}</p>
-                  <p className={classes.input_Value}>{item.vlaue} </p>
+                  <p className={item.vlaue === "NA" ? classes.input_Value_NotFilled : classes.input_Value}>{item.vlaue === "NA" ? "Not Field in" : item.vlaue} </p>
                 </div>
               </>
             );

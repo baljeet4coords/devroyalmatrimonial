@@ -1,10 +1,13 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
 import {
   AnnualIncomeProfile,
+  Challenged,
+  isHiv,
+  Manglik,
   MaritalStatus,
   MotherTongue,
 } from "../../types/enums";
@@ -18,37 +21,76 @@ import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
 import { CountryList } from "../../constants/DesiredData";
+import { useSelector } from "react-redux";
+import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
 }
 const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
+  const stepOneDefaultValues = useSelector(selectStep1Success);
+  const jsonData = stepOneDefaultValues?.jsonResponse;
+
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      profileVerification: false,
+      fullname: "Himanshu singh",
+      gender: "Male",
+      cast: "",
+      height: "",
+      challenged: "",
+      isHiv: "",
+      mothertongue: "",
+      religion: "",
+      isManglik: "",
+      profilefor: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setBasicDetails(false);
     },
   });
 
+  const [selectedManglik, setSelectedManglik] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.manglik), val: "" });
+  const [selectedIsHiv, setSelectedIsHiv] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.hiv), val: "" });
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
     id: string;
     val: string;
   }>({ id: "", val: "" });
-
-  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
+  const [selectedchallenged, setSelectedchallenged] = useState<{
     id: string;
     val: string;
   }>({ id: "", val: "" });
 
   const selectedCast = (string: string) => {
-    const id = string.split("-")[0];
-    // formik.values.cast = id;
+    // const id = string.split("-")[0];
+    const val = string.split("-")[1];
+    formik.values.cast = val;
   };
 
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
+
+  useEffect(() => {
+    (formik.values.height = cm),
+      (formik.values.challenged = selectedchallenged.val),
+      (formik.values.isHiv = selectedIsHiv.val),
+      (formik.values.mothertongue = selectedMotherTongue.val),
+      (formik.values.religion = selectedMotherTongue.val),
+      (formik.values.isManglik = selectedManglik.val);
+  }, [
+    cm,
+    selectedchallenged,
+    selectedIsHiv,
+    selectedMotherTongue,
+    selectedMotherTongue,
+    selectedManglik,
+  ]);
 
   return (
     <>
@@ -67,16 +109,23 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
                 <MdVerified />
                 your profile verification is pending
               </span>
-              <p>Get verified NOW</p>
+              {formik.initialValues.profileVerification ? (
+                <p>Verified</p>
+              ) : (
+                <p>Get verified NOW</p>
+              )}
             </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Full Name</Form.Label>
             <div className={classes.EditInputSec}>
               <input
+                name="fullname"
                 type="text"
-                value={"Himanshu singh"}
-                placeholder="Full Name"
+                placeholder="Enter Full Name"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                defaultValue={formik.initialValues.fullname}
               />
               <p>
                 Show to all <CiSettings />{" "}
@@ -88,15 +137,69 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={"Male"}
+                value={formik.initialValues.gender}
                 disabled
+                name="gender"
                 placeholder="Enter Gender"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
               />
               <span>
                 {" "}
                 <RiLockLine />{" "}
               </span>
             </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Cast</Form.Label>
+            <CastDataList options={CastList} selectedOption={selectedCast} />
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>Height</Form.Label>
+            <div className={classes.inputBox}>
+              <li className={`${classes.blankInput} d-flex`}>
+                <Form.Control
+                  name="height"
+                  type="text"
+                  placeholder={`${cm} in cms`}
+                  onBlur={formik.handleBlur}
+                  onChange={handleCmChange}
+                  defaultValue={jsonData?.height_cm}
+                />
+                <Form.Control
+                  name="height"
+                  type="text"
+                  placeholder={`${feet} in ft.`}
+                  onBlur={formik.handleBlur}
+                  onChange={handleFeetChange}
+                />
+              </li>
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <DropdownGridSingleSelect
+              title="Challenged"
+              data={Challenged}
+              nameid="challenged"
+              selectedDataFn={setSelectedchallenged}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <DropdownGridSingleSelect
+              title="HIV"
+              data={isHiv}
+              nameid="hiv"
+              selectedDataFn={setSelectedIsHiv}
+              defaultValue={jsonData?.hiv}
+            />
+          </div>
+          <div className={classes.singleBox}>
+            <DropdownGridSingleSelect
+              title="MotherTongue"
+              data={MotherTongue}
+              nameid="mothertongue"
+              selectedDataFn={setSelectedMotherTongue}
+            />
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Religion</Form.Label>
@@ -106,6 +209,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
                 value={"Hindu"}
                 disabled
                 placeholder="Enter Gender"
+                onBlur={formik.handleBlur}
+                onChange={handleCmChange}
               />
               <span>
                 {" "}
@@ -113,66 +218,26 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
               </span>
             </div>
           </div>
+
           <div className={classes.singleBox}>
-            <Form.Label>MotherTongue</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={MotherTongue}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              title="Add Manglik"
+              data={Manglik}
+              nameid="addmanglik"
+              selectedDataFn={setSelectedManglik}
+              defaultValue={jsonData?.manglik}
             />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Cast</Form.Label>
-            <CastDataList options={CastList} selectedOption={selectedCast} />
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Country Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"India"}
-                placeholder="Country Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>State Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Delhi"}
-                placeholder="State Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>City Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Ambikapur"}
-                placeholder="City Living in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Annual Income</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                value={"Rs. 1-2 Lakh"}
-                placeholder="Annual Income"
-              />
-            </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Profile Managed By</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                value={"Self"}
+                defaultValue={formik.initialValues.profilefor}
                 placeholder="Profile Managed By"
+                name="profilefor"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import classes from './CountryStateCity.module.scss';
 import {
   Country,
   State,
@@ -63,7 +63,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
 
   return (
     <>
-      <div>
+      <div className={classes.CSC_wrapper}>
         <label>{`${title} Country`}</label>
         <select onChange={(e) => countryFn(e)}>
           <option value="100-IN">{defaultIndiaCountry?.name}</option>;
@@ -76,7 +76,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
           })}
         </select>
       </div>
-      <div>
+      <div className={classes.CSC_wrapper}>
         <label>{`${title} State`}</label>
         <select onChange={(e) => stateFn(e)}>
           {stateOfCountry.map((state, index) => {
@@ -88,7 +88,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
           })}
         </select>
       </div>
-      <div>
+      <div className={classes.CSC_wrapper}>
         <label>{`${title} City`}</label>
         <select onChange={(e) => cityFn(e)}>
           {cityOfState.map((city, index) => {

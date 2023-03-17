@@ -3,6 +3,7 @@ import RegisterHeader from "./RegisterComponent/RegisterHeader/RegisterHeader";
 import { Footer } from "../../components";
 import React, { useEffect, useState } from "react";
 import classes from "./RegisterDetails.module.scss";
+// import ProfileDetails from "../ProfileDetails";
 import CareerDetails from "./RegisterComponent/CareerDetails";
 import ExpressYourself from "./RegisterComponent/ExpressYourself";
 import FamilyDetails from "./RegisterComponent/FamilyDetails";

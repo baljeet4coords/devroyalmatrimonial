@@ -118,6 +118,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                   />
                 </div>
                 <div className={classes.singleBox}>
+                <Form.Label>Annual Income</Form.Label>
                   <Form.Control
                     type="text"
                     name="annual_income"

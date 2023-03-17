@@ -1,10 +1,8 @@
 import { FC } from "react";
-import { useState } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { BloodGroup, Challenged, FamilyIncome } from "../../types/enums";
 import { AiOutlineHeart } from "react-icons/ai";
 
 interface MyComponentProps {
@@ -13,18 +11,24 @@ interface MyComponentProps {
 const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      hobbies: "",
+      interests: "",
+      favourite_music: "",
+      favourite_book: "",
+      favourite_read: "",
+      dress_style: "",
+      tv_shows: "",
+      favourite_movies: "",
+      sports: "",
+      cuisine: "",
+      food_i_cook: "",
+      vacation_destination: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setEditDetails(false);
     },
   });
-
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
-    val: string;
-  }>({ id: "", val: "" });
 
   return (
     <>
@@ -41,7 +45,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="hobbies"
+                defaultValue={formik.values.hobbies}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -50,7 +58,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="interests"
+                defaultValue={formik.values.interests}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -59,7 +71,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="favourite_music"
+                defaultValue={formik.values.favourite_music}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -68,7 +84,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="favourite_book"
+                defaultValue={formik.values.favourite_book}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -77,7 +97,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="favourite_read"
+                defaultValue={formik.values.favourite_read}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -86,7 +110,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="dress_style"
+                defaultValue={formik.values.dress_style}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -95,7 +123,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="tv_shows"
+                defaultValue={formik.values.tv_shows}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -104,16 +136,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="favourite_movies"
+                defaultValue={formik.values.favourite_movies}
                 placeholder="Not filled in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Movies</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -122,7 +149,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="sports"
+                defaultValue={formik.values.sports}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -131,7 +162,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="cuisine"
+                defaultValue={formik.values.cuisine}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -140,7 +175,11 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="food_i_cook"
+                defaultValue={formik.values.food_i_cook}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
@@ -149,12 +188,14 @@ const EditYourLikes: FC<MyComponentProps> = ({ setEditDetails }) => {
             <div className={classes.EditInputSec}>
               <input
                 type="text"
+                name="vacation_destination"
+                defaultValue={formik.values.vacation_destination}
                 placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
-
-
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

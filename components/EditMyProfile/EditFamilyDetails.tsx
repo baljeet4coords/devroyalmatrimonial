@@ -1,32 +1,136 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { HighestEducationList } from "../../constants/DesiredData";
 import { FiUsers } from "react-icons/fi";
-import { FamilyIncome } from "../../types/enums";
+import {
+  BrotherSister,
+  FamilStatus,
+  FamilyIncome,
+  FamilyType,
+  FathersProfession,
+  LivingWithParrents,
+  MothersProfession,
+} from "../../types/enums";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectStep4Success } from "../../ducks/regiserUser/step4/selectors";
+import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
+import CountryStateCitlyList from "../CountryStateCityList/CountryStateCityList";
 
 interface MyComponentProps {
   setFamilyDetails: (details: boolean) => void;
 }
 const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
+  const dispatch = useDispatch();
+  const stepOneDefaultValues = useSelector(selectStep4Success);
+  const id = useSelector(selectSignUpSuccess)?.output;
+  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
+
+  const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Father), val: "" });
+  const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Mother), val: "" });
+  const [selectedSister, setSelectedSister] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Sister), val: "" });
+  const [selectedBrother, setSelectedBrother] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Brother), val: "" });
+  const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Status), val: "" });
+  const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Income), val: "" });
+  const [selectedFamilyType, setSelectedFamilyType] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.Family_Type), val: "" });
+
+  const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
+    jsonData?.family_native_country
+  );
+  const [selectedNativeState, setSelectedNativeState] = useState<number>(
+    jsonData?.family_native_state
+  );
+  const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
+    jsonData?.family_native_city
+  );
+  const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
+    id: string;
+    val: string;
+  }>({ id: String(jsonData?.living_with_parents), val: "" });
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      fathersProfession: "",
+      mothersProfession: "",
+      sister: "",
+      brother: "",
+      gothra: "",
+      familyStatus: "",
+      familyIncome: "",
+      familyType: "",
+      nativeCountry: {},
+      nativeState: {},
+      nativeCity: {},
+      livingWithParents: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(JSON.stringify(values, null, 1));
+      setFamilyDetails(false);
     },
   });
 
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
-    val: string;
-  }>({ id: "", val: "" });
+  useEffect(() => {
+    formik.values.fathersProfession = selectedFathersOccupation.val;
+    formik.values.mothersProfession = selectedMothersOccupation.val;
+    formik.values.sister = selectedSister.val;
+    formik.values.brother = selectedBrother.val;
+    formik.values.familyStatus = selectedFamilyStatus.val;
+    formik.values.familyIncome = selectedFamilyIncome.val;
+    formik.values.familyType = selectedFamilyType.val;
+    formik.values.nativeCountry = selectedNativeCountry;
+    formik.values.nativeState = selectedNativeState;
+    formik.values.nativeCity = selectedNativeCity;
+    formik.values.livingWithParents = selectedLivingWithParents.val;
+  }, [
+    selectedFathersOccupation.val,
+    selectedMothersOccupation.val,
+    selectedSister.val,
+    selectedBrother.val,
+    selectedFamilyStatus.val,
+    selectedFamilyIncome.val,
+    selectedFamilyType.val,
+    selectedLivingWithParents.val,
+    selectedNativeCountry,
+    selectedNativeState,
+    selectedNativeCity,
+    formik.values,
+  ]);
+
+  const getSelectedCountry = (id: number) => {
+    setSelectedNativeCountry(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedNativeState(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedNativeCity(id);
+  };
 
   return (
     <>
@@ -39,135 +143,102 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
-            <Form.Label>Profile Handler Name</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                // value={"Not filled in"}
-                placeholder="Not filled in"
-              />
-            </div>
+            <DropdownGridSingleSelect
+              selectedDataFn={setSelectedFathersOccupation}
+              title="Father's Occupation"
+              data={FathersProfession}
+              nameid="fathersProfession"
+              defaultValue={jsonData?.Father}
+            />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Mother is</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={HighestEducationList}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              selectedDataFn={setSelectedMothersOccupation}
+              title="Mother's Occupation"
+              data={MothersProfession}
+              nameid="mothersProfession"
+              defaultValue={jsonData?.Mother}
             />
           </div>
 
           <div className={classes.singleBox}>
-            <Form.Label>Father is</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={HighestEducationList}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              selectedDataFn={setSelectedSister}
+              title="Sister"
+              data={BrotherSister}
+              nameid="sister"
+              defaultValue={jsonData?.Sister}
             />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Sister(s)</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={HighestEducationList}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              selectedDataFn={setSelectedBrother}
+              title="Brother"
+              data={BrotherSister}
+              nameid="brother"
+              defaultValue={jsonData?.Brother}
             />
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Brother(s)</Form.Label>
-            <DropdownGridSingleSelect
-              title=""
-              data={HighestEducationList}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
-            />
-          </div>
-
           <div className={classes.singleBox}>
             <Form.Label>Gothra</Form.Label>
             <div className={classes.EditInputSec}>
               <input
                 type="text"
-                // value={"Not filled in"}
+                name="gothra"
+                defaultValue={formik.initialValues.gothra}
                 placeholder="Not filled in"
-              />
-            </div>
-          </div>
-
-          <div className={classes.singleBox}>
-            <Form.Label>Gothra (maternal)</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                // value={"Not filled in"}
-                placeholder="Not filled in"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Family Status</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                // value={"Not filled in"}
-                placeholder="Not filled in"
-              />
-            </div>
-          </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Family Income</Form.Label>
             <DropdownGridSingleSelect
-              title=""
-              data={FamilyIncome}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
+              selectedDataFn={setSelectedFamilyStatus}
+              title="Family Status "
+              data={FamilStatus}
+              nameid="familyStatus"
+              defaultValue={jsonData?.Family_Status}
             />
           </div>
 
           <div className={classes.singleBox}>
-            <Form.Label>Family Type</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                placeholder="Joint Family"
-              />
-            </div>
+            <DropdownGridSingleSelect
+              selectedDataFn={setSelectedFamilyIncome}
+              title="Family Income"
+              data={FamilyIncome}
+              nameid="familyIncome"
+              defaultValue={jsonData?.Family_Income}
+            />
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Family Values</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                placeholder="Not filled in"
-              />
-            </div>
+            <DropdownGridSingleSelect
+              selectedDataFn={setSelectedFamilyType}
+              title="Family Type"
+              data={FamilyType}
+              nameid="familyType"
+              defaultValue={jsonData?.Family_Type}
+            />
           </div>
+          <CountryStateCitlyList
+            title="Family Native"
+            setSelectedCountry={getSelectedCountry}
+            setSelectedState={getSelectedState}
+            setSelectedCity={getSelectedCity}
+            defaultValueCountry={0}
+            defaultValueState={0}
+            defaultValueCity={0}
+          />
+
           <div className={classes.singleBox}>
-            <Form.Label>Family based out of</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                placeholder="Not filled in"
-              />
-              <p className="text-decoration-underline">
-                Not From india </p>
-            </div>
+            <DropdownGridSingleSelect
+              selectedDataFn={setSelectedLivingWithParents}
+              title="Living With Parents"
+              data={LivingWithParrents}
+              nameid="livingWithParents"
+              defaultValue={jsonData?.living_with_parents}
+            />
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Living with parents?</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                placeholder="Not filled in"
-              />
-            </div>
-          </div>
-
-
-
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

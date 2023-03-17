@@ -3,35 +3,46 @@ import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
 
-
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
 }
-const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
+const LifeStyleDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
     data: [
       {
-        name: "Habits",
-        value: "Dietary Habits? ,Drinking Habits? ,Smoking Habits?",
+        name: "Diet",
+        value: "Vegetarian",
       },
       {
-        name: "Assets",
-        value: "Own a house?, Own a Car?",
+        name: "Smoking",
+        value: "Occasionally",
       },
       {
-        name: "Languages Known",
+        name: "drinking",
         value: "NA",
       },
       {
-        name: "Blood Group",
+        name: "Love pets",
+        value: "yes",
+      },
+      {
+        name: "Owns House",
+        value: "no",
+      },
+      {
+        name: "Owns car",
+        value: "yes",
+      },
+      {
+        name: "Blood group",
         value: "NA",
       },
       {
-        name: "Special Cases",
-        value: "Challenged? ,Thalassemia?.HIV+ve?",
-      }
+        name: "Thalassemia",
+        value: "NA",
+      },
     ],
   };
   return (
@@ -42,10 +53,7 @@ const LifeStyleDetails:FC<MyComponentProps> = ({ setEditDetails }) => {
             <CiPillsBottle1 />
             LifeStyle
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setEditDetails(true)}
-          >
+          <span className={classes.Edit} onClick={() => setEditDetails(true)}>
             Edit
           </span>
         </div>
