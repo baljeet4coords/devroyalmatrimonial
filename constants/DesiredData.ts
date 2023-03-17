@@ -1,4 +1,33 @@
-import { MotherTongue } from "../types/enums";
+// import { MotherTongue } from "../types/enums";
+
+export const MotherTongueArr = [
+  "Hindi",
+  "Hindi_Delhi_Punjabi",
+  "Hindi_MP_CG",
+  "Hindi_UP_UK",
+  "Punjabi",
+  "Hindi_Bihar_Jharkhand",
+  "Hindi_Rajasthan",
+  "Haryanvi",
+  "Himachali",
+  "Kashmiri",
+  "Sindhi",
+  "Urdu",
+  "Marathi",
+  "Gujarati",
+  "Kutchi",
+  "Konkani",
+  "Tamil",
+  "Telugu",
+  "Kannada",
+  "Malayalam",
+  "Tulu",
+  "Bengali",
+  "Oriya",
+  "Assamese",
+  "Sikkim_or_Nepali",
+  "English",
+];
 
 export const MaritalStatusList = [
   "Never Married",
@@ -505,7 +534,7 @@ export const HeightToList = [
 // ]
 
 export const ManglikList = ["Manglik", "Non Manglik", "Angshik"];
-export const Employed_In= ["Not Working", "Study", "Govt Employed"];
+export const Employed_In = ["Not Working", "Study", "Govt Employed"];
 
 export const HighestEducationList = [
   "Diploma",
@@ -550,4 +579,35 @@ export const city = [
   },
 ];
 
-export { MotherTongue };
+// export { MotherTongue };
+
+export const OccupationData = [
+  "GovernmentPublicSector",
+  "CivilServices",
+  "Defense",
+  "BusinessSelfEmployed",
+  "NotWorking",
+  "Administration",
+  "AdvertisingMediaEntertainment",
+  "Agricultural",
+  "AirlineAviation",
+  "Architecture",
+  "ArmedForces",
+  "BankingFinance",
+  "BPOCustomerService",
+  "CorporateManagementProfessionals",
+  "Doctor",
+  "TeacherEducationTraining",
+  "Engineering",
+  "Hospitality",
+  "LawEnforcement",
+  "Legal",
+  "MerchantNavy",
+  "OtherMedicalHealthcare",
+  "ScienceResearch",
+  "SoftwareIT",
+  "TopManagement",
+  "Others",
+];
+
+export const SmokeDrinkWith = ["Doesnotmatter", "Yes", "No", "Occasionally"];
