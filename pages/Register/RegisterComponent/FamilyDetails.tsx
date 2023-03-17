@@ -18,12 +18,11 @@ import {
 } from "../../../types/enums";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
 import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
 import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
 import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
-import { selectSignInSuccess } from "../../../ducks/signIn/selectors";
+import { selectAuthSuccess } from "../../../ducks/auth/selectors";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -31,8 +30,8 @@ interface ProfileDetailsProps {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep4Success);
-  const userIdSignUp = useSelector(selectSignUpSuccess)?.output;
-  const userIdSignIn = useSelector(selectSignInSuccess)?.jsonResponse?.userid;
+  const userIdSignUp = useSelector(selectAuthSuccess)?.output;
+  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);

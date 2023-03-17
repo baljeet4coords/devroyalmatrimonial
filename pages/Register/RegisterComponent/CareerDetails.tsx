@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { CustomButton, DropdownGridSingleSelect } from "../../../components";
+import {
+  CountryStateCitlyList,
+  CustomButton,
+  DropdownGridSingleSelect,
+} from "../../../components";
 import classes from "./Component.module.scss";
-import { FloatingLabel, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import RightSection from "./RightSection/RightSection";
 import {
   CountryList,
@@ -17,7 +21,9 @@ interface ProfileDetailsProps {
 }
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
-  //To scroll on top whan submit butotn is clicked on  previous page
+  const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(0);
+  const [selectedNativeState, setSelectedNativeState] = useState<number>(0);
+  const [selectedNativeCity, setSelectedNativeCity] = useState<number>(0);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -48,6 +54,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const checkFunction = () => {
     nextPage(2);
   };
+  const getSelectedCountry = (id: number) => {
+    setSelectedNativeCountry(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedNativeState(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedNativeCity(id);
+  };
   return (
     <>
       <div className={classes.profile_Container}>
@@ -57,34 +72,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
               <h1>Great! You are about to complete your profile.</h1>
               <small>mandatory</small>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-                <div className={`form-group ${classes.inputCover}`}>
-                  <DropdownGridSingleSelect
-                    selectedDataFn={() => {}}
-                    title="Country"
-                    data={CountryList}
-                    nameid="country"
-                  />
-                </div>
-                <div className={classes.singleBox}>
-                  <Form.Label>Staet</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="state"
-                    placeholder="Enter State"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div className={classes.singleBox}>
-                  <Form.Label>City</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="city"
-                    placeholder="Enter City"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
-                </div>
+                <CountryStateCitlyList
+                  title=""
+                  setSelectedCountry={getSelectedCountry}
+                  setSelectedState={getSelectedState}
+                  setSelectedCity={getSelectedCity}
+                  defaultValueCountry={0}
+                  defaultValueState={0}
+                  defaultValueCity={0}
+                />
                 <div className={`form-group ${classes.inputCover}`}>
                   <DropdownGridSingleSelect
                     selectedDataFn={() => {}}
@@ -118,7 +114,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                   />
                 </div>
                 <div className={classes.singleBox}>
-                <Form.Label>Annual Income</Form.Label>
+                  <Form.Label>Annual Income</Form.Label>
                   <Form.Control
                     type="text"
                     name="annual_income"
@@ -131,28 +127,17 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 <h5 className="text-center p-3">
                   Here is your chance to make your profile stand out!
                 </h5>
-                <div className={classes.singleBox}>
-                  <Form.Label>Express Yourself!</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="express_yourself"
-                    rows={5}
-                    placeholder="Intro yourself"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
-                </div>
                 <Button
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                   // onClick={() => nextPage(1)}
                 >
-                  Complete Registration
+                  Next
                 </Button>
               </Form>
             </Col>
-            {/* <RightSection /> */}
+            <RightSection />
           </Row>
         </Container>
       </div>

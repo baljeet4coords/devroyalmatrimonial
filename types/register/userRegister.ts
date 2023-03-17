@@ -1,6 +1,6 @@
 export interface IRegisterStep1 {
-  actionType: string;
-  userId: string;
+  actionType: "V" | "C" | "U";
+  userId?: number;
   profilefor?: string;
   profileHandlerName?: string;
   dob?: string;

@@ -3,8 +3,6 @@ import { Navbar, Container, Nav, Image, Button } from "react-bootstrap";
 import classes from "./RegisterHeader.module.scss";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { selectSignInSuccess } from "../../../../ducks/signIn/selectors";
-import { selectSignUpSuccess } from "../../../../ducks/signUp/selectors";
 import { CustomButton } from "../../../../components";
 import { useRouter } from "next/router";
 

@@ -11,7 +11,6 @@ import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
 import ModalForm from "../HomeForm/ModalLogin";
-import { SignInType } from "../../ducks/signIn/types";
 
 type ModalLoginProps = {
   onSubmitForm: (values: SignInType) => void;

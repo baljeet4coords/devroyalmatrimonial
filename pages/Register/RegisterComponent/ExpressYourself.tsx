@@ -6,25 +6,24 @@ import RightSection from "./RightSection/RightSection";
 import { useDispatch, useSelector } from "react-redux";
 import { STEP_5 } from "../../../ducks/regiserUser/step5/constants";
 import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
-import { selectSignUpSuccess } from "../../../ducks/signUp/selectors";
+import { selectAuthSuccess } from "../../../ducks/auth/selectors";
 import axios from "axios";
 import { IRegisterStep5 } from "../../../types/register/userRegister";
-import { selectSignInSuccess } from "../../../ducks/signIn/selectors";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep5Success);
-  const userIdSignUp = useSelector(selectSignUpSuccess)?.output;
-  const userIdSignIn = useSelector(selectSignInSuccess)?.jsonResponse?.userid;
+  const userIdauth = useSelector(selectAuthSuccess)?.output;
+  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch({
       type: STEP_5,
-      payload: { actionType: "V", userId: userIdSignUp || userIdSignIn},
+      payload: { actionType: "V", userId: userIdauth || userIdSignIn},
     });
-  }, [dispatch, userIdSignIn, userIdSignUp]);
+  }, [dispatch, userIdSignIn, userIdauth]);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -35,7 +34,7 @@ const ExpressYourself: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       actionType: "",
-      userId: userIdSignUp || userIdSignIn,
+      userId: userIdauth || userIdSignIn,
       aboutCareer: jsonData?.about_career,
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,

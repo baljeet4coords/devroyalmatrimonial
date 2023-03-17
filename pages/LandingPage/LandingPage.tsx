@@ -13,36 +13,33 @@ import {
   cardItems,
 } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
-import { SignInType } from "../../ducks/signIn/types";
-import { selectSignInSuccess } from "../../ducks/signIn/selectors";
 import router from "next/router";
-import { signIn } from "../../ducks/signIn/actions";
-import { signUp } from "../../ducks/signUp/actions";
 import { SignUpType } from "../../types/authentication";
-import { loginRequest, signupRequest } from "../../ducks/auth/actions";
+import { getToken, selectAuthSuccess } from "../../ducks/auth/selectors";
+import { signupRequest, loginRequest } from "../../ducks/auth/actions";
+import { LoginType } from "../../ducks/auth/types";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const isSignUp = useSelector(selectSignUpSuccess);
-  const isSignIn = useSelector(selectSignInSuccess);
+  const isAuthenticated = useSelector(getToken);
+  const authSuccess = useSelector(selectAuthSuccess);
 
-  if (isSignUp && isSignUp?.output) {
-    router.push("/Register/");
+  if (isAuthenticated) {
+    router.push("/Register");
   }
-  if (isSignIn && isSignIn?.output === 1) {
+  if (authSuccess && authSuccess?.output === 1) {
     if (
-      isSignIn?.jsonResponse?.user_status === "1" ||
-      isSignIn?.jsonResponse?.user_status === "R"
+      authSuccess?.jsonResponse?.user_status === "1" ||
+      authSuccess?.jsonResponse?.user_status === "R"
     ) {
       router.push("/Register/");
     } else {
       router.push("/");
     }
   }
-  if (isSignIn && isSignIn?.output === 0) {
+  if (authSuccess && authSuccess?.output === 0) {
     alert("Wrong Password");
   }
   const [activeId, setActiveId] = useState<string>();
@@ -57,7 +54,7 @@ const LandingPage: React.FC = () => {
     dispatch(signupRequest(values));
   };
 
-  const onSubmitLoginForm = (values: SignInType) => {
+  const onSubmitLoginForm = (values: LoginType) => {
     dispatch(loginRequest(values));
   };
   return (

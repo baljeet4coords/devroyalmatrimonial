@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { useFormik } from "formik";
-import { SignInType } from "../../ducks/signIn/types";
+import { LoginType } from "../../ducks/auth/types";
 
 type ModalLoginProps = {
   onCloseModal: () => void;
-  onSubmitForm: (values: SignInType) => void;
+  onSubmitForm: (values: LoginType) => void;
 };
 
 const ModalForm: React.FC<ModalLoginProps> = ({
@@ -33,7 +33,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
       onSubmitForm({ ...values, from: loginWithEmail ? "email" : "mobile" });
     },
   });
-
+  
   return (
     <div className={classes.modal_form}>
       <Form onSubmit={formik.handleSubmit}>
