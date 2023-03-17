@@ -13,6 +13,7 @@ import { selectSignInSuccess } from "../../ducks/signIn/selectors";
 import router from "next/router";
 import { useDispatch } from "react-redux";
 import storage from "redux-persist/es/storage";
+import { logout } from "../../ducks/signIn/actions";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -28,13 +29,13 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const [active, setActive] = useState<number>(0);
   const isSignIn = useSelector(selectSignInSuccess);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   const pageNo = isSignIn?.jsonResponse?.user_status;
-  //   if (pageNo && pageNo !== "R") {
-  //     setActive(+pageNo);
-  //   }
-  //   console.log(pageNo);
-  // }, []);
+  useEffect(() => {
+    const pageNo = isSignIn?.jsonResponse?.user_status;
+    if (pageNo && pageNo !== "R") {
+      setActive(+pageNo);
+    }
+    console.log(pageNo);
+  }, [isSignIn?.jsonResponse?.user_status]);
 
   const chooseMessage = (message: number) => {
     setActive(message);
@@ -47,6 +48,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <ExpressYourself key={4} />,
   ];
   const onLogout = () => {
+    dispatch(logout());
     storage.removeItem("persist:root");
     router.push("/");
   };

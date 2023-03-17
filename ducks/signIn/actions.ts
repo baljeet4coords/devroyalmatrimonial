@@ -1,9 +1,13 @@
 import { SignInJsonResponse, SignInType } from "./types";
-import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "./constants";
+import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, LOGOUT } from "./constants";
 
 interface SignInAction {
   type: typeof SIGN_IN;
   payload: SignInType;
+}
+
+interface LogoutAction {
+  type: typeof LOGOUT;
 }
 
 interface SignInSuccessAction {
@@ -22,26 +26,31 @@ interface SignInFailureAction {
   error: string;
 }
 
-export const signUp = (payload: SignInAction["payload"]): SignInAction => ({
+export const signIn = (payload: SignInAction["payload"]): SignInAction => ({
   type: SIGN_IN,
   payload,
 });
 
-export const signUpSuccess = (
+export const signInSuccess = (
   response: SignInSuccessAction["response"]
 ): SignInSuccessAction => ({
   type: SIGN_IN_SUCCESS,
   response,
 });
 
-export const signUpFailure = (
+export const signInFailure = (
   error: SignInFailureAction["error"]
 ): SignInFailureAction => ({
   type: SIGN_IN_FAILURE,
   error,
 });
 
+export const logout = (): LogoutAction => ({
+  type: LOGOUT,
+});
+
 export type SignInActions =
   | SignInAction
   | SignInSuccessAction
-  | SignInFailureAction;
+  | SignInFailureAction
+  | LogoutAction;

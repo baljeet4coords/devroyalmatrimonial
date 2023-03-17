@@ -12,14 +12,15 @@ import {
   HomeCard,
   cardItems,
 } from "../../components";
-import { SignUpFormValues } from "../../components/HomeForm/types";
 import { useDispatch, useSelector } from "react-redux";
-import { SIGN_UP } from "../../ducks/signUp/constants";
 import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
 import { SignInType } from "../../ducks/signIn/types";
-import { SIGN_IN } from "../../ducks/signIn/constants";
 import { selectSignInSuccess } from "../../ducks/signIn/selectors";
 import router from "next/router";
+import { signIn } from "../../ducks/signIn/actions";
+import { signUp } from "../../ducks/signUp/actions";
+import { SignUpType } from "../../types/authentication";
+import { loginRequest, signupRequest } from "../../ducks/auth/actions";
 
 const LandingPage: React.FC = () => {
   const ref = useRef(null);
@@ -28,29 +29,22 @@ const LandingPage: React.FC = () => {
   const isSignUp = useSelector(selectSignUpSuccess);
   const isSignIn = useSelector(selectSignInSuccess);
 
-  useEffect(() => {
-    console.log(isSignIn?.output);
-    if (isSignIn?.output === 1) {
+  if (isSignUp && isSignUp?.output) {
+    router.push("/Register/");
+  }
+  if (isSignIn && isSignIn?.output === 1) {
+    if (
+      isSignIn?.jsonResponse?.user_status === "1" ||
+      isSignIn?.jsonResponse?.user_status === "R"
+    ) {
       router.push("/Register/");
+    } else {
+      router.push("/");
     }
-  }, [isSignIn]);
-
-  // if (isSignUp && isSignUp?.output) {
-  //   router.push("/Register/");
-  // }
-  // if (isSignIn && isSignIn?.output === 1) {
-  //   if (
-  //     isSignIn?.jsonResponse?.user_status === "1" ||
-  //     isSignIn?.jsonResponse?.user_status === "R"
-  //   ) {
-  //     router.push("/Register/");
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }
-  // if (isSignIn && isSignIn?.output === 0) {
-  //   alert("Wrong Password");
-  // }
+  }
+  if (isSignIn && isSignIn?.output === 0) {
+    alert("Wrong Password");
+  }
   const [activeId, setActiveId] = useState<string>();
 
   const refineScroll = (scrollVal: any) => {
@@ -59,18 +53,12 @@ const LandingPage: React.FC = () => {
   };
   const headimage = "cover_img_free_chat.jpg";
 
-  const onSubmitForm = (values: SignUpFormValues) => {
-    dispatch({
-      type: SIGN_UP,
-      payload: values,
-    });
+  const onSubmitForm = (values: SignUpType) => {
+    dispatch(signupRequest(values));
   };
 
   const onSubmitLoginForm = (values: SignInType) => {
-    dispatch({
-      type: SIGN_IN,
-      payload: values,
-    });
+    dispatch(loginRequest(values));
   };
   return (
     <>

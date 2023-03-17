@@ -1,5 +1,5 @@
 import { SignInActions } from "./actions";
-import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "./constants";
+import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, LOGOUT } from "./constants";
 import { SignInJsonResponse } from "./types";
 
 interface SignInState {
@@ -43,6 +43,10 @@ export default function signUpReducer(
         isLoading: false,
         response: null,
         error: action.error,
+      };
+    case LOGOUT:
+      return {
+        ...initialState,
       };
     default:
       return state;

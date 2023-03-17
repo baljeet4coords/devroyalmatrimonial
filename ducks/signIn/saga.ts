@@ -1,8 +1,8 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from "./constants";
+import { takeEvery, call, put, takeLatest } from "redux-saga/effects";
+import { SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, LOGOUT } from "./constants";
 import axios from "axios";
 
-import { SignInActions } from "./actions";
+import { SignInActions, logout } from "./actions";
 
 function* signInSaga(action: SignInActions): any {
   try {
@@ -30,6 +30,14 @@ function* signInSaga(action: SignInActions): any {
   }
 }
 
+function* logoutSaga() {
+  yield put(logout());
+}
+
 export default function* rootSaga() {
   yield takeEvery(SIGN_IN, signInSaga);
+}
+
+export function* authWatcher() {
+  yield takeLatest(LOGOUT, logoutSaga);
 }
