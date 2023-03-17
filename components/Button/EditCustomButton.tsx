@@ -1,13 +1,13 @@
 import classes from "./CustomButton.module.scss";
 
 interface CustomButtonProps {
-  title: any;
+  children: any;
   setEditDetails: (details: boolean) => void;
   buttonType: number;
 }
 
 const EditCustomButton: React.FC<CustomButtonProps> = ({
-  title,
+  children,
   setEditDetails,
   buttonType,
 }) => {
@@ -17,7 +17,7 @@ const EditCustomButton: React.FC<CustomButtonProps> = ({
       className={classes.editcustomButton}
       onClick={() => setEditDetails(false)}
     >
-      {title}
+      {children}
     </button>
   ) : (
     <button
@@ -25,7 +25,7 @@ const EditCustomButton: React.FC<CustomButtonProps> = ({
       className={`${classes.editcustomButton} ${classes.editcustomButtonGray}`}
       onClick={() => setEditDetails(false)}
     >
-      {title}
+      {children}
     </button>
   );
 };

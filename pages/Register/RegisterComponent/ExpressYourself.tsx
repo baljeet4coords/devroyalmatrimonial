@@ -3,6 +3,10 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
 import RightSection from "./RightSection/RightSection";
+<<<<<<< HEAD
+
+const ExpressYourself: React.FC = () => {
+=======
 import { useDispatch, useSelector } from "react-redux";
 import { STEP_5 } from "../../../ducks/regiserUser/step5/constants";
 import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
@@ -23,6 +27,7 @@ const ExpressYourself: React.FC = () => {
       payload: { actionType: "V", userId: userId },
     });
   }, []);
+>>>>>>> bae73d8d983436ac8a8891803edfa618b3618596
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -32,6 +37,15 @@ const ExpressYourself: React.FC = () => {
   }, []);
   const formik = useFormik({
     initialValues: {
+<<<<<<< HEAD
+      aboutcareer: "",
+      aboutfamily: "",
+      abouteducation: "",
+      basicintor: "",
+    },
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 1));
+=======
       actionType: "",
       userId: userId,
       aboutCareer: jsonData?.about_career,
@@ -59,6 +73,7 @@ const ExpressYourself: React.FC = () => {
         );
       }
       response.data.output === 1 && console.log("route to next page");
+>>>>>>> bae73d8d983436ac8a8891803edfa618b3618596
     },
   });
 
@@ -75,7 +90,11 @@ const ExpressYourself: React.FC = () => {
                   <Form.Label>About Career</Form.Label>
                   <Form.Control
                     as="textarea"
+<<<<<<< HEAD
+                    name="aboutcareer"
+=======
                     name="aboutCareer"
+>>>>>>> bae73d8d983436ac8a8891803edfa618b3618596
                     rows={3}
                     placeholder="About your career"
                     onBlur={formik.handleBlur}
