@@ -6,29 +6,46 @@ import classes from "./GlobalDetails.module.scss";
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
 }
-const EducationAndCareer:FC<MyComponentProps> = ({ setEudcationAndCareer }) => {
-
-  
+const EducationAndCareer: FC<MyComponentProps> = ({
+  setEudcationAndCareer,
+}) => {
   const BasicDetails = {
     pin: true,
     pinValue: "Intersted in setting aborad?",
     data: [
       {
+        name: "Country",
+        value: "NA",
+      },
+      {
+        name: "State",
+        value: "NA",
+      },
+      {
+        name: "City",
+        value: "NA",
+      },
+      {
+        name: "Residential Status",
+        value: "NA",
+      },
+      {
+        name: "Ready to Settle Aboard",
+        value: "yes",
+      },
+      {
         name: "Higest Education",
         value: "M.S.(Engineering)",
       },
       {
-        name: "School Name",
-        value: "NA",
+        name: "Employed In",
+        value: "Private Sector",
       },
       {
-        name: "UG College",
-        value: "B.E/B.Tech",
+        name: "Annual Income",
+        value: "Rs. 1-2 Lakh",
       },
-      {
-        name: "PG College",
-        value: "NA",
-      },
+
       {
         name: "Other UG Degree",
         value: "NA",
@@ -37,10 +54,7 @@ const EducationAndCareer:FC<MyComponentProps> = ({ setEudcationAndCareer }) => {
         name: "Other PG Degree",
         value: "NA",
       },
-      {
-        name: "Employed In",
-        value: "Private Sector",
-      },
+
       {
         name: "Occupation",
         value: "Admin Professional",
@@ -48,10 +62,6 @@ const EducationAndCareer:FC<MyComponentProps> = ({ setEudcationAndCareer }) => {
       {
         name: "Organization Name",
         value: "NA",
-      },
-      {
-        name: "Annual Income",
-        value: "Rs. 1-2 Lakh",
       },
     ],
   };
@@ -90,10 +100,12 @@ const EducationAndCareer:FC<MyComponentProps> = ({ setEudcationAndCareer }) => {
             );
           })}
         </div>
-        {BasicDetails.pin && <div className={classes.pin}>
-          <BsPinAngle />
-          {BasicDetails.pinValue}
-        </div>}
+        {BasicDetails.pin && (
+          <div className={classes.pin}>
+            <BsPinAngle />
+            {BasicDetails.pinValue}
+          </div>
+        )}
       </div>
     </>
   );

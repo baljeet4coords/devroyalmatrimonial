@@ -1,0 +1,41 @@
+.CSC_wrapper {
+
+    label {
+        min-width: 135px;
+        text-align: right;
+        position: absolute;
+        margin-bottom: 0.3rem;
+        width: 145px;
+    }
+
+    select {
+        word-wrap: normal;
+        width: 75%;
+        padding: 0.7rem 1rem;
+        border: 1px solid lightgray;
+        margin: auto;
+        margin-right: 0;
+        display: block;
+    }
+}
+
+
+
+
+@media only screen and (max-width: 1200px) {
+
+    .CSC_wrapper {
+        position: relative;
+
+        label {
+            margin-bottom: 1rem;
+            position: initial;
+            text-align: left;
+            width: -webkit-fill-available;
+        }
+
+        select {
+            width: 100%;
+        }
+    }
+}

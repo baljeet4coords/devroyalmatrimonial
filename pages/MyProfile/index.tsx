@@ -69,9 +69,13 @@ const MyProfile: React.FC = () => {
               )}
               <hr />
               {eudcationAndCareer ? (
-                <EditEducationAmdCareer setEudcationAndCareer={setEudcationAndCareer} />
+                <EditEducationAmdCareer
+                  setEudcationAndCareer={setEudcationAndCareer}
+                />
               ) : (
-                <EducationAndCareer setEudcationAndCareer={setEudcationAndCareer} />
+                <EducationAndCareer
+                  setEudcationAndCareer={setEudcationAndCareer}
+                />
               )}
               <hr />
               {familyDetails ? (
