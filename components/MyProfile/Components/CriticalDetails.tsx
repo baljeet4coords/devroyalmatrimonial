@@ -32,7 +32,7 @@ const CriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           <div className={classes.UserdetailsSec}>
             <p className={classes.input_Name}>Marital Status</p>
             <p className={classes.input_Value}>Never Married</p>
-          </div>
+          </div>  
         </div>
       </div>
     </>

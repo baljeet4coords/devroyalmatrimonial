@@ -12,27 +12,17 @@ import {
   HeightFromList,
   HeightToList,
   ReligionList,
-  MotherTongue,
+  MotherTongueArr,
   ManglikList,
   HighestEducationList,
+  SmokeDrinkWith,
+  OccupationData,
 } from "../../constants/DesiredData";
 import { FaEdit } from "react-icons/fa";
 import { SlArrowDown } from "react-icons/sl";
 import { IoClose } from "react-icons/io5";
 import Form from "react-bootstrap/Form";
 import CustomButton from "../../components/Button/CustomButton";
-
-// interface DesiredProfileProps {
-//   handleInputChange: (a:any) => void
-//   handleSubmit: (a:any) => void
-// }
-// interface onShow {
-//   FromyHeightValue: any,
-//   HeightFromList: string[],
-//   getClickedData: (data: paramsStatus) => void,
-//   activeList: acticeStateType,
-//   openList: (active: string) => void
-// }
 
 type paramsStatus = {
   val: string;
@@ -54,8 +44,12 @@ const DesiredProfilePage: React.FC = () => {
   const [ToHeighttValue, updateToHeightValue] = useState<string>();
   const [ReligionValue, updateReligionValue] = useState<string[]>([]);
   const [MotherTongueArray, updateMotherTongueArray] = useState<string[]>([]);
+  const [OccupationArray, updateOccupationArray] = useState<string[]>([]);
   const [ManglikArray, updateManglikArray] = useState<string[]>([]);
   const [HighestEduArray, updateHighestEduArray] = useState<string[]>([]);
+  // const [SmokingArray, updateSmoking] = useState<string[]>([]);
+  // const [SmokingArray, updateSmoking] = useState<string[]>([]);
+  // const [DietaryhabitsArray, updateDietaryhabits] = useState<string[]>([]);
 
   const [searchedCountry, setSearchedCountry] = useState<string[]>(CountryList);
   const [searchedMotherTongue, setSearchedMotherTongue] =
@@ -108,6 +102,12 @@ const DesiredProfilePage: React.FC = () => {
       updateMotherTongueArray((prevArray) => [...prevArray, data.val]);
     }
     if (
+      OccupationArray.indexOf(data.val) === -1 &&
+      data.selectedInputQuery === "Occupations"
+    ) {
+      updateOccupationArray((prevArray) => [...prevArray, data.val]);
+    }
+    if (
       ManglikArray.indexOf(data.val) === -1 &&
       data.selectedInputQuery === "Manglik"
     ) {
@@ -157,6 +157,9 @@ const DesiredProfilePage: React.FC = () => {
     if (data.selectedInputQuery === "HighestEdu") {
       HighestEduArray.splice(data.idd, 1);
     }
+    if (data.selectedInputQuery === "Occupations") {
+      OccupationArray.splice(data.idd, 1);
+    }
   };
 
   const storeInputType = [
@@ -171,6 +174,7 @@ const DesiredProfilePage: React.FC = () => {
     "MotherTongue",
     "Manglik",
     "HighestEdu",
+    "Occupations",
   ];
 
   const [activeList, setActiveList] = useState<acticeStateType>({
@@ -184,7 +188,7 @@ const DesiredProfilePage: React.FC = () => {
   };
   const handleClickOutside = () => {
     if (containerRef.current) {
-      setActiveList({ type: "", visible: false });
+      setActiveList({ type: "", visible: true });
       console.log(activeList);
     }
   };
@@ -228,7 +232,10 @@ const DesiredProfilePage: React.FC = () => {
                 <FaEdit /> Edit
               </span>
             </div>
-            <Col sm={12} className="d-flex justify-content-center">
+            <Col
+              sm={12}
+              className={`${classes.form_wrapper} d-flex justify-content-center`}
+            >
               <form className={classes.formEdit}>
                 <div className={classes.twoBox}>
                   <label>Age</label>
@@ -409,6 +416,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Marital" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Marital")}
                     >
                       <ul>
                         {MaritalStatusList.map((val, idd) => {
@@ -474,6 +482,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "country" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("country")}
                     >
                       <ul>
                         {searchedCountry.map((val, idd) => {
@@ -538,6 +547,7 @@ const DesiredProfilePage: React.FC = () => {
                           ? classes.active
                           : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("ResidentialStatus")}
                     >
                       <ul>
                         {ResidentialList.map((val, idd) => {
@@ -552,7 +562,7 @@ const DesiredProfilePage: React.FC = () => {
                                 })
                               }
                               className={
-                                mycountryArray.includes(val)
+                                ResidentialArray.includes(val)
                                   ? classes.tabActive
                                   : ""
                               }
@@ -577,7 +587,10 @@ const DesiredProfilePage: React.FC = () => {
                 <FaEdit /> Edit
               </span>
             </div>
-            <Col sm={12} className="d-flex justify-content-center">
+            <Col
+              sm={12}
+              className={`${classes.form_wrapper} d-flex justify-content-center`}
+            >
               <form className={classes.formEdit}>
                 <div className={classes.singleBox}>
                   <label>Religion</label>
@@ -614,6 +627,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Religion" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Religion")}
                     >
                       <ul>
                         {ReligionList.map((val, idd) => {
@@ -679,9 +693,10 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "MotherTongue" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("MotherTongue")}
                     >
                       <ul>
-                        {searchedMotherTongue.map((val, idd) => {
+                        {MotherTongueArr.map((val, idd) => {
                           return (
                             <li
                               key={idd}
@@ -739,6 +754,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Manglik" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Manglik")}
                     >
                       <ul>
                         {ManglikList.map((val, idd) => {
@@ -779,10 +795,13 @@ const DesiredProfilePage: React.FC = () => {
                 <FaEdit /> Edit
               </span>
             </div>
-            <Col sm={12} className="d-flex justify-content-center">
+            <Col
+              sm={12}
+              className={`${classes.form_wrapper} d-flex justify-content-center`}
+            >
               <form className={classes.formEdit}>
                 <div className={classes.singleBox}>
-                  <label>Highest Education </label>
+                  <label>Education </label>
                   <div className={classes.inputBox}>
                     <ul onClick={() => openList("HighestEdu")}>
                       {HighestEduArray.map((val: string, idd: number) => {
@@ -816,6 +835,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "HighestEdu" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("HighestEdu")}
                     >
                       <ul>
                         {HighestEducationList.map((val, idd) => {
@@ -846,8 +866,8 @@ const DesiredProfilePage: React.FC = () => {
                 <div className={classes.singleBox}>
                   <label>Occupation</label>
                   <div className={classes.inputBox}>
-                    <ul onClick={() => openList("country")}>
-                      {mycountryArray.map((val: string, idd: number) => {
+                    <ul onClick={() => openList("Occupations")}>
+                      {OccupationArray.map((val: string, idd: number) => {
                         return (
                           <li key={val}>
                             <span>{val}</span>
@@ -856,7 +876,7 @@ const DesiredProfilePage: React.FC = () => {
                                 getClickedDeleteData({
                                   val: val,
                                   idd: idd,
-                                  selectedInputQuery: "country",
+                                  selectedInputQuery: "Occupations",
                                 })
                               }
                             />
@@ -867,23 +887,24 @@ const DesiredProfilePage: React.FC = () => {
                         <input
                           type="text"
                           placeholder={
-                            mycountryArray.length < 1
+                            OccupationArray.length < 1
                               ? "Select Some Options"
                               : ""
                           }
                           onChange={(e) =>
-                            searchDataFunc(e.target.value, "country")
+                            searchDataFunc(e.target.value, "Occupations")
                           }
                         />
                       </li>
                     </ul>
                     <div
                       className={`${
-                        activeList.type === "country" ? classes.active : ""
+                        activeList.type === "Occupations" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Occupations")}
                     >
                       <ul>
-                        {searchedCountry.map((val, idd) => {
+                        {OccupationData.map((val, idd) => {
                           return (
                             <li
                               key={idd}
@@ -891,75 +912,11 @@ const DesiredProfilePage: React.FC = () => {
                                 getClickedData({
                                   val: val,
                                   idd: idd,
-                                  selectedInputQuery: "country",
+                                  selectedInputQuery: "Occupations",
                                 })
                               }
                               className={
-                                mycountryArray.includes(val)
-                                  ? classes.tabActive
-                                  : ""
-                              }
-                            >
-                              <span>{val}</span>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className={classes.singleBox}>
-                  <label>Residential Status</label>
-                  <div className={classes.inputBox}>
-                    <ul onClick={() => openList("ResidentialStatus")}>
-                      {ResidentialArray.map((val: string, idd: number) => {
-                        return (
-                          <li key={val}>
-                            <span>{val}</span>
-                            <IoClose
-                              onClick={() =>
-                                getClickedDeleteData({
-                                  val: val,
-                                  idd: idd,
-                                  selectedInputQuery: "ResidentialStatus",
-                                })
-                              }
-                            />
-                          </li>
-                        );
-                      })}
-                      <li className={classes.blankInput}>
-                        <input
-                          type="text"
-                          placeholder={
-                            ResidentialArray.length < 1
-                              ? "Select Some Options"
-                              : ""
-                          }
-                        />
-                      </li>
-                    </ul>
-                    <div
-                      className={`${
-                        activeList.type === "ResidentialStatus"
-                          ? classes.active
-                          : ""
-                      } ${classes.inputBoxVal}`}
-                    >
-                      <ul>
-                        {ResidentialList.map((val, idd) => {
-                          return (
-                            <li
-                              key={idd}
-                              onClick={() =>
-                                getClickedData({
-                                  val: val,
-                                  idd: idd,
-                                  selectedInputQuery: "ResidentialStatus",
-                                })
-                              }
-                              className={
-                                mycountryArray.includes(val)
+                                OccupationArray.includes(val)
                                   ? classes.tabActive
                                   : ""
                               }
@@ -984,6 +941,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Fromyear" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Fromyear")}
                     >
                       <ul>
                         {AgeFromYearList.map((val, idd) => {
@@ -1018,6 +976,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Toyear" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Toyear")}
                     >
                       <ul>
                         {AgeToYearList.map((val, idd) => {
@@ -1055,7 +1014,10 @@ const DesiredProfilePage: React.FC = () => {
                 <FaEdit /> Edit
               </span>
             </div>
-            <Col sm={12} className="d-flex justify-content-center">
+            <Col
+              sm={12}
+              className={`${classes.form_wrapper} d-flex justify-content-center`}
+            >
               <form className={classes.formEdit}>
                 <div className={classes.singleBox}>
                   <label>Dietary habits</label>
@@ -1092,6 +1054,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Religion" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Religion")}
                     >
                       <ul>
                         {ReligionList.map((val, idd) => {
@@ -1157,6 +1120,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "MotherTongue" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("MotherTongue")}
                     >
                       <ul>
                         {searchedMotherTongue.map((val, idd) => {
@@ -1217,6 +1181,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Manglik" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Manglik")}
                     >
                       <ul>
                         {ManglikList.map((val, idd) => {
@@ -1277,6 +1242,7 @@ const DesiredProfilePage: React.FC = () => {
                       className={`${
                         activeList.type === "Manglik" ? classes.active : ""
                       } ${classes.inputBoxVal}`}
+                      onClick={() => openList("Manglik")}
                     >
                       <ul>
                         {ManglikList.map((val, idd) => {

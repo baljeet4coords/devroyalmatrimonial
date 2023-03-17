@@ -9,7 +9,7 @@ import {
   Employed_In,
   HighestEducationList,
 } from "../../../constants/DesiredData";
-import { ReadyToSettleAbroad, ResidentialStatus } from "../../../types/enums";
+import { EducationTypeAndVal, ReadyToSettleAbroad, ResidentialStatus } from "../../../types/enums";
 import { useFormik } from "formik";
 
 interface ProfileDetailsProps {
@@ -105,7 +105,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                   <DropdownGridSingleSelect
                     selectedDataFn={() => {}}
                     title="Highest Degree"
-                    data={HighestEducationList}
+                    data={EducationTypeAndVal}
                     nameid="higest_degree"
                   />
                 </div>

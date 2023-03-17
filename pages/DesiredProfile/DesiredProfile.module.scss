@@ -67,106 +67,112 @@
         }
     }
 
-    .formEdit {
-        .twoBox {
-            display: flex;
 
-            div {
-                width: 100%;
+    .form_wrapper {
+        width: 50%;
+        margin: auto;
 
-                svg {
-                    position: absolute;
-                    right: 15px;
-                    top: 40%;
+        .formEdit {
+            .twoBox {
+                display: flex;
+
+                div {
+                    width: 100%;
+
+                    svg {
+                        position: absolute;
+                        right: 15px;
+                        top: 40%;
+                    }
                 }
-            }
 
-            .inputBox {
-                border: 1px solid #d9d9d9;
-                border-radius: 2px;
-                padding: 0.875rem 5.5rem;
-                text-align: center;
-                margin: 0.6em;
-                color: $browser_text;
-                cursor: pointer;
-                position: relative;
-                min-width: 275px;
-
-                .inputBoxVal {
-                    visibility: hidden;
+                .inputBox {
                     border: 1px solid #d9d9d9;
                     border-radius: 2px;
-                    padding: 0.875rem 1rem;
+                    padding: 0.875rem 5.5rem;
                     text-align: center;
                     margin: 0.6em;
                     color: $browser_text;
                     cursor: pointer;
-                    width: 100%;
-                    position: absolute;
-                    left: -9px;
-                    border: 1px solid $red_bg;
-                    background: $milkWhite_bg;
-                    box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-                    z-index: 9;
+                    position: relative;
+                    min-width: 275px;
 
-                    ul {
-                        list-style: none;
-                        margin: 0;
-                        padding: 0 5px;
+                    .inputBoxVal {
+                        visibility: hidden;
+                        border: 1px solid #d9d9d9;
+                        border-radius: 2px;
+                        padding: 0.875rem 1rem;
+                        text-align: center;
+                        margin: 0.6em;
+                        color: $browser_text;
+                        cursor: pointer;
                         width: 100%;
-                        max-height: 300px;
-                        overflow-x: hidden;
-                        overflow-y: scroll;
-                        cursor: text;
-                        display: grid;
-                        grid-template-columns: auto auto auto;
+                        position: absolute;
+                        left: -9px;
+                        border: 1px solid $red_bg;
+                        background: $milkWhite_bg;
+                        box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+                        z-index: 9;
 
-                        li {
-                            position: relative;
-                            margin: 3px 5px 3px 0;
-                            padding: 10px 20px 10px 5px;
-                            border: 1px solid #d9d9d9;
-                            max-width: 100%;
-                            border-radius: 3px;
-                            background-color: #f5f5f5;
-                            line-height: 13px;
-                            cursor: default;
+                        ul {
+                            list-style: none;
+                            margin: 0;
+                            padding: 0 5px;
+                            width: 100%;
+                            max-height: 300px;
+                            overflow-x: hidden;
+                            overflow-y: scroll;
+                            cursor: text;
+                            display: grid;
+                            grid-template-columns: auto auto auto;
 
-                            &:hover {
+                            li {
+                                position: relative;
+                                margin: 3px 5px 3px 0;
+                                padding: 10px 20px 10px 5px;
+                                border: 1px solid #d9d9d9;
+                                max-width: 100%;
+                                border-radius: 3px;
+                                background-color: #f5f5f5;
+                                line-height: 13px;
+                                cursor: default;
+
+                                &:hover {
+                                    background-color: #d9475c;
+                                    color: #fff
+                                }
+                            }
+
+                            .tabActive {
                                 background-color: #d9475c;
                                 color: #fff
                             }
                         }
-
-                        .tabActive {
-                            background-color: #d9475c;
-                            color: #fff
-                        }
                     }
                 }
             }
-        }
 
-        .input_max {
-            width: -webkit-fill-available;
-        }
+            .input_max {
+                width: -webkit-fill-available;
+            }
 
-        label {
-            position: absolute;
-            margin: 1rem 0 0 -9rem;
-            width: 130px;
-            text-align: end;
-        }
+            label {
+                position: absolute;
+                margin: 1rem 0 0 -9rem;
+                width: 130px;
+                text-align: end;
+            }
 
-        input {
-            border: 1px solid #d9d9d9;
-            border-radius: 2px;
-            padding: 0.875rem 2.5rem;
-            text-align: center;
-            margin: 0.6em;
+            input {
+                border: 1px solid #d9d9d9;
+                border-radius: 2px;
+                padding: 0.875rem 2.5rem;
+                text-align: center;
+                margin: 0.6em;
 
-            &:focus {
-                outline: none;
+                &:focus {
+                    outline: none;
+                }
             }
         }
     }
@@ -208,9 +214,9 @@
             overflow-x: hidden;
             // overflow-y: scroll;   
             cursor: text;
-            display: grid;
-            grid-template-columns: auto auto auto;
-            align-items: baseline;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
 
             li {
                 position: relative;
@@ -270,11 +276,10 @@
             padding: 0 5px;
             width: 100%;
             max-height: 300px;
-            overflow-x: hidden;
-            overflow-y: scroll;
-            cursor: text;
-            display: grid;
-            grid-template-columns: auto auto auto;
+            cursor: default;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
 
             li {
                 position: relative;
@@ -285,7 +290,7 @@
                 border-radius: 3px;
                 background-color: #f5f5f5;
                 line-height: 13px;
-                cursor: default;
+                cursor: pointer;
 
                 &:hover {
                     background-color: #d9475c;
@@ -548,12 +553,14 @@
                         display: flex;
                         flex-wrap: wrap;
                         padding: 0%;
+
                         li {
                             padding: 0.5rem 1rem;
+
                             input {
                                 text-align: start;
                                 font-size: 0.8rem;
-                                
+
                             }
                         }
                     }
