@@ -80,7 +80,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: string;
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
-
+  console.log(selectedNativeState);
+  
   const formik = useFormik({
     initialValues: {
       userId: userId,

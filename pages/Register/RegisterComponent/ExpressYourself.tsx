@@ -4,12 +4,11 @@ import classes from "./Component.module.scss";
 import { useFormik } from "formik";
 import RightSection from "./RightSection/RightSection";
 import { useDispatch, useSelector } from "react-redux";
-import { STEP_5 } from "../../../ducks/regiserUser/step5/constants";
 import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
-import { getUserId, selectAuthSuccess } from "../../../ducks/auth/selectors";
+import { getUserId } from "../../../ducks/auth/selectors";
 import axios from "axios";
-import { IRegisterStep5 } from "../../../types/register/userRegister";
 import router from "next/router";
+import { step5 } from "../../../ducks/regiserUser/step5/actions";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,10 +18,7 @@ const ExpressYourself: React.FC = () => {
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
   useEffect(() => {
-    dispatch({
-      type: STEP_5,
-      payload: { actionType: "v", userId: userId },
-    });
+    dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
   const formik = useFormik({

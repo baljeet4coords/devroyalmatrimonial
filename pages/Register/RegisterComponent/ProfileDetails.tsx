@@ -127,7 +127,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm));
+    setCm(String(jsonData?.height_cm) || "0");
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
