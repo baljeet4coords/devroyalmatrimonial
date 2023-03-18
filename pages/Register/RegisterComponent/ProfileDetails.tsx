@@ -127,7 +127,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm || 100) );
+    setCm(String(jsonData?.height_cm || 100));
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -206,10 +206,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     </div>
                   </div>
                 )}
-                <GenderRadioButtons
-                  selectedGender={gender}
-                  onChangeGender={onChangeGender}
-                />
+                {(selectedProfileFor?.id == "1" ||
+                  selectedProfileFor?.id == "6" ||
+                  selectedProfileFor?.id == "7") && (
+                  <GenderRadioButtons
+                    selectedGender={gender}
+                    onChangeGender={onChangeGender}
+                  />
+                )}
                 <div className={classes.singleBox}>
                   <Form.Label>Date of Birth</Form.Label>
                   <Form.Control
@@ -231,7 +235,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="fullname"
                         type="text"
-                        placeholder="Select Some Options"
+                        placeholder="Select Option"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         defaultValue={jsonData?.fullname}
@@ -265,7 +269,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder={`${cm} cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
-                        defaultValue={jsonData?.height_cm}
                       />
                       <Form.Control
                         name="height"

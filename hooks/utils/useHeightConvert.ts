@@ -16,12 +16,14 @@ export const useHeightConverter = () => {
 
   const feetToCm = (feet: string) => {
     const cm = +feet * 30.48;
-    return cm.toFixed(2);
+    const cm_fix = cm.toFixed(2) + "cms";
+    return cm_fix;
   };
 
   const cmToFeet = (cm: string) => {
     const feet = +cm / 30.48;
-    return feet.toFixed(2);
+    const ft_fix = feet.toFixed(2) + "cms";
+    return ft_fix;
   };
 
   return { feet, cm, setCm, handleFeetChange, handleCmChange };

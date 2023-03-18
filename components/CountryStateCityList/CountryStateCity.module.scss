@@ -16,6 +16,13 @@
         margin: auto;
         margin-right: 0;
         display: block;
+        text-align: center;
+        outline: none;
+
+        option {
+            width: 50%;
+            text-align: center;
+        }
     }
 }
 

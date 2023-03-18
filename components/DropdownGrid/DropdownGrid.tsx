@@ -45,10 +45,21 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     setSearchedData(searched);
   };
 
+  const InputTypeDataFun = (val: string) => {
+    if (val.length > 1) {
+      getClickedData({
+        val: val,
+        id: val,
+      });
+      setActiveList(false);
+    }
+  };
+
   const getClickedData = (data: Data) => {
     setSelectedData(data);
     selectedDataFn(data);
     ref.current.value = "";
+    console.log(selectedData);
   };
 
   return (
@@ -65,9 +76,11 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             placeholder={
               selectedData.val.split("-")[0] ||
               (defaultValue && findKeyByValue(data, defaultValue)) ||
-              "Select Some Options"
+              "Select Option"
             }
+            defaultValue={selectedData.val}
             ref={ref}
+            onBlur={(e) => InputTypeDataFun(e.target.value)}
             onChange={(e) => searchDataFunc(e.target.value)}
           />
         </li>
