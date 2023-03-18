@@ -20,7 +20,7 @@ interface Step1SuccessAction {
 
 interface Step1FailureAction {
   type: typeof STEP_1_FAILURE;
-  error: string;
+  error: string | any;
 }
 
 export const step1 = (payload: Step1Action["payload"]): Step1Action => ({

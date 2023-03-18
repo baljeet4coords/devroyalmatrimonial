@@ -24,5 +24,5 @@ export const useHeightConverter = () => {
     return feet.toFixed(2);
   };
 
-  return { feet, cm, handleFeetChange, handleCmChange };
+  return { feet, cm, setCm, handleFeetChange, handleCmChange };
 };

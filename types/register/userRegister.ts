@@ -1,5 +1,5 @@
 export interface IRegisterStep1 {
-  actionType: "V" | "C" | "U";
+  actionType: "v" | "c" | "u";
   userId?: number;
   profilefor?: string;
   profileHandlerName?: string;
@@ -35,9 +35,89 @@ export interface IRegisterStep1Response {
   profile_handlername: string;
   religion: number;
 }
+export interface IRegisterStep2 {
+  actionType: "v" | "c" | "u";
+  userId?: number;
+  country?: number;
+  state?: number;
+  city?: number;
+  education?: number;
+  occupation?: number;
+  annualIncome?: number;
+  residentialStatus?: number;
+  readyToSettleAbroad?: number;
+  college?: number;
+}
+
+export interface IRegisterStep2Response {
+  city: number;
+  state: number;
+  College: string;
+  country: number;
+  education: number;
+  occupation: number;
+  annual_income: number;
+  residentialstatus: number;
+  readytosettleabroad: number;
+}
+
+export interface IRegisterStep3 {
+  actionType: "v" | "c" | "u";
+  userId?: number;
+  diet?: number;
+  smoking?: number;
+  drinking?: number;
+  love_pets?: number;
+  Owns_house?: number;
+  Owns_car?: number;
+  blood_group?: number;
+  Thalassemia?: number;
+  religious_belief?: number;
+}
+export interface IRegisterStep3Response {
+  diet: number;
+  smoking: number;
+  drinking: number;
+  love_pets: number;
+  Owns_house: number;
+  Owns_car: number;
+  blood_group: number;
+  Thalassemia: number;
+  religious_belief: number;
+}
+export interface IRegisterStep4 {
+  actionType?: "v" | "c" | "u";
+  userId?: number;
+  fathersProfession?: string;
+  mothersProfession?: string;
+  sister?: string;
+  brother?: string;
+  gothra?: string;
+  familyStatus?: string;
+  familyIncome?: string;
+  familyType?: string;
+  familyNativeCountry?: string;
+  familyNativeState?: string;
+  familyNativeCity?: string;
+  livingWithParents?: string;
+}
+export interface IRegisterStep4Response {
+  Father: number;
+  Gothra: string;
+  Mother: number;
+  Sister: number;
+  Brother: number;
+  Family_Type: number;
+  Family_Income: number;
+  Family_Status: number;
+  family_native_country: number,
+  family_native_state: number,
+  family_native_city: number,
+  living_with_parents: number;
+}
 
 export interface IRegisterStep5 {
-  actionType: string;
+  actionType: "v" | "c" | "u";
   userId?: number;
   aboutCareer?: string | null;
   aboutFamily?: string | null;
@@ -50,35 +130,4 @@ export interface IRegisterStep5Response {
   about_career: string | null;
   about_family: string | null;
   about_education: string | null;
-}
-
-export interface IRegisterStep4 {
-  actionType: string;
-  userId?: number;
-  fathersProfession?: number;
-  mothersProfession?: number;
-  sister?: number;
-  brother?: number;
-  gothra?: string;
-  familyStatus?: number;
-  familyIncome?: number;
-  familyType?: number;
-  familyNativeCountry?: number;
-  familyNativeState?: number;
-  familyNativeCity?: number;
-  livingWithParents?: number;
-}
-export interface IRegisterStep4Response {
-  Father: number;
-  Gothra: string;
-  Mother: number;
-  Sister: number;
-  Brother: number;
-  Family_Type: number;
-  Family_Income: number;
-  Family_Status: number;
-  family_native_country: number | (() => number);
-  family_native_state?: number | (() => number);
-  family_native_city: number | (() => number);
-  living_with_parents: number ;
 }

@@ -18,30 +18,27 @@ import {
 } from "../../../types/enums";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { STEP_4 } from "../../../ducks/regiserUser/step4/constants";
 import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
 import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
-import { selectAuthSuccess } from "../../../ducks/auth/selectors";
+import { getUserId } from "../../../ducks/auth/selectors";
+import { step4 } from "../../../ducks/regiserUser/step4/actions";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
-  const stepOneDefaultValues = useSelector(selectStep4Success);
-  const userIdSignUp = useSelector(selectAuthSuccess)?.output;
-  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
-  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const stepFourDefaultValues = useSelector(selectStep4Success);
+  const jsonData = stepFourDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
-  useEffect(() => {
-    dispatch({
-      type: STEP_4,
-      payload: { actionType: "V", userId: userIdSignUp || userIdSignIn },
-    });
-  }, [dispatch, userIdSignIn, userIdSignUp]);
+  const userId = useSelector(getUserId);
 
+  useEffect(() => {
+    dispatch(step4({ actionType: "v", userId: userId }));
+  }, [dispatch, isReduxEmpty, userId]);
+  
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
@@ -71,42 +68,35 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: string;
   }>({ id: String(jsonData?.Family_Type), val: "" });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
-    jsonData?.family_native_country
+    jsonData?.family_native_country || 0
   );
   const [selectedNativeState, setSelectedNativeState] = useState<number>(
-    jsonData?.family_native_state
+    jsonData?.family_native_state || 0
   );
   const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
-    jsonData?.family_native_city
+    jsonData?.family_native_city || 0
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
     id: string;
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }, []);
-  console.log(jsonData);
+  console.log(selectedNativeState);
+  
   const formik = useFormik({
     initialValues: {
-      actionType: "",
-      userId: userIdSignUp || userIdSignIn,
-      fathersProfession: jsonData?.Father,
-      mothersProfession: jsonData?.Mother,
-      sister: jsonData?.Sister,
-      brother: jsonData?.Brother,
+      userId: userId,
+      mothersProfession: String(jsonData?.Mother),
+      fathersProfession: String(jsonData?.Father),
+      sister: String(jsonData?.Sister),
+      brother: String(jsonData?.Brother),
       gothra: jsonData?.Gothra,
-      familyStatus: jsonData?.Family_Status,
-      familyIncome: jsonData?.Family_Income,
-      familyType: jsonData?.Family_Type,
-      familyNativeCountry: jsonData?.family_native_country,
-      familyNativeState: jsonData?.family_native_state,
-      familyNativeCity: jsonData?.family_native_city,
-      livingWithParents: jsonData?.living_with_parents,
+      familyStatus: String(jsonData?.Family_Status),
+      familyIncome: String(jsonData?.Family_Income),
+      familyType: String(jsonData?.Family_Type),
+      familyNativeCountry: String(jsonData?.family_native_country),
+      familyNativeState: String(jsonData?.family_native_state),
+      familyNativeCity: String(jsonData?.family_native_city),
+      livingWithParents: String(jsonData?.living_with_parents),
     },
     onSubmit: async (values: IRegisterStep4) => {
       let response;
@@ -114,16 +104,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
+            actionType: "c",
             ...values,
-            actionType: "C",
           }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
+            actionType: "u",
             ...values,
-            actionType: "U",
           }
         );
       }
@@ -140,19 +130,19 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const getSelectedState = (id: number) => {
     setSelectedNativeCity(id);
   };
-
+  
   useEffect(() => {
-    formik.values.fathersProfession = +selectedFathersOccupation.id;
-    formik.values.mothersProfession = +selectedMothersOccupation.id;
-    formik.values.sister = +selectedSister.id;
-    formik.values.brother = +selectedBrother.id;
-    formik.values.familyStatus = +selectedFamilyStatus.id;
-    formik.values.familyIncome = +selectedFamilyIncome.id;
-    formik.values.familyType = +selectedFamilyType.id;
-    formik.values.familyNativeCountry = selectedNativeCountry;
-    formik.values.familyNativeState = selectedNativeState;
-    formik.values.familyNativeCity = selectedNativeCity;
-    formik.values.livingWithParents = +selectedLivingWithParents.id;
+    formik.values.mothersProfession = selectedMothersOccupation.id;
+    formik.values.fathersProfession = selectedFathersOccupation.id;
+    formik.values.sister = selectedSister.id;
+    formik.values.brother = selectedBrother.id;
+    formik.values.familyStatus = selectedFamilyStatus.id;
+    formik.values.familyIncome = selectedFamilyIncome.id;
+    formik.values.familyType = selectedFamilyType.id;
+    formik.values.familyNativeCountry = String(selectedNativeCountry);
+    formik.values.familyNativeState = String(selectedNativeState);
+    formik.values.familyNativeCity = String(selectedNativeCity);
+    formik.values.livingWithParents = String(selectedLivingWithParents.id);
   }, [
     formik.values,
     selectedBrother.id,
@@ -166,6 +156,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
+    jsonData,
   ]);
 
   return (
@@ -214,6 +205,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Gothra"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
+                    defaultValue={jsonData?.Gothra}
                   />
                 </div>
                 <DropdownGridSingleSelect
@@ -242,9 +234,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   setSelectedCountry={getSelectedCountry}
                   setSelectedState={getSelectedState}
                   setSelectedCity={getSelectedCity}
-                  defaultValueCountry={0}
-                  defaultValueState={0}
-                  defaultValueCity={0}
+                  defaultValueCountry={jsonData?.family_native_city}
+                  defaultValueState={jsonData?.family_native_state}
+                  defaultValueCity={jsonData?.family_native_city}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedLivingWithParents}
@@ -259,7 +251,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 type="submit"
                 className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
               >
-                Add to my profile
+                Next
               </Button>
             </Form>
           </Col>

@@ -13,7 +13,7 @@ interface DropdownGridProps {
   selectedDataFn: (val: Data) => void;
   defaultValue?: number;
 }
-const   DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
+const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
   data,
   nameid,
@@ -64,7 +64,7 @@ const   DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             name={nameid}
             placeholder={
               selectedData.val.split("-")[0] ||
-              findKeyByValue(data, defaultValue) ||
+              (defaultValue && findKeyByValue(data, defaultValue)) ||
               "Select Some Options"
             }
             ref={ref}
@@ -81,7 +81,7 @@ const   DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
               const [name, id] = item.split("-");
               return (
                 <li
-                  key={id}
+                  key={id + name}
                   onClick={() =>
                     getClickedData({
                       val: item,

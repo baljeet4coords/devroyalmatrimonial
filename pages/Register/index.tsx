@@ -6,7 +6,7 @@ import classes from "./RegisterDetails.module.scss";
 import CareerDetails from "./RegisterComponent/CareerDetails";
 import ExpressYourself from "./RegisterComponent/ExpressYourself";
 import FamilyDetails from "./RegisterComponent/FamilyDetails";
-import LifeStyle from "./RegisterComponent/LfieStyle";
+import LifeStyle from "./RegisterComponent/LifeStyle";
 import ProfileDetails from "./RegisterComponent/ProfileDetails";
 import { useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
