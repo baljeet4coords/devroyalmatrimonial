@@ -234,9 +234,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   setSelectedCountry={getSelectedCountry}
                   setSelectedState={getSelectedState}
                   setSelectedCity={getSelectedCity}
-                  defaultValueCountry={0}
-                  defaultValueState={0}
-                  defaultValueCity={0}
+                  defaultValueCountry={jsonData?.family_native_city}
+                  defaultValueState={jsonData?.family_native_state}
+                  defaultValueCity={jsonData?.family_native_city}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedLivingWithParents}

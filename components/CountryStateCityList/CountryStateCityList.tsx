@@ -64,9 +64,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
       <div className={classes.CSC_wrapper}>
         <label>{`${title} Country`}</label>
         <select onChange={(e) => countryFn(e)}>
-          <option value={`${defaultValueCountry}-${defaultCountry?.isoCode}`}>
-            {defaultCountry?.name}
-          </option>
+          <option value={""}>Select Country</option>
           {countries.map((country, index) => {
             return (
               <option key={index} value={`${index}-${country.isoCode}`}>
