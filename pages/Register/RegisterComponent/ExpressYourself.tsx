@@ -20,7 +20,8 @@ const ExpressYourself: React.FC = () => {
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-
+  console.log(isReduxEmpty);
+  
   const formik = useFormik({
     initialValues: {
       userId: userId,

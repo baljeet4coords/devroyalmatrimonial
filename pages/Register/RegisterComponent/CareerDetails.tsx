@@ -96,7 +96,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     formik.values.residentialStatus = residentialStatus.id;
     formik.values.readyToSettleAbroad = settleAboard.id;
     formik.values.education = education.id;
-    formik.values.college = jsonData?.College;
+    // formik.values.college = jsonData?.College;
     formik.values.occupation = occupation.id;
     formik.values.annualIncome = annualIncome.id;
   }, [
