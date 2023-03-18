@@ -1,8 +1,8 @@
 import { takeEvery, call, put } from "redux-saga/effects";
-import { STEP_1, STEP_1_SUCCESS, STEP_1_FAILURE } from "./constants";
+import { STEP_1 } from "./constants";
 import axios from "axios";
 
-import { Step1Actions } from "./actions";
+import { Step1Actions, step1Failure, step1Success } from "./actions";
 
 function* step1Saga(action: Step1Actions): any {
   try {
@@ -13,10 +13,10 @@ function* step1Saga(action: Step1Actions): any {
         action.payload
       );
       const responseData = response.data;
-      yield put({ type: STEP_1_SUCCESS, response: responseData });
+      yield put(step1Success(responseData));
     }
   } catch (error) {
-    yield put({ type: STEP_1_FAILURE, error });
+    yield put(step1Failure(error));
   }
 }
 

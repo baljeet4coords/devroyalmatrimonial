@@ -41,13 +41,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    if (isReduxEmpty === undefined) {
-      dispatch(step1({ actionType: "V", userId: userId }));
-    }
+    dispatch(step1({ actionType: "v", userId: userId }));
     setGender(jsonData?.gender === "M" ? "1" : "2");
-  }, [dispatch, isReduxEmpty, jsonData?.gender, userId]);
+  }, [dispatch, jsonData?.gender, userId]);
 
-  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
+  const { feet, cm, setCm, handleFeetChange, handleCmChange } =
+    useHeightConverter();
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
     id: string;
     val: string;
@@ -80,7 +79,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: string;
     val: string;
   }>({ id: String(jsonData?.children_status), val: "" });
+
   const [gender, setGender] = useState<string>("");
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -105,12 +106,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "C" }
+          { ...values, actionType: "c" }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "U" }
+          { ...values, actionType: "u" }
         );
       }
       response.data.output === 1 && nextPage(1);
@@ -126,6 +127,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
+    setCm(String(jsonData?.height_cm) || "0");
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -145,6 +147,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedChildrenStatus.id,
     formik.values,
     cm,
+    setCm,
+    jsonData?.height_cm,
   ]);
 
   useEffect(() => {
@@ -255,7 +259,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <div className={classes.inputBox}>
                     <li className={`${classes.blankInput} d-flex`}>
                       <Form.Control
-                        name="height"
+                        name="heightincms"
                         type="text"
                         placeholder={`${cm} in cms`}
                         onBlur={formik.handleBlur}

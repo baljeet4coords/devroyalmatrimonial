@@ -26,22 +26,25 @@ const LandingPage: React.FC = () => {
   const isAuthenticated = useSelector(getToken);
   const authSuccess = useSelector(selectAuthSuccess);
 
-  if (isAuthenticated) {
-    router.push("/Register");
-  }
-  if (authSuccess && authSuccess?.output === 1) {
-    if (
-      authSuccess?.jsonResponse?.user_status === "1" ||
-      authSuccess?.jsonResponse?.user_status === "R"
-    ) {
-      router.push("/Register/");
-    } else {
-      router.push("/");
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/Register");
     }
-  }
-  if (authSuccess && authSuccess?.output === 0) {
-    alert("Wrong Password");
-  }
+    if (authSuccess && authSuccess?.output === 1) {
+      if (
+        authSuccess?.jsonResponse?.user_status === "1" ||
+        authSuccess?.jsonResponse?.user_status === "R"
+      ) {
+        router.push("/Register/");
+      } else {
+        router.push("/");
+      }
+    }
+    if (authSuccess && authSuccess?.output === 0) {
+      alert("Wrong Password");
+    }
+  }, [authSuccess, isAuthenticated]);
+
   const [activeId, setActiveId] = useState<string>();
 
   const refineScroll = (scrollVal: any) => {
