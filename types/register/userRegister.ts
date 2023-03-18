@@ -86,20 +86,20 @@ export interface IRegisterStep3Response {
   religious_belief: number;
 }
 export interface IRegisterStep4 {
-  actionType?: "V" | "C" | "U";
+  actionType?: "v" | "c" | "u";
   userId?: number;
-  fathersProfession?: number;
-  mothersProfession?: number;
-  sister?: number;
-  brother?: number;
+  fathersProfession?: string;
+  mothersProfession?: string;
+  sister?: string;
+  brother?: string;
   gothra?: string;
-  familyStatus?: number;
-  familyIncome?: number;
-  familyType?: number;
-  familyNativeCountry?: number;
-  familyNativeState?: number;
-  familyNativeCity?: number;
-  livingWithParents?: number;
+  familyStatus?: string;
+  familyIncome?: string;
+  familyType?: string;
+  familyNativeCountry?: string;
+  familyNativeState?: string;
+  familyNativeCity?: string;
+  livingWithParents?: string;
 }
 export interface IRegisterStep4Response {
   Father: number;

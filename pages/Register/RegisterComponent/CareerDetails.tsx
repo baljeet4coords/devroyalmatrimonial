@@ -62,15 +62,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const formik = useFormik({
     initialValues: {
       userId: userId,
-      country: selectedCountry,
-      state: selectedState,
-      city: selectedCity,
-      residentialStatus: residentialStatus.id,
-      readyToSettleAbroad: settleAboard.id,
-      education: education.id,
-      college: jsonData?.College || "",
-      occupation: occupation.id,
-      annualIncome: annualIncome.id,
+      country: jsonData?.country,
+      state: jsonData?.state,
+      city: jsonData?.city,
+      residentialStatus: String(jsonData?.residentialstatus),
+      readyToSettleAbroad: String(jsonData?.readytosettleabroad),
+      education: String(jsonData?.education),
+      college: jsonData?.College,
+      occupation: String(jsonData?.occupation),
+      annualIncome: String(jsonData?.annual_income),
     },
     onSubmit: async (values) => {
       let response;
@@ -90,15 +90,26 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   });
 
   useEffect(() => {
-    setSelectedCountry(jsonData?.country || 0);
-    setSelectedState(jsonData?.state || 0);
-    setSelectedCity(jsonData?.city || 0);
-    setResidentialStatus({ id: String(jsonData?.residentialstatus), val: "" });
-    setEducation({ id: String(jsonData?.education), val: "" });
-    setOccupation({ id: String(jsonData?.occupation), val: "" });
-    setSettleAbroad({ id: String(jsonData?.readytosettleabroad), val: "" });
-    setannualIncome({ id: String(jsonData?.annual_income), val: "" });
-  }, [jsonData]);
+    formik.values.country = selectedCountry;
+    formik.values.state = selectedState;
+    formik.values.city = selectedCity;
+    formik.values.residentialStatus = residentialStatus.id;
+    formik.values.readyToSettleAbroad = settleAboard.id;
+    formik.values.education = education.id;
+    // formik.values.college = jsonData?.College;
+    formik.values.occupation = occupation.id;
+    formik.values.annualIncome = annualIncome.id;
+  }, [
+    annualIncome.id,
+    education.id,
+    formik.values,
+    occupation.id,
+    residentialStatus.id,
+    selectedCity,
+    selectedCountry,
+    selectedState,
+    settleAboard.id,
+  ]);
 
   const getSelectedCountry = (id: number) => {
     setSelectedCountry(id);

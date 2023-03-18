@@ -6,54 +6,53 @@ import RightSection from "./RightSection/RightSection";
 import { useDispatch, useSelector } from "react-redux";
 import { STEP_5 } from "../../../ducks/regiserUser/step5/constants";
 import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
-import { selectAuthSuccess } from "../../../ducks/auth/selectors";
+import { getUserId, selectAuthSuccess } from "../../../ducks/auth/selectors";
 import axios from "axios";
 import { IRegisterStep5 } from "../../../types/register/userRegister";
+import router from "next/router";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
-  const stepOneDefaultValues = useSelector(selectStep5Success);
-  const userIdauth = useSelector(selectAuthSuccess)?.output;
-  const userIdSignIn = useSelector(selectAuthSuccess)?.jsonResponse?.userid;
-  const jsonData = stepOneDefaultValues?.jsonResponse;
+  const stepFiveDefaultValues = useSelector(selectStep5Success);
+  const jsonData = stepFiveDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
+  const userId = useSelector(getUserId);
   useEffect(() => {
     dispatch({
       type: STEP_5,
-      payload: { actionType: "V", userId: userIdauth || userIdSignIn},
+      payload: { actionType: "v", userId: userId },
     });
-  }, [dispatch, userIdSignIn, userIdauth]);
+  }, [dispatch, userId]);
 
   const formik = useFormik({
     initialValues: {
-      actionType: "",
-      userId: userIdauth || userIdSignIn,
+      userId: userId,
       aboutCareer: jsonData?.about_career,
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,
       basicIntro: jsonData?.basic_intro,
     },
-    onSubmit: async (values: IRegisterStep5) => {
+    onSubmit: async (values) => {
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
           {
+            actionType: "c",
             ...values,
-            actionType: "C",
           }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
           {
+            actionType: "u",
             ...values,
-            actionType: "U",
           }
         );
       }
-      response.data.output === 1 && console.log("route to next page");
+      response.data.output === 1 && router.push("/DesiredProfile");
     },
   });
 
@@ -120,7 +119,7 @@ const ExpressYourself: React.FC = () => {
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                   // onClick={() => nextPage(1)}
                 >
-                  Upadate
+                  Submit your profile
                 </Button>
               </Form>
             </Col>

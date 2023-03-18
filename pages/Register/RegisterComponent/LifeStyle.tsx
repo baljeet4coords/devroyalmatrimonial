@@ -35,69 +35,69 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }, [dispatch, isReduxEmpty, userId]);
 
   const [diet, setDiet] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.diet), val: "" });
 
   const [smoking, setSmoking] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.smoking), val: "" });
 
   const [drinking, setDrinking] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.drinking), val: "" });
 
   const [lovePets, setLovePets] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.love_pets), val: "" });
 
   const [ownsHouse, setOwnsHouse] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.Owns_house), val: "" });
 
   const [ownsCar, setOwnsCar] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.Owns_car), val: "" });
 
   const [bloodGroup, setBloodGroup] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.blood_group), val: "" });
 
   const [thalassemia, setThalassemia] = useState<{
-    id?: string;
+    id: string;
     val: string;
   }>({ id: String(jsonData?.Thalassemia), val: "" });
 
   const formik = useFormik({
     initialValues: {
       userId: userId,
-      diet: jsonData?.diet,
-      smoking: jsonData?.smoking,
-      drinking: jsonData?.drinking,
-      love_pets: jsonData?.love_pets,
-      own_house: jsonData?.Owns_house,
-      own_car: jsonData?.Owns_car,
-      blood_group: jsonData?.blood_group,
-      thalassemia: jsonData?.Thalassemia,
-      religious_belief: jsonData?.religious_belief,
+      diet: String(jsonData?.diet),
+      smoking: String(jsonData?.smoking),
+      drinking: String(jsonData?.drinking),
+      lovePets: String(jsonData?.love_pets),
+      ownsHouse: String(jsonData?.Owns_house),
+      ownsCar: String(jsonData?.Owns_car),
+      bloodGroup: String(jsonData?.blood_group),
+      thalassemia: String(jsonData?.Thalassemia),
+      religiousBelief: String(jsonData?.religious_belief),
     },
     onSubmit: async (values) => {
       let response;
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
-          { actionType: "C", ...values }
+          { actionType: "c", ...values }
         );
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
-          { actionType: "U", ...values }
+          { actionType: "u", ...values }
         );
       }
       response.data.output === 1 && nextPage(3);
@@ -105,14 +105,14 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   });
 
   useEffect(() => {
-    formik.values.diet = Number(diet?.id);
-    formik.values.smoking = Number(smoking?.id);
-    formik.values.drinking = Number(drinking?.id);
-    formik.values.love_pets = Number(lovePets?.id);
-    formik.values.own_house = Number(ownsCar?.id);
-    formik.values.own_car = Number(ownsCar?.id);
-    formik.values.blood_group = Number(bloodGroup?.id);
-    formik.values.thalassemia = Number(thalassemia?.id);
+    formik.values.diet = diet.id;
+    formik.values.smoking = smoking.id;
+    formik.values.drinking = drinking.id;
+    formik.values.lovePets = lovePets.id;
+    formik.values.ownsHouse = ownsCar.id;
+    formik.values.ownsCar = ownsCar.id;
+    formik.values.bloodGroup = bloodGroup.id;
+    formik.values.thalassemia = thalassemia.id;
   }, [
     bloodGroup?.id,
     diet?.id,
@@ -158,28 +158,28 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   selectedDataFn={setLovePets}
                   title="Love Pets"
                   data={Pets}
-                  nameid="love_pets"
+                  nameid="lovePets"
                   defaultValue={jsonData?.love_pets}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setOwnsHouse}
                   title="Owns House"
                   data={OwnHouseCar}
-                  nameid="own_house"
+                  nameid="ownsHouse"
                   defaultValue={jsonData?.Owns_house}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setOwnsCar}
                   title="Owns Car"
                   data={OwnHouseCar}
-                  nameid="own_car"
+                  nameid="ownsCar"
                   defaultValue={jsonData?.Owns_car}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setBloodGroup}
                   title="Blood Group"
                   data={BloodGroup}
-                  nameid="blood_group"
+                  nameid="bloodGroup"
                   defaultValue={jsonData?.blood_group}
                 />
                 <DropdownGridSingleSelect
@@ -193,9 +193,9 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Form.Label>Religious Belief</Form.Label>
                   <Form.Control
                     as="textarea"
-                    name="religious_belief"
+                    name="religiousBelief"
                     rows={3}
-                    placeholder="Abotu Religious Belief"
+                    placeholder="About Religious Belief"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     defaultValue={jsonData?.religious_belief}
@@ -207,7 +207,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 type="submit"
                 className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
               >
-                Add to my profile
+                Next
               </Button>
             </Form>
           </Col>

@@ -36,37 +36,37 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const userId = useSelector(getUserId);
 
   useEffect(() => {
-    dispatch(step4({ actionType: "V", userId: userId }));
+    dispatch(step4({ actionType: "v", userId: userId }));
   }, [dispatch, isReduxEmpty, userId]);
-
+  
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Father), val: "" });
   const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Mother), val: "" });
   const [selectedSister, setSelectedSister] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Sister), val: "" });
   const [selectedBrother, setSelectedBrother] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Brother), val: "" });
   const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Family_Status), val: "" });
   const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Family_Income), val: "" });
   const [selectedFamilyType, setSelectedFamilyType] = useState<{
     id: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: String(jsonData?.Family_Type), val: "" });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
     jsonData?.family_native_country || 0
   );
@@ -84,18 +84,18 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const formik = useFormik({
     initialValues: {
       userId: userId,
-      fathersProfession: jsonData?.Father,
-      mothersProfession: jsonData?.Mother,
-      sister: jsonData?.Sister,
-      brother: jsonData?.Brother,
+      mothersProfession: String(jsonData?.Mother),
+      fathersProfession: String(jsonData?.Father),
+      sister: String(jsonData?.Sister),
+      brother: String(jsonData?.Brother),
       gothra: jsonData?.Gothra,
-      familyStatus: jsonData?.Family_Status,
-      familyIncome: jsonData?.Family_Income,
-      familyType: jsonData?.Family_Type,
-      familyNativeCountry: jsonData?.family_native_country,
-      familyNativeState: jsonData?.family_native_state,
-      familyNativeCity: jsonData?.family_native_city,
-      livingWithParents: jsonData?.living_with_parents,
+      familyStatus: String(jsonData?.Family_Status),
+      familyIncome: String(jsonData?.Family_Income),
+      familyType: String(jsonData?.Family_Type),
+      familyNativeCountry: String(jsonData?.family_native_country),
+      familyNativeState: String(jsonData?.family_native_state),
+      familyNativeCity: String(jsonData?.family_native_city),
+      livingWithParents: String(jsonData?.living_with_parents),
     },
     onSubmit: async (values: IRegisterStep4) => {
       let response;
@@ -103,7 +103,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
-            actionType: "C",
+            actionType: "c",
             ...values,
           }
         );
@@ -111,7 +111,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
           {
-            actionType: "U",
+            actionType: "u",
             ...values,
           }
         );
@@ -129,19 +129,19 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const getSelectedState = (id: number) => {
     setSelectedNativeCity(id);
   };
-
+  
   useEffect(() => {
-    formik.values.fathersProfession = +selectedFathersOccupation.id;
-    formik.values.mothersProfession = +selectedMothersOccupation.id;
-    formik.values.sister = +selectedSister.id;
-    formik.values.brother = +selectedBrother.id;
-    formik.values.familyStatus = +selectedFamilyStatus.id;
-    formik.values.familyIncome = +selectedFamilyIncome.id;
-    formik.values.familyType = +selectedFamilyType.id;
-    formik.values.familyNativeCountry = selectedNativeCountry;
-    formik.values.familyNativeState = selectedNativeState;
-    formik.values.familyNativeCity = selectedNativeCity;
-    formik.values.livingWithParents = +selectedLivingWithParents.id;
+    formik.values.mothersProfession = selectedMothersOccupation.id;
+    formik.values.fathersProfession = selectedFathersOccupation.id;
+    formik.values.sister = selectedSister.id;
+    formik.values.brother = selectedBrother.id;
+    formik.values.familyStatus = selectedFamilyStatus.id;
+    formik.values.familyIncome = selectedFamilyIncome.id;
+    formik.values.familyType = selectedFamilyType.id;
+    formik.values.familyNativeCountry = String(selectedNativeCountry);
+    formik.values.familyNativeState = String(selectedNativeState);
+    formik.values.familyNativeCity = String(selectedNativeCity);
+    formik.values.livingWithParents = String(selectedLivingWithParents.id);
   }, [
     formik.values,
     selectedBrother.id,
@@ -155,6 +155,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
+    jsonData,
   ]);
 
   return (
@@ -203,6 +204,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Gothra"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
+                    defaultValue={jsonData?.Gothra}
                   />
                 </div>
                 <DropdownGridSingleSelect
@@ -248,7 +250,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 type="submit"
                 className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
               >
-                Add to my profile
+                Next
               </Button>
             </Form>
           </Col>
