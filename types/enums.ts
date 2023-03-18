@@ -355,6 +355,12 @@ export enum Thalassemia {
 }
 
 export enum ChildrenStatus {
+  No = "1",
+  Yes_Livingtogether = "2",
+  Yes_LivingSeparatly = "3",
+}
+
+export enum ChildrenStatus0 {
   Doesnotmatter = "0",
   No = "1",
   Yes_Livingtogether = "2",

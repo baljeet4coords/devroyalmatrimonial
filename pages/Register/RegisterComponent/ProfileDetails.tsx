@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
 import { CastList } from "../../../constants/CastList";
 import CastDataList from "../../../components/CastDataList/CastDataList";
-import { STEP_1 } from "../../../ducks/regiserUser/step1/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
