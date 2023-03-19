@@ -45,22 +45,86 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     setSearchedData(searched);
   };
 
-  const InputTypeDataFun = (val: string) => {
-    if (val.length > 1) {
-      getClickedData({
-        val: val,
-        id: val,
-      });
-      setActiveList(false);
-    }
-  };
-
   const getClickedData = (data: Data) => {
     setSelectedData(data);
     selectedDataFn(data);
     ref.current.value = "";
-    console.log(selectedData);
   };
+
+  const findidOFSelect = (name: string) => {
+    for (const [key, value] of Object.entries(data)) {
+      if (key === name) {
+        return value;
+      }
+    }
+    return name;
+  };
+
+  // for Blood group value change
+
+  useEffect(() => {
+    let splitSelectVAL;
+    if (selectedData.val.charAt(selectedData.val.length - 1) !== "-") {
+      console.log(
+        "selectedData.val",
+        selectedData.val.charAt(selectedData.val.length - 2)
+      );
+      splitSelectVAL = selectedData.val.split("-")[0];
+    }
+
+    const idx = selectedData.id;
+    switch (splitSelectVAL) {
+      case "A_plus":
+        setSelectedData({
+          id: idx,
+          val: "A +ve",
+        });
+        break;
+      case "B_plus":
+        setSelectedData({
+          id: idx,
+          val: "B +ve",
+        });
+        break;
+      case "O_plus":
+        setSelectedData({
+          id: idx,
+          val: "O +ve",
+        });
+        break;
+      case "AB_plus":
+        setSelectedData({
+          id: idx,
+          val: "AB +ve",
+        });
+        break;
+      case "A_negative":
+        setSelectedData({
+          id: idx,
+          val: "A neg",
+        });
+        break;
+      case "B_negative":
+        setSelectedData({
+          id: idx,
+          val: "B neg",
+        });
+        break;
+      case "O_negative":
+        setSelectedData({
+          id: idx,
+          val: "o -neg",
+        });
+        break;
+
+      case "AB_negative":
+        setSelectedData({
+          id: idx,
+          val: "AB neg",
+        });
+        break;
+    }
+  }, [activeList]);
 
   return (
     <div className={classes.singleBox}>
@@ -80,7 +144,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             }
             defaultValue={selectedData.val}
             ref={ref}
-            onBlur={(e) => InputTypeDataFun(e.target.value)}
             onChange={(e) => searchDataFunc(e.target.value)}
           />
         </li>
@@ -95,12 +158,13 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
               return (
                 <li
                   key={id + name}
-                  onClick={() =>
+                  onClick={() => {
+                    const unixID = findidOFSelect(name);
                     getClickedData({
                       val: item,
-                      id,
-                    })
-                  }
+                      id: unixID,
+                    });
+                  }}
                   className={selectedData.val === item ? classes.tabActive : ""}
                 >
                   <span>{name}</span>

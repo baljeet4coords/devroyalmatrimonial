@@ -104,6 +104,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     onSubmit: async (values) => {
       let response;
       if (isReduxEmpty === undefined) {
+        console.log(values,'form values');
+        
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           { ...values, actionType: "c" }
