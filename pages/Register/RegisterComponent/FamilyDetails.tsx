@@ -8,7 +8,7 @@ import {
   DropdownGridSingleSelect,
 } from "../../../components";
 import {
-  BrotherSister,
+  BortherSisterCount,
   FamilStatus,
   FamilyIncome,
   FamilyType,
@@ -38,7 +38,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
   }, [dispatch, isReduxEmpty, userId]);
-  
+
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;
@@ -81,7 +81,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
   console.log(selectedNativeState);
-  
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -130,7 +130,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const getSelectedState = (id: number) => {
     setSelectedNativeCity(id);
   };
-  
+
   useEffect(() => {
     formik.values.mothersProfession = selectedMothersOccupation.id;
     formik.values.fathersProfession = selectedFathersOccupation.id;
@@ -185,14 +185,14 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedSister}
                   title="Sister"
-                  data={BrotherSister}
+                  data={BortherSisterCount}
                   nameid="sister"
                   defaultValue={jsonData?.Sister}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedBrother}
                   title="Brother"
-                  data={BrotherSister}
+                  data={BortherSisterCount}
                   nameid="brother"
                   defaultValue={jsonData?.Brother}
                 />

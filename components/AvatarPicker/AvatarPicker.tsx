@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { Button } from "react-bootstrap";
+import classes from  "./AvtarPicker.module.scss"
 
 type Avatar = {
   name: string;
@@ -42,6 +43,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
         onChange={handleImageChange}
         id="profilepic"
         name="profilepic"
+        className={classes.Profile_input}
       />
       {image && (
         <AvatarEditor
@@ -54,11 +56,12 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
           color={[255, 255, 255, 0.6]} // RGBA
           scale={scale}
           onImageReady={() => setScale(1)}
+          className={classes.canvasIMG}
         />
       )}
       {image && (
-        <div>
-          <Button onClick={handleSave}>Crop Image</Button>
+        <div  className={classes.BtnDiv} >
+          <Button onClick={handleSave} className={classes.Btn}>Crop Image</Button>
         </div>
       )}
     </>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Gender } from "../../types/enums";
-import classes from "./GenderInput.module.scss"
+import classes from "./GenderInput.module.scss";
 
 interface GenderRadioButtons {
   selectedGender: string;
@@ -13,7 +13,7 @@ const GenderRadioButtons: React.FC<GenderRadioButtons> = ({
 }) => {
   return (
     <Form.Group className={classes.gender_Section_Mob}>
-      <Form.Label>Gender</Form.Label>
+      <Form.Label className={classes.gender_Male}>Gender</Form.Label>
       <div className={`${classes.gender_main}  d-flex`}>
         <Form.Check
           type="radio"

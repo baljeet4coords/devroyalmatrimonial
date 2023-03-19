@@ -3,6 +3,7 @@
 
 .gender_main {
   gap: 10px;
+
   .Gender_from_input {
     display: flex;
     align-items: center;
@@ -11,21 +12,29 @@
     padding: 0;
     gap: 10px;
 
-    input{
+    input {
       margin: 0;
       cursor: pointer;
     }
 
-    label{
+    label {
       margin: 0;
       position: initial;
       cursor: pointer;
       display: inline-block;
+      min-width: 0;
     }
   }
 }
+
+.gender_Section_Mob {
+  .gender_Male {
+    margin-top: 0;
+  }
+}
+
 @media only screen and (max-width: 990px) {
-  .gender_Section_Mob{
+  .gender_Section_Mob {
     display: flex;
     justify-content: space-between;
     margin: 0.5rem 0;
