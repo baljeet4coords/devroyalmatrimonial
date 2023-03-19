@@ -14,6 +14,7 @@ import router from "next/router";
 import { useDispatch } from "react-redux";
 // import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
+import storage from "redux-persist/es/storage";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -50,7 +51,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   ];
   const onLogout = () => {
     dispatch(logoutRequest());
-    // storage.removeItem("persist:root");
+    //storage.removeItem("persist:root");
     router.push("/");
   };
   return (

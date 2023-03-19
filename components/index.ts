@@ -15,6 +15,7 @@ import DropdownGridSingleSelect from "./DropdownGrid/DropdownGrid";
 import GenderRadioButtons from "./GenderRadioButtons/GenderRadioButtons";
 import AvatarPicker from "./AvatarPicker/AvatarPicker";
 import CountryStateCitlyList from "./CountryStateCityList/CountryStateCityList";
+import StrictRadioCheck from "./StrictRadioCheck/StrictRadioCheck";
 
 export {
   Header,
@@ -34,4 +35,5 @@ export {
   GenderRadioButtons,
   AvatarPicker,
   CountryStateCitlyList,
+  StrictRadioCheck,
 };

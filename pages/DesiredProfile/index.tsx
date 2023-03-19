@@ -1,190 +1,341 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
-import { Footer } from "../../components";
-import React, { useState, useRef, useEffect } from "react";
-import classes from "./DesiredProfile.module.scss";
 import {
-  MaritalStatusList,
-  CountryList,
-  ResidentialList,
-  AgeFromYearList,
-  AgeToYearList,
-  HeightFromList,
-  HeightToList,
-  ReligionList,
-  MotherTongueArr,
-  ManglikList,
-  HighestEducationList,
-  SmokeDrinkWith,
-  OccupationData,
-} from "../../constants/DesiredData";
-import { FaEdit } from "react-icons/fa";
-import { SlArrowDown } from "react-icons/sl";
-import { IoClose } from "react-icons/io5";
-import Form from "react-bootstrap/Form";
-import CustomButton from "../../components/Button/CustomButton";
+  DropdownGridSingleSelect,
+  Footer,
+  StrictRadioCheck,
+} from "../../components";
+import React, { useEffect, useState } from "react";
+import classes from "./DesiredProfile.module.scss";
+import { AgeFromYearList, HeighListInCms } from "../../constants/DesiredData";
 import SingleInput from "../../components/InputField/SingleInputField";
 import DoubleInput from "../../components/InputField/DoubleInputField";
-type paramsStatus = {
-  val: string;
-  idd: number;
-  selectedInputQuery: string;
-};
-type acticeStateType = {
-  type: string;
-  visible: boolean;
-};
+import {
+  AnnualIncomeProfile0,
+  ChallengedWith0,
+  ChildrenStatus0,
+  DietWith0,
+  EducationTypeAndVal,
+  ManglikWith0,
+  MaritalStatus0,
+  MotherTongueWith0,
+  OccupationWith0,
+  ReadyToSettleAbroadWith0,
+  ReligionWith0,
+  ResidentialStatusWith0,
+  SmokeDrinkWith0,
+  isHivWith0,
+} from "../../types/enums";
+import CountryMultiple from "../../components/InputField/CountryStateMultiple/CountryMultiple";
+import StateMultiple from "../../components/InputField/CountryStateMultiple/StateMultiple";
+import CityMultiple from "../../components/InputField/CountryStateMultiple/CityMultiple";
+import CasteMultiple from "../../components/InputField/CasteMultiple/CasteMultiple";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
+import { selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
+import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
+import axios from "axios";
+import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
+
 const DesiredProfilePage: React.FC = () => {
-  const containerRef = useRef(null);
-  const [activeList, setActiveList] = useState<acticeStateType>({
-    type: "",
-    visible: false,
-  });
+  const dispatch = useDispatch();
+  const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
+  const userId = useSelector(getUserId);
 
-  const handleClickOutside = () => {
-    if (containerRef.current) {
-      setActiveList({ type: "", visible: true });
-      console.log(activeList);
-    }
-  };
+  const jsonData = partnerPreferrenceResponse?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
+      dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
+  }, [dispatch, userId]);
 
+  const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
+    jsonData?.height_greater_than ?? ""
+  );
+  const [selectedAgeTo, setSelectedAgeTo] = useState<string>(
+    jsonData?.height_less_than ?? ""
+  );
+  const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>(
+    jsonData?.age_greater_than || ""
+  );
+  const [selectedHeightTo, setSelectedHeightTo] = useState<string>(
+    jsonData?.age_less_than || ""
+  );
+  const [country, setCountry] = useState<number[]>(jsonData?.country || []);
+  const [state, setState] = useState<number[]>(jsonData?.state || []);
+  const [city, setCity] = useState<number[]>(jsonData?.city || []);
+  const [education, setEducation] = useState<string[]>(
+    jsonData?.education || []
+  );
+  const [occupation, setOccupation] = useState<string[]>(
+    jsonData?.occupation || []
+  );
+  const [annualIncome, setAnnualIncome] = useState<{ id: string; val: string }>(
+    { id: jsonData?.annual_income_greater_than || "", val: "" }
+  );
+  const [maritalStatus, setMaritalStatus] = useState<string[]>(
+    jsonData?.marital_status || []
+  );
+  const [religion, setReligion] = useState<string[]>(jsonData?.religion || []);
+  const [motherTongue, setMotherTongue] = useState<string[]>(
+    jsonData?.mother_tongue || []
+  );
+  const [residentialStatus, setResidentialStatus] = useState<string[]>(
+    jsonData?.Residential_status || []
+  );
+  const [manglik, setManglik] = useState<string[]>([]);
+  const [diet, setDiet] = useState<{ id: string; val: string }>({
+    id: jsonData?.diet || "",
+    val: "",
+  });
+  const [smoke, setSmoke] = useState<{ id: string; val: string }>({
+    id: jsonData?.smoking || "",
+    val: "",
+  });
+  const [drink, setDrink] = useState<{ id: string; val: string }>({
+    id: jsonData?.drinking || "",
+    val: "",
+  });
+  const [readyToSettleAbroad, setReadyToSettleAbroad] = useState<{
+    id: string;
+    val: string;
+  }>({
+    id: jsonData?.ready_to_settleAbroad || "",
+    val: "",
+  });
+  const [challenged, setChallenged] = useState<string[]>(
+    jsonData?.Challenged || []
+  );
+  const [childrenStatus, setChildrenStatus] = useState<string[]>(
+    jsonData?.children_status || []
+  );
+  const [hiv, setHiv] = useState<{ id: string; val: string }>({
+    id: jsonData?.HIV || "",
+    val: "",
+  });
+  const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
+  const [filters, setFilters] = useState<string[]>(
+    jsonData?.mandatory_fields || []
+  );
+  const savePartnerPref = async (event: any) => {
+    event.preventDefault();
+    const partnerPrefPostReq: PartnerPreferrence = {
+      userId: userId,
+      ageGreaterThan: selectedAgeFrom,
+      ageLessThan: selectedAgeTo,
+      heightGreaterThan: selectedHeightFrom,
+      heightLessThan: selectedHeightTo,
+      country: JSON.stringify(country),
+      state: JSON.stringify(state),
+      city: JSON.stringify(city),
+      education: JSON.stringify(education),
+      occupation: JSON.stringify(occupation),
+      annualIncomeGreaterThan: annualIncome.id,
+      maritalStatus: JSON.stringify(maritalStatus),
+      religion: JSON.stringify(religion),
+      motherTongue: JSON.stringify(motherTongue),
+      cast: JSON.stringify(caste),
+      residentialStatus: JSON.stringify(residentialStatus),
+      manglik: JSON.stringify(manglik),
+      diet: diet.id,
+      smoking: smoke.id,
+      drinking: drink.id,
+      readyToSettleAbroad: readyToSettleAbroad.id,
+      challenged: JSON.stringify(challenged),
+      childrenStatus: JSON.stringify(childrenStatus),
+      hiv: hiv.id,
+      horoscopeMatch: "0",
+      mandatoryFields: JSON.stringify(filters),
+    };
+    let response;
+    if (isReduxEmpty === undefined) {
+      response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
+        { ...partnerPrefPostReq, actionType: "c" }
+      );
+    } else {
+      response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
+        { ...partnerPrefPostReq, actionType: "u" }
+      );
+    }
+    response.data.output === 1 && console.log(1);
+  };
+  
   return (
     <React.Fragment>
-      <Container fluid className={classes.background_header} ref={containerRef}>
+      <Container fluid className={classes.background_header}>
         <LoginHeader />
       </Container>
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <Row>
             <h1>Desired Partner Profile</h1>
-            <p>
-              The criteria you mention here determines the ‘Desired Partner
-              Matches’ you see. So please review this information carefully.
-              Moreover, Filters determine whose Interests/Calls you want to
-              receive.
-            </p>
-            <div className={classes.dark_box}>
-              No. of Mutual Matches with below criteria - 80
-            </div>
-            <div className={classes.checkBox}>
-              {" "}
-              <Form.Check aria-label="option 1" />I also want to receive matches
-              based on the history of my interests and acceptances
-              <small>
-                These matches may not fully fulfil your Desired Partner
-                Preference.
-              </small>
-            </div>
-            <div className={classes.editInfo}>
-              <span>Basic details</span>
-              <span>
-                <FaEdit /> Edit
-              </span>
-            </div>
             <Col
               sm={12}
               className={`${classes.form_wrapper} d-flex justify-content-center`}
             >
               <form className={classes.formEdit}>
+                <DoubleInput
+                  data={AgeFromYearList}
+                  inputName={"Age"}
+                  onDataFrom={setSelectedAgeFrom}
+                  onDataTo={setSelectedAgeTo}
+                  defaultValueFrom={String(jsonData?.age_greater_than)}
+                  defaultValueTo={String(jsonData?.age_less_than)}
+                />
+                <DoubleInput
+                  data={HeighListInCms(100, 244)}
+                  inputName={"Height in cms"}
+                  onDataFrom={setSelectedHeightFrom}
+                  onDataTo={setSelectedHeightTo}
+                  defaultValueFrom={String(jsonData?.height_greater_than)}
+                  defaultValueTo={String(jsonData?.age_less_than)}
+                />
+                <CountryMultiple
+                  onChangeCountry={setCountry}
+                  defaultCountry={jsonData?.country || []}
+                />
+                <StateMultiple
+                  onChangeState={setState}
+                  defaultState={jsonData?.country || []}
+                />
+                <CityMultiple
+                  onChangeCity={setCity}
+                  defaultCity={jsonData?.city || []}
+                />
+                <SingleInput
+                  data={EducationTypeAndVal}
+                  inputName={"Education"}
+                  onChange={setEducation}
+                  defaultValues={jsonData?.education || []}
+                />
 
-                <DoubleInput postArray={AgeFromYearList} inputName={"Age"} />
-
-                <DoubleInput postArray={HeightFromList} inputName={"Height"} />
-
-
-                <SingleInput postArray={MaritalStatusList} inputName={"Marital Status"} />
-
-                <SingleInput postArray={CountryList} inputName={"Country"} />
-
-                <SingleInput postArray={ResidentialList} inputName={"Residential Status"} />
-
-                <CustomButton onClick={() => console.log("tab")}>
-                  Save
-                </CustomButton>
+                <SingleInput
+                  data={OccupationWith0}
+                  inputName={"Occupation"}
+                  onChange={setOccupation}
+                  defaultValues={jsonData?.occupation || []}
+                />
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"Income greater than"}
+                    data={AnnualIncomeProfile0}
+                    nameid={"AnnualIncomeProfile0"}
+                    selectedDataFn={setAnnualIncome}
+                    defaultValue={
+                      jsonData?.annual_income_greater_than
+                        ? +jsonData?.annual_income_greater_than
+                        : 0
+                    }
+                  />
+                </div>
+                <SingleInput
+                  data={MaritalStatus0}
+                  inputName={"Marital Status"}
+                  onChange={setMaritalStatus}
+                  defaultValues={jsonData?.marital_status || []}
+                />
+                <SingleInput
+                  data={ReligionWith0}
+                  inputName={"Religion"}
+                  onChange={setReligion}
+                  defaultValues={jsonData?.religion || []}
+                />
+                <SingleInput
+                  data={MotherTongueWith0}
+                  inputName={"Mother Tongue"}
+                  onChange={setMotherTongue}
+                  defaultValues={jsonData?.mother_tongue || []}
+                />
+                <CasteMultiple
+                  onChangeCaste={setCaste}
+                  defaultValues={jsonData?.caste || []}
+                />
+                <SingleInput
+                  data={ResidentialStatusWith0}
+                  inputName={"Residential Status"}
+                  onChange={setResidentialStatus}
+                  defaultValues={jsonData?.Residential_status || []}
+                />
+                <SingleInput
+                  data={ManglikWith0}
+                  inputName={"Manglik"}
+                  onChange={setManglik}
+                  defaultValues={jsonData?.manglik || []}
+                />
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"Diet"}
+                    data={DietWith0}
+                    nameid={"DietWith0"}
+                    selectedDataFn={setDiet}
+                    defaultValue={jsonData?.diet ? +jsonData?.diet : 0}
+                  />
+                </div>
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"Smoking"}
+                    data={SmokeDrinkWith0}
+                    nameid={"Smoke0"}
+                    selectedDataFn={setSmoke}
+                    defaultValue={jsonData?.smoking ? +jsonData?.smoking : 0}
+                  />
+                </div>
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"Drinking"}
+                    data={SmokeDrinkWith0}
+                    nameid={"drinkingwith0"}
+                    selectedDataFn={setDrink}
+                    defaultValue={jsonData?.drinking ? +jsonData?.drinking : 0}
+                  />
+                </div>
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"Ready to settle abroad"}
+                    data={ReadyToSettleAbroadWith0}
+                    nameid={"ReadyToSettleAbroadWith0"}
+                    selectedDataFn={setReadyToSettleAbroad}
+                    defaultValue={
+                      jsonData?.ready_to_settleAbroad
+                        ? +jsonData?.ready_to_settleAbroad
+                        : 0
+                    }
+                  />
+                </div>
+                <SingleInput
+                  data={ChallengedWith0}
+                  inputName={"Challenged"}
+                  onChange={setChallenged}
+                  defaultValues={jsonData?.Challenged || []}
+                />
+                <SingleInput
+                  data={ChildrenStatus0}
+                  inputName={"Children Status"}
+                  onChange={setChildrenStatus}
+                  defaultValues={jsonData?.children_status || []}
+                />
+                <div className={classes.singleDropDown}>
+                  <DropdownGridSingleSelect
+                    title={"HIV"}
+                    data={isHivWith0}
+                    nameid={"HIV"}
+                    selectedDataFn={setHiv}
+                    defaultValue={jsonData?.HIV ? +jsonData?.HIV : 0}
+                  />
+                </div>
+                <div>
+                  <StrictRadioCheck
+                    onSetFilters={setFilters}
+                    defaultValue={jsonData?.mandatory_fields || []}
+                  />
+                </div>
+                <Button className="mb-5" onClick={savePartnerPref}>
+                  Save your preferrence
+                </Button>
               </form>
             </Col>
-            <hr />
-            <div className={classes.editInfo}>
-              <span>Religion & Ethnicity</span>
-              <span>
-                <FaEdit /> Edit
-              </span>
-            </div>
-            <Col
-              sm={12}
-              className={`${classes.form_wrapper} d-flex justify-content-center`}
-            >
-              <form className={classes.formEdit}>
-
-                <SingleInput postArray={ReligionList} inputName={"Religion"} />
-
-                <SingleInput postArray={MotherTongueArr} inputName={"Mother Tongue"} />
-
-                <SingleInput postArray={ManglikList} inputName={"Manglik"} />
-
-                <CustomButton onClick={() => console.log("tab")}>
-                  Save
-                </CustomButton>
-              </form>
-            </Col>
-            <hr />
-            <div className={classes.editInfo}>
-              <span>Education & Work</span>
-              <span>
-                <FaEdit /> Edit
-              </span>
-            </div>
-            <Col
-              sm={12}
-              className={`${classes.form_wrapper} d-flex justify-content-center`}
-            >
-              <form className={classes.formEdit}>
-
-                <SingleInput postArray={HighestEducationList} inputName={"Education"} />
-
-                <SingleInput postArray={OccupationData} inputName={"Occupation"} />
-
-                <DoubleInput postArray={AgeFromYearList} inputName={"Income"} />
-
-
-                <CustomButton onClick={() => console.log("tab")}>
-                  Save
-                </CustomButton>
-              </form>
-            </Col>
-            <hr />
-            <div className={classes.editInfo}>
-              <span>Lifestyle</span>
-              <span>
-                <FaEdit /> Edit
-              </span>
-            </div>
-            <Col
-              sm={12}
-              className={`${classes.form_wrapper} d-flex justify-content-center`}
-            >
-              <form className={classes.formEdit}>
-
-                <SingleInput postArray={ReligionList} inputName={"Dietary habits"} />
-
-                <SingleInput postArray={MotherTongueArr} inputName={"Dietary habits"} />
-
-                <SingleInput postArray={ManglikList} inputName={"Smoking habits"} />
-
-                <SingleInput postArray={ManglikList} inputName={"Challenged"} />
-
-                <CustomButton onClick={() => console.log("tab")}>
-                  Save
-                </CustomButton>
-              </form>
-            </Col>
-            {/* <hr /> */}
           </Row>
         </Container>
       </div>

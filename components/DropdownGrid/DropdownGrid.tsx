@@ -94,7 +94,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
               const [name, id] = item.split("-");
               return (
                 <li
-                  key={id + name}
+                  key={item}
                   onClick={() =>
                     getClickedData({
                       val: item,

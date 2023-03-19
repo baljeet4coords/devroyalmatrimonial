@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(getToken);
   const authSuccess = useSelector(selectAuthSuccess);
-
+  console.log(authSuccess?.jsonResponse?.user_status);
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/Register");
@@ -36,6 +36,8 @@ const LandingPage: React.FC = () => {
         authSuccess?.jsonResponse?.user_status === "R"
       ) {
         router.push("/Register/");
+      } else if (authSuccess?.jsonResponse?.user_status === "P") {
+        router.push("/DesiredProfile/");
       } else {
         router.push("/");
       }
