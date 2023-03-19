@@ -5,14 +5,19 @@ import { IoClose } from "react-icons/io5";
 
 interface CityMultiple {
   onChangeCity: (city: number[]) => void;
-  defaultCountry: ICity[];
+  defaultCity: number[];
 }
-const CityMultiple: React.FC<CityMultiple> = ({ onChangeCity }) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [citiesIds, setCitiesIds] = useState<number[]>([]);
-  const [HostedArray, updateHostedArray] = useState<ICity[]>([]);
-  const [activeList, setActiveList] = useState<boolean>(false);
+const CityMultiple: React.FC<CityMultiple> = ({
+  onChangeCity,
+  defaultCity,
+}) => {
   const cityOfState: ICity[] = City.getCitiesOfCountry("IN");
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
+  const [HostedArray, updateHostedArray] = useState<ICity[]>(
+    cityOfState.filter((_, index) => defaultCity.includes(index))
+  );
+  const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICity[]>(cityOfState);
 

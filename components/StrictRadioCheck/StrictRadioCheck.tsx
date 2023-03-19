@@ -5,11 +5,14 @@ import { Col, Row } from "react-bootstrap";
 
 interface StrictRadioCheckProps {
   onSetFilters: (filters: string[]) => void;
+  defaultValue: string[];
 }
 const StrictRadioCheck: React.FC<StrictRadioCheckProps> = ({
   onSetFilters,
+  defaultValue,
 }) => {
-  const [selectedSwitches, setSelectedSwitches] = useState<string[]>([]);
+  const [selectedSwitches, setSelectedSwitches] =
+    useState<string[]>(defaultValue);
   const switches = [
     "height",
     "country",

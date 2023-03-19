@@ -4,18 +4,20 @@ import classes from "./CountryStateCityMultiple.module.scss";
 import { IoClose } from "react-icons/io5";
 
 interface CountryProps {
-  defaultCountry: string;
+  defaultCountry: number[];
   onChangeCountry: (country: number[]) => void;
 }
 const CountryMultiple: React.FC<CountryProps> = ({
   defaultCountry,
   onChangeCountry,
 }) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [countriesIds, setCountriesIds] = useState<number[]>([]);
-  const [HostedArray, updateHostedArray] = useState<ICountry[]>([]);
-  const [activeList, setActiveList] = useState<boolean>(false);
   const countries: ICountry[] = Country.getAllCountries();
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [countriesIds, setCountriesIds] = useState<number[]>(defaultCountry);
+  const [HostedArray, updateHostedArray] = useState<ICountry[]>(
+    countries.filter((_, index) => defaultCountry.includes(index))
+  );
+  const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
 

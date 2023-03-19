@@ -8,11 +8,17 @@ import {
 
 interface CityMultiple {
   onChangeCaste: (caste: number[]) => void;
+  defaultValues: number[];
 }
-const CasteMultiple: React.FC<CityMultiple> = ({ onChangeCaste }) => {
+const CasteMultiple: React.FC<CityMultiple> = ({
+  onChangeCaste,
+  defaultValues,
+}) => {
   const elementRef = useRef<HTMLDivElement>(null);
-  const [castesIds, setCastesIds] = useState<number[]>([]);
-  const [HostedArray, updateHostedArray] = useState<ICastListArray[]>([]);
+  const [castesIds, setCastesIds] = useState<number[]>(defaultValues);
+  const [HostedArray, updateHostedArray] = useState<ICastListArray[]>(
+    CastListArray.filter((_, index) => defaultValues.includes(index))
+  );
   const [activeList, setActiveList] = useState<boolean>(false);
 
   const [searchHostedArray, UpdatesearchHostedArray] =

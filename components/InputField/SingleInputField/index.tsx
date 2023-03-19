@@ -15,19 +15,10 @@ const SingleInput: React.FC<MyComponentProps> = ({
   onChange,
   defaultValues,
 }) => {
-  const findKeyByValue = (obj: any, value: number): string => {
-    for (let key in obj) {
-      if (obj[key] === String(value)) {
-        return key;
-      }
-    }
-    return "";
-  };
-
   const combinedData = Object.entries(data).map(
     ([key, value]) => `${key}-${value}`
   );
-  const [HostedArray, updateHostedArray] = useState<string[]>([]);
+  const [HostedArray, updateHostedArray] = useState<string[]>(defaultValues ||  []);
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
 

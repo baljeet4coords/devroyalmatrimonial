@@ -46,54 +46,77 @@ const DesiredProfilePage: React.FC = () => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    !isReduxEmpty &&
       dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
-  }, [dispatch, isReduxEmpty, userId]);
+  }, [dispatch, userId]);
 
-  const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>("");
-  const [selectedAgeTo, setSelectedAgeTo] = useState<string>("");
-  const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>("");
-  const [selectedHeightTo, setSelectedHeightTo] = useState<string>("");
-  const [country, setCountry] = useState<number[]>([]);
-  const [state, setState] = useState<number[]>([]);
-  const [city, setCity] = useState<number[]>([]);
-  const [education, setEducation] = useState<string[]>([]);
-  const [occupation, setOccupation] = useState<string[]>([]);
-  const [annualIncome, setAnnualIncome] = useState<{ id: string; val: string }>(
-    { id: "", val: "" }
+  const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
+    jsonData?.height_greater_than ?? ""
   );
-  const [maritalStatus, setMaritalStatus] = useState<string[]>([]);
-  const [religion, setReligion] = useState<string[]>([]);
-  const [motherTongue, setMotherTongue] = useState<string[]>([]);
-  const [residentialStatus, setResidentialStatus] = useState<string[]>([]);
+  const [selectedAgeTo, setSelectedAgeTo] = useState<string>(
+    jsonData?.height_less_than ?? ""
+  );
+  const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>(
+    jsonData?.age_greater_than || ""
+  );
+  const [selectedHeightTo, setSelectedHeightTo] = useState<string>(
+    jsonData?.age_less_than || ""
+  );
+  const [country, setCountry] = useState<number[]>(jsonData?.country || []);
+  const [state, setState] = useState<number[]>(jsonData?.state || []);
+  const [city, setCity] = useState<number[]>(jsonData?.city || []);
+  const [education, setEducation] = useState<string[]>(
+    jsonData?.education || []
+  );
+  const [occupation, setOccupation] = useState<string[]>(
+    jsonData?.occupation || []
+  );
+  const [annualIncome, setAnnualIncome] = useState<{ id: string; val: string }>(
+    { id: jsonData?.annual_income_greater_than || "", val: "" }
+  );
+  const [maritalStatus, setMaritalStatus] = useState<string[]>(
+    jsonData?.marital_status || []
+  );
+  const [religion, setReligion] = useState<string[]>(jsonData?.religion || []);
+  const [motherTongue, setMotherTongue] = useState<string[]>(
+    jsonData?.mother_tongue || []
+  );
+  const [residentialStatus, setResidentialStatus] = useState<string[]>(
+    jsonData?.Residential_status || []
+  );
   const [manglik, setManglik] = useState<string[]>([]);
   const [diet, setDiet] = useState<{ id: string; val: string }>({
-    id: "",
+    id: jsonData?.diet || "",
     val: "",
   });
   const [smoke, setSmoke] = useState<{ id: string; val: string }>({
-    id: "",
+    id: jsonData?.smoking || "",
     val: "",
   });
   const [drink, setDrink] = useState<{ id: string; val: string }>({
-    id: "",
+    id: jsonData?.drinking || "",
     val: "",
   });
   const [readyToSettleAbroad, setReadyToSettleAbroad] = useState<{
     id: string;
     val: string;
   }>({
-    id: "",
+    id: jsonData?.ready_to_settleAbroad || "",
     val: "",
   });
-  const [challenged, setChallenged] = useState<string[]>([]);
-  const [childrenStatus, setChildrenStatus] = useState<string[]>([]);
+  const [challenged, setChallenged] = useState<string[]>(
+    jsonData?.Challenged || []
+  );
+  const [childrenStatus, setChildrenStatus] = useState<string[]>(
+    jsonData?.children_status || []
+  );
   const [hiv, setHiv] = useState<{ id: string; val: string }>({
-    id: "",
+    id: jsonData?.HIV || "",
     val: "",
   });
-  const [caste, setCaste] = useState<number[]>([]);
-  const [filters, setFilters] = useState<string[]>([]);
+  const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
+  const [filters, setFilters] = useState<string[]>(
+    jsonData?.mandatory_fields || []
+  );
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {
@@ -102,27 +125,27 @@ const DesiredProfilePage: React.FC = () => {
       ageLessThan: selectedAgeTo,
       heightGreaterThan: selectedHeightFrom,
       heightLessThan: selectedHeightTo,
-      country: country,
-      state: state,
-      city: city,
-      education: education,
-      occupation: occupation,
+      country: JSON.stringify(country),
+      state: JSON.stringify(state),
+      city: JSON.stringify(city),
+      education: JSON.stringify(education),
+      occupation: JSON.stringify(occupation),
       annualIncomeGreaterThan: annualIncome.id,
-      maritalStatus: maritalStatus,
-      religion: religion,
-      motherTongue: motherTongue,
-      cast: caste,
-      residentialStatus: residentialStatus,
-      manglik: manglik,
+      maritalStatus: JSON.stringify(maritalStatus),
+      religion: JSON.stringify(religion),
+      motherTongue: JSON.stringify(motherTongue),
+      cast: JSON.stringify(caste),
+      residentialStatus: JSON.stringify(residentialStatus),
+      manglik: JSON.stringify(manglik),
       diet: diet.id,
       smoking: smoke.id,
       drinking: drink.id,
       readyToSettleAbroad: readyToSettleAbroad.id,
-      challenged: challenged,
-      childrenStatus: childrenStatus,
+      challenged: JSON.stringify(challenged),
+      childrenStatus: JSON.stringify(childrenStatus),
       hiv: hiv.id,
       horoscopeMatch: "0",
-      mandatoryFields: filters,
+      mandatoryFields: JSON.stringify(filters),
     };
     let response;
     if (isReduxEmpty === undefined) {
@@ -138,7 +161,7 @@ const DesiredProfilePage: React.FC = () => {
     }
     response.data.output === 1 && console.log(1);
   };
-
+  
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
@@ -158,35 +181,41 @@ const DesiredProfilePage: React.FC = () => {
                   inputName={"Age"}
                   onDataFrom={setSelectedAgeFrom}
                   onDataTo={setSelectedAgeTo}
-                  defaultValueFrom={"20"}
-                  defaultValueTo={"30"}
+                  defaultValueFrom={String(jsonData?.age_greater_than)}
+                  defaultValueTo={String(jsonData?.age_less_than)}
                 />
                 <DoubleInput
-                  data={HeighListInCms(100, 300)}
+                  data={HeighListInCms(100, 244)}
                   inputName={"Height in cms"}
                   onDataFrom={setSelectedHeightFrom}
                   onDataTo={setSelectedHeightTo}
-                  defaultValueFrom={"120"}
-                  defaultValueTo={"180"}
+                  defaultValueFrom={String(jsonData?.height_greater_than)}
+                  defaultValueTo={String(jsonData?.age_less_than)}
                 />
                 <CountryMultiple
                   onChangeCountry={setCountry}
-                  defaultCountry={""}
+                  defaultCountry={jsonData?.country || []}
                 />
-                <StateMultiple onChangeState={setState} defaultCountry={[]} />
-                <CityMultiple onChangeCity={setCity} defaultCountry={[]} />
+                <StateMultiple
+                  onChangeState={setState}
+                  defaultState={jsonData?.country || []}
+                />
+                <CityMultiple
+                  onChangeCity={setCity}
+                  defaultCity={jsonData?.city || []}
+                />
                 <SingleInput
                   data={EducationTypeAndVal}
                   inputName={"Education"}
                   onChange={setEducation}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.education || []}
                 />
 
                 <SingleInput
                   data={OccupationWith0}
                   inputName={"Occupation"}
                   onChange={setOccupation}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.occupation || []}
                 />
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
@@ -194,38 +223,46 @@ const DesiredProfilePage: React.FC = () => {
                     data={AnnualIncomeProfile0}
                     nameid={"AnnualIncomeProfile0"}
                     selectedDataFn={setAnnualIncome}
+                    defaultValue={
+                      jsonData?.annual_income_greater_than
+                        ? +jsonData?.annual_income_greater_than
+                        : 0
+                    }
                   />
                 </div>
                 <SingleInput
                   data={MaritalStatus0}
                   inputName={"Marital Status"}
                   onChange={setMaritalStatus}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.marital_status || []}
                 />
                 <SingleInput
                   data={ReligionWith0}
                   inputName={"Religion"}
                   onChange={setReligion}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.religion || []}
                 />
                 <SingleInput
                   data={MotherTongueWith0}
                   inputName={"Mother Tongue"}
                   onChange={setMotherTongue}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.mother_tongue || []}
                 />
-                <CasteMultiple onChangeCaste={setCaste} defaultValues={[]} />
+                <CasteMultiple
+                  onChangeCaste={setCaste}
+                  defaultValues={jsonData?.caste || []}
+                />
                 <SingleInput
                   data={ResidentialStatusWith0}
                   inputName={"Residential Status"}
                   onChange={setResidentialStatus}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.Residential_status || []}
                 />
                 <SingleInput
                   data={ManglikWith0}
                   inputName={"Manglik"}
                   onChange={setManglik}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.manglik || []}
                 />
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
@@ -233,6 +270,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={DietWith0}
                     nameid={"DietWith0"}
                     selectedDataFn={setDiet}
+                    defaultValue={jsonData?.diet ? +jsonData?.diet : 0}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -241,6 +279,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={SmokeDrinkWith0}
                     nameid={"Smoke0"}
                     selectedDataFn={setSmoke}
+                    defaultValue={jsonData?.smoking ? +jsonData?.smoking : 0}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -249,6 +288,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={SmokeDrinkWith0}
                     nameid={"drinkingwith0"}
                     selectedDataFn={setDrink}
+                    defaultValue={jsonData?.drinking ? +jsonData?.drinking : 0}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -257,19 +297,24 @@ const DesiredProfilePage: React.FC = () => {
                     data={ReadyToSettleAbroadWith0}
                     nameid={"ReadyToSettleAbroadWith0"}
                     selectedDataFn={setReadyToSettleAbroad}
+                    defaultValue={
+                      jsonData?.ready_to_settleAbroad
+                        ? +jsonData?.ready_to_settleAbroad
+                        : 0
+                    }
                   />
                 </div>
                 <SingleInput
                   data={ChallengedWith0}
                   inputName={"Challenged"}
                   onChange={setChallenged}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.Challenged || []}
                 />
                 <SingleInput
                   data={ChildrenStatus0}
                   inputName={"Children Status"}
                   onChange={setChildrenStatus}
-                  defaultValues={[]}
+                  defaultValues={jsonData?.children_status || []}
                 />
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
@@ -277,10 +322,14 @@ const DesiredProfilePage: React.FC = () => {
                     data={isHivWith0}
                     nameid={"HIV"}
                     selectedDataFn={setHiv}
+                    defaultValue={jsonData?.HIV ? +jsonData?.HIV : 0}
                   />
                 </div>
                 <div>
-                  <StrictRadioCheck onSetFilters={setFilters} />
+                  <StrictRadioCheck
+                    onSetFilters={setFilters}
+                    defaultValue={jsonData?.mandatory_fields || []}
+                  />
                 </div>
                 <Button className="mb-5" onClick={savePartnerPref}>
                   Save your preferrence

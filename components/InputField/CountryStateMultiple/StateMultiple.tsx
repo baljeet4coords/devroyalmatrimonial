@@ -5,17 +5,19 @@ import { IoClose } from "react-icons/io5";
 
 interface StateMultipleProps {
   onChangeState: (state: number[]) => void;
-  defaultCountry: IState[];
+  defaultState: number[];
 }
 const StateMultiple: React.FC<StateMultipleProps> = ({
   onChangeState,
-  defaultCountry,
+  defaultState,
 }) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [statesIds, setStatesIds] = useState<number[]>([]);
-  const [HostedArray, updateHostedArray] = useState<IState[]>([]);
-  const [activeList, setActiveList] = useState<boolean>(false);
   const stateOfCountry: IState[] = State.getStatesOfCountry("IN");
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [statesIds, setStatesIds] = useState<number[]>(defaultState);
+  const [HostedArray, updateHostedArray] = useState<IState[]>(
+    stateOfCountry.filter((_, index) => defaultState.includes(index))
+  );
+  const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<IState[]>(stateOfCountry);
 
