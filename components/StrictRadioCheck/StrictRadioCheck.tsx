@@ -67,7 +67,9 @@ const StrictRadioCheck: React.FC<StrictRadioCheckProps> = ({
           <CustomButton onClick={() => setSelectedSwitches([])}>
             Remove all filters
           </CustomButton>
-          <CustomButton onClick={onHandleSetFilters}>Set Filters</CustomButton>
+          <CustomButton onClick={() => onHandleSetFilters}>
+            Set Filters
+          </CustomButton>
         </div>
       )}
     </div>

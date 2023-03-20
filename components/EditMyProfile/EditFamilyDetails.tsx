@@ -18,7 +18,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectStep4Success } from "../../ducks/regiserUser/step4/selectors";
-import { selectSignUpSuccess } from "../../ducks/signUp/selectors";
+import { selectAuthSuccess } from "../../ducks/auth/selectors";
 import CountryStateCitlyList from "../CountryStateCityList/CountryStateCityList";
 
 interface MyComponentProps {
@@ -27,7 +27,7 @@ interface MyComponentProps {
 const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep4Success);
-  const id = useSelector(selectSignUpSuccess)?.output;
+  const id = useSelector(selectAuthSuccess)?.output;
   const jsonData = stepOneDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
@@ -61,15 +61,15 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
     val: string;
   }>({ id: String(jsonData?.Family_Type), val: "" });
 
-  const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
-    jsonData?.family_native_country
-  );
-  const [selectedNativeState, setSelectedNativeState] = useState<number>(
-    jsonData?.family_native_state
-  );
-  const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
-    jsonData?.family_native_city
-  );
+  const [selectedNativeCountry, setSelectedNativeCountry] = useState<
+    number | undefined
+  >(jsonData?.family_native_country);
+  const [selectedNativeState, setSelectedNativeState] = useState<
+    number | undefined
+  >(jsonData?.family_native_state);
+  const [selectedNativeCity, setSelectedNativeCity] = useState<
+    number | undefined
+  >(jsonData?.family_native_city);
   const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
     id: string;
     val: string;
@@ -103,9 +103,9 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
     formik.values.familyStatus = selectedFamilyStatus.val;
     formik.values.familyIncome = selectedFamilyIncome.val;
     formik.values.familyType = selectedFamilyType.val;
-    formik.values.nativeCountry = selectedNativeCountry;
-    formik.values.nativeState = selectedNativeState;
-    formik.values.nativeCity = selectedNativeCity;
+    formik.values.nativeCountry = selectedNativeCountry || 100;
+    formik.values.nativeState = selectedNativeState || 0;
+    formik.values.nativeCity = selectedNativeCity || 0;
     formik.values.livingWithParents = selectedLivingWithParents.val;
   }, [
     selectedFathersOccupation.val,

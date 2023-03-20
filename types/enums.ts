@@ -23,6 +23,15 @@ export enum Gender {
 }
 
 export enum MaritalStatus {
+  NeverMarried = "1",
+  AwaitingDivorce = "2",
+  Separated = "3",
+  Divorced = "4",
+  Widowed = "5",
+  Annulled = "6",
+}
+
+export enum MaritalStatusWith0 {
   DoesNotMarried = "0",
   NeverMarried = "1",
   AwaitingDivorce = "2",

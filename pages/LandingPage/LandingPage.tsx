@@ -30,22 +30,7 @@ const LandingPage: React.FC = () => {
     if (isAuthenticated) {
       router.push("/Register");
     }
-    if (authSuccess && authSuccess?.output === 1) {
-      if (
-        authSuccess?.jsonResponse?.user_status === "1" ||
-        authSuccess?.jsonResponse?.user_status === "R"
-      ) {
-        router.push("/Register/");
-      } else if (authSuccess?.jsonResponse?.user_status === "P") {
-        router.push("/DesiredProfile/");
-      } else {
-        router.push("/");
-      }
-    }
-    if (authSuccess && authSuccess?.output === 0) {
-      alert("Wrong Password");
-    }
-  }, [authSuccess, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const [activeId, setActiveId] = useState<string>();
 
@@ -59,12 +44,9 @@ const LandingPage: React.FC = () => {
     dispatch(signupRequest(values));
   };
 
-  const onSubmitLoginForm = (values: LoginType) => {
-    dispatch(loginRequest(values));
-  };
   return (
     <>
-      <Header onSubmitForm={onSubmitLoginForm} />
+      <Header />
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>

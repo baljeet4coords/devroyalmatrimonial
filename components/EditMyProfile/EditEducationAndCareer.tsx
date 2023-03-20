@@ -62,19 +62,22 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
     val: string;
   }>({ id: "", val: "" });
 
-
   useEffect(() => {
-    formik.values.residential_status = selectedResidentialStatus.val,
-    formik.values.setting_aboard = selectedSettingAboard.val,
-    formik.values.highest_education = selectedHigestEducations.id,
-    formik.values.annual_income = selectedAnnualIncome.val,
-    formik.values.employed_in = SelectedEmployedIn.id
-  }, [selectedResidentialStatus.val,
+    (formik.values.residential_status = selectedResidentialStatus.val),
+      (formik.values.setting_aboard = selectedSettingAboard.val),
+      (formik.values.highest_education = selectedHigestEducations.id),
+      (formik.values.annual_income = selectedAnnualIncome.val),
+      (formik.values.employed_in = SelectedEmployedIn.id);
+  }, [
+    selectedResidentialStatus.val,
     selectedSettingAboard.val,
     selectedHigestEducations.val,
     selectedAnnualIncome.val,
-    SelectedEmployedIn.val,])
-  
+    SelectedEmployedIn.val,
+    formik.values,
+    selectedHigestEducations.id,
+    SelectedEmployedIn.id,
+  ]);
 
   return (
     <>

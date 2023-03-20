@@ -87,8 +87,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     selectedchallenged,
     selectedIsHiv,
     selectedMotherTongue,
-    selectedMotherTongue,
     selectedManglik,
+    formik.values,
   ]);
 
   return (
