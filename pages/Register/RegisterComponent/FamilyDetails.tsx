@@ -117,7 +117,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           }
         );
       }
-      response.data.output === 1 && nextPage(4);
+      response.data.output > 0 && nextPage(4);
     },
   });
 
