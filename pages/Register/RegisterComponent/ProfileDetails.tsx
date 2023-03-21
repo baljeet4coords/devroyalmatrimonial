@@ -115,7 +115,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           { ...values, actionType: "u" }
         );
       }
-      response.data.output === 1 && nextPage(1);
+      response.data.output > 0  && nextPage(1);
     },
   });
   const onChangeGender = (gender: string) => {
