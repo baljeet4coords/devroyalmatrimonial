@@ -80,7 +80,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }>({ id: String(jsonData?.children_status), val: "" });
 
   const [gender, setGender] = useState<string>("");
-  const [blob, setImageBlob] = useState<File | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -102,36 +101,18 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       profilepic: jsonData?.photo,
     },
     onSubmit: async (values) => {
-      const formData = new FormData();
-      formData.append("userId", String(values.userId));
-      formData.append("profilefor", String(values.profilefor));
-      formData.append("profileHandlerName", String(values.profileHandlerName));
-      formData.append("dob", String(values.dob));
-      formData.append("selectgender", String(values.selectgender));
-      formData.append("fullname", String(values.fullname));
-      formData.append("cast", String(values.cast));
-      formData.append("challenged", String(values.challenged));
-      formData.append("isHiv", String(values.isHiv));
-      formData.append("mothertongue", String(values.mothertongue));
-      formData.append("religion", String(values.religion));
-      formData.append("isManglik", String(values.isManglik));
-      formData.append("maritalstatus", String(values.maritalstatus));
-      formData.append("childrenstatus", String(values.childrenstatus));
-      formData.append("height", String(values.height));
-      formData.append("profilepic", String(values.profilepic));
-      // formData.append("profilepicBlob", blob);
       let response;
       if (isReduxEmpty === undefined) {
-        formData.append("actionType", "c");
+        console.log(values, "form values");
+
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          formData
+          { ...values, actionType: "c" }
         );
       } else {
-        formData.append("actionType", "u");
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          formData
+          { ...values, actionType: "u" }
         );
       }
       response.data.output === 1 && nextPage(1);
@@ -147,7 +128,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm || 0));
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -168,7 +148,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values,
     cm,
     feet,
-    setCm,
     jsonData?.height_cm,
   ]);
 
@@ -190,16 +169,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     const id = string.split("-")[0];
     formik.values.cast = id;
   };
-  const profilePicture = ({
-    name,
-    image,
-    fileObj,
-  }: {
-    name: string;
-    image: string;
-    fileObj: File | null;
-  }) => {
-    setImageBlob(fileObj);
+  const profilePicture = ({ name, image }: { name: string; image: string }) => {
     formik.values.profilepic = name;
   };
   return (
@@ -295,7 +265,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${cm} cms`}
+                        placeholder={`${jsonData?.height_cm || cm} cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

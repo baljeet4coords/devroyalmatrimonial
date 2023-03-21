@@ -3,34 +3,24 @@ import AvatarEditor from "react-avatar-editor";
 import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
 
+type Avatar = {
+  name: string;
+  image: string;
+};
+
 interface AvatarPickerProps {
-  onGetAvatar: ({
-    name,
-    image,
-    fileObj,
-  }: {
-    name: string;
-    image: string;
-    fileObj: File | null;
-  }) => void;
+  onGetAvatar: ({ name, image }: { name: string; image: string }) => void;
 }
 
 const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
-  const [fileExt, setFilExt] = useState<string>();
   const [scale, setScale] = useState<number>(1);
   const editorRef = useRef<AvatarEditor | null>(null);
-  const [fileObj, setFileObj] = useState<File | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    const file = files?.[0];
+    const file = event.target.files?.[0];
     setFileName(String(file?.lastModified));
-    setFilExt(file?.type.split("/")[1]);
-    if (files && files.length > 0) {
-      setFileObj(files[0]);
-    }
     if (!file) return;
 
     const reader = new FileReader();
@@ -43,11 +33,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
   const handleSave = () => {
     if (!editorRef.current) return;
     const canvas = editorRef.current.getImage().toDataURL();
-    onGetAvatar({
-      name: `${fileName}.${fileExt}`,
-      image: canvas,
-      fileObj: fileObj,
-    });
+    onGetAvatar({ name: fileName, image: canvas });
   };
 
   return (
@@ -55,7 +41,6 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
       <input
         type="file"
         onChange={handleImageChange}
-        accept=".jpg,.jpeg,.png"
         id="profilepic"
         name="profilepic"
         className={classes.Profile_input}
