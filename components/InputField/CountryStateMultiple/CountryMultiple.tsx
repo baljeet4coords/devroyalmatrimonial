@@ -95,19 +95,23 @@ const CountryMultiple: React.FC<CountryProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.map((item, index) => {
-                return (
-                  <li
-                    key={item.isoCode}
-                    onClick={() => getClickedData(item, index)}
-                    className={
-                      HostedArray.includes(item) ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{item.name}</span>
-                  </li>
-                );
-              })}
+              {searchHostedArray.length > 1 ? (
+                searchHostedArray.map((item, index) => {
+                  return (
+                    <li
+                      key={item.isoCode}
+                      onClick={() => getClickedData(item, index)}
+                      className={
+                        HostedArray.includes(item) ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{item.name}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         </div>

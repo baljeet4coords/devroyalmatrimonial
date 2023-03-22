@@ -15,10 +15,13 @@ const SingleInput: React.FC<MyComponentProps> = ({
   onChange,
   defaultValues,
 }) => {
-  const combinedData = Object.entries(data).map(
+  const combinedData = Object?.entries(data).map(
     ([key, value]) => `${key}-${value}`
   );
-  const [HostedArray, updateHostedArray] = useState<string[]>(defaultValues ||  []);
+  
+  const [HostedArray, updateHostedArray] = useState<string[]>(
+    defaultValues || []
+  );
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
 

@@ -46,7 +46,7 @@ const DesiredProfilePage: React.FC = () => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-      dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
+    dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
@@ -161,7 +161,7 @@ const DesiredProfilePage: React.FC = () => {
     }
     response.data.output === 1 && console.log(1);
   };
-  
+
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
@@ -181,16 +181,32 @@ const DesiredProfilePage: React.FC = () => {
                   inputName={"Age"}
                   onDataFrom={setSelectedAgeFrom}
                   onDataTo={setSelectedAgeTo}
-                  defaultValueFrom={String(jsonData?.age_greater_than)}
-                  defaultValueTo={String(jsonData?.age_less_than)}
+                  defaultValueFrom={
+                    jsonData?.age_greater_than !== undefined
+                      ? String(jsonData?.age_greater_than)
+                      : "From"
+                  }
+                  defaultValueTo={
+                    jsonData?.age_less_than !== undefined
+                      ? String(jsonData?.age_less_than)
+                      : "To"
+                  }
                 />
                 <DoubleInput
                   data={HeighListInCms(100, 244)}
-                  inputName={"Height in cms"}
+                  inputName={"Height in feet"}
                   onDataFrom={setSelectedHeightFrom}
                   onDataTo={setSelectedHeightTo}
-                  defaultValueFrom={String(jsonData?.height_greater_than)}
-                  defaultValueTo={String(jsonData?.age_less_than)}
+                  defaultValueFrom={
+                    jsonData?.height_greater_than !== undefined
+                      ? String(jsonData?.height_greater_than)
+                      : "From"
+                  }
+                  defaultValueTo={
+                    jsonData?.height_less_than !== undefined
+                      ? String(jsonData?.height_less_than)
+                      : "To"
+                  }
                 />
                 <CountryMultiple
                   onChangeCountry={setCountry}

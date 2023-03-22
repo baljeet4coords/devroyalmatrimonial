@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/x-date-pickers": "^6.0.2",
     "@reduxjs/toolkit": "^1.9.2",
     "@syncfusion/ej2-base": "^20.4.51",
     "@syncfusion/ej2-react-progressbar": "^20.4.48",
