@@ -5,6 +5,7 @@ import { step3Saga } from "./regiserUser/step3";
 import { step4Saga } from "./regiserUser/step4";
 import { step5Saga } from "./regiserUser/step5";
 import { watchLogin, watchLogout, watchSignup } from "./auth/saga";
+import { partnerPrefferenceSaga } from "./partnerPreferrence";
 
 function* rootSaga() {
   yield all([
@@ -16,6 +17,7 @@ function* rootSaga() {
     step3Saga(),
     step4Saga(),
     step5Saga(),
+    partnerPrefferenceSaga(),
   ]);
 }
 
