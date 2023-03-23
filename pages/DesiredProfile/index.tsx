@@ -17,7 +17,7 @@ import {
   DietWith0,
   EducationTypeAndVal,
   ManglikWith0,
-  MaritalStatus0,
+  MaritalStatusWith0,
   MotherTongueWith0,
   OccupationWith0,
   ReadyToSettleAbroadWith0,
@@ -247,7 +247,7 @@ const DesiredProfilePage: React.FC = () => {
                   />
                 </div>
                 <SingleInput
-                  data={MaritalStatus0}
+                  data={MaritalStatusWith0}
                   inputName={"Marital Status"}
                   onChange={setMaritalStatus}
                   defaultValues={jsonData?.marital_status || []}

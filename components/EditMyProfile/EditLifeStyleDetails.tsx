@@ -90,10 +90,16 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
     selectedDrinking.id,
     selectedLovePets.id,
     selectedOwnsCar.id,
-    selectedOwnsCar.id,
     selectedBloodGroup.id,
     selectedThalassemia.id,
     formik.values,
+    selectedDiet.val,
+    selectedSmoking.val,
+    selectedDrinking.val,
+    selectedLovePets.val,
+    selectedOwnsCar.val,
+    selectedBloodGroup.val,
+    selectedThalassemia.val,
   ]);
 
   return (

@@ -115,7 +115,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           { ...values, actionType: "u" }
         );
       }
-      response.data.output === 1 && nextPage(1);
+      response.data.output > 0  && nextPage(1);
     },
   });
   const onChangeGender = (gender: string) => {
@@ -128,7 +128,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm || 100));
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -149,7 +148,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values,
     cm,
     feet,
-    setCm,
     jsonData?.height_cm,
   ]);
 
@@ -285,7 +283,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${cm} cms`}
+                        placeholder={`${jsonData?.height_cm || cm} cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

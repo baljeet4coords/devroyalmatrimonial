@@ -109,7 +109,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           { actionType: "u", ...values }
         );
       }
-      response.data.output === 1 && nextPage(3);
+      response.data.output > 0 && nextPage(3);
     },
   });
 

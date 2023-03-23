@@ -11,7 +11,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
   onChangeCity,
   defaultCity,
 }) => {
-  const cityOfState: ICity[] = City.getCitiesOfCountry("IN");
+  const cityOfState: ICity[] = City.getCitiesOfCountry("IN") || [];
   const elementRef = useRef<HTMLDivElement>(null);
   const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
   const [HostedArray, updateHostedArray] = useState<ICity[]>(

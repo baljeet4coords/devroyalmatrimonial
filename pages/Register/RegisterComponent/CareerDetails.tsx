@@ -85,7 +85,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
           { ...values, actionType: "u" }
         );
       }
-      response.data.output === 1 && nextPage(2);
+      response.data.output > 0 && nextPage(2);
     },
   });
 

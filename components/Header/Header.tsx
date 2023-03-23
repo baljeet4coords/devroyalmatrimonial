@@ -11,12 +11,30 @@ import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
 import ModalForm from "../HomeForm/ModalLogin";
+import { LoginType } from "../../ducks/auth/types";
+import { loginRequest } from "../../ducks/auth/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import router from "next/router";
 
-type ModalLoginProps = {
-  onSubmitForm: (values: SignInType) => void;
-};
-
-const Header: React.FC<ModalLoginProps> = ({ onSubmitForm }) => {
+const Header: React.FC = () => {
+  const authSuccess = useSelector(selectAuthSuccess);
+  if (authSuccess && authSuccess?.output === 1) {
+    if (
+      authSuccess?.jsonResponse?.user_status === "1" ||
+      authSuccess?.jsonResponse?.user_status === "R"
+    ) {
+      router.push("/Register/");
+    } else if (authSuccess?.jsonResponse?.user_status === "P") {
+      router.push("/DesiredProfile/");
+    } else {
+      router.push("/");
+    }
+  }
+  if (authSuccess && authSuccess?.output === 0) {
+    alert("Wrong Password");
+  }
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [stateSize, setSize] = useState(
     window.innerWidth <= 992 ? true : false
@@ -50,6 +68,9 @@ const Header: React.FC<ModalLoginProps> = ({ onSubmitForm }) => {
       }
     });
   }, []);
+  const onSubmitForm = (values: LoginType) => {
+    dispatch(loginRequest(values));
+  };
   return (
     <>
       <Navbar
