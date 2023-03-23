@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import {
   DropdownGridSingleSelect,
@@ -24,7 +24,6 @@ import {
   ReligionWith0,
   ResidentialStatusWith0,
   SmokeDrinkWith0,
-  isHivWith0,
 } from "../../types/enums";
 import CountryMultiple from "../../components/InputField/CountryStateMultiple/CountryMultiple";
 import StateMultiple from "../../components/InputField/CountryStateMultiple/StateMultiple";
@@ -332,22 +331,19 @@ const DesiredProfilePage: React.FC = () => {
                   onChange={setChildrenStatus}
                   defaultValues={jsonData?.children_status || []}
                 />
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"HIV"}
-                    data={isHivWith0}
-                    nameid={"HIV"}
-                    selectedDataFn={setHiv}
-                    defaultValue={jsonData?.HIV ? +jsonData?.HIV : 0}
+                <div className={classes.singleBox}>
+                  <Form.Label>HIV</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={jsonData?.HIV ? +jsonData?.HIV : "No"}
+                    disabled
                   />
                 </div>
-                <div>
-                  <StrictRadioCheck
-                    onSetFilters={setFilters}
-                    defaultValue={jsonData?.mandatory_fields || []}
-                  />
-                </div>
-                <Button className="mb-5" onClick={savePartnerPref}>
+                <StrictRadioCheck
+                  onSetFilters={setFilters}
+                  defaultValue={jsonData?.mandatory_fields || []}
+                />
+                <Button className="mb-5 mt-3 mx-auto" onClick={savePartnerPref}>
                   Save your preferrence
                 </Button>
               </form>

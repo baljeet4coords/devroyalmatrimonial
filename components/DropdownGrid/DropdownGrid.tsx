@@ -35,6 +35,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState<string[]>(combinedData);
   const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
+  const [placeholderVal, setPlaceholderVal] = useState("");
 
   const ref = useRef<any>();
   const elementRef = useRef<HTMLDivElement>(null);
@@ -44,11 +45,13 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
       item.toLowerCase().includes(query.toLowerCase())
     );
     setSearchedData(searched);
+    setPlaceholderVal(query);
   };
 
   const getClickedData = (data: Data) => {
     setSelectedData(data);
     selectedDataFn(data);
+    setPlaceholderVal(data.val);
     setActiveList(false);
   };
 
@@ -146,43 +149,42 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <Form.Control
             type="text"
             name={nameid}
-            placeholder={
-              selectedData.val.split("-")[0].replaceAll("_", " ") ||
-              (defaultValue && findKeyByValue(data, defaultValue)) ||
-              "Select Option"
-            }
-            defaultValue={
-              selectedData?.val &&
-              selectedData.val.split("-")[0].replaceAll("_", " ")
+            placeholder={"Select Option"}
+            value={
+              placeholderVal &&
+              placeholderVal.split("-")[0].replaceAll("_", " ")
             }
             onChange={(e) => searchDataFunc(e.target.value)}
             onClick={() => setActiveList(true)}
-            id={"dropGridInput"}
           />
         </li>
         {activeList && (
           <div className={`${classes.active}  ${classes.inputBoxVal}`}>
             <ul>
-              {searchedData.map((item) => {
-                const [name, id] = item.split("-");
-                return (
-                  <li
-                    key={id + name}
-                    onClick={() => {
-                      const unixID = findidOFSelect(name);
-                      getClickedData({
-                        val: item,
-                        id: unixID,
-                      });
-                    }}
-                    className={
-                      selectedData.val === item ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{name.replaceAll("_", " ")}</span>
-                  </li>
-                );
-              })}
+              {searchedData.length > 1 ? (
+                searchedData.map((item) => {
+                  const [name, id] = item.split("-");
+                  return (
+                    <li
+                      key={id + name}
+                      onClick={() => {
+                        const unixID = findidOFSelect(name);
+                        getClickedData({
+                          val: item,
+                          id: String(unixID),
+                        });
+                      }}
+                      className={
+                        selectedData.val === item ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{name.replaceAll("_", " ")}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         )}

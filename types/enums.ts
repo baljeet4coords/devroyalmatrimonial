@@ -30,14 +30,9 @@ export enum MaritalStatus {
   Widowed = "5",
   Annulled = "6",
 }
-<<<<<<< HEAD
-export enum MaritalStatus0 {
-  Doesnotmatter = "0",
-=======
 
 export enum MaritalStatusWith0 {
   DoesNotMarried = "0",
->>>>>>> 6c261bfdbb6e616c9d3abb6235123da817b3caa9
   NeverMarried = "1",
   AwaitingDivorce = "2",
   Separated = "3",
@@ -524,6 +519,7 @@ export enum FathersProfession {
 }
 
 export enum EducationTypeAndVal {
+  Do_Not_Matter = "0",
   B_Arch = "1",
   B_Des = "2",
   B_E_BTech = "3",

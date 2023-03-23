@@ -18,12 +18,18 @@ const SingleInput: React.FC<MyComponentProps> = ({
   const combinedData = Object?.entries(data).map(
     ([key, value]) => `${key}-${value}`
   );
-  
+
   const [HostedArray, updateHostedArray] = useState<string[]>(
     defaultValues || []
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (HostedArray.includes("0")&& HostedArray.length > 1 ) {
+      updateHostedArray(["0"])
+    }
+  }, [HostedArray]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -72,7 +78,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
               const [name, id] = combinedData[+uid].split("-");
               return (
                 <li key={id}>
-                  <span>{name}</span>
+                  <span>{name.replaceAll("_", " ")}</span>
                   <IoClose onClick={() => getClickedDeleteData(+uid)} />
                 </li>
               );
@@ -109,7 +115,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                       HostedArray.includes(id) ? classes.tabActive : ""
                     }
                   >
-                    <span>{name}</span>
+                    <span>{name.replaceAll("_", " ")}</span>
                   </li>
                 );
               })}

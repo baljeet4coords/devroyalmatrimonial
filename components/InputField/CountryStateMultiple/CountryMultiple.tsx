@@ -7,6 +7,16 @@ interface CountryProps {
   defaultCountry: number[];
   onChangeCountry: (country: number[]) => void;
 }
+
+interface ModifiedDataCountry {
+  currency: string;
+  flag: string;
+  isoCode: string;
+  latitude: string;
+  longitude: string;
+  phonecode: string;
+  name: string;
+}
 const CountryMultiple: React.FC<CountryProps> = ({
   defaultCountry,
   onChangeCountry,
@@ -20,28 +30,72 @@ const CountryMultiple: React.FC<CountryProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
+  const [searchInput, setSearchInput] = useState("");
+
+  // To add Does not Matter in cuntry ,state and city
+  useEffect(() => {
+    if (searchHostedArray[0].name != "Does Not Matter") {
+      const DoesNotMatter: ModifiedDataCountry = {
+        name: "Does Not Matter",
+        isoCode: "DNM",
+        flag: "DNM",
+        phonecode: "DNM",
+        currency: "DNM",
+        latitude: "DNM",
+        longitude: "DNM",
+      };
+      searchHostedArray.unshift(DoesNotMatter);
+    }
+  }, []);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = countries.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
+    setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
+  // For removeing the selcted item if Does not Matter is selected
+  const DoesNotMatterHandle = () => {
+    // console.log(countriesIds,"DoesNotMatterHandle Before");
+
+    if (countriesIds.length > 0 && countriesIds.includes(0)) {
+      // console.log("DoesNotMatterHandle After");
+
+      setCountriesIds([]);
+      setCountriesIds([0]);
+      updateHostedArray([searchHostedArray[0]]);
+    }
+  };
   const getClickedData = useCallback(
     (country: ICountry, countryIndex: number) => {
       if (!HostedArray.some((item) => Object.is(item, country))) {
-        setCountriesIds((prev) => [...prev, countryIndex]);
+        console.log(countriesIds, "countriesIds Before getclicked");
+        setCountriesIds((pre) => [...pre, countryIndex]);
         updateHostedArray((prevArray) => [...prevArray, country]);
+        console.log(countriesIds, "countriesIds after getclicked");
+        DoesNotMatterHandle();
+        setSearchInput("");
+        UpdatesearchHostedArray(countries);
       }
       onChangeCountry([...countriesIds, countryIndex]);
     },
     [HostedArray, countriesIds, onChangeCountry]
   );
 
-  const getClickedDeleteData = (isoCode: string) => {
+  const getClickedDeleteData = (isoCode: string, item: ModifiedDataCountry) => {
+    const itemname = String(item.name);
+    const getIndex = searchHostedArray.findIndex(
+      (obj) => obj.name === itemname
+    );
+    console.log(countriesIds, "Before");
+
+    const contryidsCode = countriesIds.filter((item) => item !== getIndex);
     const newArray = HostedArray.filter((item) => item.isoCode !== isoCode);
     updateHostedArray(newArray);
+    setCountriesIds(contryidsCode);
+    console.log(countriesIds, "After");
   };
 
   useEffect(() => {
@@ -72,7 +126,9 @@ const CountryMultiple: React.FC<CountryProps> = ({
               return (
                 <li key={item.isoCode}>
                   <span>{item.name}</span>
-                  <IoClose onClick={() => getClickedDeleteData(item.isoCode)} />
+                  <IoClose
+                    onClick={() => getClickedDeleteData(item.isoCode, item)}
+                  />
                 </li>
               );
             })}
@@ -82,6 +138,7 @@ const CountryMultiple: React.FC<CountryProps> = ({
                 placeholder={
                   HostedArray.length < 1 ? "Select Some Options" : ""
                 }
+                value={searchInput}
                 onChange={(e) => {
                   searchDataFunc(e.target.value);
                 }}

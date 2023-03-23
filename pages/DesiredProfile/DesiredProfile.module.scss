@@ -1,8 +1,7 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-  background: url("../../public/Images/cover-image-register.jpg") no-repeat
-    center center;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
   padding: 3rem 0 5rem 0;
   background-size: cover;
 }
@@ -69,6 +68,7 @@
   .form_wrapper {
     width: 50%;
     margin: auto;
+    position: relative;
 
     .formEdit {
       .twoBox {
@@ -156,9 +156,11 @@
 
       label {
         position: absolute;
-        margin: 1rem 0 0 -9rem;
         width: 130px;
         text-align: end;
+        left: -9rem;
+        top: 50%;
+        transform: translateY(-50%);
       }
 
       input {
@@ -180,9 +182,13 @@
 .singleDropDown {
   width: 97%;
   margin: 15px auto;
+  position: relative;
 }
+
 .singleBox {
   display: flex;
+  position: relative;
+
   div {
     width: 100%;
 
@@ -193,6 +199,7 @@
       cursor: pointer;
     }
   }
+
   .inputBox {
     border: 1px solid #d9d9d9;
     border-radius: 2px;
