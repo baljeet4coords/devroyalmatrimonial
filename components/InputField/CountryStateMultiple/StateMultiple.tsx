@@ -10,8 +10,8 @@ interface StateMultipleProps {
 
 interface ModifiedDataState {
   countryCode: string;
-  latitude: string;
-  longitude: string;
+  latitude?: string | null | undefined;
+  longitude?: string | null | undefined;
   name: string;
   isoCode: string;
 }
@@ -19,7 +19,17 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   onChangeState,
   defaultState,
 }) => {
-  const stateOfCountry: IState[] = State.getStatesOfCountry("IN");
+  const DoesNotMatter: ModifiedDataState = {
+    name: "Does Not Matter",
+    isoCode: "DNM",
+    countryCode: "DNM",
+    latitude: "DNM",
+    longitude: "DNM",
+  };
+  const stateOfCountry: IState[] = [
+    DoesNotMatter,
+    ...State.getStatesOfCountry("IN"),
+  ];
   const elementRef = useRef<HTMLDivElement>(null);
   const [statesIds, setStatesIds] = useState<number[]>(defaultState);
   const [HostedArray, updateHostedArray] = useState<IState[]>(
@@ -29,15 +39,10 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<IState[]>(stateOfCountry);
 
+  const [searchInput, setSearchInput] = useState("");
+
   useEffect(() => {
     if (searchHostedArray[0].name != "Does Not Matter") {
-      const DoesNotMatter: ModifiedDataState = {
-        name: "Does Not Matter",
-        isoCode: "DNM",
-        countryCode: "DNM",
-        latitude: "DNM",
-        longitude: "DNM",
-      };
       searchHostedArray.unshift(DoesNotMatter);
     }
   }, []);
@@ -46,22 +51,42 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
     const searchHostedArrays = stateOfCountry.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
+    setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
+  // For removeing the selcted item if Does not Matter is selected
+  useEffect(() => {
+    if (statesIds.length > 1 && statesIds.includes(0)) {
+      setStatesIds([0]);
+      updateHostedArray([searchHostedArray[0]]);
+    }
+  }, [statesIds]);
+
   const getClickedData = useCallback(
-    (state: IState, stateIndex: number) => {
+    (state: IState) => {
+      const getIndex = stateOfCountry.findIndex(
+        (obj) => obj.name === state.name
+      );
       if (!HostedArray.some((item) => Object.is(item, state))) {
-        setStatesIds((prev) => [...prev, stateIndex]);
+        setStatesIds((prev) => [...prev, getIndex]);
         updateHostedArray((prevArray: IState[]) => [...prevArray, state]);
+        setSearchInput("");
+        UpdatesearchHostedArray(stateOfCountry);
       }
-      onChangeState([...statesIds, stateIndex]);
+      onChangeState([...statesIds, getIndex ]);
     },
     [HostedArray, onChangeState, statesIds]
   );
-  const getClickedDeleteData = (isoCode: string) => {
+  const getClickedDeleteData = (isoCode: string, item: ModifiedDataState) => {
+    const itemname = String(item.name);
+    const getIndex = searchHostedArray.findIndex(
+      (obj) => obj.name === itemname
+    );
+    const stateidsCode = statesIds.filter((item) => item !== getIndex);
     const newArray = HostedArray.filter((item) => item.isoCode !== isoCode);
     updateHostedArray(newArray);
+    setStatesIds(stateidsCode);
   };
 
   useEffect(() => {
@@ -92,7 +117,9 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
               return (
                 <li key={item.isoCode}>
                   <span>{item.name}</span>
-                  <IoClose onClick={() => getClickedDeleteData(item.isoCode)} />
+                  <IoClose
+                    onClick={() => getClickedDeleteData(item.isoCode, item)}
+                  />
                 </li>
               );
             })}
@@ -102,6 +129,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
                 placeholder={
                   HostedArray.length < 1 ? "Select Some Options" : ""
                 }
+                value={searchInput}
                 onChange={(e) => {
                   searchDataFunc(e.target.value);
                 }}
@@ -115,19 +143,23 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.map((item, index) => {
-                return (
-                  <li
-                    key={item.countryCode + item.isoCode + item.name}
-                    onClick={() => getClickedData(item, index)}
-                    className={
-                      HostedArray.includes(item) ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{item.name}</span>
-                  </li>
-                );
-              })}
+              {searchHostedArray.length > 1 ? (
+                searchHostedArray.map((item, index) => {
+                  return (
+                    <li
+                      key={item.countryCode + item.isoCode + item.name}
+                      onClick={() => getClickedData(item)}
+                      className={
+                        HostedArray.includes(item) ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{item.name}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         </div>

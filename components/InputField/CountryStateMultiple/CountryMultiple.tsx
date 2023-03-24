@@ -57,29 +57,25 @@ const CountryMultiple: React.FC<CountryProps> = ({
   };
 
   // For removeing the selcted item if Does not Matter is selected
-  const DoesNotMatterHandle = () => {
-    // console.log(countriesIds,"DoesNotMatterHandle Before");
-
-    if (countriesIds.length > 0 && countriesIds.includes(0)) {
-      // console.log("DoesNotMatterHandle After");
-
-      setCountriesIds([]);
+  useEffect(() => {
+    if (countriesIds.length > 1 && countriesIds.includes(0)) {
       setCountriesIds([0]);
       updateHostedArray([searchHostedArray[0]]);
     }
-  };
+  }, [countriesIds]);
+
   const getClickedData = useCallback(
-    (country: ICountry, countryIndex: number) => {
+    (country: ICountry) => {
+      const getIndex = countries.findIndex(
+        (obj) => obj.name === country.name
+      );
       if (!HostedArray.some((item) => Object.is(item, country))) {
-        console.log(countriesIds, "countriesIds Before getclicked");
-        setCountriesIds((pre) => [...pre, countryIndex]);
+        setCountriesIds((pre) => [...pre, getIndex]);
         updateHostedArray((prevArray) => [...prevArray, country]);
-        console.log(countriesIds, "countriesIds after getclicked");
-        DoesNotMatterHandle();
         setSearchInput("");
         UpdatesearchHostedArray(countries);
       }
-      onChangeCountry([...countriesIds, countryIndex]);
+      onChangeCountry([...countriesIds, getIndex]);
     },
     [HostedArray, countriesIds, onChangeCountry]
   );
@@ -89,13 +85,11 @@ const CountryMultiple: React.FC<CountryProps> = ({
     const getIndex = searchHostedArray.findIndex(
       (obj) => obj.name === itemname
     );
-    console.log(countriesIds, "Before");
 
     const contryidsCode = countriesIds.filter((item) => item !== getIndex);
     const newArray = HostedArray.filter((item) => item.isoCode !== isoCode);
     updateHostedArray(newArray);
     setCountriesIds(contryidsCode);
-    console.log(countriesIds, "After");
   };
 
   useEffect(() => {
@@ -157,7 +151,7 @@ const CountryMultiple: React.FC<CountryProps> = ({
                   return (
                     <li
                       key={item.isoCode}
-                      onClick={() => getClickedData(item, index)}
+                      onClick={() => getClickedData(item)}
                       className={
                         HostedArray.includes(item) ? classes.tabActive : ""
                       }

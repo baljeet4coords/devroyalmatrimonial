@@ -109,7 +109,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
   const [hiv, setHiv] = useState<{ id: string; val: string }>({
-    id: jsonData?.HIV || "",
+    id: jsonData?.HIV ==="1" ? 'Yes' : "No" || "1",
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
@@ -335,7 +335,7 @@ const DesiredProfilePage: React.FC = () => {
                   <Form.Label>HIV</Form.Label>
                   <Form.Control
                     type="text"
-                    value={jsonData?.HIV ? +jsonData?.HIV : "No"}
+                    value={hiv.id}
                     disabled
                   />
                 </div>

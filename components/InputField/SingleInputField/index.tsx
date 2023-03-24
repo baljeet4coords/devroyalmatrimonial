@@ -26,8 +26,8 @@ const SingleInput: React.FC<MyComponentProps> = ({
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (HostedArray.includes("0")&& HostedArray.length > 1 ) {
-      updateHostedArray(["0"])
+    if (HostedArray.includes("0") && HostedArray.length > 1) {
+      updateHostedArray(["0"]);
     }
   }, [HostedArray]);
 
@@ -57,9 +57,10 @@ const SingleInput: React.FC<MyComponentProps> = ({
 
   const getClickedData = useCallback(
     ({ val, id }: { val: string; id: string }) => {
-      if (HostedArray.indexOf(id) === -1)
+      if (HostedArray.indexOf(id) === -1) {
         updateHostedArray((prevArray) => [...prevArray, id]);
-      onChange([...HostedArray, id]);
+        onChange([...HostedArray, id]);
+      }
     },
     [HostedArray, onChange]
   );
@@ -75,6 +76,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
         <div className={classes.inputBox}>
           <ul onClick={() => setActiveList(true)}>
             {HostedArray.map((uid: string) => {
+              console.log(uid);
               const [name, id] = combinedData[+uid].split("-");
               return (
                 <li key={id}>

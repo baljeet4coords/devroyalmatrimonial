@@ -9,8 +9,8 @@ interface CityMultiple {
 }
 interface ModifiedDataCity {
   countryCode: string;
-  latitude: string;
-  longitude: string;
+  latitude?: string | null;
+  longitude?: string | null;
   name: string;
   stateCode: string;
 }
@@ -18,7 +18,17 @@ const CityMultiple: React.FC<CityMultiple> = ({
   onChangeCity,
   defaultCity,
 }) => {
-  const cityOfState: ICity[] = City.getCitiesOfCountry("IN") || [];
+  const DoesNotMatter: ModifiedDataCity = {
+    name: "Does Not Matter",
+    countryCode: "DNM",
+    stateCode: "DNM",
+    latitude: "DNM",
+    longitude: "DNM",
+  };
+  const cityOfState: ICity[] = [
+    DoesNotMatter,
+    ...(City.getCitiesOfCountry("IN") || []),
+  ];
   const elementRef = useRef<HTMLDivElement>(null);
   const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
   const [HostedArray, updateHostedArray] = useState<ICity[]>(
@@ -28,16 +38,10 @@ const CityMultiple: React.FC<CityMultiple> = ({
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICity[]>(cityOfState);
 
-  // To add Does not Matter in cuntry ,state and city
+  const [searchInput, setSearchInput] = useState("");
+
   useEffect(() => {
     if (searchHostedArray[0].name != "Does Not Matter") {
-      const DoesNotMatter: ModifiedDataCity = {
-        name: "Does Not Matter",
-        countryCode: "DNM",
-        stateCode: "DNM",
-        latitude: "DNM",
-        longitude: "DNM",
-      };
       searchHostedArray.unshift(DoesNotMatter);
     }
   }, []);
@@ -46,22 +50,39 @@ const CityMultiple: React.FC<CityMultiple> = ({
     const searchHostedArrays = cityOfState.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
     );
+    setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
+  // For removeing the selcted item if Does not Matter is selected
+  useEffect(() => {
+    if (citiesIds.length > 1 && citiesIds.includes(0)) {
+      setCitiesIds([0]);
+      updateHostedArray([searchHostedArray[0]]);
+    }
+  }, [citiesIds]);
 
   const getClickedData = useCallback(
-    (city: ICity, cityIndex: number) => {
+    (city: ICity) => {
+      const getIndex = cityOfState.findIndex((obj) => obj.name === city.name);
       if (!HostedArray.some((item) => Object.is(item, city))) {
-        setCitiesIds((prev) => [...prev, cityIndex]);
+        setCitiesIds((prev) => [...prev, getIndex]);
         updateHostedArray((prevArray) => [...prevArray, city]);
+        setSearchInput("");
+        UpdatesearchHostedArray(cityOfState);
       }
-      onChangeCity([...citiesIds, cityIndex]);
+      onChangeCity([...citiesIds, getIndex]);
     },
     [HostedArray, citiesIds, onChangeCity]
   );
-  const getClickedDeleteData = (city: string) => {
+  const getClickedDeleteData = (city: string, item: ModifiedDataCity) => {
+    const itemname = String(item.name);
+    const getIndex = searchHostedArray.findIndex(
+      (obj) => obj.name === itemname
+    );
+    const cityidsCode = citiesIds.filter((item) => item !== getIndex);
     const newArray = HostedArray.filter((item) => item.name !== city);
     updateHostedArray(newArray);
+    setCitiesIds(cityidsCode);
   };
 
   useEffect(() => {
@@ -92,7 +113,9 @@ const CityMultiple: React.FC<CityMultiple> = ({
               return (
                 <li key={item.countryCode + item.name + item.stateCode}>
                   <span>{item.name}</span>
-                  <IoClose onClick={() => getClickedDeleteData(item.name)} />
+                  <IoClose
+                    onClick={() => getClickedDeleteData(item.name, item)}
+                  />
                 </li>
               );
             })}
@@ -102,6 +125,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
                 placeholder={
                   HostedArray.length < 1 ? "Select Some Options" : ""
                 }
+                value={searchInput}
                 onChange={(e) => {
                   searchDataFunc(e.target.value);
                 }}
@@ -119,7 +143,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
                 return (
                   <li
                     key={item.countryCode + item.name + item.stateCode}
-                    onClick={() => getClickedData(item, index)}
+                    onClick={() => getClickedData(item)}
                     className={
                       HostedArray.includes(item) ? classes.tabActive : ""
                     }
