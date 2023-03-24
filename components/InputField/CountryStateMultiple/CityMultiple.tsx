@@ -7,6 +7,13 @@ interface CityMultiple {
   onChangeCity: (city: number[]) => void;
   defaultCity: number[];
 }
+interface ModifiedDataCity {
+  countryCode: string;
+  latitude: string;
+  longitude: string;
+  name: string;
+  stateCode: string;
+}
 const CityMultiple: React.FC<CityMultiple> = ({
   onChangeCity,
   defaultCity,
@@ -20,6 +27,20 @@ const CityMultiple: React.FC<CityMultiple> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICity[]>(cityOfState);
+
+  // To add Does not Matter in cuntry ,state and city
+  useEffect(() => {
+    if (searchHostedArray[0].name != "Does Not Matter") {
+      const DoesNotMatter: ModifiedDataCity = {
+        name: "Does Not Matter",
+        countryCode: "DNM",
+        stateCode: "DNM",
+        latitude: "DNM",
+        longitude: "DNM",
+      };
+      searchHostedArray.unshift(DoesNotMatter);
+    }
+  }, []);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = cityOfState.filter((item) =>
@@ -60,7 +81,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preferred City</label>
+        <label>Preffered Indian City</label>
         <div className={classes.inputBox}>
           <ul
             onClick={() => {

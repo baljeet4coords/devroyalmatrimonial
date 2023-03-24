@@ -52,7 +52,7 @@ const CastDataList: React.FC<CastDataListProps> = ({
         {matchingOptions.map((option) => {
           if (option.length) {
             return option.map((item) => (
-              <option key={item.id} value={`${item.id}-${item.cast}`} />
+              <option key={item.id} value={`${item.cast}`} />
             ));
           }
           return null;

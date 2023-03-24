@@ -7,6 +7,14 @@ interface StateMultipleProps {
   onChangeState: (state: number[]) => void;
   defaultState: number[];
 }
+
+interface ModifiedDataState {
+  countryCode: string;
+  latitude: string;
+  longitude: string;
+  name: string;
+  isoCode: string;
+}
 const StateMultiple: React.FC<StateMultipleProps> = ({
   onChangeState,
   defaultState,
@@ -20,6 +28,19 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<IState[]>(stateOfCountry);
+
+  useEffect(() => {
+    if (searchHostedArray[0].name != "Does Not Matter") {
+      const DoesNotMatter: ModifiedDataState = {
+        name: "Does Not Matter",
+        isoCode: "DNM",
+        countryCode: "DNM",
+        latitude: "DNM",
+        longitude: "DNM",
+      };
+      searchHostedArray.unshift(DoesNotMatter);
+    }
+  }, []);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = stateOfCountry.filter((item) =>
@@ -60,7 +81,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preferred State</label>
+        <label>Preffered Indian State</label>
         <div className={classes.inputBox}>
           <ul
             onClick={() => {

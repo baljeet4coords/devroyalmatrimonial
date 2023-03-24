@@ -39,6 +39,15 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     dispatch(step4({ actionType: "v", userId: userId }));
   }, [dispatch, isReduxEmpty, userId]);
 
+  // when Render page go on the top of the page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
     id: string;
     val: string;

@@ -160,11 +160,29 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, selectedChildrenStatus.id, selectedMaritalStatus.id]);
 
+  //Render page go on the top of the page after completed the previeous step
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   useEffect(() => {
     if (selectedProfileFor.id === "1") {
       formik.values.profileHandlerName = formik.values.fullname;
     }
   }, [formik.values, formik.values.fullname, selectedProfileFor.id]);
+
+  // when select frofile for auto select gender on based of profilefor /
+  useEffect(() => {
+    if (selectedProfileFor.id === "2" || selectedProfileFor.id === "5") {
+      onChangeGender("1");
+    } else if (selectedProfileFor.id === "3" || selectedProfileFor.id === "4") {
+      onChangeGender("2");
+    }
+  }, [selectedProfileFor.id]);
 
   const selectedCast = (string: string) => {
     const id = string.split("-")[0];
@@ -309,7 +327,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   defaultValue={jsonData?.religion}
                 />
                 <DropdownGridSingleSelect
-                  title="Add Manglik"
+                  title="Manglik"
                   data={Manglik}
                   nameid="addmanglik"
                   selectedDataFn={setSelectedManglik}

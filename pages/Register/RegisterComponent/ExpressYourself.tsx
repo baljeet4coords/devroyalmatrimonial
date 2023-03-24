@@ -21,7 +21,16 @@ const ExpressYourself: React.FC = () => {
     dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
   console.log(isReduxEmpty);
-  
+
+  // when Render page go on the top of the page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       userId: userId,

@@ -30,6 +30,15 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
 
+  //Render page go on the top of the page after completed the previeous step
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, isReduxEmpty, userId]);
