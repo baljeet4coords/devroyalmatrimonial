@@ -11,8 +11,14 @@ import {
 
 import classes from "./LoginHeader.module.scss";
 import Link from "next/link";
+import CustomButton from "../Button/CustomButton";
+import router from "next/router";
+import storage from "redux-persist/es/storage";
+import { logoutRequest } from "../../ducks/auth/actions";
+import { useDispatch } from "react-redux";
 
 const LoginHeader: React.FC = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
 
@@ -29,13 +35,15 @@ const LoginHeader: React.FC = () => {
     });
   }, []);
 
+  const onLogout = () => {
+    dispatch(logoutRequest());
+    // storage.removeItem("persist:root");
+    router.push("/");
+  };
+
   return (
     <>
-      <Navbar
-        collapseOnSelect
-        expand="lg"
-        className={"p-0 color-light"}
-      >
+      <Navbar collapseOnSelect expand="lg" className={"p-0 color-light"}>
         <Container fluid className={`${classes.Navbar_Wrapper}`}>
           <Link href="/">
             <div className={classes.navBar_logo}>
@@ -120,7 +128,7 @@ const LoginHeader: React.FC = () => {
                   <Link href="/DesiredProfile">Desired Partner Profile</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li" className="text-center">
-                  <Link href="/">Sign Out</Link>
+                  <CustomButton onClick={onLogout}>Logout</CustomButton>
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>

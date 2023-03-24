@@ -162,7 +162,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                     const unixID = findidOFSelect(name);
                     getClickedData({
                       val: item,
-                      id: unixID,
+                      id: String(unixID),
                     });
                   }}
                   className={selectedData.val === item ? classes.tabActive : ""}

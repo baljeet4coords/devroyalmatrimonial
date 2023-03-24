@@ -49,7 +49,7 @@ const ExpressYourself: React.FC = () => {
           }
         );
       }
-      response.data.output === 1 && router.push("/DesiredProfile");
+      response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
 

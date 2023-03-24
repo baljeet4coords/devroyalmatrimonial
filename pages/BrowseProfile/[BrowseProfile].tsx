@@ -11,7 +11,6 @@ import classes from "./BrowseProfile.module.scss";
 import Link from "next/link";
 import ImageCard from "../../components/ImageCard/ImageCard";
 import { AiOutlineDoubleRight } from "react-icons/ai";
-import { SignUpFormValues } from "../../components/HomeForm/types";
 
 const BrowseProfile: NextPage = () => {
   const router = useRouter();

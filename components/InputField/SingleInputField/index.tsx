@@ -1,65 +1,121 @@
 import classes from "./SingleInput.module.scss";
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
- 
+
 interface MyComponentProps {
-    inputName: string;
-    postArray: string[];
-  }
-
-const SingleInput = (prop: MyComponentProps) => {
-    const [HostedArray, updateHostedArray] = useState<string[]>([]);
-    const [activeList, setActiveList] = useState<boolean>(false);
-    const [searchHostedArray, UpdatesearchHostedArray] = useState<string[]>(prop.postArray);
-    console.log(HostedArray);
-    
-
-    const searchDataFunc = (query: string) => {
-        const searchHostedArrays = prop.postArray.filter(country => country.toLowerCase().includes(query.toLowerCase()));
-        UpdatesearchHostedArray(searchHostedArrays);
-      }
-
-    const openList = (action: boolean) => {
-        setActiveList(action);
-    }
-
-    const getClickedData = (data: string) => {
-        if (HostedArray.indexOf(data) === -1)
-        updateHostedArray(prevArray => [...prevArray, data]);
-    }
-    const getClickedDeleteData = (data: number) => {
-        const newArray = HostedArray.filter((_, index) => index !== data);
-        updateHostedArray(newArray);
-      };
-
-    return (
-
-        <React.Fragment>
-            <div className={classes.singleBox} >
-                <label>{prop.inputName}</label>
-                <div className={classes.inputBox}  >
-                    <ul onClick={() => openList(true)}>
-                        {HostedArray.map((val: string, idd: number) => {
-                            return (
-                                <li key={val}><span>{val}</span><IoClose onClick={() => getClickedDeleteData(idd)} /></li>
-                            )
-                        })}
-                        <li className={classes.blankInput}><input type="text" placeholder={HostedArray.length < 1 ? "Select Some Options" : ""} onChange={(e) => searchDataFunc(e.target.value)} /></li>
-                    </ul>
-                    <div className={`${activeList ? classes.active : ''} ${classes.inputBoxVal}`}>
-                        <ul>
-                            {searchHostedArray.map((val: string, idd: number) => {
-                                return (
-                                    <li key={idd} onClick={() => getClickedData(val)} className={HostedArray.includes(val) ? classes.tabActive : ""}><span>{val}</span></li>
-                                )
-                            })}
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </React.Fragment>
-    )
+  inputName: string;
+  data: {};
+  onChange: (data: string[]) => void;
+  defaultValues: string[];
 }
+
+const SingleInput: React.FC<MyComponentProps> = ({
+  inputName,
+  data,
+  onChange,
+  defaultValues,
+}) => {
+  const combinedData = Object.entries(data).map(
+    ([key, value]) => `${key}-${value}`
+  );
+  const [HostedArray, updateHostedArray] = useState<string[]>(defaultValues ||  []);
+  const [activeList, setActiveList] = useState<boolean>(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        setActiveList(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef]);
+
+  const [searchHostedArray, UpdatesearchHostedArray] =
+    useState<string[]>(combinedData);
+
+  const searchDataFunc = (query: string) => {
+    const searchHostedArrays = Object.keys(data).filter((item) =>
+      item.toLowerCase().includes(query.toLowerCase())
+    );
+    UpdatesearchHostedArray(searchHostedArrays);
+  };
+
+  const getClickedData = useCallback(
+    ({ val, id }: { val: string; id: string }) => {
+      if (HostedArray.indexOf(id) === -1)
+        updateHostedArray((prevArray) => [...prevArray, id]);
+      onChange([...HostedArray, id]);
+    },
+    [HostedArray, onChange]
+  );
+  const getClickedDeleteData = (id: number) => {
+    const newArray = HostedArray.filter((item) => +item !== id);
+    updateHostedArray(newArray);
+  };
+
+  return (
+    <React.Fragment>
+      <div className={classes.singleBox} ref={elementRef}>
+        <label>{inputName}</label>
+        <div className={classes.inputBox}>
+          <ul onClick={() => setActiveList(true)}>
+            {HostedArray.map((uid: string) => {
+              const [name, id] = combinedData[+uid].split("-");
+              return (
+                <li key={id}>
+                  <span>{name}</span>
+                  <IoClose onClick={() => getClickedDeleteData(+uid)} />
+                </li>
+              );
+            })}
+            <li className={classes.blankInput}>
+              <input
+                type="text"
+                placeholder={
+                  HostedArray.length < 1 ? "Select Some Options" : ""
+                }
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+            </li>
+          </ul>
+          <div
+            className={`${activeList ? classes.active : ""} ${
+              classes.inputBoxVal
+            }`}
+            ref={elementRef}
+          >
+            <ul>
+              {searchHostedArray.map((item) => {
+                const [name, id] = item.split("-");
+                return (
+                  <li
+                    key={item}
+                    onClick={() =>
+                      getClickedData({
+                        val: item,
+                        id,
+                      })
+                    }
+                    className={
+                      HostedArray.includes(id) ? classes.tabActive : ""
+                    }
+                  >
+                    <span>{name}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default SingleInput;

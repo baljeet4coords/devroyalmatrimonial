@@ -23,6 +23,15 @@ export enum Gender {
 }
 
 export enum MaritalStatus {
+  NeverMarried = "1",
+  AwaitingDivorce = "2",
+  Separated = "3",
+  Divorced = "4",
+  Widowed = "5",
+  Annulled = "6",
+}
+
+export enum MaritalStatusWith0 {
   DoesNotMarried = "0",
   NeverMarried = "1",
   AwaitingDivorce = "2",
@@ -347,6 +356,12 @@ export enum Thalassemia {
 }
 
 export enum ChildrenStatus {
+  No = "1",
+  Yes_Livingtogether = "2",
+  Yes_LivingSeparatly = "3",
+}
+
+export enum ChildrenStatus0 {
   Doesnotmatter = "0",
   No = "1",
   Yes_Livingtogether = "2",
@@ -385,9 +400,12 @@ export enum Privacy_Setting {
 }
 
 export enum ChallengedWith0 {
-  Doesnotmatter = "0",
-  Yes = "1",
-  No = "2",
+  DoesNotMatter = "0",
+  None = "1",
+  Physically_Frombirth = "2",
+  Physically_Duetoaccident = "3",
+  Mentally_Frombirth = "4",
+  Mentally_Duetoaccident = "5",
 }
 
 export enum BrotherSisterWith0 {

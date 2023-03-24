@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
 import { CastList } from "../../../constants/CastList";
 import CastDataList from "../../../components/CastDataList/CastDataList";
-import { STEP_1 } from "../../../ducks/regiserUser/step1/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
@@ -104,8 +103,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     onSubmit: async (values) => {
       let response;
       if (isReduxEmpty === undefined) {
-        console.log(values,'form values');
-        
+        console.log(values, "form values");
+
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           { ...values, actionType: "c" }
@@ -116,9 +115,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           { ...values, actionType: "u" }
         );
       }
-      response.data.output === 1 && nextPage(1);
+      response.data.output > 0 && nextPage(1);
     },
   });
+
   const onChangeGender = (gender: string) => {
     setGender(gender);
     if (gender === "1") {
@@ -129,7 +129,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   };
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm || 100));
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -150,7 +149,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values,
     cm,
     feet,
-    setCm,
     jsonData?.height_cm,
   ]);
 
@@ -268,7 +266,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${cm} cms`}
+                        placeholder={`${jsonData?.height_cm || cm} cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

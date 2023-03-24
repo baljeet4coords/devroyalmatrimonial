@@ -20,7 +20,6 @@ import { RiLockLine } from "react-icons/ri";
 import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
-import { CountryList } from "../../constants/DesiredData";
 import { useSelector } from "react-redux";
 import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
 
@@ -88,8 +87,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     selectedchallenged,
     selectedIsHiv,
     selectedMotherTongue,
-    selectedMotherTongue,
     selectedManglik,
+    formik.values,
   ]);
 
   return (

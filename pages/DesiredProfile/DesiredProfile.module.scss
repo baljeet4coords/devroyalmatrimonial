@@ -1,224 +1,130 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-    background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
-    padding: 3rem 0 5rem 0;
-    background-size: cover;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
+  padding: 3rem 0 5rem 0;
+  background-size: cover;
 }
 
 .DesiredWrapper {
-    background: rgb(231, 230, 230);
-    padding-bottom: 10rem;
+  background: rgb(231, 230, 230);
+  padding-bottom: 10rem;
 
-    .innerWrapper {
-        width: 75%;
-        background-color: $milkWhite_bg;
-        padding: 0 6rem;
+  .innerWrapper {
+    width: 75%;
+    background-color: $milkWhite_bg;
+    padding: 0 6rem;
 
-        h1 {
-            font-size: 1.375rem;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        p {
-            padding: 1rem 0;
-            text-align: center;
-        }
-
-        .dark_box {
-            background-color: $dark_maroon_bg;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.1875rem;
-        }
-
-        .checkBox {
-            padding: 1.25rem 0;
-            ;
-            text-align: center;
-            font-size: 1.125rem;
-
-            div {
-                display: inline-block;
-                margin: 0 13px;
-            }
-
-            small {
-                font-size: 0.9375rem;
-                color: #999;
-                display: block;
-            }
-        }
+    h1 {
+      font-size: 1.375rem;
+      text-align: center;
+      padding: 2rem 0;
     }
 
-    .editInfo {
-        text-align: center;
-
-        span {
-            margin: 0 0.5rem;
-
-        }
-
-        span:nth-child(2) {
-            color: $red_txt;
-            cursor: pointer;
-        }
+    p {
+      padding: 1rem 0;
+      text-align: center;
     }
 
-
-    .form_wrapper {
-        width: 50%;
-        margin: auto;
-
-        .formEdit {
-            .twoBox {
-                display: flex;
-
-                div {
-                    width: 100%;
-
-                    svg {
-                        position: absolute;
-                        right: 15px;
-                        top: 40%;
-                    }
-                }
-
-                .inputBox {
-                    border: 1px solid #d9d9d9;
-                    border-radius: 2px;
-                    padding: 0.875rem 5.5rem;
-                    text-align: center;
-                    margin: 0.6em;
-                    color: $browser_text;
-                    cursor: pointer;
-                    position: relative;
-                    min-width: 275px;
-
-                    .inputBoxVal {
-                        visibility: hidden;
-                        border: 1px solid #d9d9d9;
-                        border-radius: 2px;
-                        padding: 0.875rem 1rem;
-                        text-align: center;
-                        margin: 0.6em;
-                        color: $browser_text;
-                        cursor: pointer;
-                        width: 100%;
-                        position: absolute;
-                        left: -9px;
-                        border: 1px solid $red_bg;
-                        background: $milkWhite_bg;
-                        box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-                        z-index: 9;
-
-                        ul {
-                            list-style: none;
-                            margin: 0;
-                            padding: 0 5px;
-                            width: 100%;
-                            max-height: 300px;
-                            overflow-x: hidden;
-                            overflow-y: scroll;
-                            cursor: text;
-                            display: grid;
-                            grid-template-columns: auto auto auto;
-
-                            li {
-                                position: relative;
-                                margin: 3px 5px 3px 0;
-                                padding: 10px 20px 10px 5px;
-                                border: 1px solid #d9d9d9;
-                                max-width: 100%;
-                                border-radius: 3px;
-                                background-color: #f5f5f5;
-                                line-height: 13px;
-                                cursor: default;
-
-                                &:hover {
-                                    background-color: #d9475c;
-                                    color: #fff
-                                }
-                            }
-
-                            .tabActive {
-                                background-color: #d9475c;
-                                color: #fff
-                            }
-                        }
-                    }
-                }
-            }
-
-            .input_max {
-                width: -webkit-fill-available;
-            }
-
-            label {
-                position: absolute;
-                margin: 1rem 0 0 -9rem;
-                width: 130px;
-                text-align: end;
-            }
-
-            input {
-                border: 1px solid #d9d9d9;
-                border-radius: 2px;
-                padding: 0.875rem 2.5rem;
-                text-align: center;
-                margin: 0.6em;
-
-                &:focus {
-                    outline: none;
-                }
-            }
-        }
+    .dark_box {
+      background-color: $dark_maroon_bg;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.1875rem;
     }
-}
 
-///single input box css
-.singleBox {
-    display: flex;
+    .checkBox {
+      padding: 1.25rem 0;
+      text-align: center;
+      font-size: 1.125rem;
 
-    div {
-        width: 100%;
+      div {
+        display: inline-block;
+        margin: 0 13px;
+      }
 
-        svg {
+      small {
+        font-size: 0.9375rem;
+        color: #999;
+        display: block;
+      }
+    }
+  }
+
+  .editInfo {
+    text-align: center;
+
+    span {
+      margin: 0 0.5rem;
+    }
+
+    span:nth-child(2) {
+      color: $red_txt;
+      cursor: pointer;
+    }
+  }
+
+  .form_wrapper {
+    width: 50%;
+    margin: auto;
+
+    .formEdit {
+      .twoBox {
+        display: flex;
+
+        div {
+          width: 100%;
+
+          svg {
             position: absolute;
-            right: 3px;
-            top: 20%;
-            cursor: pointer;
+            right: 15px;
+            top: 40%;
+          }
         }
-    }
 
-    .inputBox {
-        border: 1px solid #d9d9d9;
-        border-radius: 2px;
-        padding: 0.875rem 1rem;
-        text-align: center;
-        margin: 0.6em;
-        color: $browser_text;
-        cursor: pointer;
-        width: 100%;
-        position: relative;
-        min-width: 580px;
+        .inputBox {
+          border: 1px solid #d9d9d9;
+          border-radius: 2px;
+          padding: 0.875rem 5.5rem;
+          text-align: center;
+          margin: 0.6em;
+          color: $browser_text;
+          cursor: pointer;
+          position: relative;
+          min-width: 275px;
 
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0 5px;
+          .inputBoxVal {
+            visibility: hidden;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            padding: 0.875rem 1rem;
+            text-align: center;
+            margin: 0.6em;
+            color: $browser_text;
+            cursor: pointer;
             width: 100%;
-            max-height: 100px;
-            overflow-x: hidden;
-            // overflow-y: scroll;   
-            cursor: text;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            position: absolute;
+            left: -9px;
+            border: 1px solid $red_bg;
+            background: $milkWhite_bg;
+            box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+            z-index: 9;
 
-            li {
+            ul {
+              list-style: none;
+              margin: 0;
+              padding: 0 5px;
+              width: 100%;
+              max-height: 300px;
+              overflow-x: hidden;
+              overflow-y: scroll;
+              cursor: text;
+              display: grid;
+              grid-template-columns: auto auto auto;
+
+              li {
                 position: relative;
                 margin: 3px 5px 3px 0;
                 padding: 10px 20px 10px 5px;
@@ -228,342 +134,413 @@
                 background-color: #f5f5f5;
                 line-height: 13px;
                 cursor: default;
-                height: fit-content;
-            }
-        }
-    }
-
-    .blankInput {
-        border: none !important;
-        background: transparent !important;
-
-        input {
-            margin: 1px 0;
-            padding: 0;
-            height: 25px;
-            outline: 0;
-            border: 0 !important;
-            background: transparent !important;
-            box-shadow: none;
-            color: #999;
-            font-size: 100%;
-            font-family: sans-serif;
-            line-height: normal;
-            border-radius: 0;
-        }
-    }
-
-    .inputBoxVal {
-        visibility: hidden;
-        border: 1px solid #d9d9d9;
-        border-radius: 2px;
-        padding: 0.875rem 1rem;
-        text-align: center;
-        margin: 0.6em;
-        color: $browser_text;
-        cursor: pointer;
-        width: 100%;
-        position: absolute;
-        left: -9px;
-        border: 1px solid $red_bg;
-        background: $milkWhite_bg;
-        box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-        z-index: 9;
-
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0 5px;
-            width: 100%;
-            max-height: 300px;
-            cursor: default;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-
-            li {
-                position: relative;
-                margin: 3px 5px 3px 0;
-                padding: 10px 20px 10px 5px;
-                border: 1px solid #d9d9d9;
-                max-width: 100%;
-                border-radius: 3px;
-                background-color: #f5f5f5;
-                line-height: 13px;
-                cursor: pointer;
 
                 &:hover {
-                    background-color: #d9475c;
-                    color: #fff
+                  background-color: #d9475c;
+                  color: #fff;
                 }
-            }
+              }
 
-            .tabActive {
+              .tabActive {
                 background-color: #d9475c;
-                color: #fff
+                color: #fff;
+              }
             }
+          }
         }
+      }
+
+      .input_max {
+        width: -webkit-fill-available;
+      }
+
+      label {
+        position: absolute;
+        margin: 1rem 0 0 -9rem;
+        width: 130px;
+        text-align: end;
+      }
+
+      input {
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        padding: 0.875rem 2.5rem;
+        text-align: center;
+        margin: 0.6em;
+
+        &:focus {
+          outline: none;
+        }
+      }
     }
+  }
 }
 
+///single input box css
+.singleDropDown {
+  width: 97%;
+  margin: 15px auto;
+}
+.singleBox {
+  display: flex;
+  div {
+    width: 100%;
+
+    svg {
+      position: absolute;
+      right: 3px;
+      top: 20%;
+      cursor: pointer;
+    }
+  }
+  .inputBox {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1rem;
+    text-align: center;
+    margin: 0.6em;
+    color: $browser_text;
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    min-width: 580px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+      max-height: 100px;
+      overflow-x: hidden;
+      // overflow-y: scroll;
+      cursor: text;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      li {
+        position: relative;
+        margin: 3px 5px 3px 0;
+        padding: 10px 20px 10px 5px;
+        border: 1px solid #d9d9d9;
+        max-width: 100%;
+        border-radius: 3px;
+        background-color: #f5f5f5;
+        line-height: 13px;
+        cursor: default;
+        height: fit-content;
+      }
+    }
+  }
+
+  .blankInput {
+    border: none !important;
+    background: transparent !important;
+
+    input {
+      margin: 1px 0;
+      padding: 0;
+      height: 25px;
+      outline: 0;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none;
+      color: #999;
+      font-size: 100%;
+      font-family: sans-serif;
+      line-height: normal;
+      border-radius: 0;
+    }
+  }
+
+  .inputBoxVal {
+    visibility: hidden;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1rem;
+    text-align: center;
+    margin: 0.6em;
+    color: $browser_text;
+    cursor: pointer;
+    width: 100%;
+    position: absolute;
+    left: -9px;
+    border: 1px solid $red_bg;
+    background: $milkWhite_bg;
+    box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+    z-index: 9;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+      max-height: 300px;
+      cursor: default;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      li {
+        position: relative;
+        margin: 3px 5px 3px 0;
+        padding: 10px 20px 10px 5px;
+        border: 1px solid #d9d9d9;
+        max-width: 100%;
+        border-radius: 3px;
+        background-color: #f5f5f5;
+        line-height: 13px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #d9475c;
+          color: #fff;
+        }
+      }
+
+      .tabActive {
+        background-color: #d9475c;
+        color: #fff;
+      }
+    }
+  }
+}
 
 .active {
-    visibility: visible !important;
+  visibility: visible !important;
 }
-
-
-
-
-
-
-
-
 
 @media only screen and (max-width: 990px) and (min-width: 768px) {
-    .DesiredWrapper {
-        padding-bottom: 5rem;
+  .DesiredWrapper {
+    padding-bottom: 5rem;
 
-        .innerWrapper {
-            padding: 0px 2rem;
-        }
-
-        .formEdit {
-            width: 100%;
-
-            .twoBox {
-                flex-direction: column;
-                width: 100%;
-                align-items: start;
-
-                .inputBox {
-                    margin: 0.6em 0;
-                    text-align: inherit;
-                    padding: 0.8rem 2rem;
-                }
-
-                label {
-                    position: initial;
-                    text-align: start;
-                    margin: 0%;
-                }
-            }
-
-            .singleBox {
-                width: 100%;
-                flex-direction: column;
-                padding: 1rem 0;
-
-                label {
-                    position: absolute;
-                    margin: 1rem 0 0 -9rem;
-                    width: 130px;
-                    text-align: end;
-                    display: contents;
-                }
-
-                .inputBox {
-                    width: 100%;
-                    position: relative;
-                    padding: 0;
-                    margin: 0;
-                    min-width: unset;
-
-
-                    ul {
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
-                }
-            }
-        }
+    .innerWrapper {
+      padding: 0px 2rem;
     }
+
+    .formEdit {
+      width: 100%;
+
+      .twoBox {
+        flex-direction: column;
+        width: 100%;
+        align-items: start;
+
+        .inputBox {
+          margin: 0.6em 0;
+          text-align: inherit;
+          padding: 0.8rem 2rem;
+        }
+
+        label {
+          position: initial;
+          text-align: start;
+          margin: 0%;
+        }
+      }
+
+      .singleBox {
+        width: 100%;
+        flex-direction: column;
+        padding: 1rem 0;
+
+        label {
+          position: absolute;
+          margin: 1rem 0 0 -9rem;
+          width: 130px;
+          text-align: end;
+          display: contents;
+        }
+
+        .inputBox {
+          width: 100%;
+          position: relative;
+          padding: 0;
+          margin: 0;
+          min-width: unset;
+
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+  }
 }
 
-
 @media only screen and (max-width: 540px) and (min-width: 423px) {
-    .DesiredWrapper {
-        padding-bottom: 5rem;
+  .DesiredWrapper {
+    padding-bottom: 5rem;
 
-        .innerWrapper {
-            width: 90%;
-            padding: 0px 2rem;
-        }
-
-
-        .formEdit {
-            width: 100%;
-
-            .twoBox {
-                flex-direction: column;
-                width: 100%;
-                align-items: start;
-
-                .inputBox {
-                    margin: 0.6em 0;
-                    text-align: inherit;
-                    padding: 0.8rem 2rem;
-                }
-
-                label {
-                    position: initial;
-                    text-align: start;
-                    margin: 0%;
-                }
-            }
-
-            .singleBox {
-                width: 100%;
-                flex-direction: column;
-                padding: 1rem 0;
-
-                label {
-                    position: absolute;
-                    margin: 1rem 0 0 -9rem;
-                    width: 130px;
-                    text-align: end;
-                    display: contents;
-                }
-
-                .inputBox {
-                    width: 100%;
-                    position: relative;
-                    padding: 0;
-                    margin: 0;
-                    min-width: unset;
-
-
-                    ul {
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
-                }
-            }
-        }
+    .innerWrapper {
+      width: 90%;
+      padding: 0px 2rem;
     }
+
+    .formEdit {
+      width: 100%;
+
+      .twoBox {
+        flex-direction: column;
+        width: 100%;
+        align-items: start;
+
+        .inputBox {
+          margin: 0.6em 0;
+          text-align: inherit;
+          padding: 0.8rem 2rem;
+        }
+
+        label {
+          position: initial;
+          text-align: start;
+          margin: 0%;
+        }
+      }
+
+      .singleBox {
+        width: 100%;
+        flex-direction: column;
+        padding: 1rem 0;
+
+        label {
+          position: absolute;
+          margin: 1rem 0 0 -9rem;
+          width: 130px;
+          text-align: end;
+          display: contents;
+        }
+
+        .inputBox {
+          width: 100%;
+          position: relative;
+          padding: 0;
+          margin: 0;
+          min-width: unset;
+
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 415px) {
-    .DesiredWrapper {
-        padding-bottom: 5rem;
+  .DesiredWrapper {
+    padding-bottom: 5rem;
 
-        .innerWrapper {
-            width: 90%;
-            padding: 0px 2rem;
-        }
-
-
-        .formEdit {
-            width: 100%;
-
-            .twoBox {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-
-                .inputBox {
-                    width: 100%;
-                    text-align: start;
-                    padding: 0.5rem 1.7rem;
-                }
-
-                label {
-                    position: initial;
-                    text-align: start;
-                }
-            }
-
-            .singleBox {
-                width: 100%;
-                flex-direction: column;
-                padding: 1rem 0;
-
-                label {
-                    position: absolute;
-                    margin: 1rem 0 0 -9rem;
-                    width: 130px;
-                    text-align: end;
-                    display: contents;
-                }
-
-                .inputBox {
-                    width: 100%;
-                    position: relative;
-                    padding: 0;
-                    margin: 0;
-                    min-width: unset;
-
-
-                    ul {
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
-                }
-            }
-        }
+    .innerWrapper {
+      width: 90%;
+      padding: 0px 2rem;
     }
 
+    .formEdit {
+      width: 100%;
+
+      .twoBox {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+
+        .inputBox {
+          width: 100%;
+          text-align: start;
+          padding: 0.5rem 1.7rem;
+        }
+
+        label {
+          position: initial;
+          text-align: start;
+        }
+      }
+
+      .singleBox {
+        width: 100%;
+        flex-direction: column;
+        padding: 1rem 0;
+
+        label {
+          position: absolute;
+          margin: 1rem 0 0 -9rem;
+          width: 130px;
+          text-align: end;
+          display: contents;
+        }
+
+        .inputBox {
+          width: 100%;
+          position: relative;
+          padding: 0;
+          margin: 0;
+          min-width: unset;
+
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 300px) {
-    .DesiredWrapper {
-        padding-bottom: 5rem;
+  .DesiredWrapper {
+    padding-bottom: 5rem;
 
-        .innerWrapper {
-
-            .dark_box {
-                font-size: 0.9rem;
-            }
-        }
-
-
-        .formEdit {
-            .twoBox {
-                align-items: flex-start;
-
-
-                .inputBox {
-                    width: 100%;
-                    margin: 0.6rem 0;
-                    text-align: start;
-                    min-width: auto;
-                    padding: 0.5rem 1rem;
-                    font-size: 0.8rem;
-                }
-
-                label {
-                    width: auto;
-                    margin: 0%;
-                }
-            }
-
-            .singleBox {
-
-
-                .inputBox {
-                    width: 100%;
-                    position: relative;
-                    padding: 0;
-                    margin: 0;
-                    min-width: unset;
-
-
-                    ul {
-                        display: flex;
-                        flex-wrap: wrap;
-                        padding: 0%;
-
-                        li {
-                            padding: 0.5rem 1rem;
-
-                            input {
-                                text-align: start;
-                                font-size: 0.8rem;
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    .innerWrapper {
+      .dark_box {
+        font-size: 0.9rem;
+      }
     }
+
+    .formEdit {
+      .twoBox {
+        align-items: flex-start;
+
+        .inputBox {
+          width: 100%;
+          margin: 0.6rem 0;
+          text-align: start;
+          min-width: auto;
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+        }
+
+        label {
+          width: auto;
+          margin: 0%;
+        }
+      }
+
+      .singleBox {
+        .inputBox {
+          width: 100%;
+          position: relative;
+          padding: 0;
+          margin: 0;
+          min-width: unset;
+
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0%;
+
+            li {
+              padding: 0.5rem 1rem;
+
+              input {
+                text-align: start;
+                font-size: 0.8rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

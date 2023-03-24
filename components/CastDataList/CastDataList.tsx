@@ -18,22 +18,21 @@ const CastDataList: React.FC<CastDataListProps> = ({
     selectedOption(event.target.value);
   };
 
-  const defaultResult = () => {
-    const result = options.find((obj) => {
-      return obj.list.some((item) => item.id === defaultValue);
-    });
-    if (result) {
-      const resultObj = result.list.find((item) => item.id === defaultValue);
-      return resultObj?.cast;
-    }
-    return "";
-  };
-
   useEffect(() => {
+    const defaultResult = () => {
+      const result = options.find((obj) => {
+        return obj.list.some((item) => item.id === defaultValue);
+      });
+      if (result) {
+        const resultObj = result.list.find((item) => item.id === defaultValue);
+        return resultObj?.cast;
+      }
+      return "";
+    };
     if (defaultResult()) {
       setInputValue(defaultResult() ?? "");
     }
-  }, [defaultResult()]);
+  }, [defaultValue, options]);
 
   const matchingOptions = options.map((option) =>
     option.list.filter((item) =>
