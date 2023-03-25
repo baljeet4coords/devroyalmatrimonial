@@ -1,8 +1,10 @@
 @import "../../../styles/constants.scss";
+
 ///single input box css
 .singleBox {
   display: flex;
   position: relative;
+
   div {
     width: 100%;
 
@@ -129,4 +131,48 @@
 
 .active {
   visibility: visible !important;
+}
+
+
+
+@media only screen and (max-width: 1200px) and (min-width: 991px) {
+  .singleBox {
+    width: 100%;
+
+    .inputBox {
+      min-width: auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+  .singleBox {
+    flex-direction: column;
+
+    .inputBox {
+      margin: 0.6rem 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 300px) {
+  .singleBox {
+    flex-direction: column;
+
+    .inputBox {
+      margin: 0.6rem 0;
+      min-width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .singleBox {
+    flex-direction: column;
+
+    .inputBox {
+      min-width: 100%;
+      margin: 0.6rem 0;
+    }
+  }
 }
