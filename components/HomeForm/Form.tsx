@@ -3,7 +3,7 @@ import classes from "./Form.module.scss";
 import { useFormik } from "formik";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { SignupSchema } from "../../schemas/signupSchema";
-import Errors from "../Errors/signUpErrors";
+import { Errors } from "../";
 import { SignUpType } from "../../types/authentication";
 
 export interface SignUpForm {

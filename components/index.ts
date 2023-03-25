@@ -16,6 +16,7 @@ import GenderRadioButtons from "./GenderRadioButtons/GenderRadioButtons";
 import AvatarPicker from "./AvatarPicker/AvatarPicker";
 import CountryStateCitlyList from "./CountryStateCityList/CountryStateCityList";
 import StrictRadioCheck from "./StrictRadioCheck/StrictRadioCheck";
+import Errors from "./Errors/Errors";
 
 export {
   Header,
@@ -36,4 +37,5 @@ export {
   AvatarPicker,
   CountryStateCitlyList,
   StrictRadioCheck,
+  Errors,
 };

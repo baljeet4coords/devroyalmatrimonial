@@ -20,6 +20,20 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   selectedDataFn,
   defaultValue,
 }) => {
+  const elementRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        setActiveList(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef]);
   const findKeyByValue = (obj: any, value: number): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {
@@ -158,36 +172,36 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             onClick={() => setActiveList(true)}
           />
         </li>
-        {activeList && (
-          <div className={`${classes.active}  ${classes.inputBoxVal}`}>
-            <ul>
-              {searchedData.length > 1 ? (
-                searchedData.map((item) => {
-                  const [name, id] = item.split("-");
-                  return (
-                    <li
-                      key={id + name}
-                      onClick={() => {
-                        const unixID = findidOFSelect(name);
-                        getClickedData({
-                          val: item,
-                          id: String(unixID),
-                        });
-                      }}
-                      className={
-                        selectedData.val === item ? classes.tabActive : ""
-                      }
-                    >
-                      <span>{name.replaceAll("_", " ")}</span>
-                    </li>
-                  );
-                })
-              ) : (
-                <span>No Data Found</span>
-              )}
-            </ul>
-          </div>
-        )}
+        <div
+          className={`${activeList ? classes.active : ""} ${
+            classes.inputBoxVal
+          }`}
+        >
+          <ul>
+            {searchedData.map((item) => {
+              const [name, id] = item.split("-");
+              const clearName = name
+                .replace(/_/g, " ")
+                .replace(/plus/g, "+")
+                .replace(/negative/g, "-");
+              return (
+                <li
+                  key={item}
+                  onClick={() => {
+                    const unixID = findidOFSelect(name);
+                    getClickedData({
+                      val: item,
+                      id: String(unixID),
+                    });
+                  }}
+                  className={selectedData.val === item ? classes.tabActive : ""}
+                >
+                  <span>{clearName}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );

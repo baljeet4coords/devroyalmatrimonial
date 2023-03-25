@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 interface Errors {
   error: string;
 }
-const SignUpError: React.FC<Errors> = ({ error }) => {
+const Errors: React.FC<Errors> = ({ error }) => {
   return (
     <div className="py-2">
       <Image src="./error.png" alt="error" className="pe-1" />
@@ -12,4 +12,4 @@ const SignUpError: React.FC<Errors> = ({ error }) => {
   );
 };
 
-export default SignUpError;
+export default Errors;

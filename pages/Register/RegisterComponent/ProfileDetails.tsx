@@ -41,11 +41,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
-    setGender(jsonData?.gender === "M" ? "1" : "2");
-  }, [dispatch, jsonData?.gender, userId]);
+  }, [dispatch, userId]);
 
-  const { feet, cm, setCm, handleFeetChange, handleCmChange } =
-    useHeightConverter();
+  useEffect(() => {
+    setGender(jsonData?.gender === "M" ? "1" : "2");
+  }, [jsonData?.gender]);
+  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
     id: string;
     val: string;
@@ -80,7 +81,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }>({ id: String(jsonData?.children_status), val: "" });
 
   const [gender, setGender] = useState<string>("");
-
+  const [image, setImage] = useState<Blob | null>(null);
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -101,21 +102,52 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       profilepic: jsonData?.photo,
     },
     onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append("userId", String(values.userId));
+      formData.append("profilefor", String(values.profilefor));
+      formData.append("profileHandlerName", String(values.profileHandlerName));
+      formData.append("dob", String(values.dob));
+      formData.append("selectgender", String(values.selectgender));
+      formData.append("fullname", String(values.fullname));
+      formData.append("cast", String(values.cast));
+      formData.append("challenged", String(values.challenged));
+      formData.append("isHiv", String(values.isHiv));
+      formData.append("mothertongue", String(values.mothertongue));
+      formData.append("religion", String(values.religion));
+      formData.append("isManglik", String(values.isManglik));
+      formData.append("maritalstatus", String(values.maritalstatus));
+      formData.append("childrenstatus", String(values.childrenstatus));
+      formData.append("height", String(values.height));
+      formData.append("profilepic", String(values.profilepic));
+      formData.append("image", image);
       let response;
       if (isReduxEmpty === undefined) {
-        console.log(values, "form values");
-
-        response = await axios.post(
+        formData.append("actionType", "c");
+        (response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "c" }
-        );
+          formData
+        )),
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
       } else {
-        response = await axios.post(
+        formData.append("actionType", "u");
+        (response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          { ...values, actionType: "u" }
-        );
+          formData
+        )),
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
       }
-      response.data.output > 0 && nextPage(1);
+      if (response.data.output === 1) {
+        dispatch(step1({ actionType: "v", userId: userId }));
+        nextPage(1);
+      }
     },
   });
 
@@ -127,6 +159,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
+  console.log(jsonData);
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id;
@@ -136,7 +169,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.religion = selectedReligion.id;
     formik.values.isManglik = selectedManglik.id;
     formik.values.maritalstatus = selectedMaritalStatus.id;
-    formik.values.height = cm;
+    formik.values.height = String(jsonData?.height_cm) || cm;
   }, [
     selectedProfileFor.id,
     selectedChallenged.id,
@@ -148,7 +181,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedChildrenStatus.id,
     formik.values,
     cm,
-    feet,
     jsonData?.height_cm,
   ]);
 
@@ -175,22 +207,24 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, formik.values.fullname, selectedProfileFor.id]);
 
-  // when select frofile for auto select gender on based of profilefor /
   useEffect(() => {
-    if (selectedProfileFor.id === "2" || selectedProfileFor.id === "5") {
-      onChangeGender("1");
-    } else if (selectedProfileFor.id === "3" || selectedProfileFor.id === "4") {
-      onChangeGender("2");
+    if (selectedProfileFor?.id == "2" || selectedProfileFor?.id == "5") {
+      formik.values.selectgender = "M";
     }
-  }, [selectedProfileFor.id]);
+    if (selectedProfileFor?.id == "3" || selectedProfileFor?.id == "4") {
+      formik.values.selectgender = "F";
+    }
+  }, [formik.values, selectedProfileFor]);
 
   const selectedCast = (string: string) => {
     const id = string.split("-")[0];
     formik.values.cast = id;
   };
-  const profilePicture = ({ name, image }: { name: string; image: string }) => {
-    formik.values.profilepic = name;
+  const profilePicture = (imageName: string, file: null | Blob) => {
+    formik.values.profilepic = imageName;
+    file && setImage(file);
   };
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -278,9 +312,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   />
                 </div>
                 <div className={classes.singleBox}>
-                  <Form.Label>Height</Form.Label>
+                  <Form.Label>Height in centimeters</Form.Label>
                   <div className={classes.inputBox}>
-                    <li className={`${classes.blankInput} d-flex`}>
+                    <li className={`${classes.blankInput}`}>
                       <Form.Control
                         name="heightincms"
                         type="text"
@@ -288,10 +322,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />
+                    </li>
+                  </div>
+                </div>
+                <div className={classes.singleBox}>
+                  <Form.Label>Height in feet</Form.Label>
+                  <div className={classes.inputBox}>
+                    <li className={`${classes.blankInput}`}>
                       <Form.Control
                         name="height"
                         type="text"
-                        placeholder={`${feet} ft.`}
+                        placeholder={`${feet} feet`}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
                       />

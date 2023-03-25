@@ -16,9 +16,12 @@ import router from "next/router";
 import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getProfilePicture } from "../../ducks/regiserUser/step1/selectors";
 
 const LoginHeader: React.FC = () => {
   const dispatch = useDispatch();
+  const profilePicture = useSelector(getProfilePicture);
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
 
@@ -37,10 +40,9 @@ const LoginHeader: React.FC = () => {
 
   const onLogout = () => {
     dispatch(logoutRequest());
-    // storage.removeItem("persist:root");
     router.push("/");
   };
-
+    
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className={"p-0 color-light"}>
@@ -108,7 +110,7 @@ const LoginHeader: React.FC = () => {
                   <Link href="/SearchPage">
                     <Image
                       className={classes.circleImg}
-                      src="/Images/circle_header_icon.jpg"
+                      src={`${process.env.NEXT_PUBLIC_URL}/${profilePicture}`}
                       alt="avatar"
                     />
                   </Link>

@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
+import { Image } from "react-bootstrap";
 
 type Avatar = {
   name: string;
@@ -9,18 +10,21 @@ type Avatar = {
 };
 
 interface AvatarPickerProps {
-  onGetAvatar: ({ name, image }: { name: string; image: string }) => void;
+  onGetAvatar: (name: string, file: Blob | null) => void;
 }
 
 const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
+  const [fileExt, setFilExt] = useState<string>("");
   const [scale, setScale] = useState<number>(1);
   const editorRef = useRef<AvatarEditor | null>(null);
+  const [croppedImage, setCroppedImage] = useState<string>("");
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setFileName(String(file?.lastModified));
+    setFilExt(file?.type.split("/")[1] || "");
     if (!file) return;
 
     const reader = new FileReader();
@@ -31,9 +35,14 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
   };
 
   const handleSave = () => {
+    const imageName = `${fileName}.${fileExt}`;
     if (!editorRef.current) return;
     const canvas = editorRef.current.getImage().toDataURL();
-    onGetAvatar({ name: fileName, image: canvas });
+    const canvasBlob = editorRef.current.getImageScaledToCanvas();
+    canvasBlob.toBlob((blob) => {
+      onGetAvatar(imageName, blob);
+    });
+    setCroppedImage(canvas);
   };
 
   return (
@@ -58,6 +67,9 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
           onImageReady={() => setScale(1)}
           className={classes.canvasIMG}
         />
+      )}
+      {croppedImage && (
+        <Image src={croppedImage} alt="avatar" className="w-100" />
       )}
       {image && (
         <div className={classes.BtnDiv}>
