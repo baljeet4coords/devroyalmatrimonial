@@ -18,7 +18,17 @@ import { selectAuthSuccess } from "../../ducks/auth/selectors";
 import router from "next/router";
 
 const Header: React.FC = () => {
+  const [errors, setErrors] = useState<string>("");
   const authSuccess = useSelector(selectAuthSuccess);
+  useEffect(() => {
+    if (!authSuccess?.status) {
+      setErrors("No user with this credentials can be found");
+    }
+    if (authSuccess && authSuccess?.output === 0) {
+      setErrors("Wrong Password");
+    }
+  }, [authSuccess]);
+
   if (authSuccess && authSuccess?.output === 1) {
     if (
       authSuccess?.jsonResponse?.user_status === "1" ||
@@ -31,9 +41,7 @@ const Header: React.FC = () => {
       router.push("/");
     }
   }
-  if (authSuccess && authSuccess?.output === 0) {
-    alert("Wrong Password");
-  }
+
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [stateSize, setSize] = useState(
@@ -153,6 +161,7 @@ const Header: React.FC = () => {
         <ModalForm
           onCloseModal={() => setShowLoginModal(false)}
           onSubmitForm={onSubmitForm}
+          errors={errors}
         />
       )}
     </>

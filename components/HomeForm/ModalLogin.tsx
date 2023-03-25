@@ -5,14 +5,17 @@ import { useState } from "react";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { useFormik } from "formik";
 import { LoginType } from "../../ducks/auth/types";
+import Errors from "../Errors/Errors";
 
 type ModalLoginProps = {
   onCloseModal: () => void;
+  errors: string;
   onSubmitForm: (values: LoginType) => void;
 };
 
 const ModalForm: React.FC<ModalLoginProps> = ({
   onCloseModal,
+  errors,
   onSubmitForm,
 }) => {
   const [loginWithEmail, setLoginWithEmail] = useState(false);
@@ -33,7 +36,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
       onSubmitForm({ ...values, from: loginWithEmail ? "email" : "mobile" });
     },
   });
-  
+
   return (
     <div className={classes.modal_form}>
       <Form onSubmit={formik.handleSubmit}>
@@ -112,6 +115,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
             onChange={formik.handleChange}
           />
         </Form.Group>
+        {errors && <Errors error={errors} />}
         <Link
           className={`${classes.modal_links} d-flex justify-content-center mb-3`}
           href="/"

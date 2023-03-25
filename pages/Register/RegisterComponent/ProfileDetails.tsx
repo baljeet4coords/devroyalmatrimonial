@@ -30,13 +30,17 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
-
+interface Data {
+  id?: string;
+  val: string;
+}
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const userId = useSelector(getUserId);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
+
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
@@ -46,39 +50,44 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   useEffect(() => {
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
-  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
-  const [selectedProfileFor, setSelectedProfileFor] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.profile_for), val: "" });
-  const [selectedChallenged, setSelectedChallenged] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.challenged), val: "" });
-  const [selectedIsHiv, setSelectedIsHiv] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.hiv), val: "" });
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.mother_tongue), val: "" });
-  const [selectedReligion, setSelectedReligion] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.religion), val: "" });
-  const [selectedManglik, setSelectedManglik] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.manglik), val: "" });
-  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.marital_status), val: "" });
-  const [selectedChildrenStatus, setSelectedChildrenStatus] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.children_status), val: "" });
+  const { feet, cm, handleFeetChange, setCm, handleCmChange } =
+    useHeightConverter();
+
+  useEffect(() => {
+    setCm(String(jsonData?.height_cm) || "");
+  }, [jsonData?.height_cm, setCm]);
+  const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
+    id: String(jsonData?.profile_for),
+    val: "",
+  });
+  const [selectedChallenged, setSelectedChallenged] = useState<Data>({
+    id: String(jsonData?.challenged),
+    val: "",
+  });
+  const [selectedIsHiv, setSelectedIsHiv] = useState<Data>({
+    id: String(jsonData?.hiv),
+    val: "",
+  });
+  const [selectedMotherTongue, setSelectedMotherTongue] = useState<Data>({
+    id: String(jsonData?.mother_tongue),
+    val: "",
+  });
+  const [selectedReligion, setSelectedReligion] = useState<Data>({
+    id: String(jsonData?.religion),
+    val: "",
+  });
+  const [selectedManglik, setSelectedManglik] = useState<Data>({
+    id: String(jsonData?.manglik),
+    val: "",
+  });
+  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<Data>({
+    id: String(jsonData?.marital_status),
+    val: "",
+  });
+  const [selectedChildrenStatus, setSelectedChildrenStatus] = useState<Data>({
+    id: String(jsonData?.children_status),
+    val: "",
+  });
 
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | null>(null);
@@ -144,8 +153,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
             },
           };
       }
-      if (response.data.output === 1) {
-        dispatch(step1({ actionType: "v", userId: userId }));
+      if (response.data.output === 0) {
         nextPage(1);
       }
     },
@@ -159,18 +167,21 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
-  console.log(jsonData);
 
   useEffect(() => {
-    formik.values.profilefor = selectedProfileFor.id;
-    formik.values.challenged = selectedChallenged.id;
-    formik.values.isHiv = selectedIsHiv.id;
-    formik.values.mothertongue = selectedMotherTongue.id;
-    formik.values.religion = selectedReligion.id;
-    formik.values.isManglik = selectedManglik.id;
-    formik.values.maritalstatus = selectedMaritalStatus.id;
-    formik.values.height = String(jsonData?.height_cm) || cm;
+    formik.values.profilefor = selectedProfileFor.id || "";
+    formik.values.challenged = selectedChallenged.id || "";
+    formik.values.isHiv = selectedIsHiv.id || "";
+    formik.values.mothertongue = selectedMotherTongue.id || "";
+    formik.values.religion = selectedReligion.id || "";
+    formik.values.isManglik = selectedManglik.id || "";
+    formik.values.maritalstatus = selectedMaritalStatus.id || "";
+    formik.values.height = cm;
+    formik.values.profilepic = jsonData?.photo || "";
   }, [
+    jsonData,
+    formik.values,
+    cm,
     selectedProfileFor.id,
     selectedChallenged.id,
     selectedIsHiv.id,
@@ -178,21 +189,18 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedReligion.id,
     selectedManglik.id,
     selectedMaritalStatus.id,
-    selectedChildrenStatus.id,
-    formik.values,
-    cm,
-    jsonData?.height_cm,
   ]);
 
   useEffect(() => {
-    if (selectedMaritalStatus.id <= "2") {
-      formik.values.childrenstatus = "1";
-    } else {
-      formik.values.childrenstatus = selectedChildrenStatus.id;
+    if (selectedMaritalStatus.id) {
+      if (selectedMaritalStatus?.id <= "2") {
+        formik.values.childrenstatus = "1";
+      } else {
+        formik.values.childrenstatus = selectedChildrenStatus.id || "";
+      }
     }
   }, [formik.values, selectedChildrenStatus.id, selectedMaritalStatus.id]);
 
-  //Render page go on the top of the page after completed the previeous step
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -239,7 +247,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   data={ProfileFor}
                   nameid="profilefor"
                   selectedDataFn={setSelectedProfileFor}
-                  defaultValue={jsonData?.profile_for}
+                  defaultValue={String(jsonData?.profile_for)}
                 />
                 {selectedProfileFor?.id !== "1" && (
                   <div className={classes.singleBox}>
@@ -299,7 +307,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Form.Label>Upload Profile Picture</Form.Label>
                   <div className={classes.inputBox}>
                     <li className={classes.blankInput}>
-                      <AvatarPicker onGetAvatar={profilePicture} />
+                      <AvatarPicker
+                        onGetAvatar={profilePicture}
+                        defaultImage={`${process.env.NEXT_PUBLIC_URL}/${jsonData?.photo}`}
+                      />
                     </li>
                   </div>
                 </div>
@@ -344,42 +355,42 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   data={Challenged}
                   nameid="challenged"
                   selectedDataFn={setSelectedChallenged}
-                  defaultValue={jsonData?.challenged}
+                  defaultValue={String(jsonData?.challenged)}
                 />
                 <DropdownGridSingleSelect
                   title="HIV"
                   data={isHiv}
                   nameid="hiv"
                   selectedDataFn={setSelectedIsHiv}
-                  defaultValue={jsonData?.hiv}
+                  defaultValue={String(jsonData?.hiv)}
                 />
                 <DropdownGridSingleSelect
                   title="Mother Tongue"
                   data={MotherTongue}
                   nameid="mothertongue"
                   selectedDataFn={setSelectedMotherTongue}
-                  defaultValue={jsonData?.mother_tongue}
+                  defaultValue={String(jsonData?.mother_tongue)}
                 />
                 <DropdownGridSingleSelect
                   title="Religion"
                   data={Religion}
                   nameid="religion"
                   selectedDataFn={setSelectedReligion}
-                  defaultValue={jsonData?.religion}
+                  defaultValue={String(jsonData?.religion)}
                 />
                 <DropdownGridSingleSelect
                   title="Manglik"
                   data={Manglik}
                   nameid="addmanglik"
                   selectedDataFn={setSelectedManglik}
-                  defaultValue={jsonData?.manglik}
+                  defaultValue={String(jsonData?.manglik)}
                 />
                 <DropdownGridSingleSelect
                   title="Marital Status"
                   data={MaritalStatus}
                   nameid="maritalstatus"
                   selectedDataFn={setSelectedMaritalStatus}
-                  defaultValue={jsonData?.marital_status}
+                  defaultValue={String(jsonData?.marital_status)}
                 />
                 {selectedMaritalStatus.id >= "2" && (
                   <DropdownGridSingleSelect
@@ -387,7 +398,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     data={ChildrenStatus}
                     nameid="childrenstatus"
                     selectedDataFn={setSelectedChildrenStatus}
-                    defaultValue={jsonData?.children_status}
+                    defaultValue={String(jsonData?.children_status)}
                   />
                 )}
                 <Button

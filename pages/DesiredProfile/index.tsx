@@ -69,9 +69,10 @@ const DesiredProfilePage: React.FC = () => {
   const [occupation, setOccupation] = useState<string[]>(
     jsonData?.occupation || []
   );
-  const [annualIncome, setAnnualIncome] = useState<{ id: string; val: string }>(
-    { id: jsonData?.annual_income_greater_than || "", val: "" }
-  );
+  const [annualIncome, setAnnualIncome] = useState<{
+    id?: string;
+    val: string;
+  }>({ id: jsonData?.annual_income_greater_than || "", val: "" });
   const [maritalStatus, setMaritalStatus] = useState<string[]>(
     jsonData?.marital_status || []
   );
@@ -83,20 +84,20 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.Residential_status || []
   );
   const [manglik, setManglik] = useState<string[]>([]);
-  const [diet, setDiet] = useState<{ id: string; val: string }>({
+  const [diet, setDiet] = useState<{ id?: string; val: string }>({
     id: jsonData?.diet || "",
     val: "",
   });
-  const [smoke, setSmoke] = useState<{ id: string; val: string }>({
+  const [smoke, setSmoke] = useState<{ id?: string; val: string }>({
     id: jsonData?.smoking || "",
     val: "",
   });
-  const [drink, setDrink] = useState<{ id: string; val: string }>({
+  const [drink, setDrink] = useState<{ id?: string; val: string }>({
     id: jsonData?.drinking || "",
     val: "",
   });
   const [readyToSettleAbroad, setReadyToSettleAbroad] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({
     id: jsonData?.ready_to_settleAbroad || "",
@@ -108,7 +109,7 @@ const DesiredProfilePage: React.FC = () => {
   const [childrenStatus, setChildrenStatus] = useState<string[]>(
     jsonData?.children_status || []
   );
-  const [hiv, setHiv] = useState<{ id: string; val: string }>({
+  const [hiv, setHiv] = useState<{ id?: string; val: string }>({
     id: jsonData?.HIV === "1" ? "Yes" : "No" || "1",
     val: "",
   });
@@ -142,7 +143,7 @@ const DesiredProfilePage: React.FC = () => {
       readyToSettleAbroad: readyToSettleAbroad.id,
       challenged: JSON.stringify(challenged),
       childrenStatus: JSON.stringify(childrenStatus),
-      hiv: hiv.id,
+      hiv: jsonData?.HIV,
       horoscopeMatch: "0",
       mandatoryFields: JSON.stringify(filters),
     };
@@ -183,12 +184,12 @@ const DesiredProfilePage: React.FC = () => {
                   defaultValueFrom={
                     jsonData?.age_greater_than !== undefined
                       ? String(jsonData?.age_greater_than)
-                      : "From"
+                      : "Greater than"
                   }
                   defaultValueTo={
                     jsonData?.age_less_than !== undefined
                       ? String(jsonData?.age_less_than)
-                      : "To"
+                      : "Less than"
                   }
                 />
                 <DoubleInput
@@ -199,12 +200,12 @@ const DesiredProfilePage: React.FC = () => {
                   defaultValueFrom={
                     jsonData?.height_greater_than !== undefined
                       ? String(jsonData?.height_greater_than)
-                      : "From"
+                      : "Greater than"
                   }
                   defaultValueTo={
                     jsonData?.height_less_than !== undefined
                       ? String(jsonData?.height_less_than)
-                      : "To"
+                      : "Less than"
                   }
                 />
                 <CountryMultiple
@@ -239,9 +240,7 @@ const DesiredProfilePage: React.FC = () => {
                     nameid={"AnnualIncomeProfile0"}
                     selectedDataFn={setAnnualIncome}
                     defaultValue={
-                      jsonData?.annual_income_greater_than
-                        ? +jsonData?.annual_income_greater_than
-                        : 0
+                      String(jsonData?.annual_income_greater_than) || ""
                     }
                   />
                 </div>
@@ -285,7 +284,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={DietWith0}
                     nameid={"DietWith0"}
                     selectedDataFn={setDiet}
-                    defaultValue={jsonData?.diet ? +jsonData?.diet : 0}
+                    defaultValue={String(jsonData?.diet) || ""}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -294,7 +293,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={SmokeDrinkWith0}
                     nameid={"Smoke0"}
                     selectedDataFn={setSmoke}
-                    defaultValue={jsonData?.smoking ? +jsonData?.smoking : 0}
+                    defaultValue={String(jsonData?.diet) || ""}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -303,7 +302,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={SmokeDrinkWith0}
                     nameid={"drinkingwith0"}
                     selectedDataFn={setDrink}
-                    defaultValue={jsonData?.drinking ? +jsonData?.drinking : 0}
+                    defaultValue={String(jsonData?.diet) || ""}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -312,11 +311,7 @@ const DesiredProfilePage: React.FC = () => {
                     data={ReadyToSettleAbroadWith0}
                     nameid={"ReadyToSettleAbroadWith0"}
                     selectedDataFn={setReadyToSettleAbroad}
-                    defaultValue={
-                      jsonData?.ready_to_settleAbroad
-                        ? +jsonData?.ready_to_settleAbroad
-                        : 0
-                    }
+                    defaultValue={String(jsonData?.ready_to_settleAbroad) || ""}
                   />
                 </div>
                 <SingleInput

@@ -1,5 +1,5 @@
 import { City, ICity } from "country-state-city";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import classes from "./CountryStateCityMultiple.module.scss";
 import { IoClose } from "react-icons/io5";
 
@@ -18,17 +18,19 @@ const CityMultiple: React.FC<CityMultiple> = ({
   onChangeCity,
   defaultCity,
 }) => {
-  const DoesNotMatter: ModifiedDataCity = {
-    name: "Does Not Matter",
-    countryCode: "DNM",
-    stateCode: "DNM",
-    latitude: "DNM",
-    longitude: "DNM",
-  };
-  const cityOfState: ICity[] = [
-    DoesNotMatter,
-    ...(City.getCitiesOfCountry("IN") || []),
-  ];
+  const DoesNotMatter: ModifiedDataCity = useMemo(() => {
+    return {
+      name: "Does Not Matter",
+      countryCode: "DNM",
+      stateCode: "DNM",
+      latitude: "DNM",
+      longitude: "DNM",
+    };
+  }, []);
+
+  const cityOfState: ICity[] = useMemo(() => {
+    return [DoesNotMatter, ...(City.getCitiesOfCountry("IN") || [])];
+  }, [DoesNotMatter]);
   const elementRef = useRef<HTMLDivElement>(null);
   const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
   const [HostedArray, updateHostedArray] = useState<ICity[]>(
@@ -44,7 +46,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
     if (searchHostedArray[0].name != "Does Not Matter") {
       searchHostedArray.unshift(DoesNotMatter);
     }
-  }, []);
+  }, [DoesNotMatter, searchHostedArray]);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = cityOfState.filter((item) =>
@@ -59,7 +61,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
       setCitiesIds([0]);
       updateHostedArray([searchHostedArray[0]]);
     }
-  }, [citiesIds]);
+  }, [citiesIds, searchHostedArray]);
 
   const getClickedData = useCallback(
     (city: ICity) => {
@@ -72,7 +74,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
       }
       onChangeCity([...citiesIds, getIndex]);
     },
-    [HostedArray, citiesIds, onChangeCity]
+    [HostedArray, citiesIds, cityOfState, onChangeCity]
   );
   const getClickedDeleteData = (city: string, item: ModifiedDataCity) => {
     const itemname = String(item.name);

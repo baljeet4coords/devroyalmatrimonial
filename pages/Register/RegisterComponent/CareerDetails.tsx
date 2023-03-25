@@ -24,6 +24,10 @@ import axios from "axios";
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
+interface Data {
+  id?: string;
+  val: string;
+}
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const dispatch = useDispatch();
@@ -38,26 +42,26 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const [selectedCountry, setSelectedCountry] = useState<number>(0);
   const [selectedState, setSelectedState] = useState<number>(0);
   const [selectedCity, setSelectedCity] = useState<number>(0);
-  const [residentialStatus, setResidentialStatus] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.residentialstatus), val: "" });
-  const [settleAboard, setSettleAbroad] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.readytosettleabroad), val: "" });
-  const [education, setEducation] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.education), val: "" });
-  const [occupation, setOccupation] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.occupation), val: "" });
-  const [annualIncome, setannualIncome] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.annual_income), val: "" });
+  const [residentialStatus, setResidentialStatus] = useState<Data>({
+    id: String(jsonData?.residentialstatus),
+    val: "",
+  });
+  const [settleAboard, setSettleAbroad] = useState<Data>({
+    id: String(jsonData?.readytosettleabroad),
+    val: "",
+  });
+  const [education, setEducation] = useState<Data>({
+    id: String(jsonData?.education),
+    val: "",
+  });
+  const [occupation, setOccupation] = useState<Data>({
+    id: String(jsonData?.occupation),
+    val: "",
+  });
+  const [annualIncome, setannualIncome] = useState<Data>({
+    id: String(jsonData?.annual_income),
+    val: "",
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -102,12 +106,11 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     formik.values.country = selectedCountry;
     formik.values.state = selectedState;
     formik.values.city = selectedCity;
-    formik.values.residentialStatus = residentialStatus.id;
-    formik.values.readyToSettleAbroad = settleAboard.id;
-    formik.values.education = education.id;
-    // formik.values.college = jsonData?.College;
-    formik.values.occupation = occupation.id;
-    formik.values.annualIncome = annualIncome.id;
+    formik.values.residentialStatus = residentialStatus.id || "";
+    formik.values.readyToSettleAbroad = settleAboard.id || "";
+    formik.values.education = education.id || "";
+    formik.values.occupation = occupation.id || "";
+    formik.values.annualIncome = annualIncome.id || "";
   }, [
     annualIncome.id,
     education.id,
@@ -153,21 +156,21 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 title="Residential Status"
                 data={ResidentialStatus}
                 nameid="residentialStatus"
-                defaultValue={jsonData?.residentialstatus}
+                defaultValue={String(jsonData?.residentialstatus)}
               />
               <DropdownGridSingleSelect
                 selectedDataFn={setSettleAbroad}
                 title="Ready to settle abroad"
                 data={ReadyToSettleAbroad}
                 nameid="readyToSettleAbroad"
-                defaultValue={jsonData?.readytosettleabroad}
+                defaultValue={String(jsonData?.readytosettleabroad)}
               />
               <DropdownGridSingleSelect
                 selectedDataFn={setEducation}
                 title="Highest Degree"
                 data={EducationTypeAndVal}
                 nameid="education"
-                defaultValue={jsonData?.education}
+                defaultValue={String(jsonData?.education)}
               />
               <div className={classes.singleBox}>
                 <Form.Label>College Name</Form.Label>
@@ -176,7 +179,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                     <Form.Control
                       type="text"
                       name="college"
-                      placeholder={jsonData?.College || "Enter College Name"}
+                      placeholder={
+                        String(jsonData?.College) || "Enter College Name"
+                      }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
@@ -188,14 +193,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 title="Employed In"
                 data={Occupation}
                 nameid="occupation"
-                defaultValue={jsonData?.occupation}
+                defaultValue={String(jsonData?.occupation)}
               />
               <DropdownGridSingleSelect
                 selectedDataFn={setannualIncome}
                 title="Annual Income"
                 data={AnnualIncomeProfile}
                 nameid="annualIncome"
-                defaultValue={jsonData?.annual_income}
+                defaultValue={String(jsonData?.annual_income)}
               />
               <hr />
               <h5 className="text-center p-3">

@@ -22,6 +22,10 @@ import axios from "axios";
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
+interface Data {
+  id?: string;
+  val: string;
+}
 const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepThreeDefaultValues = useSelector(selectStep3Success);
@@ -43,45 +47,45 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, isReduxEmpty, userId]);
 
-  const [diet, setDiet] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.diet), val: "" });
+  const [diet, setDiet] = useState<Data>({
+    id: String(jsonData?.diet),
+    val: "",
+  });
 
-  const [smoking, setSmoking] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.smoking), val: "" });
+  const [smoking, setSmoking] = useState<Data>({
+    id: String(jsonData?.smoking),
+    val: "",
+  });
 
-  const [drinking, setDrinking] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.drinking), val: "" });
+  const [drinking, setDrinking] = useState<Data>({
+    id: String(jsonData?.drinking),
+    val: "",
+  });
 
-  const [lovePets, setLovePets] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.love_pets), val: "" });
+  const [lovePets, setLovePets] = useState<Data>({
+    id: String(jsonData?.love_pets),
+    val: "",
+  });
 
-  const [ownsHouse, setOwnsHouse] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Owns_house), val: "" });
+  const [ownsHouse, setOwnsHouse] = useState<Data>({
+    id: String(jsonData?.Owns_house),
+    val: "",
+  });
 
-  const [ownsCar, setOwnsCar] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Owns_car), val: "" });
+  const [ownsCar, setOwnsCar] = useState<Data>({
+    id: String(jsonData?.Owns_car),
+    val: "",
+  });
 
-  const [bloodGroup, setBloodGroup] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.blood_group), val: "" });
+  const [bloodGroup, setBloodGroup] = useState<Data>({
+    id: String(jsonData?.blood_group),
+    val: "",
+  });
 
-  const [thalassemia, setThalassemia] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Thalassemia), val: "" });
+  const [thalassemia, setThalassemia] = useState<Data>({
+    id: String(jsonData?.Thalassemia),
+    val: "",
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -114,23 +118,24 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   });
 
   useEffect(() => {
-    formik.values.diet = diet.id;
-    formik.values.smoking = smoking.id;
-    formik.values.drinking = drinking.id;
-    formik.values.lovePets = lovePets.id;
-    formik.values.ownsHouse = ownsCar.id;
-    formik.values.ownsCar = ownsCar.id;
-    formik.values.bloodGroup = bloodGroup.id;
-    formik.values.thalassemia = thalassemia.id;
+    formik.values.diet = diet.id || "";
+    formik.values.smoking = smoking.id || "";
+    formik.values.drinking = drinking.id || "";
+    formik.values.lovePets = lovePets.id || "";
+    formik.values.ownsHouse = ownsHouse.id || "";
+    formik.values.ownsCar = ownsCar.id || "";
+    formik.values.bloodGroup = bloodGroup.id || "";
+    formik.values.thalassemia = thalassemia.id || "";
   }, [
-    bloodGroup?.id,
-    diet?.id,
-    drinking?.id,
+    bloodGroup.id,
+    diet.id,
+    drinking.id,
     formik.values,
-    lovePets?.id,
-    ownsCar?.id,
-    smoking?.id,
-    thalassemia?.id,
+    lovePets.id,
+    ownsCar.id,
+    ownsHouse.id,
+    smoking.id,
+    thalassemia.id,
   ]);
 
   return (
@@ -147,56 +152,56 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   title="Diet"
                   data={Diet}
                   nameid="diet"
-                  defaultValue={jsonData?.diet}
+                  defaultValue={String(jsonData?.diet)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSmoking}
                   title="Smoking"
                   data={SmokeDrink}
                   nameid="smoking"
-                  defaultValue={jsonData?.smoking}
+                  defaultValue={String(jsonData?.smoking)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setDrinking}
                   title="Drinking"
                   data={SmokeDrink}
                   nameid="drinking"
-                  defaultValue={jsonData?.drinking}
+                  defaultValue={String(jsonData?.drinking)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setLovePets}
                   title="Love Pets"
                   data={Pets}
                   nameid="lovePets"
-                  defaultValue={jsonData?.love_pets}
+                  defaultValue={String(jsonData?.love_pets)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setOwnsHouse}
                   title="Owns House"
                   data={OwnHouseCar}
                   nameid="ownsHouse"
-                  defaultValue={jsonData?.Owns_house}
+                  defaultValue={String(jsonData?.Owns_house)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setOwnsCar}
                   title="Owns Car"
                   data={OwnHouseCar}
                   nameid="ownsCar"
-                  defaultValue={jsonData?.Owns_car}
+                  defaultValue={String(jsonData?.Owns_car)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setBloodGroup}
                   title="Blood Group"
                   data={BloodGroup}
                   nameid="bloodGroup"
-                  defaultValue={jsonData?.blood_group}
+                  defaultValue={String(jsonData?.blood_group)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setThalassemia}
                   title="Thalassemia "
                   data={Thalassemia}
                   nameid="thalassemia"
-                  defaultValue={jsonData?.Thalassemia}
+                  defaultValue={String(jsonData?.Thalassemia)}
                 />
                 <div className={classes.singleBox}>
                   <Form.Label>Religious Belief</Form.Label>
@@ -207,7 +212,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Religious Belief"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    defaultValue={jsonData?.religious_belief}
+                    defaultValue={String(jsonData?.religious_belief)}
                   />
                 </div>
               </div>

@@ -28,12 +28,6 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
   defaultValueCity,
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
-  const defaultCountry = countries.find(
-    (item) =>
-      (defaultValueCountry && countries[defaultValueCountry].isoCode) ||
-      item.isoCode === "IN"
-  );
-
   const [countryCode, setCountryCode] = useState<string>(
     (defaultValueCountry && countries[defaultValueCountry].isoCode) || "IN"
   );
@@ -77,7 +71,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
       <div className={classes.CSC_wrapper}>
         <label>{`${title} State`}</label>
         <select onChange={(e) => stateFn(e)}>
-        <option value={""}>Select State</option>
+          <option value={""}>Select State</option>
           {stateOfCountry.map((state, index) => {
             return (
               <option key={index} value={`${index}-${state.isoCode}`}>
@@ -90,7 +84,7 @@ const CountryStateCitlyList: React.FC<CountryStateCitlyListProps> = ({
       <div className={classes.CSC_wrapper}>
         <label>{`${title} City`}</label>
         <select onChange={(e) => cityFn(e)}>
-        <option value={""}>Select City</option>
+          <option value={""}>Select City</option>
           {cityOfState.map((city, index) => {
             return (
               <option key={index} value={`${index}-${city.name}`}>

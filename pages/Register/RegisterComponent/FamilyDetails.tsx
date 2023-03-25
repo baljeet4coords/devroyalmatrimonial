@@ -27,6 +27,10 @@ import { step4 } from "../../../ducks/regiserUser/step4/actions";
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
 }
+interface Data {
+  id?: string;
+  val: string;
+}
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
@@ -48,34 +52,30 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     });
   }, []);
 
-  const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Father), val: "" });
-  const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Mother), val: "" });
-  const [selectedSister, setSelectedSister] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Sister), val: "" });
-  const [selectedBrother, setSelectedBrother] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Brother), val: "" });
-  const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Family_Status), val: "" });
-  const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Family_Income), val: "" });
-  const [selectedFamilyType, setSelectedFamilyType] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.Family_Type), val: "" });
+  const [selectedFathersOccupation, setSelectedFathersOccupation] =
+    useState<Data>({ id: String(jsonData?.Father), val: "" });
+  const [selectedMothersOccupation, setSelectedMothersOccupation] =
+    useState<Data>({ id: String(jsonData?.Mother), val: "" });
+  const [selectedSister, setSelectedSister] = useState<Data>({
+    id: String(jsonData?.Sister),
+    val: "",
+  });
+  const [selectedBrother, setSelectedBrother] = useState<Data>({
+    id: String(jsonData?.Brother),
+    val: "",
+  });
+  const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<Data>({
+    id: String(jsonData?.Family_Status),
+    val: "",
+  });
+  const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<Data>({
+    id: String(jsonData?.Family_Income),
+    val: "",
+  });
+  const [selectedFamilyType, setSelectedFamilyType] = useState<Data>({
+    id: String(jsonData?.Family_Type),
+    val: "",
+  });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
     jsonData?.family_native_country || 0
   );
@@ -85,10 +85,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
     jsonData?.family_native_city || 0
   );
-  const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
-    id: string;
-    val: string;
-  }>({ id: String(jsonData?.living_with_parents), val: "" });
+  const [selectedLivingWithParents, setSelectedLivingWithParents] =
+    useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
   console.log(selectedNativeState);
 
   const formik = useFormik({
@@ -182,28 +180,28 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   title="Father's Occupation"
                   data={FathersProfession}
                   nameid="fathersProfession"
-                  defaultValue={jsonData?.Father}
+                  defaultValue={String(jsonData?.Father)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedMothersOccupation}
                   title="Mother's Occupation"
                   data={MothersProfession}
                   nameid="mothersProfession"
-                  defaultValue={jsonData?.Mother}
+                  defaultValue={String(jsonData?.Mother)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedSister}
                   title="Sister"
                   data={BortherSisterCount}
                   nameid="sister"
-                  defaultValue={jsonData?.Sister}
+                  defaultValue={String(jsonData?.Sister)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedBrother}
                   title="Brother"
                   data={BortherSisterCount}
                   nameid="brother"
-                  defaultValue={jsonData?.Brother}
+                  defaultValue={String(jsonData?.Brother)}
                 />
                 <div className={classes.singleBox}>
                   <Form.Label>Gothra</Form.Label>
@@ -214,7 +212,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Gothra"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    defaultValue={jsonData?.Gothra}
+                    defaultValue={String(jsonData?.Gothra)}
                   />
                 </div>
                 <DropdownGridSingleSelect
@@ -222,21 +220,21 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   title="Family Status "
                   data={FamilStatus}
                   nameid="familyStatus"
-                  defaultValue={jsonData?.Family_Status}
+                  defaultValue={String(jsonData?.Family_Status)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedFamilyIncome}
                   title="Family Income"
                   data={FamilyIncome}
                   nameid="familyIncome"
-                  defaultValue={jsonData?.Family_Income}
+                  defaultValue={String(jsonData?.Family_Income)}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedFamilyType}
                   title="Family Type"
                   data={FamilyType}
                   nameid="familyType"
-                  defaultValue={jsonData?.Family_Type}
+                  defaultValue={String(jsonData?.Family_Type)}
                 />
                 <CountryStateCitlyList
                   title="Family Native"
@@ -252,7 +250,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   title="Living With Parents"
                   data={LivingWithParrents}
                   nameid="livingWithParents"
-                  defaultValue={jsonData?.living_with_parents}
+                  defaultValue={String(jsonData?.living_with_parents)}
                 />
               </div>
               <Button

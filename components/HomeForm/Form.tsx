@@ -8,9 +8,10 @@ import { SignUpType } from "../../types/authentication";
 
 export interface SignUpForm {
   onSubmitForm: (values: SignUpType) => void;
+  error: string;
 }
 
-const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm }) => {
+const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
     callingCodes.push({ countryName: key, callingCode: value });
@@ -106,6 +107,9 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm }) => {
           </div>
         ) : null}
       </Form.Group>
+      {
+        error && <Errors error={error}/>
+      }
       <Button
         variant="danger"
         type="submit"

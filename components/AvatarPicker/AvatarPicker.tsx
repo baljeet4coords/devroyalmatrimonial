@@ -11,9 +11,13 @@ type Avatar = {
 
 interface AvatarPickerProps {
   onGetAvatar: (name: string, file: Blob | null) => void;
+  defaultImage: string;
 }
 
-const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
+const AvatarPicker: React.FC<AvatarPickerProps> = ({
+  onGetAvatar,
+  defaultImage,
+}) => {
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [fileExt, setFilExt] = useState<string>("");
@@ -42,8 +46,12 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
     canvasBlob.toBlob((blob) => {
       onGetAvatar(imageName, blob);
     });
+    if (defaultImage) {
+      setCroppedImage(defaultImage);
+    }
     setCroppedImage(canvas);
   };
+  console.log(defaultImage);
 
   return (
     <>
@@ -68,8 +76,10 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
           className={classes.canvasIMG}
         />
       )}
-      {croppedImage && (
+      {croppedImage ? (
         <Image src={croppedImage} alt="avatar" className="w-100" />
+      ) : (
+        <Image src={defaultImage} alt="avatar" className="w-100" />
       )}
       {image && (
         <div className={classes.BtnDiv}>

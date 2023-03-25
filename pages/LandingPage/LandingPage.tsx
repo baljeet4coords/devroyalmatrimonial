@@ -15,22 +15,28 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
 import { SignUpType } from "../../types/authentication";
-import { getToken, selectAuthSuccess } from "../../ducks/auth/selectors";
-import { signupRequest, loginRequest } from "../../ducks/auth/actions";
-import { LoginType } from "../../ducks/auth/types";
+import { getToken, authOutputMessage } from "../../ducks/auth/selectors";
+import { signupRequest } from "../../ducks/auth/actions";
 
 const LandingPage: React.FC = () => {
+  const [error, setError] = useState<string>("");
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(getToken);
-  const authSuccess = useSelector(selectAuthSuccess);
-  console.log(authSuccess?.jsonResponse?.user_status);
+  const authMessage = useSelector(authOutputMessage);
+
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/Register");
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (authMessage === -2) {
+      setError("User is already present with these credentials");
+    }
+  }, [authMessage]);
 
   const [activeId, setActiveId] = useState<string>();
 
@@ -57,7 +63,7 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6}>
-            <HomeForm onSubmitForm={onSubmitForm} />
+            <HomeForm onSubmitForm={onSubmitForm} error={error}/>
           </Col>
         </Row>
         <Row className={classes.Home_white_body}>

@@ -3,15 +3,15 @@ import { Form } from "react-bootstrap";
 import classes from "./Dropdown.module.scss";
 
 interface Data {
+  id?: string;
   val: string;
-  id: string;
 }
 interface DropdownGridProps {
   title: string;
   data: {};
   nameid: string;
-  selectedDataFn: (val: Data) => void;
-  defaultValue?: number;
+  selectedDataFn: ({ id, val }: { id?: string; val: string }) => void;
+  defaultValue?: string;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
@@ -21,6 +21,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   defaultValue,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
@@ -34,7 +35,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-  const findKeyByValue = (obj: any, value: number): string => {
+  const findKeyByValue = (obj: any, value?: string): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {
         return key;
@@ -48,8 +49,13 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState<string[]>(combinedData);
-  const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
-  const [placeholderVal, setPlaceholderVal] = useState("");
+  const [selectedData, setSelectedData] = useState<Data>({
+    id: defaultValue,
+    val: "",
+  });
+  const [placeholderVal, setPlaceholderVal] = useState(
+    findKeyByValue(data, defaultValue) || ""
+  );
 
   const searchDataFunc = (query: any) => {
     const searched = Object.keys(data).filter((item) =>
@@ -74,69 +80,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     }
     return name;
   };
-
-  // for Blood group value change
-
-  useEffect(() => {
-    let splitSelectVAL;
-
-    if (selectedData.val.charAt(selectedData.val.length - 1) !== "-") {
-      splitSelectVAL = selectedData.val.split("-")[0];
-    }
-
-    const idx = selectedData.id;
-    switch (splitSelectVAL) {
-      case "A_plus":
-        setSelectedData({
-          id: idx,
-          val: "A +ve",
-        });
-        break;
-      case "B_plus":
-        setSelectedData({
-          id: idx,
-          val: "B +ve",
-        });
-        break;
-      case "O_plus":
-        setSelectedData({
-          id: idx,
-          val: "O +ve",
-        });
-        break;
-      case "AB_plus":
-        setSelectedData({
-          id: idx,
-          val: "AB +ve",
-        });
-        break;
-      case "A_negative":
-        setSelectedData({
-          id: idx,
-          val: "A neg",
-        });
-        break;
-      case "B_negative":
-        setSelectedData({
-          id: idx,
-          val: "B neg",
-        });
-        break;
-      case "O_negative":
-        setSelectedData({
-          id: idx,
-          val: "O neg",
-        });
-        break;
-
-      case "AB_negative":
-        setSelectedData({
-          id: idx,
-          val: "AB neg",
-        });
-        break;
-    }
-  }, [activeList]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -179,8 +122,8 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
               const [name, id] = item.split("-");
               const clearName = name
                 .replace(/_/g, " ")
-                .replace(/plus/g, "+")
-                .replace(/negative/g, "-");
+                .replace(/plus/g, "+ve")
+                .replace(/negative/g, "-ve");
               return (
                 <li
                   key={item}
