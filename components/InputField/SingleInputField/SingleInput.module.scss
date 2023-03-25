@@ -1,8 +1,10 @@
 @import "../../../styles/constants.scss";
+
 ///single input box css
 .singleBox {
     display: flex;
     position: relative;
+
     div {
         width: 100%;
 
@@ -51,6 +53,15 @@
                 cursor: default;
                 height: fit-content;
             }
+        }
+
+        input {
+            border: 1px solid #d9d9d9 !important;
+            border-radius: 2px;
+            padding: 0.175rem 0.5rem !important;
+            text-align: center;
+            margin: 0.6em;
+            margin-top: 0;
         }
     }
 
@@ -138,8 +149,39 @@
     .singleBox {
         width: 100%;
 
-        .inputBox{
+        .inputBox {
             min-width: auto;
         }
     }
-  }
+}
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .singleBox {
+        flex-direction: column;
+
+        .inputBox {
+            margin: 0.6rem 0;
+        }
+    }
+}
+@media only screen and (max-width: 767px) and (min-width: 300px) {
+    .singleBox {
+        flex-direction: column;
+
+        .inputBox {
+            margin: 0.6rem 0;
+            min-width: 100%;
+        }
+    }
+}
+@media only screen and (max-width: 300px) {
+    .singleBox {
+        flex-direction: column;
+        
+        .inputBox {
+            min-width: 100%;
+            margin: 0.6rem 0;
+        }
+    }
+}

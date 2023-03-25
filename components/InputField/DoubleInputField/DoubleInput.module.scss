@@ -92,8 +92,39 @@
     .twoBox {
         width: 100%;
 
-        .inputBox{
+        .inputBox {
             min-width: auto;
         }
     }
-  }
+}
+
+
+@media only screen and (max-width: 990px) and (min-width: 768px) {
+    .twoBox {
+        flex-direction: column;
+
+        .inputBox{
+            margin: 0.6rem 0;
+        }
+    }
+}
+@media only screen and (max-width: 767px) and (min-width: 300px) {
+    .twoBox {
+        flex-direction: column;
+
+        .inputBox{
+            margin: 0.6rem 0;
+        }
+    }
+}
+@media only screen and (max-width: 300px) {
+    .twoBox {
+        flex-direction: column;
+
+        .inputBox{
+            margin: 0.6rem 0;
+            min-width: auto;
+            padding: 0.875rem 0.5rem;
+        }
+    }
+}

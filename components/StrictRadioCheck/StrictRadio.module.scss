@@ -21,18 +21,22 @@
             align-items: center;
             gap: 0.5rem;
             width: 95%;
+            z-index: 5;
 
             span {
                 font-size: 12px;
             }
 
             .SwitctCusttom {
-                background-color: rgb(218, 105, 30);
 
                 >div {
                     height: 23px !important;
                     width: 52px !important;
                     margin: 0px;
+
+                    div {
+                        height: 23px !important;
+                    }
                 }
 
                 :nth-child(2) {
@@ -47,10 +51,27 @@
         .marTOP {
             margin-top: 4.5rem;
             margin-bottom: 5px;
+
         }
 
-        :nth-child(10) {
+        :nth-child(6) {
             margin-top: 2.5rem;
+            margin-bottom: 5px;
+        }
+        :nth-child(7) {
+            margin-top: 3.3rem;
+            margin-bottom: 5px;
+        }
+        :nth-child(9) {
+            margin-top: 4rem;
+            margin-bottom: 5px;
+        }
+        :nth-child(10) {
+            margin-top: 3rem;
+            margin-bottom: 5px;
+        }
+        :nth-child(11) {
+            margin-top: 3rem;
             margin-bottom: 5px;
         }
 
@@ -58,9 +79,17 @@
             margin-top: 2.5rem;
             margin-bottom: 5px;
         }
+        :nth-child(n+13) {
+            margin-top: 3rem;
+            margin-bottom: 5px;
+        }
+        :nth-child(n+17) {
+            margin-top: 2.5rem;
+            margin-bottom: 5px;
+        }
 
         :nth-child(19) {
-            margin-top: 5.5rem;
+            margin-top: 3rem;
             margin-bottom: 5px;
         }
 
@@ -119,14 +148,272 @@
             :nth-child(20) {
                 margin-top: 3.5rem;
                 margin-bottom: 5px;
-               
+
             }
+
             .mart5 {
                 margin-top: 0px;
             }
-    
+
 
         }
     }
 
+}
+
+@media only screen and (max-width: 990px) and (min-width: 300px) {
+    .StrictWrapper {
+        width: 40%;
+        margin-top: -0.5rem;
+        position: absolute;
+        top: -2rem;
+        align-items: flex-end;
+        right: 1.5rem;
+
+        .StrictWrapper_section {
+            width: 100%;
+            gap: 10rem;
+            margin-top: 0px;
+
+            .marTOP {
+                margin-top: 0rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(7) {
+                margin-top: -1.5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(8) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(9) {
+                margin-top: -4.5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(10) {
+                margin-top: -2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+11) {
+                margin-top: -1.5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+16) {
+                margin-top: -4.7rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(20) {
+                margin-top: -1.5rem;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 415px) {
+    .StrictWrapper {
+        width: 70%;
+        right: 1rem;
+
+        .StrictWrapper_section {
+            width: 100%;
+            gap: 10.2rem;
+            margin-top: 0px;
+
+            .Switch {
+                justify-content: flex-end;
+                gap: 0.5rem;
+                width: 100%;
+                align-items: center;
+            }
+
+            .marTOP {
+                margin-top: -0.2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(7) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(8) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(9) {
+                margin-top: -5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(10) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+11) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+16) {
+                margin-top: -4.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(19) {
+                margin-top: -5rem;
+                margin-bottom: 5px;
+            }
+            :nth-child(20) {
+                margin-top: -1.9rem;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 415px) and (min-width: 300px) {
+    .StrictWrapper {
+        width: 70%;
+        right: 1rem;
+
+        .StrictWrapper_section {
+            width: 100%;
+            gap: 10.2rem;
+            margin-top: 0px;
+
+            .Switch {
+                justify-content: flex-end;
+                gap: 0.5rem;
+                width: 100%;
+                align-items: center;
+            }
+
+            .marTOP {
+                margin-top: -0.2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(7) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(8) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(9) {
+                margin-top: -5.2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(10) {
+                margin-top: -2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+11) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+16) {
+                margin-top: -5.1rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(19) {
+                margin-top: -5.4rem;
+                margin-bottom: 5px;
+            }
+            :nth-child(20) {
+                margin-top: -1.5rem;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 300px) {
+    .StrictWrapper {
+        width: 40%;
+        right: 1rem;
+        position: absolute;
+        top: -1rem;
+        h4{
+            font-size: 18px;
+            margin-bottom: 10px !important;
+        }
+
+        .StrictWrapper_section {
+            width: 100%;
+            gap: 10.2rem;
+            margin-top: 0px;
+
+            .Switch {
+                justify-content: flex-end;
+                gap: 0.5rem;
+                width: 100%;
+                align-items: center;
+
+                span{
+                    display: none;
+                }
+            }
+
+            .marTOP {
+                margin-top: -0.2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(7) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(8) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(9) {
+                margin-top: -5.2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(10) {
+                margin-top: -2rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+11) {
+                margin-top: -1.8rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(n+16) {
+                margin-top: -5.1rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(19) {
+                margin-top: -5.4rem;
+                margin-bottom: 5px;
+            }
+            :nth-child(20) {
+                margin-top: -1.5rem;
+                margin-bottom: 5px;
+            }
+        }
+    }
 }

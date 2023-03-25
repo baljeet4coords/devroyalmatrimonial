@@ -78,8 +78,16 @@ const SingleInput: React.FC<MyComponentProps> = ({
     <React.Fragment>
       <div className={classes.singleBox} ref={elementRef}>
         <label>{inputName}</label>
-        <div className={classes.inputBox}>
-          <ul onClick={() => setActiveList(true)}>
+        <div className={classes.inputBox} onClick={() => setActiveList(true)}>
+          {activeList && (
+            <input
+              type="text"
+              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
+              value={searchInput}
+              onChange={(e) => searchDataFunc(e.target.value)}
+            />
+          )}
+          <ul>
             {HostedArray.map((uid: string) => {
               const [name, id] = combinedData[+uid].split("-");
               return (
@@ -89,16 +97,6 @@ const SingleInput: React.FC<MyComponentProps> = ({
                 </li>
               );
             })}
-            <li className={classes.blankInput}>
-              <input
-                type="text"
-                placeholder={
-                  HostedArray.length < 1 ? "Select Some Options" : ""
-                }
-                value={searchInput}
-                onChange={(e) => searchDataFunc(e.target.value)}
-              />
-            </li>
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${
