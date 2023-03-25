@@ -20,6 +20,20 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   selectedDataFn,
   defaultValue,
 }) => {
+  const elementRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        setActiveList(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef]);
   const findKeyByValue = (obj: any, value: number): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {
@@ -63,7 +77,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   };
 
   return (
-    <div className={classes.singleBox}>
+    <div className={classes.singleBox} ref={elementRef}>
       <Form.Label>{title}</Form.Label>
       <div
         className={classes.inputBox}
@@ -92,6 +106,10 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           <ul>
             {searchedData.map((item) => {
               const [name, id] = item.split("-");
+              const clearName = name
+                .replace(/_/g, " ")
+                .replace(/plus/g, "+")
+                .replace(/negative/g, "-");
               return (
                 <li
                   key={item}
@@ -103,7 +121,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                   }
                   className={selectedData.val === item ? classes.tabActive : ""}
                 >
-                  <span>{name}</span>
+                  <span>{clearName}</span>
                 </li>
               );
             })}

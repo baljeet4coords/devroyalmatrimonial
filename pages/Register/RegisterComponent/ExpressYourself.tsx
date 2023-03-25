@@ -9,6 +9,8 @@ import { getUserId } from "../../../ducks/auth/selectors";
 import axios from "axios";
 import router from "next/router";
 import { step5 } from "../../../ducks/regiserUser/step5/actions";
+import { textAreaSchema } from "../../../schemas/textAreaSchema";
+import { Errors } from "../../../components/";
 
 const ExpressYourself: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,8 +22,7 @@ const ExpressYourself: React.FC = () => {
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-  console.log(isReduxEmpty);
-  
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -30,6 +31,7 @@ const ExpressYourself: React.FC = () => {
       aboutEducation: jsonData?.about_education,
       basicIntro: jsonData?.basic_intro,
     },
+    validationSchema: textAreaSchema,
     onSubmit: async (values) => {
       let response;
       if (isReduxEmpty) {
@@ -52,6 +54,7 @@ const ExpressYourself: React.FC = () => {
       response.data.output === 1 && router.push("/DesiredProfile");
     },
   });
+  console.log(formik.errors.aboutCareer);
 
   return (
     <>
@@ -62,7 +65,7 @@ const ExpressYourself: React.FC = () => {
               <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
               <small>mandatory</small>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-                <div className={classes.singleBox}>
+                <div className={classes.singleBoxBlock}>
                   <Form.Label>About Career</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -73,8 +76,13 @@ const ExpressYourself: React.FC = () => {
                     onChange={formik.handleChange}
                     defaultValue={jsonData?.about_career ?? ""}
                   />
+                  {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
+                    <div className="pt-1">
+                      <Errors error={formik.errors.aboutCareer} />
+                    </div>
+                  ) : null}
                 </div>
-                <div className={classes.singleBox}>
+                <div className={classes.singleBoxBlock}>
                   <Form.Label>About Family</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -85,8 +93,13 @@ const ExpressYourself: React.FC = () => {
                     onChange={formik.handleChange}
                     defaultValue={jsonData?.about_family ?? ""}
                   />
+                  {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
+                    <div className="pt-1">
+                      <Errors error={formik.errors.aboutFamily} />
+                    </div>
+                  ) : null}
                 </div>
-                <div className={classes.singleBox}>
+                <div className={classes.singleBoxBlock}>
                   <Form.Label>About Education</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -97,8 +110,14 @@ const ExpressYourself: React.FC = () => {
                     onChange={formik.handleChange}
                     defaultValue={jsonData?.about_education ?? ""}
                   />
+                  {formik.touched.aboutEducation &&
+                  formik.errors.aboutEducation ? (
+                    <div className="pt-1">
+                      <Errors error={formik.errors.aboutEducation} />
+                    </div>
+                  ) : null}
                 </div>
-                <div className={classes.singleBox}>
+                <div className={classes.singleBoxBlock}>
                   <Form.Label>Basic Intro</Form.Label>
                   <Form.Control
                     as="textarea"
@@ -109,6 +128,11 @@ const ExpressYourself: React.FC = () => {
                     onChange={formik.handleChange}
                     defaultValue={jsonData?.basic_intro ?? ""}
                   />
+                  {formik.touched.basicIntro && formik.errors.basicIntro ? (
+                    <div className="pt-1">
+                      <Errors error={formik.errors.basicIntro} />
+                    </div>
+                  ) : null}
                 </div>
                 <Button
                   variant="danger"

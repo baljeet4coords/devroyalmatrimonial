@@ -41,11 +41,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
-    setGender(jsonData?.gender === "M" ? "1" : "2");
-  }, [dispatch, jsonData?.gender, userId]);
+  }, [dispatch, userId]);
 
-  const { feet, cm, setCm, handleFeetChange, handleCmChange } =
-    useHeightConverter();
+  useEffect(() => {
+    setGender(jsonData?.gender === "M" ? "1" : "2");
+  }, [jsonData?.gender]);
+  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
   const [selectedProfileFor, setSelectedProfileFor] = useState<{
     id: string;
     val: string;
@@ -80,8 +81,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }>({ id: String(jsonData?.children_status), val: "" });
 
   const [gender, setGender] = useState<string>("");
-  const [blob, setImageBlob] = useState<File | null>(null);
-
+  const [image, setImage] = useState<Blob | null>(null);
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -119,22 +119,35 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formData.append("childrenstatus", String(values.childrenstatus));
       formData.append("height", String(values.height));
       formData.append("profilepic", String(values.profilepic));
-      // formData.append("profilepicBlob", blob);
+      formData.append("image", image);
       let response;
       if (isReduxEmpty === undefined) {
         formData.append("actionType", "c");
-        response = await axios.post(
+        (response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
-        );
+        )),
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
       } else {
         formData.append("actionType", "u");
-        response = await axios.post(
+        (response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
-        );
+        )),
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
       }
-      response.data.output === 1 && nextPage(1);
+      if (response.data.output === 1) {
+        dispatch(step1({ actionType: "v", userId: userId }));
+        nextPage(1);
+      }
     },
   });
   const onChangeGender = (gender: string) => {
@@ -145,9 +158,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
+  console.log(jsonData);
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm || 0));
     formik.values.profilefor = selectedProfileFor.id;
     formik.values.challenged = selectedChallenged.id;
     formik.values.isHiv = selectedIsHiv.id;
@@ -155,7 +168,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.religion = selectedReligion.id;
     formik.values.isManglik = selectedManglik.id;
     formik.values.maritalstatus = selectedMaritalStatus.id;
-    formik.values.height = cm;
+    formik.values.height = String(jsonData?.height_cm) || cm;
   }, [
     selectedProfileFor.id,
     selectedChallenged.id,
@@ -167,8 +180,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedChildrenStatus.id,
     formik.values,
     cm,
-    feet,
-    setCm,
     jsonData?.height_cm,
   ]);
 
@@ -186,22 +197,24 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, formik.values.fullname, selectedProfileFor.id]);
 
+  useEffect(() => {
+    if (selectedProfileFor?.id == "2" || selectedProfileFor?.id == "5") {
+      formik.values.selectgender = "M";
+    }
+    if (selectedProfileFor?.id == "3" || selectedProfileFor?.id == "4") {
+      formik.values.selectgender = "F";
+    }
+  }, [formik.values, selectedProfileFor]);
+
   const selectedCast = (string: string) => {
     const id = string.split("-")[0];
     formik.values.cast = id;
   };
-  const profilePicture = ({
-    name,
-    image,
-    fileObj,
-  }: {
-    name: string;
-    image: string;
-    fileObj: File | null;
-  }) => {
-    setImageBlob(fileObj);
-    formik.values.profilepic = name;
+  const profilePicture = (imageName: string, file: null | Blob) => {
+    formik.values.profilepic = imageName;
+    file && setImage(file);
   };
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -289,20 +302,27 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   />
                 </div>
                 <div className={classes.singleBox}>
-                  <Form.Label>Height</Form.Label>
+                  <Form.Label>Height in centimeters</Form.Label>
                   <div className={classes.inputBox}>
-                    <li className={`${classes.blankInput} d-flex`}>
+                    <li className={`${classes.blankInput}`}>
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${cm} cms`}
+                        placeholder={`${jsonData?.height_cm || cm} cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />
+                    </li>
+                  </div>
+                </div>
+                <div className={classes.singleBox}>
+                  <Form.Label>Height in feet</Form.Label>
+                  <div className={classes.inputBox}>
+                    <li className={`${classes.blankInput}`}>
                       <Form.Control
                         name="height"
                         type="text"
-                        placeholder={`${feet} ft.`}
+                        placeholder={`${feet} feet`}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
                       />

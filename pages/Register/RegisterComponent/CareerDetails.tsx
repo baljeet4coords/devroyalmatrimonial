@@ -163,9 +163,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
               <div className={classes.singleBox}>
                 <Form.Label>College Name</Form.Label>
                 <Form.Control
-                  as="textarea"
                   name="college"
-                  rows={3}
+                  type="text"
                   placeholder={jsonData?.College}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
