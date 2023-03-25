@@ -24,6 +24,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     if (HostedArray.includes("0") && HostedArray.length > 1) {
@@ -49,17 +50,21 @@ const SingleInput: React.FC<MyComponentProps> = ({
     useState<string[]>(combinedData);
 
   const searchDataFunc = (query: string) => {
-    const searchHostedArrays = Object.keys(data).filter((item) =>
+    const searchHostedArrays = combinedData.filter((item) =>
       item.toLowerCase().includes(query.toLowerCase())
     );
+    setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
   const getClickedData = useCallback(
     ({ val, id }: { val: string; id: string }) => {
+      const getIndex = String(combinedData.indexOf(val));
       if (HostedArray.indexOf(id) === -1) {
-        updateHostedArray((prevArray) => [...prevArray, id]);
-        onChange([...HostedArray, id]);
+        updateHostedArray((prevArray) => [...prevArray, getIndex]);
+        onChange([...HostedArray, getIndex]);
+        setSearchInput("");
+        UpdatesearchHostedArray(combinedData);
       }
     },
     [HostedArray, onChange]
@@ -76,7 +81,6 @@ const SingleInput: React.FC<MyComponentProps> = ({
         <div className={classes.inputBox}>
           <ul onClick={() => setActiveList(true)}>
             {HostedArray.map((uid: string) => {
-              console.log(uid);
               const [name, id] = combinedData[+uid].split("-");
               return (
                 <li key={id}>
@@ -91,6 +95,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                 placeholder={
                   HostedArray.length < 1 ? "Select Some Options" : ""
                 }
+                value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
               />
             </li>
@@ -102,25 +107,29 @@ const SingleInput: React.FC<MyComponentProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.map((item) => {
-                const [name, id] = item.split("-");
-                return (
-                  <li
-                    key={item}
-                    onClick={() =>
-                      getClickedData({
-                        val: item,
-                        id,
-                      })
-                    }
-                    className={
-                      HostedArray.includes(id) ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{name.replaceAll("_", " ")}</span>
-                  </li>
-                );
-              })}
+              {searchHostedArray.length > 1 ? (
+                searchHostedArray.map((item) => {
+                  const [name, id] = item.split("-");
+                  return (
+                    <li
+                      key={item}
+                      onClick={() =>
+                        getClickedData({
+                          val: item,
+                          id,
+                        })
+                      }
+                      className={
+                        HostedArray.includes(id) ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{name.replaceAll("_", " ")}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         </div>

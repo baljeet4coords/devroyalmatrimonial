@@ -71,11 +71,13 @@ const StrictRadioCheck: React.FC<StrictRadioCheckProps> = ({
                 : `${classes.Switch} ${classes.mart5} `
             }
           >
+            <span>Good to have</span>
             <Switch
+              className={classes.SwitctCusttom}
               onChange={() => handleSwitchToggle(switchValue)}
               checked={selectedSwitches.includes(switchValue)}
             />
-            {switchValue}
+            <span>Must To have</span>
           </div>
         ))}
       </div>

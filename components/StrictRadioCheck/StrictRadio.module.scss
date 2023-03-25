@@ -1,36 +1,132 @@
 .StrictWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    top: -1rem;
-    right: -17rem;
+    align-items: center;
+    // background: rgb(185, 250, 148);
+    width: 26%;
+    margin-top: -1rem;
+
 
     .StrictWrapper_section {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 3rem;
+        width: 90%;
+        margin-top: 10px;
 
         .Switch {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
+            align-items: center;
             gap: 0.5rem;
             width: 95%;
+
+            span {
+                font-size: 12px;
+            }
+
+            .SwitctCusttom {
+                background-color: rgb(218, 105, 30);
+
+                >div {
+                    height: 23px !important;
+                    width: 52px !important;
+                    margin: 0px;
+                }
+
+                :nth-child(2) {
+                    height: 22px !important;
+                    width: 22px !important;
+                    // transform: translateX(23px) !important;
+                    top: 0 !important;
+                }
+            }
         }
 
         .marTOP {
-            margin-top: 2.65rem;
+            margin-top: 4.5rem;
             margin-bottom: 5px;
         }
-        .mart5{
-            margin-top: 5px;
+
+        :nth-child(10) {
+            margin-top: 2.5rem;
+            margin-bottom: 5px;
         }
-        :nth-child(1){
+
+        :nth-child(12) {
+            margin-top: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        :nth-child(19) {
+            margin-top: 5.5rem;
+            margin-bottom: 5px;
+        }
+
+        :nth-child(20) {
+            margin-top: 3.5rem;
+            margin-bottom: 5px;
+        }
+
+
+
+        .mart5 {
+            margin-top: 10px;
+        }
+
+        :nth-child(1) {
             margin-top: 0;
         }
-        :nth-child(2){
+
+        :nth-child(2) {
             margin-top: 0;
+        }
+
+    }
+}
+
+
+@media only screen and (max-width: 1200px) and (min-width: 900px) {
+    .StrictWrapper {
+        .StrictWrapper_section {
+            margin-top: 0%;
+            margin-right: -15px;
+            gap: 2.8rem;
+
+
+            .marTOP {
+                margin-top: 4rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(10) {
+                margin-top: 2.5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(12) {
+                margin-top: 2.5rem;
+                margin-bottom: 5px;
+            }
+
+            :nth-child(19) {
+                margin-top: 4.5rem;
+                margin-bottom: 5px;
+
+            }
+
+            :nth-child(20) {
+                margin-top: 3.5rem;
+                margin-bottom: 5px;
+               
+            }
+            .mart5 {
+                margin-top: 0px;
+            }
+    
+
         }
     }
+
 }

@@ -84,3 +84,16 @@
 .active {
     visibility: visible !important;
 }
+
+
+
+
+@media only screen and (max-width: 1200px) and (min-width: 991px) {
+    .twoBox {
+        width: 100%;
+
+        .inputBox{
+            min-width: auto;
+        }
+    }
+  }

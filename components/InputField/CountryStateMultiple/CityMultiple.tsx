@@ -139,19 +139,23 @@ const CityMultiple: React.FC<CityMultiple> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.map((item, index) => {
-                return (
-                  <li
-                    key={item.countryCode + item.name + item.stateCode}
-                    onClick={() => getClickedData(item)}
-                    className={
-                      HostedArray.includes(item) ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{item.name}</span>
-                  </li>
-                );
-              })}
+              {searchHostedArray.length > 1 ? (
+                searchHostedArray.map((item, index) => {
+                  return (
+                    <li
+                      key={item.countryCode + item.name + item.stateCode}
+                      onClick={() => getClickedData(item)}
+                      className={
+                        HostedArray.includes(item) ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{item.name}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         </div>

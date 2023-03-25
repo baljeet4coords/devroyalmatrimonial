@@ -11,9 +11,10 @@
   padding-bottom: 10rem;
 
   .innerWrapper {
-    width: 75%;
+    width: 85%;
     background-color: $milkWhite_bg;
     padding: 0 6rem;
+    padding-right: 3rem;
 
     h1 {
       font-size: 1.375rem;
@@ -66,11 +67,12 @@
   }
 
   .form_wrapper {
-    width: 50%;
-    margin: auto;
     position: relative;
+    justify-content: flex-end !important;
 
     .formEdit {
+      width: 60%;
+
       .twoBox {
         display: flex;
 
@@ -315,6 +317,26 @@
 
 .active {
   visibility: visible !important;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 991px) {
+  .DesiredWrapper {
+    .innerWrapper {
+      padding: 0px 2rem;
+    }
+
+
+    .form_wrapper {
+
+      .formEdit {
+        label {
+          width: 110px;
+          left: -8rem;
+
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 990px) and (min-width: 768px) {

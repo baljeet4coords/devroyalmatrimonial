@@ -71,7 +71,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
             openList({ condition: !activeList1, query: "firstinp" })
           }
         >
-          {SelectedData1 ? SelectedData1 : "From"}
+          {SelectedData1 ? SelectedData1 : `${inputName} Greater than`}
           <SlArrowDown />
           <div
             className={`${activeList1 ? classes.active : ""} ${
@@ -99,7 +99,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
             openList({ condition: !activeList2, query: "secondinp" })
           }
         >
-          {SelectedData2 ? SelectedData2 : "To"}
+          {SelectedData2 ? SelectedData2 : `${inputName} Less than`}
           <SlArrowDown />
           <div
             className={`${activeList2 ? classes.active : ""} ${

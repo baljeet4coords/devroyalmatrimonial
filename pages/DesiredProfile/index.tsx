@@ -109,7 +109,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
   const [hiv, setHiv] = useState<{ id: string; val: string }>({
-    id: jsonData?.HIV ==="1" ? 'Yes' : "No" || "1",
+    id: jsonData?.HIV === "1" ? "Yes" : "No" || "1",
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
@@ -333,20 +333,16 @@ const DesiredProfilePage: React.FC = () => {
                 />
                 <div className={classes.singleBox}>
                   <Form.Label>HIV</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={hiv.id}
-                    disabled
-                  />
+                  <Form.Control type="text" value={hiv.id} disabled />
                 </div>
-                <StrictRadioCheck
-                  onSetFilters={setFilters}
-                  defaultValue={jsonData?.mandatory_fields || []}
-                />
                 <Button className="mb-5 mt-3 mx-auto" onClick={savePartnerPref}>
                   Save your preferrence
                 </Button>
               </form>
+              <StrictRadioCheck
+                onSetFilters={setFilters}
+                defaultValue={jsonData?.mandatory_fields || []}
+              />
             </Col>
           </Row>
         </Container>
