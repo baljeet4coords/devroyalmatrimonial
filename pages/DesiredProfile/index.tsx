@@ -117,6 +117,7 @@ const DesiredProfilePage: React.FC = () => {
   const [filters, setFilters] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
+
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {
@@ -159,7 +160,7 @@ const DesiredProfilePage: React.FC = () => {
         { ...partnerPrefPostReq, actionType: "u" }
       );
     }
-    response.data.output === 1 && console.log(1);
+    response.data.output === 1 && alert("Partner Preference Saved");
   };
 
   return (

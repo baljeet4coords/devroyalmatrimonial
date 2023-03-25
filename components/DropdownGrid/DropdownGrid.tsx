@@ -65,6 +65,12 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     setPlaceholderVal(query);
   };
 
+  useEffect(() => {
+    if (defaultValue) {
+      selectedDataFn({ id: defaultValue, val: "" });
+    }
+  }, [defaultValue, selectedDataFn]);
+
   const getClickedData = (data: Data) => {
     setSelectedData(data);
     selectedDataFn(data);

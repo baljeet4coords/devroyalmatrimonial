@@ -18,6 +18,7 @@ export type PartnerPreferrenceResponse = {
   horoscope_match: string;
   age_greater_than: string;
   caste: number[];
+  photo: string;
   height_less_than: string;
   mandatory_fields: string[];
   Residential_status: string[];

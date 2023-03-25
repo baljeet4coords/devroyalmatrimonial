@@ -225,6 +225,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }, [formik.values, selectedProfileFor]);
 
   const selectedCast = (string: string) => {
+    console.log(string);
+
     const id = string.split("-")[0];
     formik.values.cast = id;
   };
@@ -314,7 +316,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     </li>
                   </div>
                 </div>
-                <div className={classes.singleBox}>
+                <div className={`${classes.singleBox} flex-column`}>
                   <Form.Label>Cast</Form.Label>
                   <CastDataList
                     options={CastList}
