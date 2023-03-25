@@ -57,7 +57,7 @@ export enum AnnualIncomeProfile {
   From_20_to_30_lakhs = "6",
   From_30_to_50_lakhs = "7",
   From_50_to_70_lakhs = "8",
-  From_70_to_1_crore = "8",
+  From_70_to_1_crore = "9",
   From_1_to_2_crores = "10",
   Above_2_crores = "11",
 }
@@ -72,7 +72,7 @@ export enum AnnualIncomeProfile0 {
   From_20_to_30_lakhs = "6",
   From_30_to_50_lakhs = "7",
   From_50_to_70_lakhs = "8",
-  From_70_to_1_crore = "8",
+  From_70_to_1_crore = "9",
   From_1_to_2_crores = "10",
   Above_2_crores = "11",
 }
