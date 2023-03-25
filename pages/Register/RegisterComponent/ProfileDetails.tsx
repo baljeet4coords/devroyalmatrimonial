@@ -150,6 +150,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       }
     },
   });
+
   const onChangeGender = (gender: string) => {
     setGender(gender);
     if (gender === "1") {
@@ -190,6 +191,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.childrenstatus = selectedChildrenStatus.id;
     }
   }, [formik.values, selectedChildrenStatus.id, selectedMaritalStatus.id]);
+
+  //Render page go on the top of the page after completed the previeous step
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   useEffect(() => {
     if (selectedProfileFor.id === "1") {
@@ -358,7 +368,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   defaultValue={jsonData?.religion}
                 />
                 <DropdownGridSingleSelect
-                  title="Add Manglik"
+                  title="Manglik"
                   data={Manglik}
                   nameid="addmanglik"
                   selectedDataFn={setSelectedManglik}

@@ -4,6 +4,11 @@ import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
 import { Image } from "react-bootstrap";
 
+type Avatar = {
+  name: string;
+  image: string;
+};
+
 interface AvatarPickerProps {
   onGetAvatar: (name: string, file: Blob | null) => void;
 }
@@ -17,8 +22,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
   const [croppedImage, setCroppedImage] = useState<string>("");
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    const file = files?.[0];
+    const file = event.target.files?.[0];
     setFileName(String(file?.lastModified));
     setFilExt(file?.type.split("/")[1] || "");
     if (!file) return;
@@ -46,7 +50,6 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({ onGetAvatar }) => {
       <input
         type="file"
         onChange={handleImageChange}
-        accept=".jpg,.jpeg,.png"
         id="profilepic"
         name="profilepic"
         className={classes.Profile_input}

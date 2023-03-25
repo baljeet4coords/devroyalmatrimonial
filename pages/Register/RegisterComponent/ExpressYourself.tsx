@@ -23,6 +23,15 @@ const ExpressYourself: React.FC = () => {
     dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
+  // when Render page go on the top of the page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -51,7 +60,7 @@ const ExpressYourself: React.FC = () => {
           }
         );
       }
-      response.data.output === 1 && router.push("/DesiredProfile");
+      response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
   console.log(formik.errors.aboutCareer);

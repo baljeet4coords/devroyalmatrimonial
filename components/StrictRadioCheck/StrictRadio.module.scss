@@ -1,0 +1,36 @@
+.StrictWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: -1rem;
+    right: -17rem;
+
+    .StrictWrapper_section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+
+        .Switch {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            width: 95%;
+        }
+
+        .marTOP {
+            margin-top: 2.65rem;
+            margin-bottom: 5px;
+        }
+        .mart5{
+            margin-top: 5px;
+        }
+        :nth-child(1){
+            margin-top: 0;
+        }
+        :nth-child(2){
+            margin-top: 0;
+        }
+    }
+}

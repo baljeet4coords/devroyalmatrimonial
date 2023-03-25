@@ -502,6 +502,7 @@ export enum FathersProfession {
 }
 
 export enum EducationTypeAndVal {
+  Do_Not_Matter = "0",
   B_Arch = "1",
   B_Des = "2",
   B_E_BTech = "3",

@@ -15,7 +15,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
   onChange,
   defaultValues,
 }) => {
-  const combinedData = Object.entries(data).map(
+  const combinedData = Object?.entries(data).map(
     ([key, value]) => `${key}-${value}`
   );
 
@@ -24,6 +24,12 @@ const SingleInput: React.FC<MyComponentProps> = ({
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (HostedArray.includes("0") && HostedArray.length > 1) {
+      updateHostedArray(["0"]);
+    }
+  }, [HostedArray]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -51,9 +57,10 @@ const SingleInput: React.FC<MyComponentProps> = ({
 
   const getClickedData = useCallback(
     ({ val, id }: { val: string; id: string }) => {
-      if (HostedArray.indexOf(id) === -1)
+      if (HostedArray.indexOf(id) === -1) {
         updateHostedArray((prevArray) => [...prevArray, id]);
-      onChange([...HostedArray, id]);
+        onChange([...HostedArray, id]);
+      }
     },
     [HostedArray, onChange]
   );
@@ -69,10 +76,11 @@ const SingleInput: React.FC<MyComponentProps> = ({
         <div className={classes.inputBox}>
           <ul onClick={() => setActiveList(true)}>
             {HostedArray.map((uid: string) => {
+              console.log(uid);
               const [name, id] = combinedData[+uid].split("-");
               return (
                 <li key={id}>
-                  <span>{name}</span>
+                  <span>{name.replaceAll("_", " ")}</span>
                   <IoClose onClick={() => getClickedDeleteData(+uid)} />
                 </li>
               );
@@ -109,7 +117,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                       HostedArray.includes(id) ? classes.tabActive : ""
                     }
                   >
-                    <span>{name}</span>
+                    <span>{name.replaceAll("_", " ")}</span>
                   </li>
                 );
               })}

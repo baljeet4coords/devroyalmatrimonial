@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import {
   DropdownGridSingleSelect,
@@ -24,7 +24,6 @@ import {
   ReligionWith0,
   ResidentialStatusWith0,
   SmokeDrinkWith0,
-  isHivWith0,
 } from "../../types/enums";
 import CountryMultiple from "../../components/InputField/CountryStateMultiple/CountryMultiple";
 import StateMultiple from "../../components/InputField/CountryStateMultiple/StateMultiple";
@@ -46,7 +45,7 @@ const DesiredProfilePage: React.FC = () => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-      dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
+    dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
@@ -110,7 +109,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
   const [hiv, setHiv] = useState<{ id: string; val: string }>({
-    id: jsonData?.HIV || "",
+    id: jsonData?.HIV ==="1" ? 'Yes' : "No" || "1",
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
@@ -161,7 +160,7 @@ const DesiredProfilePage: React.FC = () => {
     }
     response.data.output === 1 && console.log(1);
   };
-  
+
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
@@ -181,16 +180,32 @@ const DesiredProfilePage: React.FC = () => {
                   inputName={"Age"}
                   onDataFrom={setSelectedAgeFrom}
                   onDataTo={setSelectedAgeTo}
-                  defaultValueFrom={String(jsonData?.age_greater_than)}
-                  defaultValueTo={String(jsonData?.age_less_than)}
+                  defaultValueFrom={
+                    jsonData?.age_greater_than !== undefined
+                      ? String(jsonData?.age_greater_than)
+                      : "From"
+                  }
+                  defaultValueTo={
+                    jsonData?.age_less_than !== undefined
+                      ? String(jsonData?.age_less_than)
+                      : "To"
+                  }
                 />
                 <DoubleInput
                   data={HeighListInCms(100, 244)}
-                  inputName={"Height in cms"}
+                  inputName={"Height in feet"}
                   onDataFrom={setSelectedHeightFrom}
                   onDataTo={setSelectedHeightTo}
-                  defaultValueFrom={String(jsonData?.height_greater_than)}
-                  defaultValueTo={String(jsonData?.age_less_than)}
+                  defaultValueFrom={
+                    jsonData?.height_greater_than !== undefined
+                      ? String(jsonData?.height_greater_than)
+                      : "From"
+                  }
+                  defaultValueTo={
+                    jsonData?.height_less_than !== undefined
+                      ? String(jsonData?.height_less_than)
+                      : "To"
+                  }
                 />
                 <CountryMultiple
                   onChangeCountry={setCountry}
@@ -316,22 +331,19 @@ const DesiredProfilePage: React.FC = () => {
                   onChange={setChildrenStatus}
                   defaultValues={jsonData?.children_status || []}
                 />
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"HIV"}
-                    data={isHivWith0}
-                    nameid={"HIV"}
-                    selectedDataFn={setHiv}
-                    defaultValue={jsonData?.HIV ? +jsonData?.HIV : 0}
+                <div className={classes.singleBox}>
+                  <Form.Label>HIV</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={hiv.id}
+                    disabled
                   />
                 </div>
-                <div>
-                  <StrictRadioCheck
-                    onSetFilters={setFilters}
-                    defaultValue={jsonData?.mandatory_fields || []}
-                  />
-                </div>
-                <Button className="mb-5" onClick={savePartnerPref}>
+                <StrictRadioCheck
+                  onSetFilters={setFilters}
+                  defaultValue={jsonData?.mandatory_fields || []}
+                />
+                <Button className="mb-5 mt-3 mx-auto" onClick={savePartnerPref}>
                   Save your preferrence
                 </Button>
               </form>

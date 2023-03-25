@@ -6,15 +6,24 @@ import {
   ICastListArray,
 } from "../../../constants/CastListArray";
 
-interface CityMultiple {
+interface CastMultiple {
   onChangeCaste: (caste: number[]) => void;
   defaultValues: number[];
 }
-const CasteMultiple: React.FC<CityMultiple> = ({
+interface ModifiedDataState {
+  id: number;
+  caste: string;
+}
+const CasteMultiple: React.FC<CastMultiple> = ({
   onChangeCaste,
   defaultValues,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
+  const DoesNotMatter: ModifiedDataState = {
+    id: 0,
+    caste: "Does Not Matter",
+  };
+  const ListOfCaste: ICastListArray[] = [DoesNotMatter, ...CastListArray];
   const [castesIds, setCastesIds] = useState<number[]>(defaultValues);
   const [HostedArray, updateHostedArray] = useState<ICastListArray[]>(
     CastListArray.filter((_, index) => defaultValues.includes(index))
@@ -22,28 +31,56 @@ const CasteMultiple: React.FC<CityMultiple> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
 
   const [searchHostedArray, UpdatesearchHostedArray] =
-    useState<ICastListArray[]>(CastListArray);
+    useState<ICastListArray[]>(ListOfCaste);
+
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    if (searchHostedArray[0].caste != "Does Not Matter") {
+      searchHostedArray.unshift(DoesNotMatter);
+    }
+  }, []);
 
   const searchDataFunc = (query: string) => {
-    const searchHostedArrays = CastListArray.filter((item) =>
+    const searchHostedArrays = ListOfCaste.filter((item) =>
       item.caste.toLowerCase().includes(query.toLowerCase())
     );
+    setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
+  // For removeing the selcted item if Does not Matter is selected
+  useEffect(() => {
+    if (castesIds.length > 1 && castesIds.includes(0)) {
+      setCastesIds([0]);
+      updateHostedArray([searchHostedArray[0]]);
+    }
+  }, [castesIds]);
+
   const getClickedData = useCallback(
-    (caste: ICastListArray, casteIndex: number) => {
+    (caste: ICastListArray) => {
+      const getIndex = ListOfCaste.findIndex(
+        (obj) => obj.caste === caste.caste
+      );
       if (!HostedArray.some((item) => Object.is(item, caste))) {
-        setCastesIds((prev) => [...prev, casteIndex]);
+        setCastesIds((prev) => [...prev, getIndex]);
         updateHostedArray((prevArray) => [...prevArray, caste]);
+        setSearchInput("");
+        UpdatesearchHostedArray(ListOfCaste);
       }
-      onChangeCaste([...castesIds, casteIndex]);
+      onChangeCaste([...castesIds, getIndex]);
     },
     [HostedArray, castesIds, onChangeCaste]
   );
-  const getClickedDeleteData = (id: number) => {
+  const getClickedDeleteData = (id: number, item: ModifiedDataState) => {
+    const itemname = String(item.caste);
+    const getIndex = searchHostedArray.findIndex(
+      (obj) => obj.caste === itemname
+    );
+    const casteidsCode = castesIds.filter((item) => item !== getIndex);
     const newArray = HostedArray.filter((item) => item.id !== id);
     updateHostedArray(newArray);
+    setCastesIds(casteidsCode);
   };
 
   useEffect(() => {
@@ -74,7 +111,9 @@ const CasteMultiple: React.FC<CityMultiple> = ({
               return (
                 <li key={item.id}>
                   <span>{item.caste}</span>
-                  <IoClose onClick={() => getClickedDeleteData(item.id)} />
+                  <IoClose
+                    onClick={() => getClickedDeleteData(item.id, item)}
+                  />
                 </li>
               );
             })}
@@ -84,6 +123,7 @@ const CasteMultiple: React.FC<CityMultiple> = ({
                 placeholder={
                   HostedArray.length < 1 ? "Select Some Options" : ""
                 }
+                value={searchInput}
                 onChange={(e) => {
                   searchDataFunc(e.target.value);
                 }}
@@ -101,7 +141,7 @@ const CasteMultiple: React.FC<CityMultiple> = ({
                 return (
                   <li
                     key={item.id}
-                    onClick={() => getClickedData(item, index)}
+                    onClick={() => getClickedData(item)}
                     className={
                       HostedArray.includes(item) ? classes.tabActive : ""
                     }

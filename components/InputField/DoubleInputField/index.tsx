@@ -24,6 +24,9 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
 
   const [activeList2, setActiveList2] = useState<boolean>(false);
 
+  const [FromData, setFromData] = useState<String[]>(data);
+  const [ToData, setToData] = useState<String[]>(data);
+
   const [SelectedData1, updateHostedArray1] = useState<string>(
     defaultValueFrom || ""
   );
@@ -46,6 +49,18 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
     onDataTo(data);
   };
 
+  //if User select From Value first then set Tovalue greater then FromValue
+  useEffect(() => {
+    const filterData = data.filter((val) => val >= SelectedData1);
+    setToData(filterData);
+  }, [SelectedData1]);
+
+  //if User select To Value first then set FromValue Less then ToValue
+  useEffect(() => {
+    const filterData = data.filter((val) => val <= SelectedData2);
+    setFromData(filterData);
+  }, [SelectedData2]);
+
   return (
     <React.Fragment>
       <div className={classes.twoBox}>
@@ -64,11 +79,11 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
             }`}
           >
             <ul>
-              {data.map((val, idd) => {
+              {FromData.map((val, idd) => {
                 return (
                   <li
                     key={idd}
-                    onClick={() => getClickedData1(val)}
+                    onClick={() => getClickedData1(String(val))}
                     className={SelectedData1 === val ? classes.tabActive : ""}
                   >
                     <span>{val}</span>
@@ -92,14 +107,18 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
             }`}
           >
             <ul>
-              {data.map((val, idd) => {
+              {ToData.map((val, idd) => {
                 return (
                   <li
                     key={idd}
-                    onClick={() => getClickedData2(val)}
+                    onClick={() => getClickedData2(String(val))}
                     className={SelectedData2 === val ? classes.tabActive : ""}
                   >
-                    <span>{val}</span>
+                    {ToData.length >= 1 ? (
+                      <span>{val}</span>
+                    ) : (
+                      <span>No Data Found !!</span>
+                    )}
                   </li>
                 );
               })}

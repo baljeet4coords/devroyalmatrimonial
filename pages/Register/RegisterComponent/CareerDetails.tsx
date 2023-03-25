@@ -85,9 +85,18 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
           { ...values, actionType: "u" }
         );
       }
-      response.data.output === 1 && nextPage(2);
+      response.data.output > 0 && nextPage(2);
     },
   });
+
+  // when Render page go on the top of the page
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   useEffect(() => {
     formik.values.country = selectedCountry;
@@ -162,13 +171,17 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
               />
               <div className={classes.singleBox}>
                 <Form.Label>College Name</Form.Label>
-                <Form.Control
-                  name="college"
-                  type="text"
-                  placeholder={jsonData?.College}
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                />
+                <div className={classes.inputBox}>
+                  <li className={classes.blankInput}>
+                    <Form.Control
+                      type="text"
+                      name="college"
+                      placeholder={jsonData?.College || "Enter College Name"}
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                    />
+                  </li>
+                </div>
               </div>
               <DropdownGridSingleSelect
                 selectedDataFn={setOccupation}
