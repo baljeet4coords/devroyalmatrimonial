@@ -23,8 +23,8 @@ export enum Gender {
 }
 
 export enum MaritalStatus {
-  NeverMarried = "1",
-  AwaitingDivorce = "2",
+  Never_Married = "1",
+  Awaiting_Divorce = "2",
   Separated = "3",
   Divorced = "4",
   Widowed = "5",
@@ -32,9 +32,9 @@ export enum MaritalStatus {
 }
 
 export enum MaritalStatusWith0 {
-  DoesNotMarried = "0",
-  NeverMarried = "1",
-  AwaitingDivorce = "2",
+  Does_Not_Matter = "0",
+  Never_Married = "1",
+  Awaiting_Divorce = "2",
   Separated = "3",
   Divorced = "4",
   Widowed = "5",
@@ -42,43 +42,43 @@ export enum MaritalStatusWith0 {
 }
 
 export enum YeNoNA {
-  DoesNotMarried = "0",
+  Does_Not_Married = "0",
   Yes = "1",
   No = "2",
   NA = "3",
 }
 
 export enum AnnualIncomeProfile {
-  Lakh_0_1 = "1",
-  Lakhs_0_2 = "2",
-  Lakhs_2_5 = "3",
-  Lakhs_5_10 = "4",
-  Lakhs_10_20 = "5",
-  Lakhs_20_30 = "6",
-  Lakhs_30_50 = "7",
-  Lakhs_50_70 = "8",
-  Cr_70_1 = "8",
-  Cr_1_2 = "10",
-  CrAbove_2 = "11",
+  From_0_to_1_lakh = "1",
+  From_1_to_2_lakhs = "2",
+  From_2_to_5_lakhs = "3",
+  From_5_to_10_lakhs = "4",
+  From_10_to_20_lakhs = "5",
+  From_20_to_30_lakhs = "6",
+  From_30_to_50_lakhs = "7",
+  From_50_to_70_lakhs = "8",
+  From_70_to_1_crore = "9",
+  From_1_to_2_crores = "10",
+  Above_2_crores = "11",
 }
 
 export enum AnnualIncomeProfile0 {
-  Doesnotmatter = "0",
-  Lessthan1lakh = "1",
-  Greaterhtan1Lakhs = "2",
-  Greaterhtan2Lakhs = "3",
-  Greaterhtan5Lakhs = "4",
-  Greaterhtan10Lakhs = "5",
-  Greaterhtan20Lakhs = "6",
-  Greaterhtan30Lakhs = "7",
-  Greaterhtan50Lakhs = "8",
-  Greaterhtan70Lakhs = "9",
-  Greaterhtan1Cr = "10",
-  Greaterhtan2Cr = "11",
+  Does_Not_Matter = "0",
+  From_0_to_1_lakh = "1",
+  From_1_to_2_lakhs = "2",
+  From_2_to_5_lakhs = "3",
+  From_5_to_10_lakhs = "4",
+  From_10_to_20_lakhs = "5",
+  From_20_to_30_lakhs = "6",
+  From_30_to_50_lakhs = "7",
+  From_50_to_70_lakhs = "8",
+  From_70_to_1_crore = "9",
+  From_1_to_2_crores = "10",
+  Above_2_crores = "11",
 }
 
 export enum MotherTongueWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Hindi = "1",
   Hindi_Delhi_Punjabi = "2",
   Hindi_MP_CG = "3",
@@ -137,66 +137,66 @@ export enum MotherTongue {
 }
 
 export enum OccupationWith0 {
-  Doesnotmatter = "0",
-  GovernmentPublicSector = "1",
-  CivilServices = "2",
+  Does_Not_Matter = "0",
+  Government_Public_Sector = "1",
+  Civil_Services = "2",
   Defense = "3",
-  BusinessSelfEmployed = "4",
-  NotWorking = "5",
+  Business_Self_Employed = "4",
+  Not_Working = "5",
   Administration = "6",
-  AdvertisingMediaEntertainment = "7",
+  Advertising_Media_Entertainment = "7",
   Agricultural = "8",
   AirlineAviation = "9",
   Architecture = "10",
   ArmedForces = "11",
-  BankingFinance = "12",
-  BPOCustomerService = "13",
-  CorporateManagementProfessionals = "14",
+  Banking_Finance = "12",
+  BPO_Customer_Service = "13",
+  Corporate_Management_Professionals = "14",
   Doctor = "15",
-  TeacherEducationTraining = "16",
+  Teacher_Education_Training = "16",
   Engineering = "17",
   Hospitality = "18",
   LawEnforcement = "19",
   Legal = "20",
   MerchantNavy = "21",
-  OtherMedicalHealthcare = "22",
-  ScienceResearch = "23",
-  SoftwareIT = "24",
-  TopManagement = "25",
+  Other_Medical_Healthcare = "22",
+  Science_Research = "23",
+  Software_IT = "24",
+  Top_Management = "25",
   Others = "26",
 }
 
 export enum Occupation {
-  GovernmentPublicSector = "1",
-  CivilServices = "2",
+  Government_Public_Sector = "1",
+  Civil_Services = "2",
   Defense = "3",
-  BusinessSelfEmployed = "4",
-  NotWorking = "5",
+  Business_Self_Employed = "4",
+  Not_Working = "5",
   Administration = "6",
-  AdvertisingMediaEntertainment = "7",
+  Advertising_Media_Entertainment = "7",
   Agricultural = "8",
   AirlineAviation = "9",
   Architecture = "10",
   ArmedForces = "11",
-  BankingFinance = "12",
-  BPOCustomerService = "13",
-  CorporateManagementProfessionals = "14",
+  Banking_Finance = "12",
+  BPO_Customer_Service = "13",
+  Corporate_Management_Professionals = "14",
   Doctor = "15",
-  TeacherEducationTraining = "16",
+  Teacher_Education_Training = "16",
   Engineering = "17",
   Hospitality = "18",
   LawEnforcement = "19",
   Legal = "20",
   MerchantNavy = "21",
-  OtherMedicalHealthcare = "22",
-  ScienceResearch = "23",
-  SoftwareIT = "24",
-  TopManagement = "25",
+  Other_Medical_Healthcare = "22",
+  Science_Research = "23",
+  Software_IT = "24",
+  Top_Management = "25",
   Others = "26",
 }
 
 export enum ReligionWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Hindu = "1",
   Muslim = "2",
   Sikh = "3",
@@ -224,10 +224,10 @@ export enum Religion {
 
 export enum ResidentialStatus {
   Citizen = "1",
-  PermanentResident = "2",
-  WorkPermit = "3",
-  StudentVisa = "4",
-  TemporaryVisa = "5",
+  Permanent_Resident = "2",
+  Work_Permit = "3",
+  Student_Visa = "4",
+  Temporary_Visa = "5",
 }
 export enum DiscribeYourself {
   Honnest = "1",
@@ -238,46 +238,46 @@ export enum DiscribeYourself {
 }
 
 export enum ResidentialStatusWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Citizen = "1",
-  PermanentResident = "2",
-  WorkPermit = "3",
-  StudentVisa = "4",
-  TemporaryVisa = "5",
+  Permanent_Resident = "2",
+  Work_Permit = "3",
+  Student_Visa = "4",
+  Temporary_Visa = "5",
 }
 
 export enum Manglik {
   Manglik = "1",
-  NonManglik = "2",
-  Angshik_partialmanglik = "3",
+  Non_Manglik = "2",
+  Angshik_partial_manglik = "3",
   NA = "4",
 }
 
 export enum ManglikWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Manglik = "1",
-  NonManglik = "2",
-  Angshik_partialmanglik = "3",
+  Non_Manglik = "2",
+  Angshik_partial_manglik = "3",
   NA = "4",
 }
 
 export enum DietWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Vegetarian = "1",
-  NonVegetarian = "2",
+  Non_Vegetarian = "2",
   Jain = "3",
   Eggetarian = "4",
 }
 
 export enum Diet {
   Vegetarian = "1",
-  NonVegetarian = "2",
+  Non_Vegetarian = "2",
   Jain = "3",
   Eggetarian = "4",
 }
 
 export enum SmokeDrinkWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
   Occasionally = "3",
@@ -290,7 +290,7 @@ export enum SmokeDrink {
 }
 
 export enum PetsWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
 }
@@ -301,7 +301,7 @@ export enum Pets {
 }
 
 export enum OwnHouseCarWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
 }
@@ -313,16 +313,16 @@ export enum OwnHouseCar {
 
 export enum Challenged {
   None = "1",
-  Physically_Frombirth = "2",
-  Physically_Duetoaccident = "3",
-  Mentally_Frombirth = "4",
-  Mentally_Duetoaccident = "5",
+  Physically_From_birth = "2",
+  Physically_Due_to_accident = "3",
+  Mentally_From_birth = "4",
+  Mentally_Due_to_accident = "5",
 }
 
 export enum FamilStatus {
   Rich_or_Affluent = "1",
-  UpperMiddle = "2",
-  MiddleClass = "3",
+  Upper_Middle = "2",
+  Middle_Class = "3",
 }
 
 export enum BortherSisterCount {
@@ -357,15 +357,15 @@ export enum Thalassemia {
 
 export enum ChildrenStatus {
   No = "1",
-  Yes_Livingtogether = "2",
-  Yes_LivingSeparatly = "3",
+  Yes_Living_together = "2",
+  Yes_Living_Separatly = "3",
 }
 
 export enum ChildrenStatus0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   No = "1",
-  Yes_Livingtogether = "2",
-  Yes_LivingSeparatly = "3",
+  Yes_Living_together = "2",
+  Yes_Living_Separatly = "3",
 }
 
 export enum MothersProfession {
@@ -374,10 +374,14 @@ export enum MothersProfession {
   Service_or_Private = "3",
   Service_or_Govt_PSU = "4",
   Army = "5",
-  CivilServices = "6",
+  Civil_Services = "6",
   Teacher = "7",
   Retired = "8",
   Expired = "9",
+  Doctor = "9",
+  Legal = "10",
+  Law_Enforcement = "11",
+  Others = "12",
 }
 
 export enum profile_platform {
@@ -388,9 +392,9 @@ export enum profile_platform {
 }
 
 export enum EventType {
-  HinduPunjabi = "1",
+  Hindu_Punjabi = "1",
   Sikh = "2",
-  MaritalStatus = "3",
+  Marital_Status = "3",
 }
 
 export enum Privacy_Setting {
@@ -400,7 +404,7 @@ export enum Privacy_Setting {
 }
 
 export enum ChallengedWith0 {
-  DoesNotMatter = "0",
+  Does_Not_Matter = "0",
   None = "1",
   Physically_Frombirth = "2",
   Physically_Duetoaccident = "3",
@@ -409,7 +413,7 @@ export enum ChallengedWith0 {
 }
 
 export enum BrotherSisterWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   No = "1",
   Yes = "2",
   More = "2+",
@@ -421,61 +425,36 @@ export enum BrotherSister {
   More = "2+",
 }
 export enum FamilyIncomeWith0 {
-  Doesnotmatter = "0",
-  High = "1",
-  Mid = "2",
-  Low = "3",
-  FamilyIncomem = "4",
+  Does_Not_Matter = "0",
+  From_0_to_1_lakh = "1",
+  From_1_to_2_lakhs = "2",
+  From_2_to_5_lakhs = "3",
+  From_5_to_10_lakhs = "4",
+  From_10_to_20_lakhs = "5",
+  From_20_to_30_lakhs = "6",
+  From_30_to_50_lakhs = "7",
+  From_50_to_70_lakhs = "8",
+  From_70_to_1_crore = "9",
+  From_1_to_2_crores = "10",
+  Above_2_crores = "11",
 }
 
 export enum FamilyIncome {
-  High = "1",
-  Mid = "2",
-  Low = "3",
-  FamilyIncomem = "4",
-}
-
-export enum FamilyNativeCountryWith0 {
-  Doesnotmatter = "0",
-  India = "1",
-  Other = "2",
-  FamilyNativeCountry = "3",
-}
-
-export enum FamilyNativeCountry {
-  India = "1",
-  Other = "2",
-  FamilyNativeCountry = "3",
-}
-
-export enum FamilyNativeStateWith0 {
-  Doesnotmatter = "0",
-  Delhi = "1",
-  Punjab = "2",
-  Haryana = "3",
-}
-
-export enum FamilyNativeState {
-  Delhi = "1",
-  Punjab = "2",
-  Haryana = "3",
-}
-
-export enum FamilyNativeCityWith0 {
-  Doesnotmatter = "0",
-  Gurgaon = "1",
-  Rohatak = "2",
-  Hisar = "3",
-}
-
-export enum FamilyNativeCity {
-  Gurgaon = "1",
-  Rohatak = "2",
-  Hisar = "3",
+  From_0_to_1_lakh = "1",
+  From_1_to_2_lakhs = "2",
+  From_2_to_5_lakhs = "3",
+  From_5_to_10_lakhs = "4",
+  From_10_to_20_lakhs = "5",
+  From_20_to_30_lakhs = "6",
+  From_30_to_50_lakhs = "7",
+  From_50_to_70_lakhs = "8",
+  From_70_to_1_crore = "9",
+  From_1_to_2_crores = "10",
+  Above_2_crores = "11",
 }
 
 export enum LivingWithParrentsWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
 }
@@ -486,7 +465,7 @@ export enum LivingWithParrents {
 }
 
 export enum ReadyToSettleAbroadWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
 }
@@ -497,7 +476,7 @@ export enum ReadyToSettleAbroad {
 }
 
 export enum isHivWith0 {
-  Doesnotmatter = "0",
+  Does_Not_Matter = "0",
   Yes = "1",
   No = "2",
 }
@@ -516,6 +495,10 @@ export enum FathersProfession {
   Teacher = "6",
   Retired = "7",
   Expired = "8",
+  Doctor = "9",
+  Legal = "10",
+  Law_Enforcement = "11",
+  Others = "12",
 }
 
 export enum EducationTypeAndVal {

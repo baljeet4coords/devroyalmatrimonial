@@ -26,7 +26,6 @@
 }
 
 @media only screen and (max-width: 950px) {
-
   .register_header_Links,
   .register_header_Links a {
     width: 100%;
@@ -35,6 +34,21 @@
 
 /////////////////////////////////////////inputboxes SCSS////////////////////////////////////////////////////////////////////////////////
 
+.singleBoxBlock {
+  justify-content: flex-end;
+  position: relative;
+
+  div {
+    width: 100%;
+    text-align: center;
+
+    svg {
+      position: absolute;
+      right: 15px;
+      top: 40%;
+    }
+  }
+}
 .formEdit {
   text-align: start;
   display: flex;
@@ -65,14 +79,12 @@
     }
 
     label {
-
       text-align: right;
       position: absolute;
       left: 0rem;
       top: 50%;
       transform: translateY(-50%);
       margin-top: 0;
-
     }
 
     .inputBox {
@@ -89,7 +101,6 @@
       background-color: $milkWhite_bg;
       width: 100%;
       margin: 0;
-
 
       .inputBoxVal {
         visibility: hidden;
@@ -180,15 +191,13 @@
     }
   }
 
-
-  input[type=radio] {
+  input[type="radio"] {
     padding: 0.5rem;
   }
-
 }
 
 .formEdit {
-  +button {
+  + button {
     margin-top: 3rem;
   }
 }
