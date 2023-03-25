@@ -51,9 +51,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [selectedData, setSelectedData] = useState<Data>({ id: "", val: "" });
   const [placeholderVal, setPlaceholderVal] = useState("");
 
-  const ref = useRef<any>();
-  const elementRef = useRef<HTMLDivElement>(null);
-
   const searchDataFunc = (query: any) => {
     const searched = Object.keys(data).filter((item) =>
       item.toLowerCase().includes(query.toLowerCase())
