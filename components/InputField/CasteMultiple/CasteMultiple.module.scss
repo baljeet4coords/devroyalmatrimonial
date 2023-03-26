@@ -4,6 +4,7 @@
 .singleBox {
   display: flex;
   position: relative;
+  width: 70%;
 
   div {
     width: 100%;
@@ -22,11 +23,12 @@
     padding: 0.875rem 1rem;
     text-align: center;
     margin: 0.6em;
-    color: $browser_text;
+    color: #909090;
     cursor: pointer;
     width: 100%;
     position: relative;
-    min-width: 580px;
+    min-width: 570px;
+    height: 8rem;
 
     ul {
       list-style: none;
@@ -35,7 +37,6 @@
       width: 100%;
       max-height: 100px;
       overflow-x: hidden;
-      // overflow-y: scroll;
       cursor: text;
       display: flex;
       flex-wrap: wrap;
@@ -54,27 +55,21 @@
         height: fit-content;
       }
     }
-  }
 
-  .blankInput {
-    border: none !important;
-    background: transparent !important;
+    .ul_maxh_64 {
+      max-height: 64px;
+    }
 
     input {
-      margin: 1px 0;
-      padding: 0;
-      height: 25px;
-      outline: 0;
-      border: 0 !important;
-      background: transparent !important;
-      box-shadow: none;
-      color: #999;
-      font-size: 100%;
-      font-family: sans-serif;
-      line-height: normal;
-      border-radius: 0;
+      border: 1px solid #d9d9d9 !important;
+      border-radius: 2px;
+      padding: 0.175rem 0.5rem !important;
+      text-align: center;
+      margin: 0.6em;
+      margin-top: 0 !important;
     }
   }
+
 
   .inputBoxVal {
     visibility: hidden;
@@ -135,44 +130,29 @@
 
 
 
-@media only screen and (max-width: 1200px) and (min-width: 991px) {
+@media only screen and (max-width: 1200px) and (min-width: 300px) {
   .singleBox {
+    flex-direction: column;
     width: 100%;
 
     .inputBox {
+      margin: 0.6rem 0;
+      width: 100%;
       min-width: auto;
     }
   }
 }
 
-@media only screen and (max-width: 990px) and (min-width: 768px) {
-  .singleBox {
-    flex-direction: column;
-
-    .inputBox {
-      margin: 0.6rem 0;
-    }
-  }
-}
-
-@media only screen and (max-width: 767px) and (min-width: 300px) {
-  .singleBox {
-    flex-direction: column;
-
-    .inputBox {
-      margin: 0.6rem 0;
-      min-width: 100%;
-    }
-  }
-}
 
 @media only screen and (max-width: 300px) {
   .singleBox {
     flex-direction: column;
+    width: 100%;
 
     .inputBox {
-      min-width: 100%;
       margin: 0.6rem 0;
+      width: 100%;
+      min-width: auto;
     }
   }
 }

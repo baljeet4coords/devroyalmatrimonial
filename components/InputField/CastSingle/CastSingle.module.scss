@@ -56,7 +56,7 @@
             }
         }
 
-        .ul_maxh_64{
+        .ul_maxh_64 {
             max-height: 64px;
         }
 
@@ -70,25 +70,6 @@
         }
     }
 
-    .blankInput {
-        border: none !important;
-        background: transparent !important;
-
-        input {
-            margin: 1px 0;
-            padding: 0;
-            height: 25px;
-            outline: 0;
-            border: 0 !important;
-            background: transparent !important;
-            box-shadow: none;
-            color: #999;
-            font-size: 100%;
-            font-family: sans-serif;
-            line-height: normal;
-            border-radius: 0;
-        }
-    }
 
     .inputBoxVal {
         visibility: hidden;
@@ -131,34 +112,22 @@
 
                 &:hover {
                     background-color: #d9475c;
-                    color: #fff
+                    color: #fff;
                 }
             }
 
             .tabActive {
                 background-color: #d9475c;
-                color: #fff
+                color: #fff;
             }
         }
     }
 }
 
-
 .active {
     visibility: visible !important;
 }
 
-
-
-// @media only screen and (max-width: 1200px) and (min-width: 991px) {
-//     .singleBox {
-//         width: 100%;
-
-//         .inputBox {
-//             min-width: auto;
-//         }
-//     }
-// }
 
 
 @media only screen and (max-width: 1200px) and (min-width: 300px) {
@@ -168,20 +137,13 @@
 
         .inputBox {
             margin: 0.6rem 0;
+            width: 100%;
             min-width: auto;
         }
     }
 }
-// @media only screen and (max-width: 767px) and (min-width: 300px) {
-//     .singleBox {
-//         flex-direction: column;
 
-//         .inputBox {
-//             margin: 0.6rem 0;
-//             min-width: 100%;
-//         }
-//     }
-// }
+
 @media only screen and (max-width: 300px) {
     .singleBox {
         flex-direction: column;
@@ -189,6 +151,7 @@
 
         .inputBox {
             margin: 0.6rem 0;
+            width: 100%;
             min-width: auto;
         }
     }

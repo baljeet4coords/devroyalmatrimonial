@@ -114,7 +114,9 @@ const DesiredProfilePage: React.FC = () => {
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
-  const [filters, setFilters] = useState<string[]>(
+
+
+  const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
 
@@ -146,7 +148,7 @@ const DesiredProfilePage: React.FC = () => {
       childrenStatus: JSON.stringify(childrenStatus),
       hiv: jsonData?.HIV,
       horoscopeMatch: "0",
-      mandatoryFields: JSON.stringify(filters),
+      mandatoryFields: JSON.stringify(selectedSwitches),
     };
     let response;
     if (isReduxEmpty === undefined) {
@@ -161,6 +163,15 @@ const DesiredProfilePage: React.FC = () => {
       );
     }
     response.data.output === 1 && alert("Partner Preference Saved");
+  };
+
+  const handleSwitchToggle = (switchValue: string) => {
+    const newSelectedSwitches = selectedSwitches.includes(switchValue)
+      ? selectedSwitches.filter(
+          (selectedSwitch) => selectedSwitch !== switchValue
+        )
+      : [...selectedSwitches, switchValue];
+    setSelectedSwitches(newSelectedSwitches);
   };
 
   return (
@@ -185,55 +196,100 @@ const DesiredProfilePage: React.FC = () => {
                   defaultValueFrom={
                     jsonData?.age_greater_than !== undefined
                       ? String(jsonData?.age_greater_than)
-                      : "Greater than"
+                      : "Age Greater than"
                   }
                   defaultValueTo={
                     jsonData?.age_less_than !== undefined
                       ? String(jsonData?.age_less_than)
-                      : "Less than"
+                      : "Age Less than"
                   }
+                  Convert={false}
                 />
-                <DoubleInput
-                  data={HeighListInCms(100, 244)}
-                  inputName={"Height in feet"}
-                  onDataFrom={setSelectedHeightFrom}
-                  onDataTo={setSelectedHeightTo}
-                  defaultValueFrom={
-                    jsonData?.height_greater_than !== undefined
-                      ? String(jsonData?.height_greater_than)
-                      : "Greater than"
-                  }
-                  defaultValueTo={
-                    jsonData?.height_less_than !== undefined
-                      ? String(jsonData?.height_less_than)
-                      : "Less than"
-                  }
-                />
-                <CountryMultiple
-                  onChangeCountry={setCountry}
-                  defaultCountry={jsonData?.country || []}
-                />
-                <StateMultiple
-                  onChangeState={setState}
-                  defaultState={jsonData?.country || []}
-                />
-                <CityMultiple
-                  onChangeCity={setCity}
-                  defaultCity={jsonData?.city || []}
-                />
-                <SingleInput
-                  data={EducationTypeAndVal}
-                  inputName={"Education"}
-                  onChange={setEducation}
-                  defaultValues={jsonData?.education || []}
-                />
+                <div className=" d-flex gap-3 position-relative">
+                  <DoubleInput
+                    data={HeighListInCms(100, 244)}
+                    inputName={"Height in feet"}
+                    onDataFrom={setSelectedHeightFrom}
+                    onDataTo={setSelectedHeightTo}
+                    defaultValueFrom={
+                      jsonData?.height_greater_than !== undefined
+                        ? String(jsonData?.height_greater_than)
+                        : "Height Greater than"
+                    }
+                    defaultValueTo={
+                      jsonData?.height_less_than !== undefined
+                        ? String(jsonData?.height_less_than)
+                        : "Height Less than"
+                    }
+                    Convert={true}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="height"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <CountryMultiple
+                    onChangeCountry={setCountry}
+                    defaultCountry={jsonData?.country || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="country"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
 
-                <SingleInput
-                  data={OccupationWith0}
-                  inputName={"Occupation"}
-                  onChange={setOccupation}
-                  defaultValues={jsonData?.occupation || []}
-                />
+                <div className=" d-flex gap-3 position-relative">
+                  <StateMultiple
+                    onChangeState={setState}
+                    defaultState={jsonData?.country || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="state"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <CityMultiple
+                    onChangeCity={setCity}
+                    defaultCity={jsonData?.city || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="city"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={EducationTypeAndVal}
+                    inputName={"Education"}
+                    onChange={setEducation}
+                    defaultValues={jsonData?.education || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="education"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={OccupationWith0}
+                    inputName={"Occupation"}
+                    onChange={setOccupation}
+                    defaultValues={jsonData?.occupation || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="occupation"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
                     title={"Income greater than"}
@@ -244,41 +300,88 @@ const DesiredProfilePage: React.FC = () => {
                       String(jsonData?.annual_income_greater_than) || ""
                     }
                   />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="annual_income"
+                    selectedSwitches={selectedSwitches}
+                  />
                 </div>
-                <SingleInput
-                  data={MaritalStatusWith0}
-                  inputName={"Marital Status"}
-                  onChange={setMaritalStatus}
-                  defaultValues={jsonData?.marital_status || []}
-                />
-                <SingleInput
-                  data={ReligionWith0}
-                  inputName={"Religion"}
-                  onChange={setReligion}
-                  defaultValues={jsonData?.religion || []}
-                />
-                <SingleInput
-                  data={MotherTongueWith0}
-                  inputName={"Mother Tongue"}
-                  onChange={setMotherTongue}
-                  defaultValues={jsonData?.mother_tongue || []}
-                />
-                <CasteMultiple
-                  onChangeCaste={setCaste}
-                  defaultValues={jsonData?.caste || []}
-                />
-                <SingleInput
-                  data={ResidentialStatusWith0}
-                  inputName={"Residential Status"}
-                  onChange={setResidentialStatus}
-                  defaultValues={jsonData?.Residential_status || []}
-                />
-                <SingleInput
-                  data={ManglikWith0}
-                  inputName={"Manglik"}
-                  onChange={setManglik}
-                  defaultValues={jsonData?.manglik || []}
-                />
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={MaritalStatusWith0}
+                    inputName={"Marital Status"}
+                    onChange={setMaritalStatus}
+                    defaultValues={jsonData?.marital_status || []}
+                  />
+                  {/* <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="annual_income"
+                    selectedSwitches={selectedSwitches}
+                  /> */}
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={ReligionWith0}
+                    inputName={"Religion"}
+                    onChange={setReligion}
+                    defaultValues={jsonData?.religion || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="religion"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={MotherTongueWith0}
+                    inputName={"Mother Tongue"}
+                    onChange={setMotherTongue}
+                    defaultValues={jsonData?.mother_tongue || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="mother_tongue"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <CasteMultiple
+                    onChangeCaste={setCaste}
+                    defaultValues={jsonData?.caste || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="caste"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={ResidentialStatusWith0}
+                    inputName={"Residential Status"}
+                    onChange={setResidentialStatus}
+                    defaultValues={jsonData?.Residential_status || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="residentialstatus"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={ManglikWith0}
+                    inputName={"Manglik"}
+                    onChange={setManglik}
+                    defaultValues={jsonData?.manglik || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="manglik"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
                     title={"Diet"}
@@ -286,6 +389,11 @@ const DesiredProfilePage: React.FC = () => {
                     nameid={"DietWith0"}
                     selectedDataFn={setDiet}
                     defaultValue={String(jsonData?.diet) || ""}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="diet"
+                    selectedSwitches={selectedSwitches}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -296,6 +404,11 @@ const DesiredProfilePage: React.FC = () => {
                     selectedDataFn={setSmoke}
                     defaultValue={String(jsonData?.diet) || ""}
                   />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="smoking"
+                    selectedSwitches={selectedSwitches}
+                  />
                 </div>
                 <div className={classes.singleDropDown}>
                   <DropdownGridSingleSelect
@@ -304,6 +417,11 @@ const DesiredProfilePage: React.FC = () => {
                     nameid={"drinkingwith0"}
                     selectedDataFn={setDrink}
                     defaultValue={String(jsonData?.diet) || ""}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="drinking"
+                    selectedSwitches={selectedSwitches}
                   />
                 </div>
                 <div className={classes.singleDropDown}>
@@ -314,19 +432,38 @@ const DesiredProfilePage: React.FC = () => {
                     selectedDataFn={setReadyToSettleAbroad}
                     defaultValue={String(jsonData?.ready_to_settleAbroad) || ""}
                   />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="readytosettleabroad"
+                    selectedSwitches={selectedSwitches}
+                  />
                 </div>
-                <SingleInput
-                  data={ChallengedWith0}
-                  inputName={"Challenged"}
-                  onChange={setChallenged}
-                  defaultValues={jsonData?.Challenged || []}
-                />
-                <SingleInput
-                  data={ChildrenStatus0}
-                  inputName={"Children Status"}
-                  onChange={setChildrenStatus}
-                  defaultValues={jsonData?.children_status || []}
-                />
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={ChallengedWith0}
+                    inputName={"Challenged"}
+                    onChange={setChallenged}
+                    defaultValues={jsonData?.Challenged || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="challenged"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
+                <div className=" d-flex gap-3 position-relative">
+                  <SingleInput
+                    data={ChildrenStatus0}
+                    inputName={"Children Status"}
+                    onChange={setChildrenStatus}
+                    defaultValues={jsonData?.children_status || []}
+                  />
+                  <StrictRadioCheck
+                    handleSwitchToggle={handleSwitchToggle}
+                    switchNameVal="children_status"
+                    selectedSwitches={selectedSwitches}
+                  />
+                </div>
                 <div className={classes.singleBox}>
                   <Form.Label>HIV</Form.Label>
                   <Form.Control type="text" value={hiv.id} disabled />
@@ -335,10 +472,6 @@ const DesiredProfilePage: React.FC = () => {
                   Save your preferrence
                 </Button>
               </form>
-              <StrictRadioCheck
-                onSetFilters={setFilters}
-                defaultValue={jsonData?.mandatory_fields || []}
-              />
             </Col>
           </Row>
         </Container>

@@ -20,6 +20,7 @@ import { getUserId } from "../../../ducks/auth/selectors";
 import { step2 } from "../../../ducks/regiserUser/step2/actions";
 import { selectStep2Success } from "../../../ducks/regiserUser/step2/selectors";
 import axios from "axios";
+import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -150,6 +151,10 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 defaultValueCountry={jsonData?.country}
                 defaultValueState={jsonData?.state}
                 defaultValueCity={jsonData?.city}
+              />
+              <CountrySingle
+                setSelectedCountry={getSelectedCountry}
+                defaultValueCountry={jsonData?.country}
               />
               <DropdownGridSingleSelect
                 selectedDataFn={setResidentialStatus}

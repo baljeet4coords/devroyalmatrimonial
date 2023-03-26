@@ -66,9 +66,7 @@ const CountryMultiple: React.FC<CountryProps> = ({
 
   const getClickedData = useCallback(
     (country: ICountry) => {
-      const getIndex = countries.findIndex(
-        (obj) => obj.name === country.name
-      );
+      const getIndex = countries.findIndex((obj) => obj.name === country.name);
       if (!HostedArray.some((item) => Object.is(item, country))) {
         setCountriesIds((pre) => [...pre, getIndex]);
         updateHostedArray((prevArray) => [...prevArray, country]);
@@ -110,34 +108,28 @@ const CountryMultiple: React.FC<CountryProps> = ({
     <>
       <div className={classes.singleBox} ref={elementRef}>
         <label>Preferred Country</label>
-        <div className={classes.inputBox}>
-          <ul
-            onClick={() => {
-              setActiveList(true);
-            }}
-          >
-            {HostedArray.map((item) => {
-              return (
-                <li key={item.isoCode}>
-                  <span>{item.name}</span>
-                  <IoClose
-                    onClick={() => getClickedDeleteData(item.isoCode, item)}
-                  />
-                </li>
-              );
-            })}
-            <li className={classes.blankInput}>
-              <input
-                type="text"
-                placeholder={
-                  HostedArray.length < 1 ? "Select Some Options" : ""
-                }
-                value={searchInput}
-                onChange={(e) => {
-                  searchDataFunc(e.target.value);
-                }}
-              />
-            </li>
+        <div className={classes.inputBox} onClick={() => setActiveList(true)}>
+          {activeList && (
+            <input
+              type="text"
+              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
+              value={searchInput}
+              onChange={(e) => searchDataFunc(e.target.value)}
+            />
+          )}
+          <ul className={activeList ? classes.ul_maxh_64 : ""}>
+            {HostedArray.length > 0
+              ? HostedArray.map((item) => {
+                  return (
+                    <li key={item.isoCode}>
+                      <span>{item.name}</span>
+                      <IoClose
+                        onClick={() => getClickedDeleteData(item.isoCode, item)}
+                      />
+                    </li>
+                  );
+                })
+              : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${

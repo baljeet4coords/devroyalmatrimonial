@@ -87,16 +87,18 @@ const SingleInput: React.FC<MyComponentProps> = ({
               onChange={(e) => searchDataFunc(e.target.value)}
             />
           )}
-          <ul>
-            {HostedArray.map((uid: string) => {
-              const [name, id] = combinedData[+uid].split("-");
-              return (
-                <li key={id}>
-                  <span>{name.replaceAll("_", " ")}</span>
-                  <IoClose onClick={() => getClickedDeleteData(+uid)} />
-                </li>
-              );
-            })}
+          <ul className={activeList ? classes.ul_maxh_64 : ""}>
+            {HostedArray.length > 0
+              ? HostedArray.map((uid: string) => {
+                  const [name, id] = combinedData[+uid].split("-");
+                  return (
+                    <li key={id}>
+                      <span>{name.replaceAll("_", " ")}</span>
+                      <IoClose onClick={() => getClickedDeleteData(+uid)} />
+                    </li>
+                  );
+                })
+              : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${

@@ -3,6 +3,7 @@
 .twoBox {
     display: flex;
     position: relative;
+    width: 70%;
 
     div {
         width: 100%;
@@ -17,7 +18,7 @@
     .inputBox {
         border: 1px solid #d9d9d9;
         border-radius: 2px;
-        padding: 0.875rem 5.5rem;
+        padding: 0.875rem 1.5rem;
         text-align: center;
         margin: 0.6em;
         color: $browser_text;
@@ -88,43 +89,39 @@
 
 
 
-@media only screen and (max-width: 1200px) and (min-width: 991px) {
+
+
+
+// @media only screen and (max-width: 1200px) and (min-width: 768px) {
+//     .twoBox {
+//         flex-direction: column;
+//     width: 100%;
+
+//         .inputBox{
+//             margin: 0.6rem 0;
+//         }
+//     }
+// }
+@media only screen and (max-width: 1200px) and (min-width: 300px) {
     .twoBox {
+        flex-direction: column;
         width: 100%;
 
         .inputBox {
+            margin: 0.6rem 0;
             min-width: auto;
         }
     }
 }
 
-
-@media only screen and (max-width: 990px) and (min-width: 768px) {
-    .twoBox {
-        flex-direction: column;
-
-        .inputBox{
-            margin: 0.6rem 0;
-        }
-    }
-}
-@media only screen and (max-width: 767px) and (min-width: 300px) {
-    .twoBox {
-        flex-direction: column;
-
-        .inputBox{
-            margin: 0.6rem 0;
-        }
-    }
-}
 @media only screen and (max-width: 300px) {
     .twoBox {
         flex-direction: column;
+        width: 100%;
 
-        .inputBox{
+        .inputBox {
             margin: 0.6rem 0;
             min-width: auto;
-            padding: 0.875rem 0.5rem;
         }
     }
 }

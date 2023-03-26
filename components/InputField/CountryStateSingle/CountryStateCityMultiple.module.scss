@@ -4,7 +4,7 @@
 .singleBox {
   display: flex;
   position: relative;
-  width: 70%;
+  width: 100%;
 
   div {
     width: 100%;
@@ -22,13 +22,12 @@
     border-radius: 2px;
     padding: 0.875rem 1rem;
     text-align: center;
-    margin: 0.6em;
-    color: #909090;
+    color: #000000;
     cursor: pointer;
     width: 100%;
     position: relative;
-    min-width: 570px;
-    height: 8rem;
+    height: 3rem;
+    background-color: #ffffff;
 
     ul {
       list-style: none;
@@ -78,15 +77,16 @@
     padding: 0.875rem 1rem;
     text-align: center;
     margin: 0.6em;
-    color: $browser_text;
+    color: #909090;
     cursor: pointer;
     width: 100%;
     position: absolute;
     left: -9px;
-    border: 1px solid $red_bg;
-    background: $milkWhite_bg;
-    box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+    border: 1px solid #d9475c;
+    background: #ffffff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
     z-index: 9;
+    top: 2.4rem;
 
     ul {
       list-style: none;
