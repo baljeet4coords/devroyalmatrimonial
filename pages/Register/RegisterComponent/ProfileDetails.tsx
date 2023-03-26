@@ -13,19 +13,20 @@ import {
 } from "../../../types/enums";
 import {
   AvatarPicker,
+  CastListDropDown,
   DropdownGridSingleSelect,
   GenderRadioButtons,
 } from "../../../components";
 import RightSection from "./RightSection/RightSection";
 import { useEffect, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
-import { CastList } from "../../../constants/CastList";
 import CastDataList from "../../../components/CastDataList/CastDataList";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step1 } from "../../../ducks/regiserUser/step1/actions";
+import { CastListArray } from "../../../constants/CastListArray";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -88,9 +89,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: String(jsonData?.children_status),
     val: "",
   });
+  const [selectedCast, setSelectedCast] = useState<Data>({
+    val: "",
+    id: String(jsonData?.caste),
+  });
 
   const [gender, setGender] = useState<string>("");
-  const [image, setImage] = useState<Blob | null>(null);
+  const [image, setImage] = useState<Blob | string>("");
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -141,6 +146,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
               "Content-Type": "multipart/form-data",
             },
           };
+        if (response.data.output === 4) {
+          nextPage(1);
+        }
       } else {
         formData.append("actionType", "u");
         (response = await axios.post(
@@ -152,9 +160,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
               "Content-Type": "multipart/form-data",
             },
           };
-      }
-      if (response.data.output === 0) {
-        nextPage(1);
+        if (response.data.output === 0) {
+          nextPage(1);
+        }
       }
     },
   });
@@ -176,6 +184,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.religion = selectedReligion.id || "";
     formik.values.isManglik = selectedManglik.id || "";
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
+    formik.values.cast = selectedCast.id || "";
     formik.values.height = cm;
     formik.values.profilepic = jsonData?.photo || "";
   }, [
@@ -189,6 +198,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedReligion.id,
     selectedManglik.id,
     selectedMaritalStatus.id,
+    selectedCast.id,
   ]);
 
   useEffect(() => {
@@ -224,12 +234,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, selectedProfileFor]);
 
-  const selectedCast = (string: string) => {
-    console.log(string);
-
-    const id = string.split("-")[0];
-    formik.values.cast = id;
-  };
   const profilePicture = (imageName: string, file: null | Blob) => {
     formik.values.profilepic = imageName;
     file && setImage(file);
@@ -316,14 +320,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     </li>
                   </div>
                 </div>
-                <div className={`${classes.singleBox} flex-column`}>
-                  <Form.Label>Cast</Form.Label>
-                  <CastDataList
-                    options={CastList}
-                    selectedOption={selectedCast}
-                    defaultValue={jsonData?.caste}
-                  />
-                </div>
+                <CastListDropDown
+                  data={CastListArray}
+                  selectedDataFn={setSelectedCast}
+                  title="Caste"
+                  nameid={"Caste"}
+                  defaultValue={String(jsonData?.caste)}
+                />
                 <div className={classes.singleBox}>
                   <Form.Label>Height in centimeters</Form.Label>
                   <div className={classes.inputBox}>
@@ -394,7 +397,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   selectedDataFn={setSelectedMaritalStatus}
                   defaultValue={String(jsonData?.marital_status)}
                 />
-                {selectedMaritalStatus.id >= "2" && (
+                {(selectedMaritalStatus.id || "") >= "2" && (
                   <DropdownGridSingleSelect
                     title="Children Status"
                     data={ChildrenStatus}

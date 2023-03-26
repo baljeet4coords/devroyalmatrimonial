@@ -180,7 +180,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                       type="text"
                       name="college"
                       placeholder={
-                        String(jsonData?.College) || "Enter College Name"
+                        jsonData?.College !== null
+                          ? String(jsonData?.College)
+                          : "Enter College Name"
                       }
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
