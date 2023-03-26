@@ -29,7 +29,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
   });
 
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 

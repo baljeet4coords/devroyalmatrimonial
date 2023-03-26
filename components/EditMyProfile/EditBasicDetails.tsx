@@ -51,19 +51,19 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
   });
 
   const [selectedManglik, setSelectedManglik] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.manglik), val: "" });
   const [selectedIsHiv, setSelectedIsHiv] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.hiv), val: "" });
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
   const [selectedchallenged, setSelectedchallenged] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
@@ -189,7 +189,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
               data={isHiv}
               nameid="hiv"
               selectedDataFn={setSelectedIsHiv}
-              defaultValue={jsonData?.hiv}
+              defaultValue={String(jsonData?.hiv)}
             />
           </div>
           <div className={classes.singleBox}>
@@ -224,7 +224,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
               data={Manglik}
               nameid="addmanglik"
               selectedDataFn={setSelectedManglik}
-              defaultValue={jsonData?.manglik}
+              defaultValue={String(jsonData?.manglik)}
             />
           </div>
           <div className={classes.singleBox}>

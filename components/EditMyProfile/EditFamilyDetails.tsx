@@ -33,31 +33,31 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
 
   const [selectedFathersOccupation, setSelectedFathersOccupation] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Father), val: "" });
   const [selectedMothersOccupation, setSelectedMothersOccupation] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Mother), val: "" });
   const [selectedSister, setSelectedSister] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Sister), val: "" });
   const [selectedBrother, setSelectedBrother] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Brother), val: "" });
   const [selectedFamilyStatus, setSelectedFamilyStatus] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Family_Status), val: "" });
   const [selectedFamilyIncome, setSelectedFamilyIncome] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Family_Income), val: "" });
   const [selectedFamilyType, setSelectedFamilyType] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.Family_Type), val: "" });
 
@@ -71,7 +71,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
     number | undefined
   >(jsonData?.family_native_city);
   const [selectedLivingWithParents, setSelectedLivingWithParents] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: String(jsonData?.living_with_parents), val: "" });
   const formik = useFormik({
@@ -148,7 +148,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Father's Occupation"
               data={FathersProfession}
               nameid="fathersProfession"
-              defaultValue={jsonData?.Father}
+              defaultValue={String(jsonData?.Father)}
             />
           </div>
           <div className={classes.singleBox}>
@@ -157,7 +157,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Mother's Occupation"
               data={MothersProfession}
               nameid="mothersProfession"
-              defaultValue={jsonData?.Mother}
+              defaultValue={String(jsonData?.Mother)}
             />
           </div>
 
@@ -167,7 +167,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Sister"
               data={BrotherSister}
               nameid="sister"
-              defaultValue={jsonData?.Sister}
+              defaultValue={String(jsonData?.Sister)}
             />
           </div>
           <div className={classes.singleBox}>
@@ -176,7 +176,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Brother"
               data={BrotherSister}
               nameid="brother"
-              defaultValue={jsonData?.Brother}
+              defaultValue={String(jsonData?.Brother)}
             />
           </div>
           <div className={classes.singleBox}>
@@ -198,7 +198,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Family Status "
               data={FamilStatus}
               nameid="familyStatus"
-              defaultValue={jsonData?.Family_Status}
+              defaultValue={String(jsonData?.Family_Status)}
             />
           </div>
 
@@ -208,7 +208,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Family Income"
               data={FamilyIncome}
               nameid="familyIncome"
-              defaultValue={jsonData?.Family_Income}
+              defaultValue={String(jsonData?.Family_Income)}
             />
           </div>
           <div className={classes.singleBox}>
@@ -217,7 +217,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Family Type"
               data={FamilyType}
               nameid="familyType"
-              defaultValue={jsonData?.Family_Type}
+              defaultValue={String(jsonData?.Family_Type)}
             />
           </div>
           <CountryStateCitlyList
@@ -236,7 +236,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails }) => {
               title="Living With Parents"
               data={LivingWithParrents}
               nameid="livingWithParents"
-              defaultValue={jsonData?.living_with_parents}
+              defaultValue={String(jsonData?.living_with_parents)}
             />
           </div>
 

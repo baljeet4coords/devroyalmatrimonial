@@ -38,36 +38,36 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
   });
 
   const [selectedResidentialStatus, setSelectedResidentialStatus] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedSettingAboard, setSelectedSettingAboard] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedHigestEducations, setSelectedHigestEducations] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedAnnualIncome, setSelectedAnnualIncome] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [SelectedEmployedIn, setSelectedEmployedIn] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   useEffect(() => {
-    (formik.values.residential_status = selectedResidentialStatus.val),
-      (formik.values.setting_aboard = selectedSettingAboard.val),
-      (formik.values.highest_education = selectedHigestEducations.id),
-      (formik.values.annual_income = selectedAnnualIncome.val),
-      (formik.values.employed_in = SelectedEmployedIn.id);
+    (formik.values.residential_status = selectedResidentialStatus.val || ""),
+      (formik.values.setting_aboard = selectedSettingAboard.val || ""),
+      (formik.values.highest_education = selectedHigestEducations.id || ""),
+      (formik.values.annual_income = selectedAnnualIncome.val || ""),
+      (formik.values.employed_in = SelectedEmployedIn.id || "");
   }, [
     selectedResidentialStatus.val,
     selectedSettingAboard.val,

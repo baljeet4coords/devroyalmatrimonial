@@ -20,38 +20,38 @@ interface MyComponentProps {
 }
 const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
   const [selectedDiet, setSelectedDiet] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
   const [selectedSmoking, setSelectedSmoking] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
   const [selectedDrinking, setSelectedDrinking] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
   const [selectedLovePets, setSelectedLovePets] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
   const [selectedOwnsHouse, setSelectedOwnsHouse] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedOwnsCar, setSelectedOwnsCar] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedBloodGroup, setSelectedBloodGroup] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
   const [selectedThalassemia, setSelectedThalassemia] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 

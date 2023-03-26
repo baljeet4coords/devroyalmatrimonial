@@ -23,7 +23,7 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
   });
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
-    id: string;
+    id?: string;
     val: string;
   }>({ id: "", val: "" });
 
