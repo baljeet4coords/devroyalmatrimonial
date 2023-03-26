@@ -212,7 +212,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Gothra"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    defaultValue={String(jsonData?.Gothra)}
+                    defaultValue={
+                      jsonData?.Gothra ? String(jsonData?.Gothra) : ""
+                    }
                   />
                 </div>
                 <DropdownGridSingleSelect

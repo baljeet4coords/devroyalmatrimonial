@@ -212,7 +212,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     placeholder="About Religious Belief"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    defaultValue={String(jsonData?.religious_belief)}
+                    defaultValue={
+                      jsonData?.religious_belief !== undefined
+                        ? String(jsonData?.religious_belief)
+                        : ""
+                    }
                   />
                 </div>
               </div>

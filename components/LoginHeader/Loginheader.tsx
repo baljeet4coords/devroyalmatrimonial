@@ -13,7 +13,6 @@ import classes from "./LoginHeader.module.scss";
 import Link from "next/link";
 import CustomButton from "../Button/CustomButton";
 import router from "next/router";
-import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
