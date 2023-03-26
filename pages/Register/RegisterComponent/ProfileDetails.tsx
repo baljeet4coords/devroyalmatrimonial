@@ -93,7 +93,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: "",
     id: String(jsonData?.caste),
   });
-
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
   const formik = useFormik({
@@ -186,7 +186,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
     formik.values.cast = selectedCast.id || "";
     formik.values.height = cm;
-    formik.values.profilepic = jsonData?.photo || "";
+    formik.values.profilepic = selectedPhotoName || "";
   }, [
     jsonData,
     formik.values,
@@ -199,6 +199,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedManglik.id,
     selectedMaritalStatus.id,
     selectedCast.id,
+    selectedPhotoName,
   ]);
 
   useEffect(() => {
@@ -235,7 +236,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   }, [formik.values, selectedProfileFor]);
 
   const profilePicture = (imageName: string, file: null | Blob) => {
-    formik.values.profilepic = imageName;
+    setSelectedPhotoName(imageName);
     file && setImage(file);
   };
 
@@ -328,20 +329,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   defaultValue={String(jsonData?.caste)}
                 />
                 <div className={classes.singleBox}>
-                  <Form.Label>Height in centimeters</Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={`${classes.blankInput}`}>
-                      <Form.Control
-                        name="heightincms"
-                        type="text"
-                        placeholder={`${jsonData?.height_cm || cm} cms`}
-                        onBlur={formik.handleBlur}
-                        onChange={handleCmChange}
-                      />
-                    </li>
-                  </div>
-                </div>
-                <div className={classes.singleBox}>
                   <Form.Label>Height in feet</Form.Label>
                   <div className={classes.inputBox}>
                     <li className={`${classes.blankInput}`}>
@@ -351,6 +338,20 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder={`${feet} feet`}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
+                      />
+                    </li>
+                  </div>
+                </div>
+                <div className={classes.singleBox}>
+                  <Form.Label>Height in centimeters</Form.Label>
+                  <div className={classes.inputBox}>
+                    <li className={`${classes.blankInput}`}>
+                      <Form.Control
+                        name="heightincms"
+                        type="text"
+                        placeholder={`${jsonData?.height_cm || cm} cms`}
+                        onBlur={formik.handleBlur}
+                        onChange={handleCmChange}
                       />
                     </li>
                   </div>

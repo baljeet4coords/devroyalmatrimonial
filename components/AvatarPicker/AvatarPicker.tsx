@@ -51,7 +51,6 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
     }
     setCroppedImage(canvas);
   };
-  console.log(defaultImage);
 
   return (
     <>
