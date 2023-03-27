@@ -47,7 +47,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <CareerDetails key={1} nextPage={chooseMessage} />,
     <LifeStyle key={2} nextPage={chooseMessage} />,
     <FamilyDetails key={3} nextPage={chooseMessage} />,
-    <ExpressYourself key={4} />,
+    <ExpressYourself key={4} nextPage={chooseMessage}/>,
   ];
   const onLogout = () => {
     dispatch(logoutRequest());

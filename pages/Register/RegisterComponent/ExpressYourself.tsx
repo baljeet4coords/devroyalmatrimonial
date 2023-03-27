@@ -12,7 +12,11 @@ import { step5 } from "../../../ducks/regiserUser/step5/actions";
 import { textAreaSchema } from "../../../schemas/textAreaSchema";
 import { Errors } from "../../../components/";
 
-const ExpressYourself: React.FC = () => {
+interface ExpressYourselfProps {
+  nextPage: (a: number) => void;
+}
+
+const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFiveDefaultValues = useSelector(selectStep5Success);
   const jsonData = stepFiveDefaultValues?.jsonResponse;
@@ -146,9 +150,15 @@ const ExpressYourself: React.FC = () => {
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-                  // onClick={() => nextPage(1)}
                 >
                   Submit your profile
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => nextPage(3)}
+                  className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+                >
+                  Previous
                 </Button>
               </Form>
             </Col>

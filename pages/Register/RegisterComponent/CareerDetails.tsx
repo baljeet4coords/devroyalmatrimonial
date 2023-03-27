@@ -233,6 +233,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
               >
                 Next
               </Button>
+              <Button
+                variant="danger"
+                onClick={() => nextPage(0)}
+                className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+              >
+                Previous
+              </Button>
             </Form>
           </Col>
           <RightSection />

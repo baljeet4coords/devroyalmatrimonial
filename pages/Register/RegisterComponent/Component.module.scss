@@ -32,6 +32,11 @@
   }
 }
 
+@media only screen and (min-width: 768px) {
+  .Form_btnPrev {
+    display: none;
+  }
+}
 /////////////////////////////////////////inputboxes SCSS////////////////////////////////////////////////////////////////////////////////
 
 .singleBoxBlock {
@@ -248,7 +253,6 @@
     padding: 0 2rem;
     padding-bottom: 5rem;
     text-align: center;
-
     .formEdit {
       display: flex;
       flex-direction: column;
