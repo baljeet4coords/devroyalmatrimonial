@@ -1,52 +1,55 @@
-import { City, ICity } from "country-state-city";
+import {
+  City,
+  Country,
+  ICity,
+  ICountry,
+  IState,
+  State,
+} from "country-state-city";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import classes from "./CountryStateCityMultiple.module.scss";
-import { IoClose } from "react-icons/io5";
 
-interface CityMultiple {
-  onChangeCity: (city: number[]) => void;
-  defaultCity: number[];
+interface CitySingle {
+  defaultValueCountry?: number;
+  defaultValueState?: number;
+  defaultValueCity?: number;
+  setSelectedCity: (id: number) => void;
 }
-interface ModifiedDataCity {
-  countryCode: string;
-  latitude?: string | null;
-  longitude?: string | null;
-  name: string;
-  stateCode: string;
-}
-const CityMultiple: React.FC<CityMultiple> = ({
-  onChangeCity,
-  defaultCity,
+
+const CitySingle: React.FC<CitySingle> = ({
+  defaultValueCountry,
+  setSelectedCity,
+  defaultValueState,
+  defaultValueCity,
 }) => {
-  const DoesNotMatter: ModifiedDataCity = useMemo(() => {
-    return {
-      name: "Does Not Matter",
-      countryCode: "DNM",
-      stateCode: "DNM",
-      latitude: "DNM",
-      longitude: "DNM",
-    };
-  }, []);
-
-  const cityOfState: ICity[] = useMemo(() => {
-    return [DoesNotMatter, ...(City.getCitiesOfCountry("IN") || [])];
-  }, [DoesNotMatter]);
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
-  const [HostedArray, updateHostedArray] = useState<ICity[]>(
-    cityOfState.filter((_, index) => defaultCity.includes(index))
+  const countries: ICountry[] = Country.getAllCountries();
+  const [countryCode, setCountryCode] = useState<string>(
+    defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN"
   );
-  const [activeList, setActiveList] = useState<boolean>(false);
-  const [searchHostedArray, UpdatesearchHostedArray] =
-    useState<ICity[]>(cityOfState);
 
-  const [searchInput, setSearchInput] = useState("");
+  const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  const [stateCode, setStateCode] = useState<string>(
+    (defaultValueState && stateOfCountry[defaultValueState].isoCode) || "AS"
+  );
+  // console.log(stateOfCountry,(defaultValueState && stateOfCountry[defaultValueState].isoCode) );
+
+  const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
   useEffect(() => {
-    if (searchHostedArray[0]?.name != "Does Not Matter") {
-      searchHostedArray.unshift(DoesNotMatter);
+    if (defaultValueState != undefined) {
+      setTimeout(() => {
+        UpdatesearchHostedArray(cityOfState);
+      }, 100);
     }
-  }, [DoesNotMatter, searchHostedArray]);
+  }, [stateCode]);
+
+  let DefaultCity = defaultValueCity && cityOfState[defaultValueCity].name;
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [activeList, setActiveList] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [selecedData, setSelecedData] = useState(DefaultCity || "Select City");
+  const [searchHostedArray, UpdatesearchHostedArray] =
+    useState<ICity[]>(cityOfState);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = cityOfState.filter((item) =>
@@ -55,37 +58,33 @@ const CityMultiple: React.FC<CityMultiple> = ({
     setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
-  // For removeing the selcted item if Does not Matter is selected
-  useEffect(() => {
-    if (citiesIds.length > 1 && citiesIds.includes(0)) {
-      setCitiesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
-  }, [citiesIds, searchHostedArray]);
 
-  const getClickedData = useCallback(
-    (city: ICity) => {
-      const getIndex = cityOfState.findIndex((obj) => obj.name === city.name);
-      if (!HostedArray.some((item) => Object.is(item, city))) {
-        setCitiesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray) => [...prevArray, city]);
-        setSearchInput("");
-        UpdatesearchHostedArray(cityOfState);
-      }
-      onChangeCity([...citiesIds, getIndex]);
-    },
-    [HostedArray, citiesIds, cityOfState, onChangeCity]
-  );
-  const getClickedDeleteData = (city: string, item: ModifiedDataCity) => {
-    const itemname = String(item.name);
-    const getIndex = searchHostedArray.findIndex(
-      (obj) => obj.name === itemname
-    );
-    const cityidsCode = citiesIds.filter((item) => item !== getIndex);
-    const newArray = HostedArray.filter((item) => item.name !== city);
-    updateHostedArray(newArray);
-    setCitiesIds(cityidsCode);
+  // For removeing the selcted item if Does not Matter is selected
+
+  const getClickedData = (item: ICity) => {
+    setSelecedData(item.name);
+    const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);
+    setSelectedCity(getIndex);
+    console.log(getIndex, item, cityOfState, ">>>");
+
+    setTimeout(() => {
+      setActiveList(false);
+    }, 100);
   };
+
+  // To Find the country Which is get defaultValueState
+  useEffect(() => {
+    if (defaultValueCountry != undefined) {
+      setCountryCode(
+        countries[defaultValueCountry && defaultValueCountry].isoCode
+      );
+    }
+    if (defaultValueState != undefined) {
+      setStateCode(
+        stateOfCountry[defaultValueState && defaultValueState].isoCode
+      );
+    }
+  }, [defaultValueCountry, defaultValueState]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -104,34 +103,18 @@ const CityMultiple: React.FC<CityMultiple> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preffered Indian City</label>
-        <div
-          className={classes.inputBox}
-          onClick={() => {
-            setActiveList(true);
-          }}
-        >
-          {activeList && (
-            <input
-              type="text"
-              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
-              value={searchInput}
-              onChange={(e) => searchDataFunc(e.target.value)}
-            />
-          )}
-          <ul className={activeList ? classes.ul_maxh_64 : ""}>
-            {HostedArray.length > 0
-              ? HostedArray.map((item) => {
-                  return (
-                    <li key={item.countryCode + item.name + item.stateCode}>
-                      <span>{item.name}</span>
-                      <IoClose
-                        onClick={() => getClickedDeleteData(item.name, item)}
-                      />
-                    </li>
-                  );
-                })
-              : !activeList && <span>Select Some Options</span>}
+        <label>City</label>
+        <div className={classes.inputBox} onClick={() => setActiveList(true)}>
+          <ul>
+            {activeList ? (
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+            ) : (
+              <p>{selecedData}</p>
+            )}
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${
@@ -141,16 +124,13 @@ const CityMultiple: React.FC<CityMultiple> = ({
           >
             <ul>
               {searchHostedArray.length > 1 ? (
-                searchHostedArray.map((item, index) => {
+                searchHostedArray?.map((item, index) => {
                   return (
                     <li
-                      key={item.countryCode + item.name + item.stateCode}
+                      key={item.name + index}
                       onClick={() => getClickedData(item)}
-                      className={
-                        HostedArray.includes(item) ? classes.tabActive : ""
-                      }
                     >
-                      <span>{item.name}</span>
+                      <span>{item?.name}</span>
                     </li>
                   );
                 })
@@ -165,4 +145,4 @@ const CityMultiple: React.FC<CityMultiple> = ({
   );
 };
 
-export default CityMultiple;
+export default CitySingle;

@@ -6,6 +6,9 @@ interface Data {
   id?: string;
   val: string;
 }
+interface ValbyIndx {
+  id?: string | undefined;
+}
 interface DropdownGridProps {
   title: string;
   data: { id: number; caste: string }[];
@@ -35,14 +38,16 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-  const findKeyByValue = (obj: any, value?: string): string => {
-    for (let key in obj) {
-      if (obj[key] === String(value)) {
-        return key;
-      }
-    }
-    return "";
+  const findKeyByValue = (data: Data[], value?: string): any => {
+    const singleitem = data.find((item: Data) => item.id == value);
+
+    return singleitem.caste;
   };
+
+  // const getValbyIndx = (defaultValue: ValbyIndx) => {
+  //   const val = data[defaultValue].val;
+  //   return val;
+  // };
 
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState(data);
@@ -54,7 +59,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
     findKeyByValue(data, defaultValue) || ""
   );
 
-  const searchDataFunc = (query: any) => {
+  const searchDataFunc = (query: any) => {``
     const searched = data.filter((item) =>
       item.caste.toLowerCase().includes(query.toLowerCase())
     );
@@ -108,8 +113,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
             name={nameid}
             placeholder={"Select Option"}
             value={
-              placeholderVal &&
-              placeholderVal.split("-")[0].replaceAll("_", " ")
+              placeholderVal
             }
             onChange={(e) => searchDataFunc(e.target.value)}
             onClick={() => setActiveList(true)}
@@ -131,7 +135,9 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
                       id: String(item.id),
                     });
                   }}
-                  className={selectedData.val === item.caste ? classes.tabActive : ""}
+                  className={
+                    selectedData.val === item.caste ? classes.tabActive : ""
+                  }
                 >
                   <span>{item.caste}</span>
                 </li>

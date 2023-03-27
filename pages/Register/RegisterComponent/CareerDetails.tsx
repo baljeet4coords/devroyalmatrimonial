@@ -21,6 +21,8 @@ import { step2 } from "../../../ducks/regiserUser/step2/actions";
 import { selectStep2Success } from "../../../ducks/regiserUser/step2/selectors";
 import axios from "axios";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
+import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
+import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -40,9 +42,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-  const [selectedCountry, setSelectedCountry] = useState<number>(0);
-  const [selectedState, setSelectedState] = useState<number>(0);
-  const [selectedCity, setSelectedCity] = useState<number>(0);
+  const [selectedCountry, setSelectedCountry] = useState<number>();
+  const [selectedState, setSelectedState] = useState<number>();
+  const [selectedCity, setSelectedCity] = useState<number>();
   const [residentialStatus, setResidentialStatus] = useState<Data>({
     id: String(jsonData?.residentialstatus),
     val: "",
@@ -128,10 +130,10 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const getSelectedCountry = (id: number) => {
     setSelectedCountry(id);
   };
-  const getSelectedCity = (id: number) => {
+  const getSelectedState = (id: number) => {
     setSelectedState(id);
   };
-  const getSelectedState = (id: number) => {
+  const getSelectedCity = (id: number) => {
     setSelectedCity(id);
   };
 
@@ -143,7 +145,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
             <h1>Great! You are about to complete your profile.</h1>
             <small>mandatory</small>
             <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-              <CountryStateCitlyList
+              {/* <CountryStateCitlyList
                 title=""
                 setSelectedCountry={getSelectedCountry}
                 setSelectedState={getSelectedState}
@@ -151,10 +153,21 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 defaultValueCountry={jsonData?.country}
                 defaultValueState={jsonData?.state}
                 defaultValueCity={jsonData?.city}
-              />
+              /> */}
               <CountrySingle
                 setSelectedCountry={getSelectedCountry}
                 defaultValueCountry={jsonData?.country}
+              />
+              <StateSingle
+                setSelectedState={getSelectedState}
+                defaultValueCountry={selectedCountry}
+                defaultValueState={jsonData?.state}
+              />
+              <CitySingle
+                defaultValueCountry={selectedCountry}
+                defaultValueState={selectedState}
+                defaultValueCity={jsonData?.city}
+                setSelectedCity={getSelectedCity}
               />
               <DropdownGridSingleSelect
                 selectedDataFn={setResidentialStatus}
@@ -185,7 +198,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                       type="text"
                       name="college"
                       placeholder={
-                        jsonData?.College !== null
+                        jsonData?.College
                           ? String(jsonData?.College)
                           : "Enter College Name"
                       }

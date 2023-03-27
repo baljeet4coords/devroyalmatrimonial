@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 100%;
     justify-content: center;
-    max-width: 232px;
+    max-width: 32%;
 
     .StrictWrapper_section {
         display: flex;
@@ -20,7 +20,7 @@
             z-index: 5;
 
             span {
-                font-size: 12px;
+                font-size: 14px;
             }
 
             .SwitctCusttom {
@@ -53,9 +53,39 @@
     .StrictWrapper {
         position: absolute;
         right: 0rem;
+        max-width: initial;
+        width: 70%;
+
+        .StrictWrapper_section {
+
+            .Switch {
+                span {
+                    font-size: 13px;
+                }
+            }
+        }
     }
 
 }
+@media only screen and (max-width: 990px) and (min-width: 767px) {
+    .StrictWrapper {
+        position: absolute;
+        right: 0rem;
+        max-width: initial;
+        width: 40%;
+    }
+
+}
+@media only screen and (max-width: 767px) and (min-width: 415px) {
+    .StrictWrapper {
+        position: absolute;
+        right: 0rem;
+        max-width: initial;
+        width: 50%;
+    }
+
+}
+
 
 
 @media only screen and (max-width: 300px) {

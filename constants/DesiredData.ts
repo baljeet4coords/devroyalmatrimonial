@@ -156,6 +156,8 @@ export const AgeToYearList = [
   "70",
 ];
 
+export const HeightList =["3","4","5","6","7","8"]
+
 export const ReligionList = [
   "Hindu",
   "Muslim",
