@@ -11,15 +11,16 @@ const CountrySingle: React.FC<CountryProps> = ({
   defaultValueCountry,
   setSelectedCountry,
 }) => {
+  let Defaultcountry = "";
   const countries: ICountry[] = Country.getAllCountries();
   const elementRef = useRef<HTMLDivElement>(null);
-  const [countryCode, setCountryCode] = useState<string>(
-    (defaultValueCountry && countries[defaultValueCountry].isoCode) || "IN"
-  );
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
   const [searchInput, setSearchInput] = useState("");
+  const [selecedData, setSelecedData] = useState(
+    Defaultcountry || "Select Country"
+  );
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = countries.filter((item) =>
@@ -31,7 +32,21 @@ const CountrySingle: React.FC<CountryProps> = ({
 
   // For removeing the selcted item if Does not Matter is selected
 
-  const getClickedData = (item: string) => console.log(item);
+  const getClickedData = (item: ICountry) => {
+    console.log(item);
+    setSelecedData(item.name);
+    const getIndex = countries.findIndex((obj) => obj.name === item.name);
+
+    setTimeout(() => {
+      setActiveList(false);
+    }, 100);
+    setSelectedCountry(getIndex);
+  };
+
+  // To Find the country Which is get defaultValueCountry
+  useEffect(() => {
+    Defaultcountry = countries[2].name;
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -50,17 +65,18 @@ const CountrySingle: React.FC<CountryProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preferred Country</label>
+        <label>Country</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
-          <ul className={activeList ? classes.ul_maxh_64 : ""}>
-            {/* {   Country.map((item) => {
-                  return (
-                    <li key={item.isoCode}>
-                      <span>{item.name}</span>
-                      <IoClose onClick={() => {}} />
-                    </li>
-                  );
-                })} */}
+          <ul>
+            {activeList ? (
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+            ) : (
+              <p>{selecedData}</p>
+            )}
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${
@@ -72,10 +88,7 @@ const CountrySingle: React.FC<CountryProps> = ({
               {searchHostedArray.length > 1 ? (
                 searchHostedArray?.map((item, index) => {
                   return (
-                    <li
-                      key={item.isoCode}
-                      onClick={() => getClickedData(item.isoCode)}
-                    >
+                    <li key={item.isoCode} onClick={() => getClickedData(item)}>
                       <span>{item?.name}</span>
                     </li>
                   );

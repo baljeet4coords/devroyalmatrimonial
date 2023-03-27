@@ -27,7 +27,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
   const [activeList2, setActiveList2] = useState<boolean>(false);
 
   data = Convert
-    ? data.map((element) => String((Number(element) * 0.0328).toFixed(2)))
+    ? data.map((element) => String(Math.trunc(Number(element) * 0.0328).toFixed(0)))
     : data;
 
   const [FromData, setFromData] = useState<String[]>(data);

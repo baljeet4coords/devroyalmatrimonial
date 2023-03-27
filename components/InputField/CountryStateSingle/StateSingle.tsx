@@ -1,51 +1,44 @@
-import { State, IState } from "country-state-city";
+import { State, IState, Country, ICountry } from "country-state-city";
 import { useCallback, useEffect, useRef, useState } from "react";
 import classes from "./CountryStateCityMultiple.module.scss";
 import { IoClose } from "react-icons/io5";
 
-interface StateMultipleProps {
-  onChangeState: (state: number[]) => void;
-  defaultState: number[];
+interface StateProps {
+  defaultValueCountry?: number;
+  defaultValueState?: number;
+  setSelectedState: (id: number) => void;
 }
 
-interface ModifiedDataState {
-  countryCode: string;
-  latitude?: string | null | undefined;
-  longitude?: string | null | undefined;
-  name: string;
-  isoCode: string;
-}
-const StateMultiple: React.FC<StateMultipleProps> = ({
-  onChangeState,
-  defaultState,
+const StateSingle: React.FC<StateProps> = ({
+  defaultValueCountry,
+  setSelectedState,
+  defaultValueState,
 }) => {
-  const DoesNotMatter: ModifiedDataState = {
-    name: "Does Not Matter",
-    isoCode: "DNM",
-    countryCode: "DNM",
-    latitude: "DNM",
-    longitude: "DNM",
-  };
-  const stateOfCountry: IState[] = [
-    DoesNotMatter,
-    ...State.getStatesOfCountry("IN"),
-  ];
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [statesIds, setStatesIds] = useState<number[]>(defaultState);
-  const [HostedArray, updateHostedArray] = useState<IState[]>(
-    stateOfCountry.filter((_, index) => defaultState.includes(index))
-  );
-  const [activeList, setActiveList] = useState<boolean>(false);
-  const [searchHostedArray, UpdatesearchHostedArray] =
-    useState<IState[]>(stateOfCountry);
+  const countries: ICountry[] = Country.getAllCountries();
+  const [countryCode, setCountryCode] = useState<string>( defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN");
 
-  const [searchInput, setSearchInput] = useState("");
-
+  
   useEffect(() => {
-    if (searchHostedArray[0].name != "Does Not Matter") {
-      searchHostedArray.unshift(DoesNotMatter);
+    if (defaultValueCountry != undefined) {
+      setTimeout(() => {
+        setCountryCode(countries[defaultValueCountry].isoCode);
+        UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
+      }, 100);
     }
-  }, []);
+  }, [countryCode]);
+
+  const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  let Defaultstate =
+    defaultValueState && stateOfCountry[defaultValueState].name;
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [activeList, setActiveList] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [selecedData, setSelecedData] = useState(
+    Defaultstate || "Select State"
+  );
+  const [searchHostedArray, UpdatesearchHostedArray] = useState<IState[]>(
+    State.getStatesOfCountry(countryCode)
+  );
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = stateOfCountry.filter((item) =>
@@ -56,38 +49,25 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   };
 
   // For removeing the selcted item if Does not Matter is selected
-  useEffect(() => {
-    if (statesIds.length > 1 && statesIds.includes(0)) {
-      setStatesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
-  }, [statesIds]);
 
-  const getClickedData = useCallback(
-    (state: IState) => {
-      const getIndex = stateOfCountry.findIndex(
-        (obj) => obj.name === state.name
-      );
-      if (!HostedArray.some((item) => Object.is(item, state))) {
-        setStatesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray: IState[]) => [...prevArray, state]);
-        setSearchInput("");
-        UpdatesearchHostedArray(stateOfCountry);
-      }
-      onChangeState([...statesIds, getIndex]);
-    },
-    [HostedArray, onChangeState, statesIds]
-  );
-  const getClickedDeleteData = (isoCode: string, item: ModifiedDataState) => {
-    const itemname = String(item.name);
-    const getIndex = searchHostedArray.findIndex(
-      (obj) => obj.name === itemname
-    );
-    const stateidsCode = statesIds.filter((item) => item !== getIndex);
-    const newArray = HostedArray.filter((item) => item.isoCode !== isoCode);
-    updateHostedArray(newArray);
-    setStatesIds(stateidsCode);
+  const getClickedData = (item: IState) => {
+    setSelecedData(item.name);
+    const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
+    console.log(item,stateOfCountry,getIndex,"get clicked data");
+    setSelectedState(getIndex);
+    setTimeout(() => {
+      setActiveList(false);
+    }, 100);
   };
+
+  // To Find the country Which is get defaultValueState
+  useEffect(() => {
+    if (defaultValueCountry != undefined) {
+      setCountryCode(
+        countries[defaultValueCountry ? defaultValueCountry : 0].isoCode
+      );
+    }
+  }, [defaultValueCountry]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -106,29 +86,18 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preffered Indian State</label>
+        <label>State</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
-          {activeList && (
-            <input
-              type="text"
-              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
-              value={searchInput}
-              onChange={(e) => searchDataFunc(e.target.value)}
-            />
-          )}
-          <ul className={activeList ? classes.ul_maxh_64 : ""}>
-            {HostedArray.length > 0
-              ? HostedArray.map((item) => {
-                  return (
-                    <li key={item.isoCode}>
-                      <span>{item.name}</span>
-                      <IoClose
-                        onClick={() => getClickedDeleteData(item.isoCode, item)}
-                      />
-                    </li>
-                  );
-                })
-              : !activeList && <span>Select Some Options</span>}
+          <ul>
+            {activeList ? (
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+            ) : (
+              <p>{selecedData}</p>
+            )}
           </ul>
           <div
             className={`${activeList ? classes.active : ""} ${
@@ -138,16 +107,16 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
           >
             <ul>
               {searchHostedArray.length > 1 ? (
-                searchHostedArray.map((item, index) => {
+                searchHostedArray?.map((item, index) => {
                   return (
                     <li
-                      key={item.countryCode + item.isoCode + item.name}
-                      onClick={() => getClickedData(item)}
-                      className={
-                        HostedArray.includes(item) ? classes.tabActive : ""
-                      }
+                      key={item.isoCode}
+                      onClick={() => {
+                        setActiveList(false);
+                        getClickedData(item);
+                      }}
                     >
-                      <span>{item.name}</span>
+                      <span>{item?.name}</span>
                     </li>
                   );
                 })
@@ -162,4 +131,4 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   );
 };
 
-export default StateMultiple;
+export default StateSingle;
