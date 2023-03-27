@@ -3,7 +3,7 @@
 .twoBox {
     display: flex;
     position: relative;
-    width: 70%;
+    width: 66%;
 
     div {
         width: 100%;
@@ -24,7 +24,7 @@
         color: $browser_text;
         cursor: pointer;
         position: relative;
-        min-width: 275px;
+        min-width: 46%;
 
         .inputBoxVal {
             visibility: hidden;

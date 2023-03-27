@@ -1,6 +1,7 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import {
+  CustomButton,
   DropdownGridSingleSelect,
   Footer,
   StrictRadioCheck,
@@ -15,7 +16,7 @@ import {
   ChallengedWith0,
   ChildrenStatus0,
   DietWith0,
-  EducationTypeAndVal,
+  EducationTypeAndValWith0,
   ManglikWith0,
   MaritalStatusWith0,
   MotherTongueWith0,
@@ -114,7 +115,6 @@ const DesiredProfilePage: React.FC = () => {
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
-
 
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
@@ -265,7 +265,7 @@ const DesiredProfilePage: React.FC = () => {
                 </div>
                 <div className=" d-flex gap-3 position-relative">
                   <SingleInput
-                    data={EducationTypeAndVal}
+                    data={EducationTypeAndValWith0}
                     inputName={"Education"}
                     onChange={setEducation}
                     defaultValues={jsonData?.education || []}
@@ -289,17 +289,18 @@ const DesiredProfilePage: React.FC = () => {
                     selectedSwitches={selectedSwitches}
                   />
                 </div>
-
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"Income greater than"}
-                    data={AnnualIncomeProfile0}
-                    nameid={"AnnualIncomeProfile0"}
-                    selectedDataFn={setAnnualIncome}
-                    defaultValue={
-                      String(jsonData?.annual_income_greater_than) || ""
-                    }
-                  />
+                <div className={classes.DesieredSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title={"Income greater than"}
+                      data={AnnualIncomeProfile0}
+                      nameid={"AnnualIncomeProfile0"}
+                      selectedDataFn={setAnnualIncome}
+                      defaultValue={
+                        String(jsonData?.annual_income_greater_than) || ""
+                      }
+                    />
+                  </div>
                   <StrictRadioCheck
                     handleSwitchToggle={handleSwitchToggle}
                     switchNameVal="annual_income"
@@ -382,56 +383,66 @@ const DesiredProfilePage: React.FC = () => {
                     selectedSwitches={selectedSwitches}
                   />
                 </div>
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"Diet"}
-                    data={DietWith0}
-                    nameid={"DietWith0"}
-                    selectedDataFn={setDiet}
-                    defaultValue={String(jsonData?.diet) || ""}
-                  />
+                <div className={classes.DesieredSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title={"Diet"}
+                      data={DietWith0}
+                      nameid={"DietWith0"}
+                      selectedDataFn={setDiet}
+                      defaultValue={String(jsonData?.diet) || ""}
+                    />
+                  </div>
                   <StrictRadioCheck
                     handleSwitchToggle={handleSwitchToggle}
                     switchNameVal="diet"
                     selectedSwitches={selectedSwitches}
                   />
                 </div>
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"Smoking"}
-                    data={SmokeDrinkWith0}
-                    nameid={"Smoke0"}
-                    selectedDataFn={setSmoke}
-                    defaultValue={String(jsonData?.diet) || ""}
-                  />
+                <div className={classes.DesieredSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title={"Smoking"}
+                      data={SmokeDrinkWith0}
+                      nameid={"Smoke0"}
+                      selectedDataFn={setSmoke}
+                      defaultValue={String(jsonData?.diet) || ""}
+                    />
+                  </div>
                   <StrictRadioCheck
                     handleSwitchToggle={handleSwitchToggle}
                     switchNameVal="smoking"
                     selectedSwitches={selectedSwitches}
                   />
                 </div>
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"Drinking"}
-                    data={SmokeDrinkWith0}
-                    nameid={"drinkingwith0"}
-                    selectedDataFn={setDrink}
-                    defaultValue={String(jsonData?.diet) || ""}
-                  />
+                <div className={classes.DesieredSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title={"Drinking"}
+                      data={SmokeDrinkWith0}
+                      nameid={"drinkingwith0"}
+                      selectedDataFn={setDrink}
+                      defaultValue={String(jsonData?.diet) || ""}
+                    />
+                  </div>
                   <StrictRadioCheck
                     handleSwitchToggle={handleSwitchToggle}
                     switchNameVal="drinking"
                     selectedSwitches={selectedSwitches}
                   />
                 </div>
-                <div className={classes.singleDropDown}>
-                  <DropdownGridSingleSelect
-                    title={"Ready to settle abroad"}
-                    data={ReadyToSettleAbroadWith0}
-                    nameid={"ReadyToSettleAbroadWith0"}
-                    selectedDataFn={setReadyToSettleAbroad}
-                    defaultValue={String(jsonData?.ready_to_settleAbroad) || ""}
-                  />
+                <div className={classes.DesieredSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title={"Ready to settle abroad"}
+                      data={ReadyToSettleAbroadWith0}
+                      nameid={"ReadyToSettleAbroadWith0"}
+                      selectedDataFn={setReadyToSettleAbroad}
+                      defaultValue={
+                        String(jsonData?.ready_to_settleAbroad) || ""
+                      }
+                    />
+                  </div>
                   <StrictRadioCheck
                     handleSwitchToggle={handleSwitchToggle}
                     switchNameVal="readytosettleabroad"
@@ -468,9 +479,14 @@ const DesiredProfilePage: React.FC = () => {
                   <Form.Label>HIV</Form.Label>
                   <Form.Control type="text" value={hiv.id} disabled />
                 </div>
-                <Button className="mb-5 mt-3 mx-auto" onClick={savePartnerPref}>
-                  Save your preferrence
-                </Button>
+                <div className={classes.buttonWrapper}>
+                <CustomButton
+                  children={" Save your preferrence"}
+                  onClick={() => savePartnerPref}
+                />                 
+                </div>
+
+                
               </form>
             </Col>
           </Row>

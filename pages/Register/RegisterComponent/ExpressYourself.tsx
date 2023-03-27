@@ -67,7 +67,6 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
-  console.log(formik.errors.aboutCareer);
 
   return (
     <>

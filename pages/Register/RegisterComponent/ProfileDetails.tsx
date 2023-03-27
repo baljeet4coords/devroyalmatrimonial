@@ -240,6 +240,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     file && setImage(file);
   };
 
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -336,7 +337,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="height"
                         type="text"
-                        placeholder={`${feet} feet`}
+                        placeholder={`${
+                          feet.length < 1
+                            ? jsonData?.height_cm &&
+                              (jsonData?.height_cm / 30.48).toFixed(1)
+                            : feet
+                        } feet`}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
                       />
@@ -350,7 +356,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${jsonData?.height_cm || cm} cms`}
+                        placeholder={`${
+                          cm.length < 1
+                            ? jsonData?.height_cm && jsonData?.height_cm
+                            : cm
+                        } cms`}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

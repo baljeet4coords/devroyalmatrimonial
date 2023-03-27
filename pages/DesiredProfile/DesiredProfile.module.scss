@@ -183,18 +183,26 @@
 }
 
 ///single input box css
-.singleDropDown {
-  margin: 15px 0;
-  position: relative;
-  margin-left: 10px;
+
+.DesieredSingleBox {
   display: flex;
-  gap: 1.5rem;
+  position: relative;
+  width: 100%;
+  gap: 1rem;
+
+  .singleDropDown {
+    position: relative;
+    display: flex;
+    padding: 0.6rem;
+    width: 100%;
+  }
 }
+
 
 .singleBox {
   display: flex;
   position: relative;
-  width: 70.5%;
+  width: 66%;
 
 
   div {
@@ -321,6 +329,13 @@
   }
 }
 
+
+.buttonWrapper {
+  width: 66%;
+  padding: 0.6rem;
+  text-align: center;
+}
+
 .active {
   visibility: visible !important;
 }
@@ -397,10 +412,13 @@
     }
   }
 
-  .singleDropDown {
-    width: 100%;
-    margin: 0;
-    position: relative;
+  .DesieredSingleBox {
+    .singleDropDown {
+      width: 100%;
+      margin: 0;
+      position: relative;
+      padding: 0%;
+    }
   }
 
   .singleBox {
@@ -410,6 +428,10 @@
     input {
       margin: 0% !important;
     }
+  }
+
+  .buttonWrapper {
+    width: 100%;
   }
 }
 
@@ -444,10 +466,13 @@
     }
   }
 
-  .singleDropDown {
-    width: 100%;
-    margin: 0;
-    position: relative;
+  .DesieredSingleBox {
+    .singleDropDown {
+      width: 100%;
+      margin: 0;
+      position: relative;
+      padding: 0%;
+    }
   }
 
   .singleBox {
@@ -457,6 +482,10 @@
     input {
       margin: 0% !important;
     }
+  }
+
+  .buttonWrapper {
+    width: 100%;
   }
 }
 
@@ -493,10 +522,13 @@
     }
   }
 
-  .singleDropDown {
-    width: 100%;
-    margin: 0;
-    position: relative;
+  .DesieredSingleBox {
+    .singleDropDown {
+      width: 100%;
+      margin: 0;
+      position: relative;
+      padding: 0%;
+    }
   }
 
   .singleBox {
@@ -506,5 +538,9 @@
     input {
       margin: 0% !important;
     }
+  }
+
+  .buttonWrapper {
+    width: 100%;
   }
 }
