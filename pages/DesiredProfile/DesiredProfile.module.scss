@@ -68,11 +68,12 @@
 
   .form_wrapper {
     position: relative;
-    justify-content: flex-end !important;
 
     .formEdit {
-      width: 60%;
+      width: 84%;
       z-index: 2;
+      margin-left: 4rem;
+
 
       .twoBox {
         display: flex;
@@ -183,14 +184,18 @@
 
 ///single input box css
 .singleDropDown {
-  width: 97%;
-  margin: 15px auto;
+  margin: 15px 0;
   position: relative;
+  margin-left: 10px;
+  display: flex;
+  gap: 1.5rem;
 }
 
 .singleBox {
   display: flex;
   position: relative;
+  width: 70.5%;
+
 
   div {
     width: 100%;
@@ -330,10 +335,35 @@
     .form_wrapper {
 
       .formEdit {
-        label {
-          width: 110px;
-          left: -8rem;
+        width: 98%;
+        z-index: 2;
+        margin: 0%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
 
+        label {
+          width: 100%;
+          text-align: left;
+          left: 0rem;
+          position: initial;
+          transform: translateY(0px);
+
+
+        }
+
+        .singleDropDown {
+          margin-left: 0%;
+        }
+
+        .singleBox {
+          flex-direction: column;
+          width: 100%;
+
+          input {
+            width: 100%;
+            margin: 0%;
+          }
         }
       }
     }
@@ -354,6 +384,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        margin: 0;
 
         label {
           position: initial;
@@ -374,6 +405,7 @@
 
   .singleBox {
     flex-direction: column;
+    width: 100%;
 
     input {
       margin: 0% !important;
@@ -398,12 +430,14 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        margin: 0%;
 
         label {
           position: initial;
           width: fit-content;
           text-align: start;
-          transform: translateY(0%)
+          transform: translateY(0%);
+          max-width: 100px;
         }
       }
 
@@ -418,6 +452,7 @@
 
   .singleBox {
     flex-direction: column;
+    width: 100%;
 
     input {
       margin: 0% !important;
@@ -440,6 +475,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        margin: 0%;
 
         label {
           position: initial;
@@ -448,8 +484,8 @@
           transform: translateY(0%)
         }
 
-        input{
-          padding: 0.875rem 0rem ;
+        input {
+          padding: 0.875rem 0rem;
           text-align: center;
         }
       }
@@ -465,6 +501,7 @@
 
   .singleBox {
     flex-direction: column;
+    width: 100%;
 
     input {
       margin: 0% !important;

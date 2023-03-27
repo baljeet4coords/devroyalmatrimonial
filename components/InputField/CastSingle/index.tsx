@@ -14,7 +14,7 @@ interface ModifiedDataState {
   id: number;
   caste: string;
 }
-const CasteMultiple: React.FC<CastMultiple> = ({
+const CastSingle: React.FC<CastMultiple> = ({
   onChangeCaste,
   defaultValues,
 }) => {
@@ -24,7 +24,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
     caste: "Does Not Matter",
   };
   const ListOfCaste: ICastListArray[] = [DoesNotMatter, ...CastListArray];
-  const [castesIds, setCastesIds] = useState<number[]>(defaultValues);
+  const [castesIds, setCastesIds] = useState<string>();
   const [HostedArray, updateHostedArray] = useState<ICastListArray[]>(
     CastListArray.filter((_, index) => defaultValues.includes(index))
   );
@@ -50,37 +50,23 @@ const CasteMultiple: React.FC<CastMultiple> = ({
   };
 
   // For removeing the selcted item if Does not Matter is selected
-  useEffect(() => {
-    if (castesIds.length > 1 && castesIds.includes(0)) {
-      setCastesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
-  }, [castesIds]);
 
   const getClickedData = useCallback(
     (caste: ICastListArray) => {
       const getIndex = ListOfCaste.findIndex(
         (obj) => obj.caste === caste.caste
       );
-      if (!HostedArray.some((item) => Object.is(item, caste))) {
-        setCastesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray) => [...prevArray, caste]);
-        setSearchInput("");
-        UpdatesearchHostedArray(ListOfCaste);
-      }
-      onChangeCaste([...castesIds, getIndex]);
+      setCastesIds(String(getIndex));
+      updateHostedArray([caste]);
+      setSearchInput("");
+      setActiveList(false);
+      UpdatesearchHostedArray(ListOfCaste);
+      onChangeCaste([getIndex]);
     },
     [HostedArray, castesIds, onChangeCaste]
   );
   const getClickedDeleteData = (id: number, item: ModifiedDataState) => {
-    const itemname = String(item.caste);
-    const getIndex = searchHostedArray.findIndex(
-      (obj) => obj.caste === itemname
-    );
-    const casteidsCode = castesIds.filter((item) => item !== getIndex);
-    const newArray = HostedArray.filter((item) => item.id !== id);
-    updateHostedArray(newArray);
-    setCastesIds(casteidsCode);
+    setCastesIds("");
   };
 
   useEffect(() => {
@@ -157,4 +143,4 @@ const CasteMultiple: React.FC<CastMultiple> = ({
   );
 };
 
-export default CasteMultiple;
+export default CastSingle;

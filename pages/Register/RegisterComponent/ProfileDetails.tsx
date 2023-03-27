@@ -268,6 +268,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
                           defaultValue={jsonData?.profile_handlername}
+                          autoComplete="off"
                         />
                       </li>
                     </div>
