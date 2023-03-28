@@ -36,6 +36,7 @@ import { selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selecto
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
+import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -177,7 +178,7 @@ const DesiredProfilePage: React.FC = () => {
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
-        <LoginHeader />
+        <LoginHeader profilePicture={jsonData?.photo} />
       </Container>
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
@@ -206,7 +207,7 @@ const DesiredProfilePage: React.FC = () => {
                   Convert={false}
                 />
                 <div className=" d-flex gap-3 position-relative">
-                  <DoubleInput
+                  <HeightFromTo
                     data={HeighListInCms(100, 244)}
                     inputName={"Height in feet"}
                     onDataFrom={setSelectedHeightFrom}
@@ -480,13 +481,13 @@ const DesiredProfilePage: React.FC = () => {
                   <Form.Control type="text" value={hiv.id} disabled />
                 </div>
                 <div className={classes.buttonWrapper}>
-                <CustomButton
-                  children={" Save your preferrence"}
-                  onClick={() => savePartnerPref}
-                />                 
+                  <Button
+                    className={classes.savePartnerBtn}
+                    onClick={savePartnerPref}
+                  >
+                    Save Your Preference
+                  </Button>
                 </div>
-
-                
               </form>
             </Col>
           </Row>

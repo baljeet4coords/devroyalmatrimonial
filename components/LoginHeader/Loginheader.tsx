@@ -15,12 +15,12 @@ import CustomButton from "../Button/CustomButton";
 import router from "next/router";
 import { logoutRequest } from "../../ducks/auth/actions";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { getProfilePicture } from "../../ducks/regiserUser/step1/selectors";
 
-const LoginHeader: React.FC = () => {
+interface LoginHeaderProps {
+  profilePicture?: string;
+}
+const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
   const dispatch = useDispatch();
-  const profilePicture = useSelector(getProfilePicture);
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
 
@@ -41,7 +41,7 @@ const LoginHeader: React.FC = () => {
     dispatch(logoutRequest());
     router.push("/");
   };
-    
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className={"p-0 color-light"}>

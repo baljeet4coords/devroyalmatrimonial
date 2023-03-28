@@ -34,7 +34,6 @@ function* loginSaga(action: AuthActions): any {
       }
     }
   } catch (error) {
-    console.log(error);
     yield put(loginFailure(error));
   }
 }

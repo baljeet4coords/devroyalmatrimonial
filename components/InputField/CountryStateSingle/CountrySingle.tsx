@@ -5,14 +5,18 @@ import classes from "./CountryStateCityMultiple.module.scss";
 interface CountryProps {
   setSelectedCountry: (id: number) => void;
   defaultValueCountry?: number;
+  title: string;
 }
 
 const CountrySingle: React.FC<CountryProps> = ({
   defaultValueCountry,
   setSelectedCountry,
+  title,
 }) => {
-  let Defaultcountry = "";
   const countries: ICountry[] = Country.getAllCountries();
+  let Defaultcountry =
+    (defaultValueCountry && countries[defaultValueCountry].name) ||
+    countries[100].name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
@@ -33,10 +37,8 @@ const CountrySingle: React.FC<CountryProps> = ({
   // For removeing the selcted item if Does not Matter is selected
 
   const getClickedData = (item: ICountry) => {
-    console.log(item);
     setSelecedData(item.name);
     const getIndex = countries.findIndex((obj) => obj.name === item.name);
-
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -45,6 +47,7 @@ const CountrySingle: React.FC<CountryProps> = ({
 
   // To Find the country Which is get defaultValueCountry
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     Defaultcountry = countries[2].name;
   }, []);
 
@@ -65,7 +68,7 @@ const CountrySingle: React.FC<CountryProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Country</label>
+        <label>{title}</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           <ul>
             {activeList ? (

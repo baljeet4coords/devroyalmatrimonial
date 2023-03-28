@@ -11,7 +11,7 @@ interface ValbyIndx {
 }
 interface DropdownGridProps {
   title: string;
-  data: { id: number; caste: string }[];
+  data: { id: string; caste: string }[];
   nameid: string;
   selectedDataFn: ({ id, val }: Data) => void;
   defaultValue?: string;
@@ -38,16 +38,8 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-  const findKeyByValue = (data: Data[], value?: string): any => {
-    const singleitem = data.find((item: Data) => item.id == value);
 
-    return singleitem.caste;
-  };
-
-  // const getValbyIndx = (defaultValue: ValbyIndx) => {
-  //   const val = data[defaultValue].val;
-  //   return val;
-  // };
+  const foundCast = data.find((item) => item.id === defaultValue)?.caste;
 
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchedData, setSearchedData] = useState(data);
@@ -55,11 +47,10 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
     id: defaultValue,
     val: "",
   });
-  const [placeholderVal, setPlaceholderVal] = useState(
-    findKeyByValue(data, defaultValue) || ""
-  );
+  const [placeholderVal, setPlaceholderVal] = useState(foundCast);
 
-  const searchDataFunc = (query: any) => {``
+  const searchDataFunc = (query: any) => {
+    ``;
     const searched = data.filter((item) =>
       item.caste.toLowerCase().includes(query.toLowerCase())
     );
@@ -112,9 +103,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
             type="text"
             name={nameid}
             placeholder={"Select Option"}
-            value={
-              placeholderVal
-            }
+            value={placeholderVal}
             onChange={(e) => searchDataFunc(e.target.value)}
             onClick={() => setActiveList(true)}
           />

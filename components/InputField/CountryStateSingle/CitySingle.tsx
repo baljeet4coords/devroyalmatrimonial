@@ -6,10 +6,11 @@ import {
   IState,
   State,
 } from "country-state-city";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./CountryStateCityMultiple.module.scss";
 
 interface CitySingle {
+  title: string;
   defaultValueCountry?: number;
   defaultValueState?: number;
   defaultValueCity?: number;
@@ -17,6 +18,7 @@ interface CitySingle {
 }
 
 const CitySingle: React.FC<CitySingle> = ({
+  title,
   defaultValueCountry,
   setSelectedCity,
   defaultValueState,
@@ -29,21 +31,14 @@ const CitySingle: React.FC<CitySingle> = ({
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
-    (defaultValueState && stateOfCountry[defaultValueState].isoCode) || "AS"
+    defaultValueState ? stateOfCountry[defaultValueState]?.isoCode : "AS"
   );
-  // console.log(stateOfCountry,(defaultValueState && stateOfCountry[defaultValueState].isoCode) );
 
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
-  useEffect(() => {
-    if (defaultValueState != undefined) {
-      setTimeout(() => {
-        UpdatesearchHostedArray(cityOfState);
-      }, 100);
-    }
-  }, [stateCode]);
-
-  let DefaultCity = defaultValueCity && cityOfState[defaultValueCity].name;
+  let DefaultCity = defaultValueCity
+    ? cityOfState[defaultValueCity]?.name
+    : cityOfState[1]?.name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
@@ -65,8 +60,6 @@ const CitySingle: React.FC<CitySingle> = ({
     setSelecedData(item.name);
     const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);
     setSelectedCity(getIndex);
-    console.log(getIndex, item, cityOfState, ">>>");
-
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -81,10 +74,10 @@ const CitySingle: React.FC<CitySingle> = ({
     }
     if (defaultValueState != undefined) {
       setStateCode(
-        stateOfCountry[defaultValueState && defaultValueState].isoCode
+        defaultValueState ? stateOfCountry[defaultValueState]?.isoCode : "AS"
       );
     }
-  }, [defaultValueCountry, defaultValueState]);
+  }, [countries, defaultValueCountry, defaultValueState, stateOfCountry]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -103,7 +96,7 @@ const CitySingle: React.FC<CitySingle> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>City</label>
+        <label>{title}</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           <ul>
             {activeList ? (

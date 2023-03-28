@@ -26,7 +26,7 @@ export interface AuthState {
 export interface LoginJsonResponse {
   output: number;
   message: string;
-  status: number;
+  status: number | boolean;
   token: string;
   jsonResponse: RMUser | null;
 }

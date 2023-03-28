@@ -21,7 +21,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const eduCont = useRef<HTMLDivElement>(null);
   const familyCont = useRef<HTMLDivElement>(null);
   const desirCont = useRef<HTMLDivElement>(null);
-
   const aboutLink = useRef<HTMLDivElement>(null);
   const eduLink = useRef<HTMLDivElement>(null);
   const familyLink = useRef<HTMLDivElement>(null);

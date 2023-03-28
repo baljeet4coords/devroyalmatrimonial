@@ -23,6 +23,9 @@ import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step4 } from "../../../ducks/regiserUser/step4/actions";
+import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
+import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
+import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -52,6 +55,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     });
   }, []);
 
+  const [selectedCountry, setSelectedCountry] = useState<number>();
+  const [selectedState, setSelectedState] = useState<number>();
+  const [selectedCity, setSelectedCity] = useState<number>();
   const [selectedFathersOccupation, setSelectedFathersOccupation] =
     useState<Data>({ id: String(jsonData?.Father), val: "" });
   const [selectedMothersOccupation, setSelectedMothersOccupation] =
@@ -87,7 +93,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
-  console.log(selectedNativeState);
 
   const formik = useFormik({
     initialValues: {
@@ -128,16 +133,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     },
   });
 
-  const getSelectedCountry = (id: number) => {
-    setSelectedNativeCountry(id);
-  };
-  const getSelectedCity = (id: number) => {
-    setSelectedNativeState(id);
-  };
-  const getSelectedState = (id: number) => {
-    setSelectedNativeCity(id);
-  };
-
   useEffect(() => {
     formik.values.mothersProfession = selectedMothersOccupation.id;
     formik.values.fathersProfession = selectedFathersOccupation.id;
@@ -166,6 +161,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData,
   ]);
 
+  const getSelectedCountry = (id: number) => {
+    setSelectedCountry(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedState(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedCity(id);
+  };
+  
   return (
     <div className={classes.profile_Container}>
       <Container>
@@ -238,14 +243,23 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   nameid="familyType"
                   defaultValue={String(jsonData?.Family_Type)}
                 />
-                <CountryStateCitlyList
-                  title="Family Native"
+                <CountrySingle
+                  title="Native Country"
                   setSelectedCountry={getSelectedCountry}
+                  defaultValueCountry={jsonData?.family_native_country}
+                />
+                <StateSingle
+                  title="Native State"
                   setSelectedState={getSelectedState}
-                  setSelectedCity={getSelectedCity}
-                  defaultValueCountry={jsonData?.family_native_city}
+                  defaultValueCountry={selectedCountry}
                   defaultValueState={jsonData?.family_native_state}
+                />
+                <CitySingle
+                  title="Native City"
+                  defaultValueCountry={selectedCountry}
+                  defaultValueState={selectedState}
                   defaultValueCity={jsonData?.family_native_city}
+                  setSelectedCity={getSelectedCity}
                 />
                 <DropdownGridSingleSelect
                   selectedDataFn={setSelectedLivingWithParents}

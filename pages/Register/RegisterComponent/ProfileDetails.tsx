@@ -55,8 +55,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     useHeightConverter();
 
   useEffect(() => {
-    setCm(String(jsonData?.height_cm) || "");
+    setCm(jsonData?.height_cm !== undefined ? String(jsonData?.height_cm) : "0");
   }, [jsonData?.height_cm, setCm]);
+
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
     val: "",
@@ -240,7 +241,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     file && setImage(file);
   };
 
-
   return (
     <>
       <div className={classes.profile_Container}>
@@ -338,9 +338,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         name="height"
                         type="text"
                         placeholder={`${
-                          feet.length < 1
-                            ? jsonData?.height_cm &&
-                              (jsonData?.height_cm / 30.48).toFixed(1)
+                          !feet
+                            ? ((jsonData?.height_cm || 0) / 30.48).toFixed(1)
                             : feet
                         } feet`}
                         onBlur={formik.handleBlur}
@@ -356,11 +355,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={`${
-                          cm.length < 1
-                            ? jsonData?.height_cm && jsonData?.height_cm
-                            : cm
-                        } cms`}
+                        placeholder={
+                          !cm ? "Enter height in centimeters" : `${cm} cms`
+                        }
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

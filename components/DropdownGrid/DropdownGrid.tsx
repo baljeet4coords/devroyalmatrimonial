@@ -56,7 +56,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [placeholderVal, setPlaceholderVal] = useState(
     findKeyByValue(data, defaultValue) || ""
   );
-
+    
   const searchDataFunc = (query: any) => {
     const searched = Object.keys(data).filter((item) =>
       item.toLowerCase().includes(query.toLowerCase())

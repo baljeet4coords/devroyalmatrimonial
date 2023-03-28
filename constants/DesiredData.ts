@@ -419,6 +419,7 @@ export const CountryList = [
 export const HeighListInCms = (min: number, max: number) => {
   return Array.from({ length: max - min + 1 }, (_, i) => (i + min).toString());
 };
+
 export const ManglikList = ["Manglik", "Non Manglik", "Angshik"];
 export const Employed_In = ["Not Working", "Study", "Govt Employed"];
 

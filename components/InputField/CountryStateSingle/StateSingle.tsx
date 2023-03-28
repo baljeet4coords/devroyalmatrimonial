@@ -4,20 +4,23 @@ import classes from "./CountryStateCityMultiple.module.scss";
 import { IoClose } from "react-icons/io5";
 
 interface StateProps {
+  title: string;
   defaultValueCountry?: number;
   defaultValueState?: number;
   setSelectedState: (id: number) => void;
 }
 
 const StateSingle: React.FC<StateProps> = ({
+  title,
   defaultValueCountry,
   setSelectedState,
   defaultValueState,
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
-  const [countryCode, setCountryCode] = useState<string>( defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN");
+  const [countryCode, setCountryCode] = useState<string>(
+    defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN"
+  );
 
-  
   useEffect(() => {
     if (defaultValueCountry != undefined) {
       setTimeout(() => {
@@ -25,11 +28,13 @@ const StateSingle: React.FC<StateProps> = ({
         UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
       }, 100);
     }
-  }, [countryCode]);
+  }, [countries, countryCode, defaultValueCountry]);
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
-  let Defaultstate =
-    defaultValueState && stateOfCountry[defaultValueState].name;
+
+  const Defaultstate = defaultValueState
+    ? stateOfCountry[defaultValueState]?.name
+    : stateOfCountry[1].name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
@@ -53,7 +58,6 @@ const StateSingle: React.FC<StateProps> = ({
   const getClickedData = (item: IState) => {
     setSelecedData(item.name);
     const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
-    console.log(item,stateOfCountry,getIndex,"get clicked data");
     setSelectedState(getIndex);
     setTimeout(() => {
       setActiveList(false);
@@ -67,7 +71,7 @@ const StateSingle: React.FC<StateProps> = ({
         countries[defaultValueCountry ? defaultValueCountry : 0].isoCode
       );
     }
-  }, [defaultValueCountry]);
+  }, [countries, defaultValueCountry]);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -86,7 +90,7 @@ const StateSingle: React.FC<StateProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>State</label>
+        <label>{title}</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           <ul>
             {activeList ? (

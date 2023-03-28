@@ -11,7 +11,7 @@ interface CastMultiple {
   defaultValues: number[];
 }
 interface ModifiedDataState {
-  id: number;
+  id: string;
   caste: string;
 }
 const CasteMultiple: React.FC<CastMultiple> = ({
@@ -20,7 +20,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const DoesNotMatter: ModifiedDataState = {
-    id: 0,
+    id: "0",
     caste: "Does Not Matter",
   };
   const ListOfCaste: ICastListArray[] = [DoesNotMatter, ...CastListArray];
@@ -72,7 +72,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
     },
     [HostedArray, castesIds, onChangeCaste]
   );
-  const getClickedDeleteData = (id: number, item: ModifiedDataState) => {
+  const getClickedDeleteData = (id: string, item: ModifiedDataState) => {
     const itemname = String(item.caste);
     const getIndex = searchHostedArray.findIndex(
       (obj) => obj.caste === itemname

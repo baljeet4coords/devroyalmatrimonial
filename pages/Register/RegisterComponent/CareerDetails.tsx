@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import {
-  CountryStateCitlyList,
-  DropdownGridSingleSelect,
-} from "../../../components";
+import { DropdownGridSingleSelect } from "../../../components";
 import classes from "./Component.module.scss";
 import { Form } from "react-bootstrap";
 import RightSection from "./RightSection/RightSection";
@@ -42,9 +39,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-  const [selectedCountry, setSelectedCountry] = useState<number>();
-  const [selectedState, setSelectedState] = useState<number>();
-  const [selectedCity, setSelectedCity] = useState<number>();
+  const [selectedCountry, setSelectedCountry] = useState<number>(
+    jsonData?.country || 0
+  );
+  const [selectedState, setSelectedState] = useState<number>(
+    jsonData?.state || 0
+  );
+  const [selectedCity, setSelectedCity] = useState<number>(jsonData?.city || 0);
   const [residentialStatus, setResidentialStatus] = useState<Data>({
     id: String(jsonData?.residentialstatus),
     val: "",
@@ -145,25 +146,19 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
             <h1>Great! You are about to complete your profile.</h1>
             <small>mandatory</small>
             <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-              {/* <CountryStateCitlyList
-                title=""
-                setSelectedCountry={getSelectedCountry}
-                setSelectedState={getSelectedState}
-                setSelectedCity={getSelectedCity}
-                defaultValueCountry={jsonData?.country}
-                defaultValueState={jsonData?.state}
-                defaultValueCity={jsonData?.city}
-              /> */}
               <CountrySingle
+                title="Country"
                 setSelectedCountry={getSelectedCountry}
                 defaultValueCountry={jsonData?.country}
               />
               <StateSingle
+                title="State"
                 setSelectedState={getSelectedState}
                 defaultValueCountry={selectedCountry}
                 defaultValueState={jsonData?.state}
               />
               <CitySingle
+                title="City"
                 defaultValueCountry={selectedCountry}
                 defaultValueState={selectedState}
                 defaultValueCity={jsonData?.city}

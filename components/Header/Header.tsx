@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   const [errors, setErrors] = useState<string>("");
   const authSuccess = useSelector(selectAuthSuccess);
   useEffect(() => {
-    if (!authSuccess?.status) {
+    if (authSuccess?.status === false) {
       setErrors("No user with this credentials can be found");
     }
     if (authSuccess && authSuccess?.output === 0) {
@@ -35,7 +35,10 @@ const Header: React.FC = () => {
       authSuccess?.jsonResponse?.user_status === "R"
     ) {
       router.push("/Register/");
-    } else if (authSuccess?.jsonResponse?.user_status === "P") {
+    } else if (
+      authSuccess?.jsonResponse?.user_status === "P" ||
+      authSuccess?.jsonResponse?.user_status === "5"
+    ) {
       router.push("/DesiredProfile/");
     } else {
       router.push("/");

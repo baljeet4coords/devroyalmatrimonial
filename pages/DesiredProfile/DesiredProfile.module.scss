@@ -1,7 +1,8 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-  background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
   padding: 3rem 0 5rem 0;
   background-size: cover;
 }
@@ -66,6 +67,17 @@
     }
   }
 
+  .savePartnerBtn {
+    padding: 0.75rem 2.5rem;
+    font-weight: 500;
+    outline: none;
+    border: 0;
+    border-radius: 0.25rem;
+    background-color: #d9475c;
+    color: #fff;
+    width: auto;
+    margin: 1rem auto;
+  }
   .form_wrapper {
     position: relative;
 
@@ -73,7 +85,6 @@
       width: 84%;
       z-index: 2;
       margin-left: 4rem;
-
 
       .twoBox {
         display: flex;
@@ -198,12 +209,10 @@
   }
 }
 
-
 .singleBox {
   display: flex;
   position: relative;
   width: 66%;
-
 
   div {
     width: 100%;
@@ -329,7 +338,6 @@
   }
 }
 
-
 .buttonWrapper {
   width: 66%;
   padding: 0.6rem;
@@ -342,13 +350,11 @@
 
 @media only screen and (max-width: 1200px) and (min-width: 991px) {
   .DesiredWrapper {
-
     .innerWrapper {
       padding: 0px 2rem;
     }
 
     .form_wrapper {
-
       .formEdit {
         width: 98%;
         z-index: 2;
@@ -363,8 +369,6 @@
           left: 0rem;
           position: initial;
           transform: translateY(0px);
-
-
         }
 
         .singleDropDown {
@@ -405,10 +409,9 @@
           position: initial;
           width: fit-content;
           text-align: start;
-          transform: translateY(0%)
+          transform: translateY(0%);
         }
       }
-
     }
   }
 
@@ -435,11 +438,9 @@
   }
 }
 
-
 @media only screen and (max-width: 767px) and (min-width: 300px) {
   .DesiredWrapper {
     padding-bottom: 5rem;
-
 
     .innerWrapper {
       width: 100%;
@@ -462,7 +463,6 @@
           max-width: 100px;
         }
       }
-
     }
   }
 
@@ -510,7 +510,7 @@
           position: initial;
           width: fit-content;
           text-align: start;
-          transform: translateY(0%)
+          transform: translateY(0%);
         }
 
         input {
@@ -518,7 +518,6 @@
           text-align: center;
         }
       }
-
     }
   }
 
