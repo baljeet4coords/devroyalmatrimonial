@@ -40,11 +40,11 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
   const [ToData, setToData] = useState<String[]>(data);
 
   const [SelectedData1, updateHostedArray1] = useState<string>(
-    defaultValueFrom || ""
+    convertToFeetAndInches(+defaultValueFrom / 30.48) || ""
   );
 
   const [SelectedData2, updateHostedArray2] = useState<string>(
-    defaultValueTo || ""
+    convertToFeetAndInches(+defaultValueTo / 30.48) || ""
   );
 
   const openList = (data: { condition: boolean; query: string }) => {
@@ -56,7 +56,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
       ? String((Number(data) * 30.48).toFixed(0))
       : data;
 
-    updateHostedArray1(data);
+    updateHostedArray1(convertToFeetAndInches(+data));
     onDataFrom(modifData);
   };
 
@@ -65,7 +65,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
       ? String((Number(data) * 30.48).toFixed(0))
       : data;
 
-    updateHostedArray2(data);
+    updateHostedArray2(convertToFeetAndInches(+data));
     onDataTo(modifData);
   };
 
@@ -93,9 +93,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
             openList({ condition: !activeList1, query: "firstinp" })
           }
         >
-          {SelectedData1
-            ? convertToFeetAndInches(+SelectedData1 || 0)
-            : `${inputName} Greater than`}
+          {SelectedData1 ? SelectedData1 : `${inputName} Greater than`}
           <SlArrowDown />
           <div
             className={`${activeList1 ? classes.active : ""} ${
@@ -123,9 +121,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
             openList({ condition: !activeList2, query: "secondinp" })
           }
         >
-          {SelectedData2
-            ? convertToFeetAndInches(+SelectedData2 || 0)
-            : `${inputName} Less than`}
+          {SelectedData2 ? SelectedData2 : `${inputName} Less than`}
           <SlArrowDown />
           <div
             className={`${activeList2 ? classes.active : ""} ${

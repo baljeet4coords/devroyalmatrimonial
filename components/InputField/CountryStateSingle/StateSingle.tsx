@@ -20,21 +20,19 @@ const StateSingle: React.FC<StateProps> = ({
   const [countryCode, setCountryCode] = useState<string>(
     defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN"
   );
-
+    
   useEffect(() => {
     if (defaultValueCountry != undefined) {
-      setTimeout(() => {
-        setCountryCode(countries[defaultValueCountry].isoCode);
-        UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
-      }, 100);
+      setCountryCode(countries[defaultValueCountry].isoCode);
+      UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
     }
   }, [countries, countryCode, defaultValueCountry]);
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  
+  const Defaultstate =
+    defaultValueState && stateOfCountry[defaultValueState]?.name;
 
-  const Defaultstate = defaultValueState
-    ? stateOfCountry[defaultValueState]?.name
-    : stateOfCountry[1].name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
@@ -86,7 +84,8 @@ const StateSingle: React.FC<StateProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-
+  console.log(defaultValueState);
+  
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>

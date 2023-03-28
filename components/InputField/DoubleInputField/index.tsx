@@ -10,7 +10,6 @@ interface DoubleInputProps {
   onDataTo: (data: string) => void;
   defaultValueFrom: string;
   defaultValueTo: string;
-  Convert: boolean;
 }
 
 const DoubleInput: React.FC<DoubleInputProps> = ({
@@ -20,15 +19,10 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
   onDataTo,
   defaultValueFrom,
   defaultValueTo,
-  Convert,
 }) => {
   const [activeList1, setActiveList1] = useState<boolean>(false);
 
   const [activeList2, setActiveList2] = useState<boolean>(false);
-
-  data = Convert
-    ? data.map((element) => String(Math.trunc(Number(element) * 0.0328).toFixed(0)))
-    : data;
 
   const [FromData, setFromData] = useState<String[]>(data);
   const [ToData, setToData] = useState<String[]>(data);
@@ -46,19 +40,13 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
     if (data.query === "secondinp") setActiveList2(data.condition);
   };
   const getClickedData1 = (data: string) => {
-    const modifData = Convert ? String((Number(data)*30.48).toFixed(0)) : data;
-    console.log(modifData,"Modified data");
-    
     updateHostedArray1(data);
-    onDataFrom(modifData);
+    onDataFrom(data);
   };
 
   const getClickedData2 = (data: string) => {
-    const modifData = Convert ? String((Number(data)*30.48).toFixed(0)) : data;
-    console.log(modifData,"Modified data");
-    
     updateHostedArray2(data);
-    onDataTo(modifData);
+    onDataTo(data);
   };
 
   //if User select From Value first then set Tovalue greater then FromValue

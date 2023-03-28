@@ -51,11 +51,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   useEffect(() => {
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
-  const { feet, cm, handleFeetChange, setCm, handleCmChange } =
+  const { feet, cm, handleFeetChange, setCm, setFeet, handleCmChange } =
     useHeightConverter();
 
   useEffect(() => {
-    setCm(jsonData?.height_cm !== undefined ? String(jsonData?.height_cm) : "0");
+    setCm(jsonData?.height_cm !== undefined ? String(jsonData?.height_cm) : "");
+    setFeet(
+      jsonData?.height_cm !== undefined
+        ? String(jsonData?.height_cm / 30.48)
+        : ""
+    );
   }, [jsonData?.height_cm, setCm]);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
@@ -240,7 +245,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     setSelectedPhotoName(imageName);
     file && setImage(file);
   };
-
   return (
     <>
       <div className={classes.profile_Container}>
@@ -337,11 +341,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="height"
                         type="text"
-                        placeholder={`${
-                          !feet
-                            ? ((jsonData?.height_cm || 0) / 30.48).toFixed(1)
-                            : feet
-                        } feet`}
+                        value={String(Math.ceil(+feet))}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
                       />
@@ -355,9 +355,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="heightincms"
                         type="text"
-                        placeholder={
-                          !cm ? "Enter height in centimeters" : `${cm} cms`
-                        }
+                        value={String(Math.ceil(+cm))}
                         onBlur={formik.handleBlur}
                         onChange={handleCmChange}
                       />

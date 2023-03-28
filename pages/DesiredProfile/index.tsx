@@ -1,7 +1,6 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import {
-  CustomButton,
   DropdownGridSingleSelect,
   Footer,
   StrictRadioCheck,
@@ -37,6 +36,7 @@ import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
+import { partnerPrefEmpty } from "../../constants/DefaultPartnerPrefData";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const DesiredProfilePage: React.FC = () => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
+    dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
   }, [dispatch, userId]);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
@@ -204,7 +204,6 @@ const DesiredProfilePage: React.FC = () => {
                       ? String(jsonData?.age_less_than)
                       : "Age Less than"
                   }
-                  Convert={false}
                 />
                 <div className=" d-flex gap-3 position-relative">
                   <HeightFromTo
