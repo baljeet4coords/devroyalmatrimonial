@@ -18,6 +18,7 @@ import { getUserId } from "../../../ducks/auth/selectors";
 import { selectStep3Success } from "../../../ducks/regiserUser/step3/selectors";
 import { step3 } from "../../../ducks/regiserUser/step3/actions";
 import axios from "axios";
+import Loader from "../../../components/Loader/Loader";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -45,7 +46,14 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
 
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
-  }, [dispatch, isReduxEmpty, userId]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  }, [dispatch, userId, isReduxEmpty]);
+
+  // Loader state
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
@@ -141,103 +149,107 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        <Row className="justify-content-center">
-          <Col sm={12} md={5}>
-            <h1>We would love to know about your Lifestyle.</h1>
-            <small>mandatory</small>
-            <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-              <div className=" text-start d-flex flex-column gap-4">
-                <DropdownGridSingleSelect
-                  selectedDataFn={setDiet}
-                  title="Diet"
-                  data={Diet}
-                  nameid="diet"
-                  defaultValue={String(jsonData?.diet)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSmoking}
-                  title="Smoking"
-                  data={SmokeDrink}
-                  nameid="smoking"
-                  defaultValue={String(jsonData?.smoking)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setDrinking}
-                  title="Drinking"
-                  data={SmokeDrink}
-                  nameid="drinking"
-                  defaultValue={String(jsonData?.drinking)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setLovePets}
-                  title="Love Pets"
-                  data={Pets}
-                  nameid="lovePets"
-                  defaultValue={String(jsonData?.love_pets)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setOwnsHouse}
-                  title="Owns House"
-                  data={OwnHouseCar}
-                  nameid="ownsHouse"
-                  defaultValue={String(jsonData?.Owns_house)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setOwnsCar}
-                  title="Owns Car"
-                  data={OwnHouseCar}
-                  nameid="ownsCar"
-                  defaultValue={String(jsonData?.Owns_car)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setBloodGroup}
-                  title="Blood Group"
-                  data={BloodGroup}
-                  nameid="bloodGroup"
-                  defaultValue={String(jsonData?.blood_group)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setThalassemia}
-                  title="Thalassemia "
-                  data={Thalassemia}
-                  nameid="thalassemia"
-                  defaultValue={String(jsonData?.Thalassemia)}
-                />
-                <div className={classes.singleBox}>
-                  <Form.Label>Religious Belief</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="religiousBelief"
-                    rows={3}
-                    placeholder="About Religious Belief"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={
-                      jsonData?.religious_belief !== undefined
-                        ? String(jsonData?.religious_belief)
-                        : ""
-                    }
+        {loading ? (
+          <Loader />
+        ) : (
+          <Row className="justify-content-center">
+            <Col sm={12} md={5}>
+              <h1>We would love to know about your Lifestyle.</h1>
+              <small>mandatory</small>
+              <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
+                <div className=" text-start d-flex flex-column gap-4">
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setDiet}
+                    title="Diet"
+                    data={Diet}
+                    nameid="diet"
+                    defaultValue={String(jsonData?.diet)}
                   />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSmoking}
+                    title="Smoking"
+                    data={SmokeDrink}
+                    nameid="smoking"
+                    defaultValue={String(jsonData?.smoking)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setDrinking}
+                    title="Drinking"
+                    data={SmokeDrink}
+                    nameid="drinking"
+                    defaultValue={String(jsonData?.drinking)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setLovePets}
+                    title="Love Pets"
+                    data={Pets}
+                    nameid="lovePets"
+                    defaultValue={String(jsonData?.love_pets)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setOwnsHouse}
+                    title="Owns House"
+                    data={OwnHouseCar}
+                    nameid="ownsHouse"
+                    defaultValue={String(jsonData?.Owns_house)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setOwnsCar}
+                    title="Owns Car"
+                    data={OwnHouseCar}
+                    nameid="ownsCar"
+                    defaultValue={String(jsonData?.Owns_car)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setBloodGroup}
+                    title="Blood Group"
+                    data={BloodGroup}
+                    nameid="bloodGroup"
+                    defaultValue={String(jsonData?.blood_group)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setThalassemia}
+                    title="Thalassemia "
+                    data={Thalassemia}
+                    nameid="thalassemia"
+                    defaultValue={String(jsonData?.Thalassemia)}
+                  />
+                  <div className={classes.singleBox}>
+                    <Form.Label>Religious Belief</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="religiousBelief"
+                      rows={3}
+                      placeholder="About Religious Belief"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={
+                        jsonData?.religious_belief !== undefined
+                          ? String(jsonData?.religious_belief)
+                          : ""
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-              <Button
-                variant="danger"
-                type="submit"
-                className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-              >
-                Next
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => nextPage(1)}
-                className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
-              >
-                Previous
-              </Button>
-            </Form>
-          </Col>
-          <RightSection />
-        </Row>
+                <Button
+                  variant="danger"
+                  type="submit"
+                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                >
+                  Next
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => nextPage(1)}
+                  className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+                >
+                  Previous
+                </Button>
+              </Form>
+            </Col>
+            <RightSection />
+          </Row>
+        )}
       </Container>
     </div>
   );

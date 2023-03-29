@@ -26,6 +26,7 @@ import { step4 } from "../../../ducks/regiserUser/step4/actions";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
+import Loader from "../../../components/Loader/Loader";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -44,7 +45,14 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   }, [dispatch, isReduxEmpty, userId]);
+
+  // Loader state
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -175,119 +183,123 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        <Row className="justify-content-center">
-          <Col sm={12} md={5}>
-            <h1>We would love to know about your family.</h1>
-            <small>mandatory</small>
-            <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-              <div className=" text-start d-flex flex-column gap-4">
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedFathersOccupation}
-                  title="Father's Occupation"
-                  data={FathersProfession}
-                  nameid="fathersProfession"
-                  defaultValue={String(jsonData?.Father)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedMothersOccupation}
-                  title="Mother's Occupation"
-                  data={MothersProfession}
-                  nameid="mothersProfession"
-                  defaultValue={String(jsonData?.Mother)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedSister}
-                  title="Sister"
-                  data={BortherSisterCount}
-                  nameid="sister"
-                  defaultValue={String(jsonData?.Sister)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedBrother}
-                  title="Brother"
-                  data={BortherSisterCount}
-                  nameid="brother"
-                  defaultValue={String(jsonData?.Brother)}
-                />
-                <div className={classes.singleBox}>
-                  <Form.Label>Gothra</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="gothra"
-                    rows={3}
-                    placeholder="About Gothra"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={
-                      jsonData?.Gothra ? String(jsonData?.Gothra) : ""
-                    }
+        {loading ? (
+          <Loader />
+        ) : (
+          <Row className="justify-content-center">
+            <Col sm={12} md={5}>
+              <h1>We would love to know about your family.</h1>
+              <small>mandatory</small>
+              <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
+                <div className=" text-start d-flex flex-column gap-4">
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedFathersOccupation}
+                    title="Father's Occupation"
+                    data={FathersProfession}
+                    nameid="fathersProfession"
+                    defaultValue={String(jsonData?.Father)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedMothersOccupation}
+                    title="Mother's Occupation"
+                    data={MothersProfession}
+                    nameid="mothersProfession"
+                    defaultValue={String(jsonData?.Mother)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedSister}
+                    title="Sister"
+                    data={BortherSisterCount}
+                    nameid="sister"
+                    defaultValue={String(jsonData?.Sister)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedBrother}
+                    title="Brother"
+                    data={BortherSisterCount}
+                    nameid="brother"
+                    defaultValue={String(jsonData?.Brother)}
+                  />
+                  <div className={classes.singleBox}>
+                    <Form.Label>Gothra</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="gothra"
+                      rows={3}
+                      placeholder="About Gothra"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={
+                        jsonData?.Gothra ? String(jsonData?.Gothra) : ""
+                      }
+                    />
+                  </div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedFamilyStatus}
+                    title="Family Status "
+                    data={FamilStatus}
+                    nameid="familyStatus"
+                    defaultValue={String(jsonData?.Family_Status)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedFamilyIncome}
+                    title="Family Income"
+                    data={FamilyIncome}
+                    nameid="familyIncome"
+                    defaultValue={String(jsonData?.Family_Income)}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedFamilyType}
+                    title="Family Type"
+                    data={FamilyType}
+                    nameid="familyType"
+                    defaultValue={String(jsonData?.Family_Type)}
+                  />
+                  <CountrySingle
+                    title="Native Country"
+                    setSelectedCountry={getSelectedCountry}
+                    defaultValueCountry={jsonData?.family_native_country}
+                  />
+                  <StateSingle
+                    title="Native State"
+                    setSelectedState={getSelectedState}
+                    defaultValueCountry={selectedNativeCountry}
+                    defaultValueState={jsonData?.family_native_state}
+                  />
+                  <CitySingle
+                    title="Native City"
+                    defaultValueCountry={selectedNativeCountry}
+                    defaultValueState={selectedNativeState}
+                    defaultValueCity={jsonData?.family_native_city}
+                    setSelectedCity={getSelectedCity}
+                  />
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSelectedLivingWithParents}
+                    title="Living With Parents"
+                    data={LivingWithParrents}
+                    nameid="livingWithParents"
+                    defaultValue={String(jsonData?.living_with_parents)}
                   />
                 </div>
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedFamilyStatus}
-                  title="Family Status "
-                  data={FamilStatus}
-                  nameid="familyStatus"
-                  defaultValue={String(jsonData?.Family_Status)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedFamilyIncome}
-                  title="Family Income"
-                  data={FamilyIncome}
-                  nameid="familyIncome"
-                  defaultValue={String(jsonData?.Family_Income)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedFamilyType}
-                  title="Family Type"
-                  data={FamilyType}
-                  nameid="familyType"
-                  defaultValue={String(jsonData?.Family_Type)}
-                />
-                <CountrySingle
-                  title="Native Country"
-                  setSelectedCountry={getSelectedCountry}
-                  defaultValueCountry={jsonData?.family_native_country}
-                />
-                <StateSingle
-                  title="Native State"
-                  setSelectedState={getSelectedState}
-                  defaultValueCountry={selectedNativeCountry}
-                  defaultValueState={jsonData?.family_native_state}
-                />
-                <CitySingle
-                  title="Native City"
-                  defaultValueCountry={selectedNativeCountry}
-                  defaultValueState={selectedNativeState}
-                  defaultValueCity={jsonData?.family_native_city}
-                  setSelectedCity={getSelectedCity}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSelectedLivingWithParents}
-                  title="Living With Parents"
-                  data={LivingWithParrents}
-                  nameid="livingWithParents"
-                  defaultValue={String(jsonData?.living_with_parents)}
-                />
-              </div>
-              <Button
-                variant="danger"
-                type="submit"
-                className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-              >
-                Next
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => nextPage(2)}
-                className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
-              >
-                Previous
-              </Button>
-            </Form>
-          </Col>
-          <RightSection />
-        </Row>
+                <Button
+                  variant="danger"
+                  type="submit"
+                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                >
+                  Next
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => nextPage(2)}
+                  className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+                >
+                  Previous
+                </Button>
+              </Form>
+            </Col>
+            <RightSection />
+          </Row>
+        )}
       </Container>
     </div>
   );
