@@ -95,16 +95,16 @@ export enum MotherTongueWith0 {
   Gujarati = "14",
   Kutchi = "15",
   Konkani = "16",
+  English = "17",
   Tamil = "18",
   Telugu = "19",
   Kannada = "20",
   Malayalam = "21",
   Tulu = "22",
+  Sikkim_or_Nepali = "23",
   Bengali = "24",
   Oriya = "25",
   Assamese = "26",
-  Sikkim_or_Nepali = "27",
-  English = "28",
 }
 
 export enum MotherTongue {
@@ -124,16 +124,16 @@ export enum MotherTongue {
   Gujarati = "14",
   Kutchi = "15",
   Konkani = "16",
+  English = "17",
   Tamil = "18",
   Telugu = "19",
   Kannada = "20",
   Malayalam = "21",
   Tulu = "22",
+  Sikkim_or_Nepali = "23",
   Bengali = "24",
   Oriya = "25",
   Assamese = "26",
-  Sikkim_or_Nepali = "27",
-  English = "28",
 }
 
 export enum OccupationWith0 {
