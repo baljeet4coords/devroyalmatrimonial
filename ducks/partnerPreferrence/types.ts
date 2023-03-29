@@ -1,5 +1,5 @@
 export type PartnerPreferrenceResponse = {
-  HIV: string;
+  HIV: number;
   city: number[];
   diet: string;
   state: number[];
@@ -30,8 +30,8 @@ export type PartnerPreferrenceResponse = {
 export type PartnerPreferrence = {
   actionType?: "v" | "c" | "u";
   userId?: number;
-  ageGreaterThan?: string;
-  ageLessThan?: string;
+  ageGreaterThan?: number;
+  ageLessThan?: number;
   heightGreaterThan?: string;
   heightLessThan?: string;
   country?: string;

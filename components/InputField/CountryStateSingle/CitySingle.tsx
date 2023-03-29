@@ -26,19 +26,32 @@ const CitySingle: React.FC<CitySingle> = ({
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
-    defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN"
+    defaultValueCountry != (undefined && null)
+      ? countries[defaultValueCountry].isoCode
+      : "IN"
   );
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
-    defaultValueState ? stateOfCountry[defaultValueState]?.isoCode : "AS"
+    defaultValueState != (undefined && null)
+      ? stateOfCountry[defaultValueState]?.isoCode
+      : "AS"
   );
 
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
-  let DefaultCity = defaultValueCity
-    ? cityOfState[defaultValueCity]?.name
-    : cityOfState[1]?.name;
+  useEffect(() => {
+    if (defaultValueState != undefined) {
+      setTimeout(() => {
+        UpdatesearchHostedArray(cityOfState);
+      }, 100);
+    }
+  }, [stateCode]);
+
+  let DefaultCity =
+    defaultValueCity != (undefined && null)
+      ? cityOfState[defaultValueCity]?.name
+      : cityOfState[1]?.name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");

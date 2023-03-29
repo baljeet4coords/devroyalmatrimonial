@@ -111,8 +111,11 @@ const DesiredProfilePage: React.FC = () => {
   const [childrenStatus, setChildrenStatus] = useState<string[]>(
     jsonData?.children_status || []
   );
+
+  jsonData?.HIV && console.log(jsonData?.HIV, "jsonData?.HIV");
+
   const [hiv, setHiv] = useState<{ id?: string; val: string }>({
-    id: jsonData?.HIV === "1" ? "Yes" : "No" || "1",
+    id: jsonData?.HIV === 1 ? "Yes" : "No",
     val: "",
   });
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
@@ -125,8 +128,8 @@ const DesiredProfilePage: React.FC = () => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
-      ageGreaterThan: selectedAgeFrom,
-      ageLessThan: selectedAgeTo,
+      ageGreaterThan: +selectedAgeFrom,
+      ageLessThan: +selectedAgeTo,
       heightGreaterThan: selectedHeightFrom,
       heightLessThan: selectedHeightTo,
       country: JSON.stringify(country),
@@ -147,7 +150,7 @@ const DesiredProfilePage: React.FC = () => {
       readyToSettleAbroad: readyToSettleAbroad.id,
       challenged: JSON.stringify(challenged),
       childrenStatus: JSON.stringify(childrenStatus),
-      hiv: jsonData?.HIV,
+      hiv: String(jsonData?.HIV || 0),
       horoscopeMatch: "0",
       mandatoryFields: JSON.stringify(selectedSwitches),
     };
@@ -406,7 +409,7 @@ const DesiredProfilePage: React.FC = () => {
                       data={SmokeDrinkWith0}
                       nameid={"Smoke0"}
                       selectedDataFn={setSmoke}
-                      defaultValue={String(jsonData?.diet) || ""}
+                      defaultValue={String(jsonData?.smoking) || ""}
                     />
                   </div>
                   <StrictRadioCheck
@@ -422,7 +425,7 @@ const DesiredProfilePage: React.FC = () => {
                       data={SmokeDrinkWith0}
                       nameid={"drinkingwith0"}
                       selectedDataFn={setDrink}
-                      defaultValue={String(jsonData?.diet) || ""}
+                      defaultValue={String(jsonData?.drinking) || ""}
                     />
                   </div>
                   <StrictRadioCheck
