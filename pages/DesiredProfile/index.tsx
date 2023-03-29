@@ -118,12 +118,13 @@ const DesiredProfilePage: React.FC = () => {
     id: jsonData?.HIV === 1 ? "Yes" : "No",
     val: "",
   });
+  
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
 
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
-
+    
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {

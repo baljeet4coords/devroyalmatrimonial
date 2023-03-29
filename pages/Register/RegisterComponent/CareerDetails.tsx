@@ -66,7 +66,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     id: String(jsonData?.annual_income),
     val: "",
   });
-
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -82,7 +81,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     },
     onSubmit: async (values) => {
       let response;
-      if (isReduxEmpty === undefined) {
+      if (isReduxEmpty) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
           { ...values, actionType: "c" }
