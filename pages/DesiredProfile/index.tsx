@@ -112,15 +112,16 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
   const [hiv, setHiv] = useState<{ id?: string; val: string }>({
-    id: jsonData?.HIV === "1" ? "Yes" : "No" || "1",
+    id: jsonData?.HIV === 1 ? "Yes" : "No",
     val: "",
   });
+  
   const [caste, setCaste] = useState<number[]>(jsonData?.caste || []);
 
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
-
+    
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {
@@ -147,7 +148,7 @@ const DesiredProfilePage: React.FC = () => {
       readyToSettleAbroad: readyToSettleAbroad.id,
       challenged: JSON.stringify(challenged),
       childrenStatus: JSON.stringify(childrenStatus),
-      hiv: jsonData?.HIV,
+      hiv: String(jsonData?.HIV) || "",
       horoscopeMatch: "0",
       mandatoryFields: JSON.stringify(selectedSwitches),
     };

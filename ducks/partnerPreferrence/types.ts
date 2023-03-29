@@ -1,5 +1,5 @@
 export type PartnerPreferrenceResponse = {
-  HIV: string;
+  HIV: number;
   city: number[];
   diet: string;
   state: number[];
