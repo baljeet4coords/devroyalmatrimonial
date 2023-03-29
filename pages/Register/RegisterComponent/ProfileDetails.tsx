@@ -58,7 +58,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     setCm(jsonData?.height_cm !== undefined ? String(jsonData?.height_cm) : "");
     setFeet(
       jsonData?.height_cm !== undefined
-        ? String(jsonData?.height_cm / 30.48)
+        ? String((jsonData?.height_cm / 30.48).toFixed(1))
         : ""
     );
   }, [jsonData?.height_cm, setCm]);
@@ -341,7 +341,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Control
                         name="height"
                         type="text"
-                        value={String(Math.ceil(+feet))}
+                        value={String(feet)}
                         onBlur={formik.handleBlur}
                         onChange={handleFeetChange}
                       />
