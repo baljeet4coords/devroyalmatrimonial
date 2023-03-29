@@ -27,6 +27,7 @@ import axios from "axios";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
+import Loader from "../../../components/Loader/Loader";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -46,6 +47,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -62,6 +66,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         : ""
     );
   }, [jsonData?.height_cm, setCm]);
+
+  // Loader state
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
@@ -249,181 +257,188 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     <>
       <div className={classes.profile_Container}>
         <Container>
-          <Row className="justify-content-center">
-            <Col sm={12} md={5}>
-              <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
-              <small>mandatory</small>
-              <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-                <DropdownGridSingleSelect
-                  title="Profile For"
-                  data={ProfileFor}
-                  nameid="profilefor"
-                  selectedDataFn={setSelectedProfileFor}
-                  defaultValue={String(jsonData?.profile_for)}
-                />
-                {selectedProfileFor?.id !== "1" && (
+          {loading ? (
+            <Loader />
+          ) : (
+            <Row className="justify-content-center">
+              <Col sm={12} md={5}>
+                <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
+                <small>mandatory</small>
+                <Form
+                  className={classes.formEdit}
+                  onSubmit={formik.handleSubmit}
+                >
+                  <DropdownGridSingleSelect
+                    title="Profile For"
+                    data={ProfileFor}
+                    nameid="profilefor"
+                    selectedDataFn={setSelectedProfileFor}
+                    defaultValue={String(jsonData?.profile_for)}
+                  />
+                  {selectedProfileFor?.id !== "1" && (
+                    <div className={classes.singleBox}>
+                      <Form.Label>Profile Handler</Form.Label>
+                      <div className={classes.inputBox}>
+                        <li className={classes.blankInput}>
+                          <Form.Control
+                            name="profileHandlerName"
+                            type="text"
+                            placeholder="Enter your name"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            defaultValue={jsonData?.profile_handlername}
+                            autoComplete="off"
+                          />
+                        </li>
+                      </div>
+                    </div>
+                  )}
+                  {(selectedProfileFor?.id == "1" ||
+                    selectedProfileFor?.id == "6" ||
+                    selectedProfileFor?.id == "7") && (
+                    <GenderRadioButtons
+                      selectedGender={gender}
+                      onChangeGender={onChangeGender}
+                    />
+                  )}
                   <div className={classes.singleBox}>
-                    <Form.Label>Profile Handler</Form.Label>
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="dob"
+                      max="2001-01-02"
+                      placeholder="DateRange"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={jsonData?.dob.split(" ")[0]}
+                    />
+                  </div>
+                  <div className={classes.singleBox}>
+                    <Form.Label>
+                      {gender === "1" ? "Groom" : "Bride"} Name
+                    </Form.Label>
                     <div className={classes.inputBox}>
                       <li className={classes.blankInput}>
                         <Form.Control
-                          name="profileHandlerName"
+                          name="fullname"
                           type="text"
-                          placeholder="Enter your name"
+                          placeholder="Select Option"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
-                          defaultValue={jsonData?.profile_handlername}
-                          autoComplete="off"
+                          defaultValue={jsonData?.fullname}
                         />
                       </li>
                     </div>
                   </div>
-                )}
-                {(selectedProfileFor?.id == "1" ||
-                  selectedProfileFor?.id == "6" ||
-                  selectedProfileFor?.id == "7") && (
-                  <GenderRadioButtons
-                    selectedGender={gender}
-                    onChangeGender={onChangeGender}
+                  <div className={classes.singleBox}>
+                    <Form.Label>Upload Profile Picture</Form.Label>
+                    <div className={classes.inputBox}>
+                      <li className={classes.blankInput}>
+                        <AvatarPicker
+                          onGetAvatar={profilePicture}
+                          defaultImage={`${process.env.NEXT_PUBLIC_URL}/${jsonData?.photo}`}
+                        />
+                      </li>
+                    </div>
+                  </div>
+                  <CastListDropDown
+                    data={CastListArray}
+                    selectedDataFn={setSelectedCast}
+                    title="Caste"
+                    nameid={"Caste"}
+                    defaultValue={String(jsonData?.caste)}
                   />
-                )}
-                <div className={classes.singleBox}>
-                  <Form.Label>Date of Birth</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="dob"
-                    max="2001-01-02"
-                    placeholder="DateRange"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={jsonData?.dob.split(" ")[0]}
-                  />
-                </div>
-                <div className={classes.singleBox}>
-                  <Form.Label>
-                    {gender === "1" ? "Groom" : "Bride"} Name
-                  </Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={classes.blankInput}>
-                      <Form.Control
-                        name="fullname"
-                        type="text"
-                        placeholder="Select Option"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        defaultValue={jsonData?.fullname}
-                      />
-                    </li>
+                  <div className={classes.singleBox}>
+                    <Form.Label>Height in feet</Form.Label>
+                    <div className={classes.inputBox}>
+                      <li className={`${classes.blankInput}`}>
+                        <Form.Control
+                          name="height"
+                          type="text"
+                          value={String(feet)}
+                          onBlur={formik.handleBlur}
+                          onChange={handleFeetChange}
+                        />
+                      </li>
+                    </div>
                   </div>
-                </div>
-                <div className={classes.singleBox}>
-                  <Form.Label>Upload Profile Picture</Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={classes.blankInput}>
-                      <AvatarPicker
-                        onGetAvatar={profilePicture}
-                        defaultImage={`${process.env.NEXT_PUBLIC_URL}/${jsonData?.photo}`}
-                      />
-                    </li>
+                  <div className={classes.singleBox}>
+                    <Form.Label>Height in centimeters</Form.Label>
+                    <div className={classes.inputBox}>
+                      <li className={`${classes.blankInput}`}>
+                        <Form.Control
+                          name="heightincms"
+                          type="text"
+                          value={String(Math.ceil(+cm))}
+                          onBlur={formik.handleBlur}
+                          onChange={handleCmChange}
+                        />
+                      </li>
+                    </div>
                   </div>
-                </div>
-                <CastListDropDown
-                  data={CastListArray}
-                  selectedDataFn={setSelectedCast}
-                  title="Caste"
-                  nameid={"Caste"}
-                  defaultValue={String(jsonData?.caste)}
-                />
-                <div className={classes.singleBox}>
-                  <Form.Label>Height in feet</Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={`${classes.blankInput}`}>
-                      <Form.Control
-                        name="height"
-                        type="text"
-                        value={String(feet)}
-                        onBlur={formik.handleBlur}
-                        onChange={handleFeetChange}
-                      />
-                    </li>
-                  </div>
-                </div>
-                <div className={classes.singleBox}>
-                  <Form.Label>Height in centimeters</Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={`${classes.blankInput}`}>
-                      <Form.Control
-                        name="heightincms"
-                        type="text"
-                        value={String(Math.ceil(+cm))}
-                        onBlur={formik.handleBlur}
-                        onChange={handleCmChange}
-                      />
-                    </li>
-                  </div>
-                </div>
-                <DropdownGridSingleSelect
-                  title="Challenged"
-                  data={Challenged}
-                  nameid="challenged"
-                  selectedDataFn={setSelectedChallenged}
-                  defaultValue={String(jsonData?.challenged)}
-                />
-                <DropdownGridSingleSelect
-                  title="HIV"
-                  data={isHiv}
-                  nameid="hiv"
-                  selectedDataFn={setSelectedIsHiv}
-                  defaultValue={String(jsonData?.hiv)}
-                />
-                <DropdownGridSingleSelect
-                  title="Mother Tongue"
-                  data={MotherTongue}
-                  nameid="mothertongue"
-                  selectedDataFn={setSelectedMotherTongue}
-                  defaultValue={String(jsonData?.mother_tongue)}
-                />
-                <DropdownGridSingleSelect
-                  title="Religion"
-                  data={Religion}
-                  nameid="religion"
-                  selectedDataFn={setSelectedReligion}
-                  defaultValue={String(jsonData?.religion)}
-                />
-                <DropdownGridSingleSelect
-                  title="Manglik"
-                  data={Manglik}
-                  nameid="addmanglik"
-                  selectedDataFn={setSelectedManglik}
-                  defaultValue={String(jsonData?.manglik)}
-                />
-                <DropdownGridSingleSelect
-                  title="Marital Status"
-                  data={MaritalStatus}
-                  nameid="maritalstatus"
-                  selectedDataFn={setSelectedMaritalStatus}
-                  defaultValue={String(jsonData?.marital_status)}
-                />
-                {(selectedMaritalStatus.id || "") >= "2" && (
                   <DropdownGridSingleSelect
-                    title="Children Status"
-                    data={ChildrenStatus}
-                    nameid="childrenstatus"
-                    selectedDataFn={setSelectedChildrenStatus}
-                    defaultValue={String(jsonData?.children_status)}
+                    title="Challenged"
+                    data={Challenged}
+                    nameid="challenged"
+                    selectedDataFn={setSelectedChallenged}
+                    defaultValue={String(jsonData?.challenged)}
                   />
-                )}
-                <Button
-                  variant="danger"
-                  type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-                >
-                  Next
-                </Button>
-              </Form>
-            </Col>
-            <RightSection />
-          </Row>
+                  <DropdownGridSingleSelect
+                    title="HIV"
+                    data={isHiv}
+                    nameid="hiv"
+                    selectedDataFn={setSelectedIsHiv}
+                    defaultValue={String(jsonData?.hiv)}
+                  />
+                  <DropdownGridSingleSelect
+                    title="Mother Tongue"
+                    data={MotherTongue}
+                    nameid="mothertongue"
+                    selectedDataFn={setSelectedMotherTongue}
+                    defaultValue={String(jsonData?.mother_tongue)}
+                  />
+                  <DropdownGridSingleSelect
+                    title="Religion"
+                    data={Religion}
+                    nameid="religion"
+                    selectedDataFn={setSelectedReligion}
+                    defaultValue={String(jsonData?.religion)}
+                  />
+                  <DropdownGridSingleSelect
+                    title="Manglik"
+                    data={Manglik}
+                    nameid="addmanglik"
+                    selectedDataFn={setSelectedManglik}
+                    defaultValue={String(jsonData?.manglik)}
+                  />
+                  <DropdownGridSingleSelect
+                    title="Marital Status"
+                    data={MaritalStatus}
+                    nameid="maritalstatus"
+                    selectedDataFn={setSelectedMaritalStatus}
+                    defaultValue={String(jsonData?.marital_status)}
+                  />
+                  {(selectedMaritalStatus.id || "") >= "2" && (
+                    <DropdownGridSingleSelect
+                      title="Children Status"
+                      data={ChildrenStatus}
+                      nameid="childrenstatus"
+                      selectedDataFn={setSelectedChildrenStatus}
+                      defaultValue={String(jsonData?.children_status)}
+                    />
+                  )}
+                  <Button
+                    variant="danger"
+                    type="submit"
+                    className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  >
+                    Next
+                  </Button>
+                </Form>
+              </Col>
+              <RightSection />
+            </Row>
+          )}
         </Container>
       </div>
     </>

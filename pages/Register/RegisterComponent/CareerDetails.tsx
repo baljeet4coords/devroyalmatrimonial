@@ -20,6 +20,7 @@ import axios from "axios";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
+import Loader from "../../../components/Loader/Loader";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -38,7 +39,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const userId = useSelector(getUserId);
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   }, [dispatch, userId]);
+
+  // Loader state
+
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 0
   );
@@ -140,104 +149,108 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        <Row className="justify-content-center">
-          <Col sm={12} md={5}>
-            <h1>Great! You are about to complete your profile.</h1>
-            <small>mandatory</small>
-            <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-              <CountrySingle
-                title="Country"
-                setSelectedCountry={getSelectedCountry}
-                defaultValueCountry={jsonData?.country}
-              />
-              <StateSingle
-                title="State"
-                setSelectedState={getSelectedState}
-                defaultValueCountry={selectedCountry}
-                defaultValueState={jsonData?.state}
-              />
-              <CitySingle
-                title="City"
-                defaultValueCountry={selectedCountry}
-                defaultValueState={selectedState}
-                defaultValueCity={jsonData?.city}
-                setSelectedCity={getSelectedCity}
-              />
-              <DropdownGridSingleSelect
-                selectedDataFn={setResidentialStatus}
-                title="Residential Status"
-                data={ResidentialStatus}
-                nameid="residentialStatus"
-                defaultValue={String(jsonData?.residentialstatus)}
-              />
-              <DropdownGridSingleSelect
-                selectedDataFn={setSettleAbroad}
-                title="Ready to settle abroad"
-                data={ReadyToSettleAbroad}
-                nameid="readyToSettleAbroad"
-                defaultValue={String(jsonData?.readytosettleabroad)}
-              />
-              <DropdownGridSingleSelect
-                selectedDataFn={setEducation}
-                title="Highest Degree"
-                data={EducationTypeAndVal}
-                nameid="education"
-                defaultValue={String(jsonData?.education)}
-              />
-              <div className={classes.singleBox}>
-                <Form.Label>College Name</Form.Label>
-                <div className={classes.inputBox}>
-                  <li className={classes.blankInput}>
-                    <Form.Control
-                      type="text"
-                      name="college"
-                      placeholder={
-                        jsonData?.College
-                          ? String(jsonData?.College)
-                          : "Enter College Name"
-                      }
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                    />
-                  </li>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Row className="justify-content-center">
+            <Col sm={12} md={5}>
+              <h1>Great! You are about to complete your profile.</h1>
+              <small>mandatory</small>
+              <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
+                <CountrySingle
+                  title="Country"
+                  setSelectedCountry={getSelectedCountry}
+                  defaultValueCountry={jsonData?.country}
+                />
+                <StateSingle
+                  title="State"
+                  setSelectedState={getSelectedState}
+                  defaultValueCountry={selectedCountry}
+                  defaultValueState={jsonData?.state}
+                />
+                <CitySingle
+                  title="City"
+                  defaultValueCountry={selectedCountry}
+                  defaultValueState={selectedState}
+                  defaultValueCity={jsonData?.city}
+                  setSelectedCity={getSelectedCity}
+                />
+                <DropdownGridSingleSelect
+                  selectedDataFn={setResidentialStatus}
+                  title="Residential Status"
+                  data={ResidentialStatus}
+                  nameid="residentialStatus"
+                  defaultValue={String(jsonData?.residentialstatus)}
+                />
+                <DropdownGridSingleSelect
+                  selectedDataFn={setSettleAbroad}
+                  title="Ready to settle abroad"
+                  data={ReadyToSettleAbroad}
+                  nameid="readyToSettleAbroad"
+                  defaultValue={String(jsonData?.readytosettleabroad)}
+                />
+                <DropdownGridSingleSelect
+                  selectedDataFn={setEducation}
+                  title="Highest Degree"
+                  data={EducationTypeAndVal}
+                  nameid="education"
+                  defaultValue={String(jsonData?.education)}
+                />
+                <div className={classes.singleBox}>
+                  <Form.Label>College Name</Form.Label>
+                  <div className={classes.inputBox}>
+                    <li className={classes.blankInput}>
+                      <Form.Control
+                        type="text"
+                        name="college"
+                        placeholder={
+                          jsonData?.College
+                            ? String(jsonData?.College)
+                            : "Enter College Name"
+                        }
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                      />
+                    </li>
+                  </div>
                 </div>
-              </div>
-              <DropdownGridSingleSelect
-                selectedDataFn={setOccupation}
-                title="Employed In"
-                data={Occupation}
-                nameid="occupation"
-                defaultValue={String(jsonData?.occupation)}
-              />
-              <DropdownGridSingleSelect
-                selectedDataFn={setannualIncome}
-                title="Annual Income"
-                data={AnnualIncomeProfile}
-                nameid="annualIncome"
-                defaultValue={String(jsonData?.annual_income)}
-              />
-              <hr />
-              <h5 className="text-center p-3">
-                Here is your chance to make your profile stand out!
-              </h5>
-              <Button
-                variant="danger"
-                type="submit"
-                className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
-              >
-                Next
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => nextPage(0)}
-                className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
-              >
-                Previous
-              </Button>
-            </Form>
-          </Col>
-          <RightSection />
-        </Row>
+                <DropdownGridSingleSelect
+                  selectedDataFn={setOccupation}
+                  title="Employed In"
+                  data={Occupation}
+                  nameid="occupation"
+                  defaultValue={String(jsonData?.occupation)}
+                />
+                <DropdownGridSingleSelect
+                  selectedDataFn={setannualIncome}
+                  title="Annual Income"
+                  data={AnnualIncomeProfile}
+                  nameid="annualIncome"
+                  defaultValue={String(jsonData?.annual_income)}
+                />
+                <hr />
+                <h5 className="text-center p-3">
+                  Here is your chance to make your profile stand out!
+                </h5>
+                <Button
+                  variant="danger"
+                  type="submit"
+                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                >
+                  Next
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => nextPage(0)}
+                  className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+                >
+                  Previous
+                </Button>
+              </Form>
+            </Col>
+            <RightSection />
+          </Row>
+        )}
       </Container>
     </div>
   );

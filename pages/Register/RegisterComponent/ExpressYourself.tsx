@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
@@ -11,6 +11,7 @@ import router from "next/router";
 import { step5 } from "../../../ducks/regiserUser/step5/actions";
 import { textAreaSchema } from "../../../schemas/textAreaSchema";
 import { Errors } from "../../../components/";
+import Loader from "../../../components/Loader/Loader";
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
@@ -25,8 +26,14 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const userId = useSelector(getUserId);
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   }, [dispatch, userId]);
 
+  // Loader state
+
+  const [loading, setLoading] = useState<boolean>(true);
   // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
@@ -72,98 +79,105 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     <>
       <div className={classes.profile_Container}>
         <Container>
-          <Row className="justify-content-center">
-            <Col sm={12} md={5}>
-              <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
-              <small>mandatory</small>
-              <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-                <div className={classes.singleBoxBlock}>
-                  <Form.Label>About Career</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="aboutCareer"
-                    rows={3}
-                    placeholder="About your career"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={jsonData?.about_career ?? ""}
-                  />
-                  {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
-                    <div className="pt-1">
-                      <Errors error={formik.errors.aboutCareer} />
-                    </div>
-                  ) : null}
-                </div>
-                <div className={classes.singleBoxBlock}>
-                  <Form.Label>About Family</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="aboutFamily"
-                    rows={3}
-                    placeholder="About your family"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={jsonData?.about_family ?? ""}
-                  />
-                  {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
-                    <div className="pt-1">
-                      <Errors error={formik.errors.aboutFamily} />
-                    </div>
-                  ) : null}
-                </div>
-                <div className={classes.singleBoxBlock}>
-                  <Form.Label>About Education</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="aboutEducation"
-                    rows={3}
-                    placeholder="About your education"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={jsonData?.about_education ?? ""}
-                  />
-                  {formik.touched.aboutEducation &&
-                  formik.errors.aboutEducation ? (
-                    <div className="pt-1">
-                      <Errors error={formik.errors.aboutEducation} />
-                    </div>
-                  ) : null}
-                </div>
-                <div className={classes.singleBoxBlock}>
-                  <Form.Label>Basic Intro</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="basicIntro"
-                    rows={3}
-                    placeholder="Intro yourself"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    defaultValue={jsonData?.basic_intro ?? ""}
-                  />
-                  {formik.touched.basicIntro && formik.errors.basicIntro ? (
-                    <div className="pt-1">
-                      <Errors error={formik.errors.basicIntro} />
-                    </div>
-                  ) : null}
-                </div>
-                <Button
-                  variant="danger"
-                  type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+          {loading ? (
+            <Loader />
+          ) : (
+            <Row className="justify-content-center">
+              <Col sm={12} md={5}>
+                <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
+                <small>mandatory</small>
+                <Form
+                  className={classes.formEdit}
+                  onSubmit={formik.handleSubmit}
                 >
-                  Submit your profile
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => nextPage(3)}
-                  className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
-                >
-                  Previous
-                </Button>
-              </Form>
-            </Col>
-            <RightSection />
-          </Row>
+                  <div className={classes.singleBoxBlock}>
+                    <Form.Label>About Career</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="aboutCareer"
+                      rows={3}
+                      placeholder="About your career"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={jsonData?.about_career ?? ""}
+                    />
+                    {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
+                      <div className="pt-1">
+                        <Errors error={formik.errors.aboutCareer} />
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className={classes.singleBoxBlock}>
+                    <Form.Label>About Family</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="aboutFamily"
+                      rows={3}
+                      placeholder="About your family"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={jsonData?.about_family ?? ""}
+                    />
+                    {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
+                      <div className="pt-1">
+                        <Errors error={formik.errors.aboutFamily} />
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className={classes.singleBoxBlock}>
+                    <Form.Label>About Education</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="aboutEducation"
+                      rows={3}
+                      placeholder="About your education"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={jsonData?.about_education ?? ""}
+                    />
+                    {formik.touched.aboutEducation &&
+                    formik.errors.aboutEducation ? (
+                      <div className="pt-1">
+                        <Errors error={formik.errors.aboutEducation} />
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className={classes.singleBoxBlock}>
+                    <Form.Label>Basic Intro</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="basicIntro"
+                      rows={3}
+                      placeholder="Intro yourself"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      defaultValue={jsonData?.basic_intro ?? ""}
+                    />
+                    {formik.touched.basicIntro && formik.errors.basicIntro ? (
+                      <div className="pt-1">
+                        <Errors error={formik.errors.basicIntro} />
+                      </div>
+                    ) : null}
+                  </div>
+                  <Button
+                    variant="danger"
+                    type="submit"
+                    className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  >
+                    Submit your profile
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => nextPage(3)}
+                    className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
+                  >
+                    Previous
+                  </Button>
+                </Form>
+              </Col>
+              <RightSection />
+            </Row>
+          )}
         </Container>
       </div>
     </>

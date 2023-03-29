@@ -14,8 +14,6 @@ const CountrySingle: React.FC<CountryProps> = ({
   title,
 }) => {
 
-  console.log(defaultValueCountry,"defaultValueCountry");
-  
   const countries: ICountry[] = Country.getAllCountries();
   let Defaultcountry =
     (defaultValueCountry !=(undefined && null)  && countries[defaultValueCountry].name) ||
