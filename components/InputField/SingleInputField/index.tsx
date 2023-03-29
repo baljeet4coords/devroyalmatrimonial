@@ -60,7 +60,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
   const getClickedData = useCallback(
     ({ val, id }: { val: string; id: string }) => {
       const getIndex = String(combinedData.indexOf(val));
-      if (HostedArray.indexOf(id) === -1) {
+      if (HostedArray.indexOf(getIndex) === -1) {
         updateHostedArray((prevArray) => [...prevArray, getIndex]);
         onChange([...HostedArray, getIndex]);
         setSearchInput("");

@@ -55,9 +55,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     });
   }, []);
 
-  const [selectedCountry, setSelectedCountry] = useState<number>();
-  const [selectedState, setSelectedState] = useState<number>();
-  const [selectedCity, setSelectedCity] = useState<number>();
   const [selectedFathersOccupation, setSelectedFathersOccupation] =
     useState<Data>({ id: String(jsonData?.Father), val: "" });
   const [selectedMothersOccupation, setSelectedMothersOccupation] =
@@ -105,12 +102,14 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       familyStatus: String(jsonData?.Family_Status),
       familyIncome: String(jsonData?.Family_Income),
       familyType: String(jsonData?.Family_Type),
-      familyNativeCountry: String(jsonData?.family_native_country),
-      familyNativeState: String(jsonData?.family_native_state),
-      familyNativeCity: String(jsonData?.family_native_city),
+      familyNativeCountry: jsonData?.family_native_country,
+      familyNativeState: jsonData?.family_native_state,
+      familyNativeCity: jsonData?.family_native_city,
       livingWithParents: String(jsonData?.living_with_parents),
     },
     onSubmit: async (values: IRegisterStep4) => {
+      console.log(values, "values");
+
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -141,9 +140,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.familyStatus = selectedFamilyStatus.id;
     formik.values.familyIncome = selectedFamilyIncome.id;
     formik.values.familyType = selectedFamilyType.id;
-    formik.values.familyNativeCountry = String(selectedNativeCountry);
-    formik.values.familyNativeState = String(selectedNativeState);
-    formik.values.familyNativeCity = String(selectedNativeCity);
+    formik.values.familyNativeCountry = selectedNativeCountry;
+    formik.values.familyNativeState = selectedNativeState;
+    formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
   }, [
     formik.values,
@@ -158,19 +157,21 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
-    jsonData,
   ]);
 
   const getSelectedCountry = (id: number) => {
-    setSelectedCountry(id);
+    console.log(id, "id");
+
+    setSelectedNativeCountry(id);
+    console.log(selectedNativeCountry, "selectedNativeCountry");
   };
   const getSelectedState = (id: number) => {
-    setSelectedState(id);
+    setSelectedNativeState(id);
   };
   const getSelectedCity = (id: number) => {
-    setSelectedCity(id);
+    setSelectedNativeCity(id);
   };
-  
+
   return (
     <div className={classes.profile_Container}>
       <Container>
@@ -251,13 +252,13 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 <StateSingle
                   title="Native State"
                   setSelectedState={getSelectedState}
-                  defaultValueCountry={selectedCountry}
+                  defaultValueCountry={selectedNativeCountry}
                   defaultValueState={jsonData?.family_native_state}
                 />
                 <CitySingle
                   title="Native City"
-                  defaultValueCountry={selectedCountry}
-                  defaultValueState={selectedState}
+                  defaultValueCountry={selectedNativeCountry}
+                  defaultValueState={selectedNativeState}
                   defaultValueCity={jsonData?.family_native_city}
                   setSelectedCity={getSelectedCity}
                 />

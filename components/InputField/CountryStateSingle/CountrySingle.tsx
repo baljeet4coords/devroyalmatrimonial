@@ -13,9 +13,12 @@ const CountrySingle: React.FC<CountryProps> = ({
   setSelectedCountry,
   title,
 }) => {
+
+  console.log(defaultValueCountry,"defaultValueCountry");
+  
   const countries: ICountry[] = Country.getAllCountries();
   let Defaultcountry =
-    (defaultValueCountry && countries[defaultValueCountry].name) ||
+    (defaultValueCountry !=(undefined && null)  && countries[defaultValueCountry].name) ||
     countries[100].name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);

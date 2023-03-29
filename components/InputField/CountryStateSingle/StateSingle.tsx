@@ -18,7 +18,7 @@ const StateSingle: React.FC<StateProps> = ({
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
-    defaultValueCountry ? countries[defaultValueCountry].isoCode : "IN"
+    defaultValueCountry !=(undefined && null) ? countries[defaultValueCountry].isoCode : "IN"
   );
     
   useEffect(() => {
@@ -84,7 +84,7 @@ const StateSingle: React.FC<StateProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-  console.log(defaultValueState);
+
   
   return (
     <>
