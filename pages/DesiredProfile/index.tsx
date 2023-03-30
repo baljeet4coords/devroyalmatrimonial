@@ -7,7 +7,11 @@ import {
 } from "../../components";
 import React, { useEffect, useState } from "react";
 import classes from "./DesiredProfile.module.scss";
-import { AgeFromYearList, HeighListInCms } from "../../constants/DesiredData";
+import {
+  AgeFromYearList,
+  HeighListInCms,
+  HeightList,
+} from "../../constants/DesiredData";
 import SingleInput from "../../components/InputField/SingleInputField";
 import DoubleInput from "../../components/InputField/DoubleInputField";
 import {
@@ -38,6 +42,7 @@ import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import { partnerPrefEmpty } from "../../constants/DefaultPartnerPrefData";
 import Loader from "../../components/Loader/Loader";
+import HeightFromTest from "../../components/InputField/DoubleInputField/HeightFromTest";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -120,8 +125,6 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
 
-  jsonData?.HIV && console.log(jsonData?.HIV, "jsonData?.HIV");
-
   const [hiv, setHiv] = useState<{ id?: string; val: string }>({
     id: jsonData?.HIV === 1 ? "Yes" : "No",
     val: "",
@@ -136,6 +139,11 @@ const DesiredProfilePage: React.FC = () => {
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     setLoading(true);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
       ageGreaterThan: +selectedAgeFrom,
@@ -174,13 +182,10 @@ const DesiredProfilePage: React.FC = () => {
       response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
         { ...partnerPrefPostReq, actionType: "u" }
-      );
+        );
+        dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
+        setLoading(false)
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
     response.data.output === 1 && alert("Partner Preference Saved");
   };
 
@@ -227,8 +232,24 @@ const DesiredProfilePage: React.FC = () => {
                     }
                   />
                   <div className=" d-flex gap-3 position-relative">
+                    <HeightFromTest
+                      data={HeightList}
+                      inputName={"Height in feet"}
+                      onDataFrom={setSelectedHeightFrom}
+                      onDataTo={setSelectedHeightTo}
+                      defaultValueFrom={
+                        jsonData?.height_greater_than !== undefined
+                          ? String(jsonData?.height_greater_than)
+                          : "Height Greater than"
+                      }
+                      defaultValueTo={
+                        jsonData?.height_less_than !== undefined
+                          ? String(jsonData?.height_less_than)
+                          : "Height Less than"
+                      }
+                    />
                     {/* <HeightFromTo
-                      data={HeighListInCms(100, 244)}
+                      data={HeightList}
                       inputName={"Height in feet"}
                       onDataFrom={setSelectedHeightFrom}
                       onDataTo={setSelectedHeightTo}
@@ -244,22 +265,6 @@ const DesiredProfilePage: React.FC = () => {
                       }
                       Convert={true}
                     /> */}
-                    <DoubleInput 
-                     data={HeighListInCms(100, 244)}
-                     inputName={"Height in feet"}
-                     onDataFrom={setSelectedHeightFrom}
-                     onDataTo={setSelectedHeightTo}
-                     defaultValueFrom={
-                       jsonData?.height_greater_than !== undefined
-                         ? String(jsonData?.height_greater_than)
-                         : "Height Greater than"
-                     }
-                     defaultValueTo={
-                       jsonData?.height_less_than !== undefined
-                         ? String(jsonData?.height_less_than)
-                         : "Height Less than"
-                     }
-                    />
                     <StrictRadioCheck
                       handleSwitchToggle={handleSwitchToggle}
                       switchNameVal="height"
