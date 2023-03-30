@@ -22,7 +22,10 @@ import { useEffect, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
 import CastDataList from "../../../components/CastDataList/CastDataList";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStep1Success } from "../../../ducks/regiserUser/step1/selectors";
+import {
+  selectStep1Loading,
+  selectStep1Success,
+} from "../../../ducks/regiserUser/step1/selectors";
 import axios from "axios";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step1 } from "../../../ducks/regiserUser/step1/actions";
@@ -39,6 +42,7 @@ interface Data {
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
+  const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
@@ -47,9 +51,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -66,10 +67,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         : ""
     );
   }, [jsonData?.height_cm, setCm]);
-
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
@@ -257,7 +254,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     <>
       <div className={classes.profile_Container}>
         <Container>
-          {loading ? (
+          {isLoading ? (
             <Loader />
           ) : (
             <Row className="justify-content-center">
@@ -303,15 +300,19 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="dob"
-                      max="2001-01-02"
-                      placeholder="DateRange"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      defaultValue={jsonData?.dob.split(" ")[0]}
-                    />
+                    <div className={classes.inputBox}>
+                      <li className={classes.blankInput}>
+                        <Form.Control
+                          type="date"
+                          name="dob"
+                          max="2001-01-02"
+                          placeholder="DateRange"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          defaultValue={jsonData?.dob.split(" ")[0]}
+                        />
+                      </li>
+                    </div>
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>

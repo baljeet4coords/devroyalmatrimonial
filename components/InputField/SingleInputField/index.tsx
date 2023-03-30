@@ -27,12 +27,6 @@ const SingleInput: React.FC<MyComponentProps> = ({
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
-    if (HostedArray.includes("0") && HostedArray.length > 1) {
-      updateHostedArray(["0"]);
-    }
-  }, [HostedArray]);
-
-  useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
         setActiveList(false);
@@ -57,18 +51,41 @@ const SingleInput: React.FC<MyComponentProps> = ({
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
-  const getClickedData = useCallback(
-    ({ val, id }: { val: string; id: string }) => {
-      const getIndex = String(combinedData.indexOf(val));
+  const getClickedData = ({ val, id }: { val: string; id: string }) => {
+    const getIndex = String(combinedData.indexOf(val));
+    if (getIndex == "0") {
+      updateHostedArray(["0"]);
+    } else {
       if (HostedArray.indexOf(getIndex) === -1) {
+        updateHostedArray(HostedArray.filter((indx) => indx > "0"));
         updateHostedArray((prevArray) => [...prevArray, getIndex]);
-        onChange([...HostedArray, getIndex]);
-        setSearchInput("");
-        UpdatesearchHostedArray(combinedData);
       }
-    },
-    [HostedArray, onChange]
-  );
+    }
+    UpdatesearchHostedArray(combinedData);
+    setSearchInput("");
+  };
+
+  useEffect(() => {
+    onChange(HostedArray);
+  }, [HostedArray]);
+
+  // const getClickedData = useCallback(
+  //   ({ val, id }: { val: string; id: string }) => {
+  //     const getIndex = String(combinedData.indexOf(val));
+  //     if (getIndex == "0") {
+  //       updateHostedArray(["0"]);
+  //     } else {
+  //       if (HostedArray.indexOf(getIndex) === -1) {
+  //         updateHostedArray(HostedArray.filter((indx) => indx > "0"));
+  //         updateHostedArray((prevArray) => [...prevArray, getIndex]);
+  //       }
+  //     }
+  //     UpdatesearchHostedArray(combinedData);
+  //     setSearchInput("");
+  //   },
+  //   [HostedArray, onChange]
+  // );
+
   const getClickedDeleteData = (id: number) => {
     const newArray = HostedArray.filter((item) => +item !== id);
     updateHostedArray(newArray);
@@ -107,7 +124,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray.map((item) => {
                   const [name, id] = item.split("-");
                   return (

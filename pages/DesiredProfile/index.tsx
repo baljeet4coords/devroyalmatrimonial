@@ -35,18 +35,18 @@ import CityMultiple from "../../components/InputField/CountryStateMultiple/CityM
 import CasteMultiple from "../../components/InputField/CasteMultiple/CasteMultiple";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
-import { selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
+import { selectPartnerPrefLoading, selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
-import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import { partnerPrefEmpty } from "../../constants/DefaultPartnerPrefData";
 import Loader from "../../components/Loader/Loader";
-import HeightFromTest from "../../components/InputField/DoubleInputField/HeightFromTest";
+import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
   const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
+  const isLoading = useSelector(selectPartnerPrefLoading);
   const userId = useSelector(getUserId);
 
   const jsonData = partnerPreferrenceResponse?.jsonResponse;
@@ -54,14 +54,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId]);
-
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
     jsonData?.height_greater_than ?? ""
@@ -138,12 +131,6 @@ const DesiredProfilePage: React.FC = () => {
 
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
-    setLoading(true);
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
       ageGreaterThan: +selectedAgeFrom,
@@ -184,7 +171,6 @@ const DesiredProfilePage: React.FC = () => {
         { ...partnerPrefPostReq, actionType: "u" }
         );
         dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
-        setLoading(false)
     }
     response.data.output === 1 && alert("Partner Preference Saved");
   };
@@ -206,8 +192,8 @@ const DesiredProfilePage: React.FC = () => {
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <Row>
-            <h1>Desired Partner Profile</h1>
-            {loading ? (
+            <h1>Tell us your preferences</h1>
+            {isLoading ? (
               <Loader />
             ) : (
               <Col
@@ -232,7 +218,7 @@ const DesiredProfilePage: React.FC = () => {
                     }
                   />
                   <div className=" d-flex gap-3 position-relative">
-                    <HeightFromTest
+                    <HeightFromTo
                       data={HeightList}
                       inputName={"Height in feet"}
                       onDataFrom={setSelectedHeightFrom}
@@ -248,23 +234,6 @@ const DesiredProfilePage: React.FC = () => {
                           : "Height Less than"
                       }
                     />
-                    {/* <HeightFromTo
-                      data={HeightList}
-                      inputName={"Height in feet"}
-                      onDataFrom={setSelectedHeightFrom}
-                      onDataTo={setSelectedHeightTo}
-                      defaultValueFrom={
-                        jsonData?.height_greater_than !== undefined
-                          ? String(jsonData?.height_greater_than)
-                          : "Height Greater than"
-                      }
-                      defaultValueTo={
-                        jsonData?.height_less_than !== undefined
-                          ? String(jsonData?.height_less_than)
-                          : "Height Less than"
-                      }
-                      Convert={true}
-                    /> */}
                     <StrictRadioCheck
                       handleSwitchToggle={handleSwitchToggle}
                       switchNameVal="height"
@@ -334,7 +303,7 @@ const DesiredProfilePage: React.FC = () => {
                   <div className={classes.DesieredSingleBox}>
                     <div className={classes.singleDropDown}>
                       <DropdownGridSingleSelect
-                        title={"Income greater than"}
+                        title={"Annual Income"}
                         data={AnnualIncomeProfile0}
                         nameid={"AnnualIncomeProfile0"}
                         selectedDataFn={setAnnualIncome}

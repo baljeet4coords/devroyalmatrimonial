@@ -159,6 +159,7 @@
           }
         }
       }
+
     }
 
     .blankInput {
@@ -176,6 +177,23 @@
         font-family: sans-serif;
         line-height: normal;
         border-radius: 0;
+      }
+      
+      .inputplacholder{
+        color: #070707;
+        font-size: 16px;
+        ::placeholder {
+          color: red;
+          opacity: 1; /* Firefox */
+        }
+        
+        :-ms-input-placeholder { /* Internet Explorer 10-11 */
+         color: red;
+        }
+        
+        ::-ms-input-placeholder { /* Microsoft Edge */
+         color: red;
+        }
       }
     }
   }
@@ -309,6 +327,7 @@
         position: initial;
         margin: 0%;
         text-align: start;
+        transform: translateY(0%);
       }
 
       .singleBox {
@@ -325,7 +344,7 @@
 
             input {
               text-align: start;
-              padding: 1.5rem;
+              padding: 1rem;
             }
           }
         }

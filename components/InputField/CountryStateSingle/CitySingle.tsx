@@ -48,14 +48,14 @@ const CitySingle: React.FC<CitySingle> = ({
     }
   }, [stateCode]);
 
-  let DefaultCity =
-    defaultValueCity != (undefined && null)
-      ? cityOfState[defaultValueCity]?.name
-      : cityOfState[1]?.name;
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
-  const [selecedData, setSelecedData] = useState(DefaultCity || "Select City");
+  const [selecedData, setSelecedData] = useState(
+    (defaultValueCity != (undefined && null) &&
+      cityOfState[defaultValueCity]?.name) ||
+      "Select City"
+  );
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICity[]>(cityOfState);
 
@@ -73,6 +73,8 @@ const CitySingle: React.FC<CitySingle> = ({
     setSelecedData(item.name);
     const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);
     setSelectedCity(getIndex);
+    setSearchInput("");
+    UpdatesearchHostedArray(cityOfState);
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -129,7 +131,7 @@ const CitySingle: React.FC<CitySingle> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray?.map((item, index) => {
                   return (
                     <li

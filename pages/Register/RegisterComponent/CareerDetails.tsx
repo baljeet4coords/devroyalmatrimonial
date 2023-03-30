@@ -15,7 +15,10 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step2 } from "../../../ducks/regiserUser/step2/actions";
-import { selectStep2Success } from "../../../ducks/regiserUser/step2/selectors";
+import {
+  selectStep2Loading,
+  selectStep2Success,
+} from "../../../ducks/regiserUser/step2/selectors";
 import axios from "axios";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
@@ -37,16 +40,18 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const isLoading = useSelector(selectStep2Loading);
+
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
+    console.log(jsonData);
   }, [dispatch, userId]);
 
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : 0);
+    setSelectedState(jsonData?.state != undefined ? jsonData?.state : 0);
+    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : 0);
+  }, [jsonData?.country, jsonData?.state, jsonData?.city]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 0
@@ -75,6 +80,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     id: String(jsonData?.annual_income),
     val: "",
   });
+  const [collegeName, setCollegeName] = useState<string>(
+    jsonData?.College ? jsonData?.College : ""
+  );
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -123,6 +131,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     formik.values.education = education.id || "";
     formik.values.occupation = occupation.id || "";
     formik.values.annualIncome = annualIncome.id || "";
+    formik.values.college = collegeName;
   }, [
     annualIncome.id,
     education.id,
@@ -134,6 +143,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     selectedCountry,
     selectedState,
     settleAboard.id,
+    collegeName,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -149,7 +159,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
@@ -160,19 +170,19 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 <CountrySingle
                   title="Country"
                   setSelectedCountry={getSelectedCountry}
-                  defaultValueCountry={jsonData?.country}
+                  defaultValueCountry={selectedCountry}
                 />
                 <StateSingle
                   title="State"
                   setSelectedState={getSelectedState}
                   defaultValueCountry={selectedCountry}
-                  defaultValueState={jsonData?.state}
+                  defaultValueState={selectedState}
                 />
                 <CitySingle
                   title="City"
                   defaultValueCountry={selectedCountry}
                   defaultValueState={selectedState}
-                  defaultValueCity={jsonData?.city}
+                  defaultValueCity={selectedCity}
                   setSelectedCity={getSelectedCity}
                 />
                 <DropdownGridSingleSelect
@@ -203,13 +213,11 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                       <Form.Control
                         type="text"
                         name="college"
-                        placeholder={
-                          jsonData?.College
-                            ? String(jsonData?.College)
-                            : "Enter College Name"
-                        }
+                        className={classes.inputplacholder}
+                        placeholder={"Enter College Name"}
+                        value={collegeName}
                         onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
+                        onChange={(e)=>setCollegeName(e.target.value)}
                       />
                     </li>
                   </div>

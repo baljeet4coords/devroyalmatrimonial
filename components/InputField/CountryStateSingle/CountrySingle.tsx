@@ -40,6 +40,8 @@ const CountrySingle: React.FC<CountryProps> = ({
   const getClickedData = (item: ICountry) => {
     setSelecedData(item.name);
     const getIndex = countries.findIndex((obj) => obj.name === item.name);
+    setSearchInput("");
+    UpdatesearchHostedArray(countries);
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -89,7 +91,7 @@ const CountrySingle: React.FC<CountryProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray?.map((item, index) => {
                   return (
                     <li key={item.isoCode} onClick={() => getClickedData(item)}>
