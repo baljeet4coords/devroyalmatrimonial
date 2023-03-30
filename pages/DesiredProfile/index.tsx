@@ -31,7 +31,7 @@ import CityMultiple from "../../components/InputField/CountryStateMultiple/CityM
 import CasteMultiple from "../../components/InputField/CasteMultiple/CasteMultiple";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
-import { selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
+import { selectPartnerPrefLoading, selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
@@ -42,6 +42,7 @@ import Loader from "../../components/Loader/Loader";
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
   const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
+  const isLoading = useSelector(selectPartnerPrefLoading);
   const userId = useSelector(getUserId);
 
   const jsonData = partnerPreferrenceResponse?.jsonResponse;
@@ -49,14 +50,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId]);
-
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
     jsonData?.height_greater_than ?? ""
@@ -135,7 +129,6 @@ const DesiredProfilePage: React.FC = () => {
 
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
-    setLoading(true);
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
       ageGreaterThan: +selectedAgeFrom,
@@ -202,7 +195,7 @@ const DesiredProfilePage: React.FC = () => {
         <Container className={classes.innerWrapper}>
           <Row>
             <h1>Desired Partner Profile</h1>
-            {loading ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <Col
@@ -244,21 +237,21 @@ const DesiredProfilePage: React.FC = () => {
                       }
                       Convert={true}
                     /> */}
-                    <DoubleInput 
-                     data={HeighListInCms(100, 244)}
-                     inputName={"Height in feet"}
-                     onDataFrom={setSelectedHeightFrom}
-                     onDataTo={setSelectedHeightTo}
-                     defaultValueFrom={
-                       jsonData?.height_greater_than !== undefined
-                         ? String(jsonData?.height_greater_than)
-                         : "Height Greater than"
-                     }
-                     defaultValueTo={
-                       jsonData?.height_less_than !== undefined
-                         ? String(jsonData?.height_less_than)
-                         : "Height Less than"
-                     }
+                    <DoubleInput
+                      data={HeighListInCms(100, 244)}
+                      inputName={"Height in feet"}
+                      onDataFrom={setSelectedHeightFrom}
+                      onDataTo={setSelectedHeightTo}
+                      defaultValueFrom={
+                        jsonData?.height_greater_than !== undefined
+                          ? String(jsonData?.height_greater_than)
+                          : "Height Greater than"
+                      }
+                      defaultValueTo={
+                        jsonData?.height_less_than !== undefined
+                          ? String(jsonData?.height_less_than)
+                          : "Height Less than"
+                      }
                     />
                     <StrictRadioCheck
                       handleSwitchToggle={handleSwitchToggle}
