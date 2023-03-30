@@ -15,7 +15,10 @@ import {
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../../ducks/auth/selectors";
-import { selectStep3Success } from "../../../ducks/regiserUser/step3/selectors";
+import {
+  selectStep3Loading,
+  selectStep3Success,
+} from "../../../ducks/regiserUser/step3/selectors";
 import { step3 } from "../../../ducks/regiserUser/step3/actions";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
@@ -30,12 +33,12 @@ interface Data {
 const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepThreeDefaultValues = useSelector(selectStep3Success);
+  const isLoading = useSelector(selectStep3Loading);
   const jsonData = stepThreeDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
 
-  //Render page go on the top of the page after completed the previeous step
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -149,7 +152,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">

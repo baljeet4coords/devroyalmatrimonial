@@ -15,7 +15,10 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../../ducks/auth/selectors";
 import { step2 } from "../../../ducks/regiserUser/step2/actions";
-import { selectStep2Success } from "../../../ducks/regiserUser/step2/selectors";
+import {
+  selectStep2Loading,
+  selectStep2Success,
+} from "../../../ducks/regiserUser/step2/selectors";
 import axios from "axios";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
@@ -37,16 +40,10 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const isLoading = useSelector(selectStep2Loading);
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId]);
-
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 0
@@ -149,7 +146,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">

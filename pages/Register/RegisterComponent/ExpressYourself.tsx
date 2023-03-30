@@ -4,7 +4,10 @@ import classes from "./Component.module.scss";
 import { useFormik } from "formik";
 import RightSection from "./RightSection/RightSection";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStep5Success } from "../../../ducks/regiserUser/step5/selectors";
+import {
+  selectStep5Loading,
+  selectStep5Success,
+} from "../../../ducks/regiserUser/step5/selectors";
 import { getUserId } from "../../../ducks/auth/selectors";
 import axios from "axios";
 import router from "next/router";
@@ -20,20 +23,15 @@ interface ExpressYourselfProps {
 const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFiveDefaultValues = useSelector(selectStep5Success);
+  const isLoading = useSelector(selectStep5Loading);
   const jsonData = stepFiveDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId]);
 
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
   // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
@@ -79,7 +77,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     <>
       <div className={classes.profile_Container}>
         <Container>
-          {loading ? (
+          {isLoading ? (
             <Loader />
           ) : (
             <Row className="justify-content-center">

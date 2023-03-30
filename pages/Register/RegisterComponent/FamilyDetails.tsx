@@ -18,7 +18,10 @@ import {
 } from "../../../types/enums";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStep4Success } from "../../../ducks/regiserUser/step4/selectors";
+import {
+  selectStep4Loading,
+  selectStep4Success,
+} from "../../../ducks/regiserUser/step4/selectors";
 import { IRegisterStep4 } from "../../../types/register/userRegister";
 import axios from "axios";
 import { getUserId } from "../../../ducks/auth/selectors";
@@ -38,21 +41,16 @@ interface Data {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
+  const isLoading = useSelector(selectStep4Loading);
   const jsonData = stepFourDefaultValues?.jsonResponse;
+
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, isReduxEmpty, userId]);
-
-  // Loader state
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -183,7 +181,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
