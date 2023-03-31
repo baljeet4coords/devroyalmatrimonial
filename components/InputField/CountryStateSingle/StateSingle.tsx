@@ -18,26 +18,33 @@ const StateSingle: React.FC<StateProps> = ({
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
-    defaultValueCountry !=(undefined && null) ? countries[defaultValueCountry].isoCode : "IN"
+    defaultValueCountry != (undefined && null)
+      ? countries[defaultValueCountry].isoCode
+      : "IN"
   );
-    
+
   useEffect(() => {
     if (defaultValueCountry != undefined) {
       setCountryCode(countries[defaultValueCountry].isoCode);
-      UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
+      UpdatesearchHostedArray(
+        State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
+      );
     }
   }, [countries, countryCode, defaultValueCountry]);
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
-  
-  const Defaultstate =
-    defaultValueState && stateOfCountry[defaultValueState]?.name;
+
+  // const Defaultstate =
+  //   defaultValueState && stateOfCountry[defaultValueState]?.name;
 
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
+  // const [defaultStateName, setDefaultStateName] = useState<string>( defaultValueState != undefined && stateOfCountry[defaultValueState]?.name);
   const [selecedData, setSelecedData] = useState(
-    Defaultstate || "Select State"
+    (defaultValueState != undefined &&
+      stateOfCountry[defaultValueState]?.name) ||
+      "Select State"
   );
   const [searchHostedArray, UpdatesearchHostedArray] = useState<IState[]>(
     State.getStatesOfCountry(countryCode)
@@ -57,6 +64,8 @@ const StateSingle: React.FC<StateProps> = ({
     setSelecedData(item.name);
     const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
     setSelectedState(getIndex);
+    setSearchInput("");
+    UpdatesearchHostedArray(stateOfCountry);
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -85,7 +94,6 @@ const StateSingle: React.FC<StateProps> = ({
     };
   }, [elementRef]);
 
-  
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
@@ -109,7 +117,7 @@ const StateSingle: React.FC<StateProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray?.map((item, index) => {
                   return (
                     <li

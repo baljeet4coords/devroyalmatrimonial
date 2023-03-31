@@ -7,7 +7,11 @@ import {
 } from "../../components";
 import React, { useEffect, useState } from "react";
 import classes from "./DesiredProfile.module.scss";
-import { AgeFromYearList, HeighListInCms } from "../../constants/DesiredData";
+import {
+  AgeFromYearList,
+  HeighListInCms,
+  HeightList,
+} from "../../constants/DesiredData";
 import SingleInput from "../../components/InputField/SingleInputField";
 import DoubleInput from "../../components/InputField/DoubleInputField";
 import {
@@ -35,9 +39,9 @@ import { selectPartnerPrefLoading, selectPartnerPrefSuccess } from "../../ducks/
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
-import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import { partnerPrefEmpty } from "../../constants/DefaultPartnerPrefData";
 import Loader from "../../components/Loader/Loader";
+import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -114,8 +118,6 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.children_status || []
   );
 
-  jsonData?.HIV && console.log(jsonData?.HIV, "jsonData?.HIV");
-
   const [hiv, setHiv] = useState<{ id?: string; val: string }>({
     id: jsonData?.HIV === 1 ? "Yes" : "No",
     val: "",
@@ -167,13 +169,9 @@ const DesiredProfilePage: React.FC = () => {
       response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
         { ...partnerPrefPostReq, actionType: "u" }
-      );
+        );
+        dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
     response.data.output === 1 && alert("Partner Preference Saved");
   };
 
@@ -194,7 +192,7 @@ const DesiredProfilePage: React.FC = () => {
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <Row>
-            <h1>Desired Partner Profile</h1>
+            <h1>Tell us your preferences</h1>
             {isLoading ? (
               <Loader />
             ) : (
@@ -220,25 +218,8 @@ const DesiredProfilePage: React.FC = () => {
                     }
                   />
                   <div className=" d-flex gap-3 position-relative">
-                    {/* <HeightFromTo
-                      data={HeighListInCms(100, 244)}
-                      inputName={"Height in feet"}
-                      onDataFrom={setSelectedHeightFrom}
-                      onDataTo={setSelectedHeightTo}
-                      defaultValueFrom={
-                        jsonData?.height_greater_than !== undefined
-                          ? String(jsonData?.height_greater_than)
-                          : "Height Greater than"
-                      }
-                      defaultValueTo={
-                        jsonData?.height_less_than !== undefined
-                          ? String(jsonData?.height_less_than)
-                          : "Height Less than"
-                      }
-                      Convert={true}
-                    /> */}
-                    <DoubleInput
-                      data={HeighListInCms(100, 244)}
+                    <HeightFromTo
+                      data={HeightList}
                       inputName={"Height in feet"}
                       onDataFrom={setSelectedHeightFrom}
                       onDataTo={setSelectedHeightTo}
@@ -322,7 +303,7 @@ const DesiredProfilePage: React.FC = () => {
                   <div className={classes.DesieredSingleBox}>
                     <div className={classes.singleDropDown}>
                       <DropdownGridSingleSelect
-                        title={"Income greater than"}
+                        title={"Annual Income"}
                         data={AnnualIncomeProfile0}
                         nameid={"AnnualIncomeProfile0"}
                         selectedDataFn={setAnnualIncome}

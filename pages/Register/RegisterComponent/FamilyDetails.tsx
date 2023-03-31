@@ -241,7 +241,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   />
                   <DropdownGridSingleSelect
                     selectedDataFn={setSelectedFamilyIncome}
-                    title="Family Income"
+                    title="Family Annual Income"
                     data={FamilyIncome}
                     nameid="familyIncome"
                     defaultValue={String(jsonData?.Family_Income)}

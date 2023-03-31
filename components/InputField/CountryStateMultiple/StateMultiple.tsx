@@ -106,7 +106,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preffered Indian State</label>
+        <label>Preferred Indian State</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           {activeList && (
             <input

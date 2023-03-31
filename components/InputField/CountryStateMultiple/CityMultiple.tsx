@@ -104,7 +104,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
-        <label>Preffered Indian City</label>
+        <label>Preferred Indian City</label>
         <div
           className={classes.inputBox}
           onClick={() => {

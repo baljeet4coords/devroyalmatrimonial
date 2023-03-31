@@ -300,15 +300,19 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control
-                      type="date"
-                      name="dob"
-                      max="2001-01-02"
-                      placeholder="DateRange"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      defaultValue={jsonData?.dob.split(" ")[0]}
-                    />
+                    <div className={classes.inputBox}>
+                      <li className={classes.blankInput}>
+                        <Form.Control
+                          type="date"
+                          name="dob"
+                          max="2001-01-02"
+                          placeholder="DateRange"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          defaultValue={jsonData?.dob.split(" ")[0]}
+                        />
+                      </li>
+                    </div>
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>

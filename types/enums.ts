@@ -49,32 +49,32 @@ export enum YeNoNA {
 }
 
 export enum AnnualIncomeProfile {
-  From_0_to_1_lakh = "1",
-  From_1_to_2_lakhs = "2",
-  From_2_to_5_lakhs = "3",
-  From_5_to_10_lakhs = "4",
-  From_10_to_20_lakhs = "5",
-  From_20_to_30_lakhs = "6",
-  From_30_to_50_lakhs = "7",
-  From_50_to_70_lakhs = "8",
-  From_70_to_1_crore = "9",
-  From_1_to_2_crores = "10",
+  Between_0_to_1_lakh = "1",
+  Between_1_to_2_lakhs = "2",
+  Between_2_to_5_lakhs = "3",
+  Between_5_to_10_lakhs = "4",
+  Between_10_to_20_lakhs = "5",
+  Between_20_to_30_lakhs = "6",
+  Between_30_to_50_lakhs = "7",
+  Between_50_to_70_lakhs = "8",
+  Between_70_to_1_crore = "9",
+  Between_1_to_2_crores = "10",
   Above_2_crores = "11",
 }
 
 export enum AnnualIncomeProfile0 {
   Does_Not_Matter = "0",
-  From_0_to_1_lakh = "1",
-  From_1_to_2_lakhs = "2",
-  From_2_to_5_lakhs = "3",
-  From_5_to_10_lakhs = "4",
-  From_10_to_20_lakhs = "5",
-  From_20_to_30_lakhs = "6",
-  From_30_to_50_lakhs = "7",
-  From_50_to_70_lakhs = "8",
-  From_70_to_1_crore = "9",
-  From_1_to_2_crores = "10",
-  Above_2_crores = "11",
+  Greater_then_1_lakh = "1",
+  Greater_then_2_lakhs = "2",
+  Greater_then_5_lakhs = "3",
+  Greater_then_10_lakhs = "4",
+  Greater_then_20_lakhs = "5",
+  Greater_then_30_lakhs = "6",
+  Greater_then_50_lakhs = "7",
+  Greater_then_70_lakhs = "8",
+  Greater_then_1_crore = "9",
+  Greater_then_2_crores = "10",
+  Greater_then_5_crores = "11",
 }
 
 export enum MotherTongueWith0 {
@@ -440,16 +440,16 @@ export enum FamilyIncomeWith0 {
 }
 
 export enum FamilyIncome {
-  From_0_to_1_lakh = "1",
-  From_1_to_2_lakhs = "2",
-  From_2_to_5_lakhs = "3",
-  From_5_to_10_lakhs = "4",
-  From_10_to_20_lakhs = "5",
-  From_20_to_30_lakhs = "6",
-  From_30_to_50_lakhs = "7",
-  From_50_to_70_lakhs = "8",
-  From_70_to_1_crore = "9",
-  From_1_to_2_crores = "10",
+  Between_0_to_1_lakh = "1",
+  Between_1_to_2_lakhs = "2",
+  Between_2_to_5_lakhs = "3",
+  Between_5_to_10_lakhs = "4",
+  Between_10_to_20_lakhs = "5",
+  Between_20_to_30_lakhs = "6",
+  Between_30_to_50_lakhs = "7",
+  Between_50_to_70_lakhs = "8",
+  Between_70_to_1_crore = "9",
+  Between_1_to_2_crores = "10",
   Above_2_crores = "11",
 }
 
