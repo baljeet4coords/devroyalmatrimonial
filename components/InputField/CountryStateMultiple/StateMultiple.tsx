@@ -42,6 +42,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
+    // for adding does not matter in state list
     if (searchHostedArray[0].name != "Does Not Matter") {
       searchHostedArray.unshift(DoesNotMatter);
     }
@@ -55,12 +56,8 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
-  // For removeing the selcted item if Does not Matter is selected
   useEffect(() => {
-    if (statesIds.length > 1 && statesIds.includes(0)) {
-      setStatesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
+    onChangeState(statesIds);
   }, [statesIds]);
 
   const getClickedData = useCallback(
@@ -68,13 +65,23 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
       const getIndex = stateOfCountry.findIndex(
         (obj) => obj.name === state.name
       );
-      if (!HostedArray.some((item) => Object.is(item, state))) {
-        setStatesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray: IState[]) => [...prevArray, state]);
-        setSearchInput("");
-        UpdatesearchHostedArray(stateOfCountry);
+
+      if (getIndex == 0) {
+        // For removeing the selcted item if Does not Matter is selected
+        setStatesIds([0]);
+        updateHostedArray([state]);
+      } else {
+        if (!HostedArray.some((item) => Object.is(item, state))) {
+          setStatesIds(statesIds.filter((indx) => indx > 0));
+          updateHostedArray(
+            HostedArray.filter((item) => item.isoCode != "DNM")
+          );
+          setStatesIds((prev) => [...prev, getIndex]);
+          updateHostedArray((prevArray: IState[]) => [...prevArray, state]);
+        }
       }
-      onChangeState([...statesIds, getIndex]);
+      UpdatesearchHostedArray(stateOfCountry);
+      setSearchInput("");
     },
     [HostedArray, onChangeState, statesIds]
   );
@@ -137,7 +144,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray.map((item, index) => {
                   return (
                     <li

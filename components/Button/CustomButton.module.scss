@@ -13,7 +13,7 @@
     margin: 1rem auto;
 
     &:hover {
-        color: $red_txt;
+        color: $red_txt !important;
         background-color: $milkWhite_bg;
         outline: 3px solid $red_txt;
         transition: 0.5s ease-in-out;

@@ -13,6 +13,7 @@ function* step1Saga(action: Step1Actions): any {
         action.payload
       );
       const responseData = response.data;
+      
       yield put(step1Success(responseData));
     }
   } catch (error) {

@@ -55,27 +55,33 @@ const CityMultiple: React.FC<CityMultiple> = ({
     setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
+
   // For removeing the selcted item if Does not Matter is selected
   useEffect(() => {
-    if (citiesIds.length > 1 && citiesIds.includes(0)) {
-      setCitiesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
-  }, [citiesIds, searchHostedArray]);
+    onChangeCity(citiesIds);
+  }, [citiesIds]);
 
   const getClickedData = useCallback(
     (city: ICity) => {
       const getIndex = cityOfState.findIndex((obj) => obj.name === city.name);
-      if (!HostedArray.some((item) => Object.is(item, city))) {
-        setCitiesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray) => [...prevArray, city]);
+      if (getIndex == 0) {
+        // For removeing the selcted item if Does not Matter is selected
+        setCitiesIds([0]);
+        updateHostedArray([city]);
+      } else {
+        if (!HostedArray.some((item) => Object.is(item, city))) {
+          setCitiesIds(citiesIds.filter((indx) => indx > 0));
+          updateHostedArray(HostedArray.filter((item) => item.stateCode != "DNM"));
+          setCitiesIds((prev) => [...prev, getIndex]);
+          updateHostedArray((prevArray) => [...prevArray, city]);
+        }
         setSearchInput("");
         UpdatesearchHostedArray(cityOfState);
       }
-      onChangeCity([...citiesIds, getIndex]);
     },
     [HostedArray, citiesIds, cityOfState, onChangeCity]
   );
+
   const getClickedDeleteData = (city: string, item: ModifiedDataCity) => {
     const itemname = String(item.name);
     const getIndex = searchHostedArray.findIndex(
@@ -140,7 +146,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray.map((item, index) => {
                   return (
                     <li

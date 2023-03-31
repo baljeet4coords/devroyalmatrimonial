@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 // import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
 import storage from "redux-persist/es/storage";
+import { TbPlayerTrackPrev } from "react-icons/tb";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -47,7 +48,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <CareerDetails key={1} nextPage={chooseMessage} />,
     <LifeStyle key={2} nextPage={chooseMessage} />,
     <FamilyDetails key={3} nextPage={chooseMessage} />,
-    <ExpressYourself key={4} nextPage={chooseMessage}/>,
+    <ExpressYourself key={4} nextPage={chooseMessage} />,
   ];
   const onLogout = () => {
     dispatch(logoutRequest());
@@ -59,6 +60,14 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
       <Container fluid className={classes.background_header}>
         <RegisterHeader onLogout={onLogout} />
         <Row className={classes.register_header_Links}>
+          {active > 0 && (
+            <button
+              className={classes.prevButton}
+              onClick={() => chooseMessage(active - 1)}
+            >
+              <TbPlayerTrackPrev />
+            </button>
+          )}
           {topHeading.map((heading, index) => {
             return (
               <Col
