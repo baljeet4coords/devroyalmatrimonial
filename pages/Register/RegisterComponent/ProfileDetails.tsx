@@ -113,7 +113,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length-1]);
-    console.log(selectedPhotoName);
   }
   const formik = useFormik({
     initialValues: {
@@ -259,7 +258,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     file && setImage(file);
   };
 
-  // {console.log(jsonData?.photo.includes("uploads") ,imgsplt[imgsplt?.length-1],"process.env.NEXT_PUBLIC_URL")}
 
   return (
     <>

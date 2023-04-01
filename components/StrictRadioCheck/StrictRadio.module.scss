@@ -13,11 +13,11 @@
 
         .Switch {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-            gap: 0.5rem;
             width: 95%;
             z-index: 5;
+            gap: 0.5rem;
 
             span {
                 font-size: 14px;
@@ -67,6 +67,7 @@
     }
 
 }
+
 @media only screen and (max-width: 990px) and (min-width: 767px) {
     .StrictWrapper {
         position: absolute;
@@ -76,6 +77,7 @@
     }
 
 }
+
 @media only screen and (max-width: 767px) and (min-width: 415px) {
     .StrictWrapper {
         position: absolute;
