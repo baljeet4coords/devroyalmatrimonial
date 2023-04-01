@@ -104,9 +104,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: "",
     id: String(jsonData?.caste),
   });
-  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
+
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>(
+    jsonData?.photo || ""
+  );
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
+  if (selectedPhotoName?.includes("uploads")) {
+    const imgsplt = selectedPhotoName.split("/");
+    setSelectedPhotoName(imgsplt[imgsplt.length-1]);
+    console.log(selectedPhotoName);
+  }
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -124,7 +132,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       maritalstatus: String(jsonData?.marital_status),
       childrenstatus: String(jsonData?.children_status),
       height: String(jsonData?.height_cm),
-      profilepic: jsonData?.photo,
+      profilepic: selectedPhotoName,
     },
     onSubmit: async (values) => {
       const formData = new FormData();
@@ -250,6 +258,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     setSelectedPhotoName(imageName);
     file && setImage(file);
   };
+
+  // {console.log(jsonData?.photo.includes("uploads") ,imgsplt[imgsplt?.length-1],"process.env.NEXT_PUBLIC_URL")}
+
   return (
     <>
       <div className={classes.profile_Container}>

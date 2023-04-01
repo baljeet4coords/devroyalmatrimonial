@@ -58,22 +58,27 @@ const CountryMultiple: React.FC<CountryProps> = ({
 
   // For removeing the selcted item if Does not Matter is selected
   useEffect(() => {
-    if (countriesIds.length > 1 && countriesIds.includes(0)) {
-      setCountriesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
+    onChangeCountry(countriesIds);
   }, [countriesIds]);
 
   const getClickedData = useCallback(
     (country: ICountry) => {
       const getIndex = countries.findIndex((obj) => obj.name === country.name);
-      if (!HostedArray.some((item) => Object.is(item, country))) {
-        setCountriesIds((pre) => [...pre, getIndex]);
-        updateHostedArray((prevArray) => [...prevArray, country]);
-        setSearchInput("");
-        UpdatesearchHostedArray(countries);
+      if (getIndex == 0) {
+        setCountriesIds([0]);
+        updateHostedArray([country]);
+      } else {
+        if (!HostedArray.some((item) => Object.is(item, country))) {
+          setCountriesIds(countriesIds.filter((indx) => indx > 0));
+          updateHostedArray(
+            HostedArray.filter((item) => item.isoCode != "DNM")
+          );
+          setCountriesIds((pre) => [...pre, getIndex]);
+          updateHostedArray((prevArray) => [...prevArray, country]);
+        }
       }
-      onChangeCountry([...countriesIds, getIndex]);
+      UpdatesearchHostedArray(countries);
+      setSearchInput("");
     },
     [HostedArray, countriesIds, onChangeCountry]
   );
@@ -138,7 +143,7 @@ const CountryMultiple: React.FC<CountryProps> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.length > 1 ? (
+              {searchHostedArray.length > 0 ? (
                 searchHostedArray.map((item, index) => {
                   return (
                     <li

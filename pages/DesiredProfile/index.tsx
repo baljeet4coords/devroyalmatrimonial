@@ -35,7 +35,10 @@ import CityMultiple from "../../components/InputField/CountryStateMultiple/CityM
 import CasteMultiple from "../../components/InputField/CasteMultiple/CasteMultiple";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
-import { selectPartnerPrefLoading, selectPartnerPrefSuccess } from "../../ducks/partnerPreferrence/selectors";
+import {
+  selectPartnerPrefLoading,
+  selectPartnerPrefSuccess,
+} from "../../ducks/partnerPreferrence/selectors";
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
@@ -57,16 +60,16 @@ const DesiredProfilePage: React.FC = () => {
   }, [dispatch, userId]);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
-    jsonData?.height_greater_than ?? ""
+    jsonData?.age_greater_than ?? ""
   );
   const [selectedAgeTo, setSelectedAgeTo] = useState<string>(
-    jsonData?.height_less_than ?? ""
+    jsonData?.age_less_than || ""
   );
   const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>(
-    jsonData?.age_greater_than || ""
+    jsonData?.height_greater_than || ""
   );
   const [selectedHeightTo, setSelectedHeightTo] = useState<string>(
-    jsonData?.age_less_than || ""
+    jsonData?.height_less_than ?? ""
   );
   const [country, setCountry] = useState<number[]>(jsonData?.country || []);
   const [state, setState] = useState<number[]>(jsonData?.state || []);
@@ -169,8 +172,8 @@ const DesiredProfilePage: React.FC = () => {
       response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
         { ...partnerPrefPostReq, actionType: "u" }
-        );
-        dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
+      );
+      dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
     }
     response.data.output === 1 && alert("Partner Preference Saved");
   };
