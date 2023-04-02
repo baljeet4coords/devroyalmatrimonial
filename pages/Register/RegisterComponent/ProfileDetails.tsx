@@ -112,7 +112,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const [image, setImage] = useState<Blob | string>("");
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
-    setSelectedPhotoName(imgsplt[imgsplt.length-1]);
+    setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
   }
   const formik = useFormik({
     initialValues: {
@@ -220,6 +220,52 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedPhotoName,
   ]);
 
+  // for change state in useState when jsondata response update
+  useEffect(() => {
+    setSelectedProfileFor(
+      jsonData?.profile_for !== (null && undefined)
+        ? { id: String(jsonData?.profile_for), val: "" }
+        : { id: "", val: "" }
+    ),
+      setSelectedChallenged(
+        jsonData?.challenged !== (null && undefined)
+          ? { id: String(jsonData?.challenged), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedIsHiv(
+        jsonData?.hiv !== (null && undefined)
+          ? { id: String(jsonData?.hiv), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedMotherTongue(
+        jsonData?.mother_tongue !== (null && undefined)
+          ? { id: String(jsonData?.mother_tongue), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedReligion(
+        jsonData?.religion !== (null && undefined)
+          ? { id: String(jsonData?.religion), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedManglik(
+        jsonData?.manglik !== (null && undefined)
+          ? { id: String(jsonData?.manglik), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedMaritalStatus(
+        jsonData?.marital_status !== (null && undefined)
+          ? { id: String(jsonData?.marital_status), val: "" }
+          : { id: "", val: "" }
+      ),
+      setSelectedChildrenStatus(
+        jsonData?.children_status !== (null && undefined)
+          ? { id: String(jsonData?.children_status), val: "" }
+          : { id: "", val: "" }
+      ),
+      (formik.values.profileHandlerName = jsonData?.profile_handlername),
+      (formik.values.dob = jsonData?.dob);
+  }, [jsonData, jsonData?.profile_handlername]);
+
   useEffect(() => {
     if (selectedMaritalStatus.id) {
       if (selectedMaritalStatus?.id <= "2") {
@@ -257,7 +303,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     setSelectedPhotoName(imageName);
     file && setImage(file);
   };
-
 
   return (
     <>
@@ -366,6 +411,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                           name="height"
                           type="text"
                           value={String(feet)}
+                          placeholder={!feet ? "feet" : ""}
                           onBlur={formik.handleBlur}
                           onChange={handleFeetChange}
                         />

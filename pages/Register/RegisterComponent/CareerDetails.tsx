@@ -125,6 +125,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
       left: 0,
       behavior: "smooth",
     });
+    setCollegeName(
+      jsonData?.College != (null && undefined) ? jsonData?.College : ""
+    );
   }, []);
 
   useEffect(() => {

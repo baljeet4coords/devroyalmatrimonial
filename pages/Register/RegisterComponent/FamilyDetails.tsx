@@ -100,6 +100,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
+  const [gothraVal, setGothraVal] = useState<string>(
+    jsonData?.Gothra !== undefined ? String(jsonData?.Gothra) : ""
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -108,7 +111,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       fathersProfession: String(jsonData?.Father),
       sister: String(jsonData?.Sister),
       brother: String(jsonData?.Brother),
-      gothra: jsonData?.Gothra,
+      gothra: gothraVal,
       familyStatus: String(jsonData?.Family_Status),
       familyIncome: String(jsonData?.Family_Income),
       familyType: String(jsonData?.Family_Type),
@@ -176,6 +179,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.familyNativeState = selectedNativeState;
     formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
+    formik.values.gothra = gothraVal;
   }, [
     formik.values,
     selectedBrother.id,
@@ -189,6 +193,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
+    gothraVal,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -249,10 +254,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About Gothra"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      defaultValue={
-                        jsonData?.Gothra ? String(jsonData?.Gothra) : ""
-                      }
+                      onChange={(e) => setGothraVal(e.target.value)}
+                      defaultValue={gothraVal}
                     />
                   </div>
                   <DropdownGridSingleSelect
