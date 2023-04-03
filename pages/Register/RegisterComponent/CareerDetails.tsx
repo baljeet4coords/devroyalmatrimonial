@@ -40,11 +40,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const isLoading = useSelector(selectStep2Loading);
+  // const isLoading = useSelector(selectStep2Loading);
+  const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    console.log(jsonData);
+    setTimeout(() => {
+      isloading(false);
+    }, 100);
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -54,12 +57,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   }, [jsonData?.country, jsonData?.state, jsonData?.city]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
-    jsonData?.country || 0
+    jsonData?.country || -1
   );
   const [selectedState, setSelectedState] = useState<number>(
-    jsonData?.state || 0
+    jsonData?.state || -1
   );
-  const [selectedCity, setSelectedCity] = useState<number>(jsonData?.city || 0);
+  const [selectedCity, setSelectedCity] = useState<number>(
+    jsonData?.city || -1
+  );
   const [residentialStatus, setResidentialStatus] = useState<Data>({
     id: String(jsonData?.residentialstatus),
     val: "",
@@ -159,7 +164,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
@@ -170,19 +175,19 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 <CountrySingle
                   title="Country"
                   setSelectedCountry={getSelectedCountry}
-                  defaultValueCountry={selectedCountry}
+                  defaultValueCountry={jsonData?.country}
                 />
                 <StateSingle
                   title="State"
                   setSelectedState={getSelectedState}
                   defaultValueCountry={selectedCountry}
-                  defaultValueState={selectedState}
+                  defaultValueState={jsonData?.state}
                 />
                 <CitySingle
                   title="City"
                   defaultValueCountry={selectedCountry}
                   defaultValueState={selectedState}
-                  defaultValueCity={selectedCity}
+                  defaultValueCity={jsonData?.city}
                   setSelectedCity={getSelectedCity}
                 />
                 <DropdownGridSingleSelect
@@ -217,7 +222,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                         placeholder={"Enter College Name"}
                         value={collegeName}
                         onBlur={formik.handleBlur}
-                        onChange={(e)=>setCollegeName(e.target.value)}
+                        onChange={(e) => setCollegeName(e.target.value)}
                       />
                     </li>
                   </div>

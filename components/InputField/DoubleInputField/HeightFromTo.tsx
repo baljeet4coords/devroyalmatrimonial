@@ -50,8 +50,12 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
   };
 
   useEffect(() => {
-    defaultValueFrom != (null && undefined) && updateHostedArray1(DefaultHeightConvert(Number(defaultValueFrom)));
-    defaultValueTo != (null && undefined) && updateHostedArray2(DefaultHeightConvert(Number(defaultValueTo)));
+    defaultValueFrom != (null && undefined) &&
+      defaultValueFrom != "Height Greater than" &&
+      updateHostedArray1(DefaultHeightConvert(Number(defaultValueFrom)));
+    defaultValueTo != (null && undefined) &&
+      defaultValueTo != "Height Less than" &&
+      updateHostedArray2(DefaultHeightConvert(Number(defaultValueTo)));
   }, []);
 
   const getClickedData1 = (data: string) => {
@@ -74,7 +78,6 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
   };
 
   useEffect(() => {
-
     if (SelectedData1) {
       const filteredList = data.filter((height) => {
         // Convert the height string to inches for comparison

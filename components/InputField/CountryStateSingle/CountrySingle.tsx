@@ -13,19 +13,19 @@ const CountrySingle: React.FC<CountryProps> = ({
   setSelectedCountry,
   title,
 }) => {
-
   const countries: ICountry[] = Country.getAllCountries();
+
   let Defaultcountry =
-    (defaultValueCountry !=(undefined && null)  && countries[defaultValueCountry].name) ||
-    countries[100].name;
+    (defaultValueCountry != (undefined && null) &&
+      defaultValueCountry != -1 &&
+      countries[defaultValueCountry].name) ||
+    "Select Country";
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
   const [searchInput, setSearchInput] = useState("");
-  const [selecedData, setSelecedData] = useState(
-    Defaultcountry || "Select Country"
-  );
+  const [selecedData, setSelecedData] = useState(Defaultcountry);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = countries.filter((item) =>
@@ -34,6 +34,13 @@ const CountrySingle: React.FC<CountryProps> = ({
     setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
   };
+
+  // To add Does not Matter in cuntry ,state and city
+  useEffect(() => {
+    if (searchHostedArray[0].name == "Does Not Matter") {
+      searchHostedArray.shift();
+    }
+  }, []);
 
   // For removeing the selcted item if Does not Matter is selected
 
@@ -94,7 +101,13 @@ const CountrySingle: React.FC<CountryProps> = ({
               {searchHostedArray.length > 0 ? (
                 searchHostedArray?.map((item, index) => {
                   return (
-                    <li key={item.isoCode} onClick={() => getClickedData(item)}>
+                    <li
+                      key={item.isoCode}
+                      onClick={() => getClickedData(item)}
+                      className={
+                        item.name == selecedData ? classes.tabActive : ""
+                      }
+                    >
                       <span>{item?.name}</span>
                     </li>
                   );

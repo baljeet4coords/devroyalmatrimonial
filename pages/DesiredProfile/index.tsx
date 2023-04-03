@@ -187,6 +187,11 @@ const DesiredProfilePage: React.FC = () => {
     setSelectedSwitches(newSelectedSwitches);
   };
 
+  useEffect(() => {
+    setHiv({ id: jsonData?.HIV === 1 ? "Yes" : "No", val: "" });
+    setSelectedSwitches(jsonData?.mandatory_fields || []);
+  }, [jsonData, jsonData?.HIV, jsonData?.mandatory_fields]);
+
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>

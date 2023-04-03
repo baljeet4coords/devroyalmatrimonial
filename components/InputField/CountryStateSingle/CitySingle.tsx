@@ -91,6 +91,7 @@ const CitySingle: React.FC<CitySingle> = ({
       setStateCode(
         defaultValueState ? stateOfCountry[defaultValueState]?.isoCode : "AS"
       );
+      // setSelecedData("Select City");
     }
   }, [countries, defaultValueCountry, defaultValueState, stateOfCountry]);
 
@@ -137,6 +138,9 @@ const CitySingle: React.FC<CitySingle> = ({
                     <li
                       key={item.name + index}
                       onClick={() => getClickedData(item)}
+                      className={
+                        item.name == selecedData ? classes.tabActive : ""
+                      }
                     >
                       <span>{item?.name}</span>
                     </li>

@@ -125,7 +125,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
                     });
                   }}
                   className={
-                    selectedData.val === item.caste ? classes.tabActive : ""
+                    item.id ==selectedData.id ? classes.tabActive : ""
                   }
                 >
                   <span>{item.caste}</span>
