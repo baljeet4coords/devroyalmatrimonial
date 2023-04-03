@@ -258,6 +258,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     file && setImage(file);
   };
 
+<<<<<<< HEAD
+=======
+  // {console.log(jsonData?.photo.includes("uploads") ,imgsplt[imgsplt?.length-1],"process.env.NEXT_PUBLIC_URL")}
+>>>>>>> abcc78e0eec45ce21a81b6a3cef99e353d8657fe
 
   return (
     <>
