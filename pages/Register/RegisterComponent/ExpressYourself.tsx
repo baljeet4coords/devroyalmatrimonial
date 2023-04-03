@@ -162,14 +162,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
                   >
-                    Submit your profile
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => nextPage(3)}
-                    className={`${classes.Form_btnPrev} mt-2 w-50 mx-auto`}
-                  >
-                    Previous
+                    Submit
                   </Button>
                 </Form>
               </Col>

@@ -51,10 +51,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
 
   // For removeing the selcted item if Does not Matter is selected
   useEffect(() => {
-    if (castesIds.length > 1 && castesIds.includes(0)) {
-      setCastesIds([0]);
-      updateHostedArray([searchHostedArray[0]]);
-    }
+    onChangeCaste(castesIds);
   }, [castesIds]);
 
   const getClickedData = useCallback(
@@ -62,15 +59,23 @@ const CasteMultiple: React.FC<CastMultiple> = ({
       const getIndex = ListOfCaste.findIndex(
         (obj) => obj.caste === caste.caste
       );
-      if (!HostedArray.some((item) => Object.is(item, caste))) {
-        setCastesIds((prev) => [...prev, getIndex]);
-        updateHostedArray((prevArray) => [...prevArray, caste]);
-        setSearchInput("");
-        UpdatesearchHostedArray(ListOfCaste);
+
+      if (getIndex == 0) {
+        // For removeing the selcted item if Does not Matter is selected
+        setCastesIds([0]);
+        updateHostedArray([caste]);
+      } else {
+        if (!HostedArray.some((item) => Object.is(item, caste))) {
+          setCastesIds(castesIds.filter((indx) => indx > 0));
+          updateHostedArray(HostedArray.filter((item) => item.id != "0"));
+          setCastesIds((prev) => [...prev, getIndex]);
+          updateHostedArray((prevArray) => [...prevArray, caste]);
+        }
       }
-      onChangeCaste([...castesIds, getIndex]);
+      setSearchInput("");
+      UpdatesearchHostedArray(ListOfCaste);
     },
-    [HostedArray, castesIds, onChangeCaste]
+    [HostedArray, castesIds]
   );
   const getClickedDeleteData = (id: string, item: ModifiedDataState) => {
     const itemname = String(item.caste);
@@ -136,19 +141,23 @@ const CasteMultiple: React.FC<CastMultiple> = ({
             ref={elementRef}
           >
             <ul>
-              {searchHostedArray.map((item, index) => {
-                return (
-                  <li
-                    key={item.id}
-                    onClick={() => getClickedData(item)}
-                    className={
-                      HostedArray.includes(item) ? classes.tabActive : ""
-                    }
-                  >
-                    <span>{item.caste}</span>
-                  </li>
-                );
-              })}
+              {searchHostedArray.length > 0 ? (
+                searchHostedArray.map((item, index) => {
+                  return (
+                    <li
+                      key={item.id}
+                      onClick={() => getClickedData(item)}
+                      className={
+                        HostedArray.includes(item) ? classes.tabActive : ""
+                      }
+                    >
+                      <span>{item.caste}</span>
+                    </li>
+                  );
+                })
+              ) : (
+                <span>No Data Found</span>
+              )}
             </ul>
           </div>
         </div>

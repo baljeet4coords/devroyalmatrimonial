@@ -23,15 +23,6 @@ const StateSingle: React.FC<StateProps> = ({
       : "IN"
   );
 
-  useEffect(() => {
-    if (defaultValueCountry != undefined) {
-      setCountryCode(countries[defaultValueCountry].isoCode);
-      UpdatesearchHostedArray(
-        State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
-      );
-    }
-  }, [countries, countryCode, defaultValueCountry]);
-
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
 
   // const Defaultstate =
@@ -50,6 +41,16 @@ const StateSingle: React.FC<StateProps> = ({
     State.getStatesOfCountry(countryCode)
   );
 
+  useEffect(() => {
+    if (defaultValueCountry != undefined && typeof defaultValueCountry =="number") {
+      setCountryCode(countries[defaultValueCountry].isoCode);
+      UpdatesearchHostedArray(
+        State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
+      );
+      // setSelecedData( "Select State");
+    }
+  }, [countries, countryCode, defaultValueCountry]);
+
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = stateOfCountry.filter((item) =>
       item.name.toLowerCase().includes(query.toLowerCase())
@@ -61,14 +62,15 @@ const StateSingle: React.FC<StateProps> = ({
   // For removeing the selcted item if Does not Matter is selected
 
   const getClickedData = (item: IState) => {
+    setTimeout(() => {
+      setActiveList(false);
+    }, 50);
     setSelecedData(item.name);
     const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
     setSelectedState(getIndex);
     setSearchInput("");
     UpdatesearchHostedArray(stateOfCountry);
-    setTimeout(() => {
-      setActiveList(false);
-    }, 100);
+  
   };
 
   // To Find the country Which is get defaultValueState
@@ -126,6 +128,9 @@ const StateSingle: React.FC<StateProps> = ({
                         setActiveList(false);
                         getClickedData(item);
                       }}
+                      className={
+                        item.name == selecedData ? classes.tabActive : ""
+                      }
                     >
                       <span>{item?.name}</span>
                     </li>
