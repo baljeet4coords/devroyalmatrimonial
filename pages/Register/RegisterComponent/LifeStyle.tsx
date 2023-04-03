@@ -49,14 +49,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
 
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
   }, [dispatch, userId, isReduxEmpty]);
 
   // Loader state
 
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
@@ -98,6 +95,12 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: "",
   });
 
+  const [ReligiousBelief, setReligiousBelief] = useState<string>(
+    jsonData?.religious_belief !== undefined
+      ? String(jsonData.religious_belief)
+      : ""
+  );
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -109,7 +112,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       ownsCar: String(jsonData?.Owns_car),
       bloodGroup: String(jsonData?.blood_group),
       thalassemia: String(jsonData?.Thalassemia),
-      religiousBelief: String(jsonData?.religious_belief),
+      religiousBelief: ReligiousBelief,
     },
     onSubmit: async (values) => {
       let response;
@@ -128,6 +131,15 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     },
   });
 
+  // to update json data when first time relode
+  useEffect(() => {
+    setReligiousBelief(
+      jsonData?.religious_belief !== (null && undefined)
+        ? String(jsonData?.religious_belief)
+        : ""
+    );
+  }, [jsonData, jsonData?.religious_belief]);
+
   useEffect(() => {
     formik.values.diet = diet.id || "";
     formik.values.smoking = smoking.id || "";
@@ -137,6 +149,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.ownsCar = ownsCar.id || "";
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
+    formik.values.religiousBelief = ReligiousBelief;
   }, [
     bloodGroup.id,
     diet.id,
@@ -147,6 +160,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     ownsHouse.id,
     smoking.id,
     thalassemia.id,
+    ReligiousBelief,
   ]);
 
   return (
@@ -225,11 +239,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About Religious Belief"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setReligiousBelief(e.target.value)}
                       defaultValue={
-                        jsonData?.religious_belief !== undefined
-                          ? String(jsonData?.religious_belief)
-                          : ""
+                        jsonData?.religious_belief !== (null && undefined)
+                          ? jsonData?.religious_belief
+                          : ReligiousBelief
                       }
                     />
                   </div>
