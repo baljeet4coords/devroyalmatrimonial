@@ -117,7 +117,7 @@ const CitySingle: React.FC<CitySingle> = ({
       } else {
         setHasMounted(true);
       }
-    }, 200);
+    }, 500);
     return () => {
       clearTimeout(timeout);
     };

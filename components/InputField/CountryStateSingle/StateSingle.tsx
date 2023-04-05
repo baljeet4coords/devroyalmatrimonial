@@ -62,7 +62,7 @@ const StateSingle: React.FC<StateProps> = ({
       } else {
         setHasMounted(true);
       }
-    }, 200);
+    }, 500);
     return () => {
       clearTimeout(timeout);
     };

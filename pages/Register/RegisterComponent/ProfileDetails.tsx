@@ -258,7 +258,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     setSelectedPhotoName(imageName);
     file && setImage(file);
   };
-  const [defaultPhoto, setDefaultPhoto] = useState<string>("");
   useEffect(() => {
     if (jsonData && jsonData.fullname) {
       formik.values.fullname = jsonData.fullname;
@@ -272,11 +271,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     if (jsonData && jsonData.dob) {
       formik.values.dob = jsonData.dob;
     }
-    // if (jsonData && jsonData.photo) {
-    //   setDefaultPhoto(jsonData.photo);
-    // }
+    if (jsonData && jsonData.photo) {
+      const fileName = jsonData.photo.split("/").pop();
+      setSelectedPhotoName(fileName || "");
+    }
   }, [formik.values, jsonData]);
-  console.log(jsonData?.photo);
   return (
     <>
       <div className={classes.profile_Container}>
@@ -369,7 +368,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <li className={classes.blankInput}>
                         <AvatarPicker
                           onGetAvatar={profilePicture}
-                          defaultImage={`${process.env.NEXT_PUBLIC_URL}/${jsonData?.photo}`}
+                          defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
                         />
                       </li>
                     </div>
