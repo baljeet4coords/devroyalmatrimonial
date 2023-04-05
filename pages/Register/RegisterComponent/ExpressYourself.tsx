@@ -72,6 +72,20 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
+  useEffect(() => {
+    if (jsonData && jsonData.about_career) {
+      formik.values.aboutCareer = jsonData.about_career;
+    }
+    if (jsonData && jsonData.about_family) {
+      formik.values.aboutFamily = jsonData.about_family;
+    }
+    if (jsonData && jsonData.about_education) {
+      formik.values.aboutEducation = jsonData.about_education;
+    }
+    if (jsonData && jsonData.basic_intro) {
+      formik.values.basicIntro = jsonData.basic_intro;
+    }
+  }, [formik.values, jsonData]);
 
   return (
     <>
