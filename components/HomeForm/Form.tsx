@@ -81,6 +81,7 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
               className={classes.Form_input}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              maxLength={formik.values.countryCode === "+91" ? 10 : 15}
             />
           </Col>
         </Row>
@@ -107,15 +108,13 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
           </div>
         ) : null}
       </Form.Group>
-      {
-        error && <Errors error={error}/>
-      }
+      {error && <Errors error={error} />}
       <Button
         variant="danger"
         type="submit"
         className={`${classes.Form_btn} mt-2 w-100`}
       >
-        Register Free
+        Register
       </Button>
     </Form>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
@@ -18,6 +18,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
   onGetAvatar,
   defaultImage,
 }) => {
+  const defaultImageOnly = defaultImage.split("/").pop();
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [fileExt, setFilExt] = useState<string>("");
@@ -46,11 +47,19 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
     canvasBlob.toBlob((blob) => {
       onGetAvatar(imageName, blob);
     });
-    if (defaultImage) {
+    if (!defaultImageOnly) {
       setCroppedImage(defaultImage);
+    } else {
+      setCroppedImage("/Images/no-avatar.png");
     }
     setCroppedImage(canvas);
   };
+
+  useEffect(() => {
+    if (defaultImageOnly === "undefined") {
+      setCroppedImage("/Images/no-avatar.png");
+    }
+  }, [defaultImageOnly]);
 
   return (
     <>
@@ -78,7 +87,9 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
       {croppedImage ? (
         <Image src={croppedImage} alt="avatar" className="w-100" />
       ) : (
-        <Image src={defaultImage} alt="avatar" className="w-100" />
+        <>
+          <Image src={defaultImage} alt="avatar" className="w-100" />
+        </>
       )}
       {image && (
         <div className={classes.BtnDiv}>

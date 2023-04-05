@@ -40,31 +40,19 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  // const isLoading = useSelector(selectStep2Loading);
-  const [loading, isloading] = useState<boolean>(true);
+  const isLoading = useSelector(selectStep2Loading);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      isloading(false);
-    }, 100);
   }, [dispatch, userId]);
 
-  useEffect(() => {
-    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : 0);
-    setSelectedState(jsonData?.state != undefined ? jsonData?.state : 0);
-    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : 0);
-  }, [jsonData?.country, jsonData?.state, jsonData?.city]);
-
   const [selectedCountry, setSelectedCountry] = useState<number>(
-    jsonData?.country || -1
+    jsonData?.country || 100
   );
   const [selectedState, setSelectedState] = useState<number>(
-    jsonData?.state || -1
+    jsonData?.state || 0
   );
-  const [selectedCity, setSelectedCity] = useState<number>(
-    jsonData?.city || -1
-  );
+  const [selectedCity, setSelectedCity] = useState<number>(jsonData?.city || 0);
   const [residentialStatus, setResidentialStatus] = useState<Data>({
     id: String(jsonData?.residentialstatus),
     val: "",
@@ -85,9 +73,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     id: String(jsonData?.annual_income),
     val: "",
   });
-  const [collegeName, setCollegeName] = useState<string>(
-    jsonData?.College ? jsonData?.College : ""
-  );
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -125,9 +110,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
       left: 0,
       behavior: "smooth",
     });
-    setCollegeName(
-      jsonData?.College != (null && undefined) ? jsonData?.College : ""
-    );
   }, []);
 
   useEffect(() => {
@@ -139,7 +121,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     formik.values.education = education.id || "";
     formik.values.occupation = occupation.id || "";
     formik.values.annualIncome = annualIncome.id || "";
-    formik.values.college = collegeName;
   }, [
     annualIncome.id,
     education.id,
@@ -151,7 +132,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     selectedCountry,
     selectedState,
     settleAboard.id,
-    collegeName,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -163,11 +143,11 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const getSelectedCity = (id: number) => {
     setSelectedCity(id);
   };
-
+  
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
@@ -223,9 +203,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                         name="college"
                         className={classes.inputplacholder}
                         placeholder={"Enter College Name"}
-                        value={collegeName}
                         onBlur={formik.handleBlur}
-                        onChange={(e) => setCollegeName(e.target.value)}
+                        onChange={formik.handleChange}
+                        defaultValue={
+                          jsonData?.College != null
+                            ? String(jsonData?.College)
+                            : ""
+                        }
                       />
                     </li>
                   </div>

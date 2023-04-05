@@ -43,9 +43,6 @@ const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
               <Button variant="link" className="default-anchor p-3">
                 LIVE CHAT
               </Button>
-              <Button variant="link" className="default-anchor p-3">
-                1-800-419-6299 (Toll Free)
-              </Button>
               <CustomButton onClick={onLogout}>Logout</CustomButton>
             </Nav>
           </Navbar.Collapse>

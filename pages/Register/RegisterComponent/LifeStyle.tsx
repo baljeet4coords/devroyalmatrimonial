@@ -51,10 +51,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, userId, isReduxEmpty]);
 
-  // Loader state
-
-  // const [loading, setLoading] = useState<boolean>(true);
-
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
     val: "",
@@ -237,6 +233,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       as="textarea"
                       name="religiousBelief"
                       rows={3}
+                      className="text-center"
                       placeholder="About Religious Belief"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setReligiousBelief(e.target.value)}

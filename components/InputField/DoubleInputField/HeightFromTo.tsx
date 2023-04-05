@@ -1,5 +1,5 @@
 import classes from "./DoubleInput.module.scss";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SlArrowDown } from "react-icons/sl";
 
 interface HeightFromToProps {
@@ -19,6 +19,8 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
   defaultValueFrom,
   defaultValueTo,
 }) => {
+  const elementRef1 = useRef<HTMLDivElement>(null);
+  const elementRef2 = useRef<HTMLDivElement>(null);
   const [activeList1, setActiveList1] = useState<boolean>(false);
 
   const [activeList2, setActiveList2] = useState<boolean>(false);
@@ -61,7 +63,6 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
   const getClickedData1 = (data: string) => {
     const feet = data.split(" ")[0].split("'")[0];
     const inche = data.split(" ")[1].split('"')[0];
-    console.log((+feet * 30.48 + +inche * 2.54).toFixed(0));
 
     updateHostedArray1(data);
     onDataFrom(String(+feet * 30.48 + +inche * 2.54));
@@ -72,7 +73,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
     const inche = data.split(" ")[1].split('"')[0];
 
     const Heightin_cm = (+feet * 30.48 + +inche * 2.54).toFixed(0);
-    console.log();
+
     updateHostedArray2(data);
     onDataTo(String(Heightin_cm));
   };
@@ -110,6 +111,38 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
     }
   }, [SelectedData1, SelectedData2]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        elementRef1.current &&
+        !elementRef1?.current?.contains(event.target)
+      ) {
+        setActiveList1(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef1]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        elementRef2.current &&
+        !elementRef2?.current?.contains(event.target)
+      ) {
+        setActiveList2(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef2]);
+
   return (
     <React.Fragment>
       <div className={classes.twoBox}>
@@ -119,6 +152,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
           onClick={() =>
             openList({ condition: !activeList1, query: "firstinp" })
           }
+          ref={elementRef1}
         >
           {SelectedData1 ? SelectedData1 : `Height Greater than`}
           <SlArrowDown />
@@ -147,6 +181,7 @@ const HeightFromTo: React.FC<HeightFromToProps> = ({
           onClick={() =>
             openList({ condition: !activeList2, query: "secondinp" })
           }
+          ref={elementRef2}
         >
           {SelectedData2 ? SelectedData2 : `Height Less than`}
           <SlArrowDown />

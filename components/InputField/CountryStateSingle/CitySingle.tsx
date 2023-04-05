@@ -51,7 +51,7 @@ const CitySingle: React.FC<CitySingle> = ({
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
-  const [selecedData, setSelecedData] = useState(
+  const [selectedData, setSelectedData] = useState(
     (defaultValueCity != (undefined && null) &&
       cityOfState[defaultValueCity]?.name) ||
       "Select City"
@@ -70,7 +70,7 @@ const CitySingle: React.FC<CitySingle> = ({
   // For removeing the selcted item if Does not Matter is selected
 
   const getClickedData = (item: ICity) => {
-    setSelecedData(item.name);
+    setSelectedData(item.name);
     const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);
     setSelectedCity(getIndex);
     setSearchInput("");
@@ -91,7 +91,6 @@ const CitySingle: React.FC<CitySingle> = ({
       setStateCode(
         defaultValueState ? stateOfCountry[defaultValueState]?.isoCode : "AS"
       );
-      // setSelecedData("Select City");
     }
   }, [countries, defaultValueCountry, defaultValueState, stateOfCountry]);
 
@@ -109,6 +108,21 @@ const CitySingle: React.FC<CitySingle> = ({
     };
   }, [elementRef]);
 
+  const [hasMounted, setHasMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (hasMounted) {
+        setSelectedData("Select City");
+      } else {
+        setHasMounted(true);
+      }
+    }, 200);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [stateCode, countryCode]);
+
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
@@ -122,7 +136,7 @@ const CitySingle: React.FC<CitySingle> = ({
                 onChange={(e) => searchDataFunc(e.target.value)}
               />
             ) : (
-              <p>{selecedData}</p>
+              <p>{selectedData}</p>
             )}
           </ul>
           <div
@@ -139,7 +153,7 @@ const CitySingle: React.FC<CitySingle> = ({
                       key={item.name + index}
                       onClick={() => getClickedData(item)}
                       className={
-                        item.name == selecedData ? classes.tabActive : ""
+                        item.name == selectedData ? classes.tabActive : ""
                       }
                     >
                       <span>{item?.name}</span>

@@ -41,19 +41,15 @@ interface Data {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
-  // const isLoading = useSelector(selectStep4Loading);
+  const isLoading = useSelector(selectStep4Loading);
   const jsonData = stepFourDefaultValues?.jsonResponse;
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      isloading(false);
-    }, 100);
   }, [dispatch, userId, isReduxEmpty]);
 
   // when Render page go on the top of the page
@@ -90,18 +86,18 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: "",
   });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
-    jsonData?.family_native_country || -1
+    jsonData?.family_native_country || 100
   );
   const [selectedNativeState, setSelectedNativeState] = useState<number>(
-    jsonData?.family_native_state || -1
+    jsonData?.family_native_state || 0
   );
   const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
-    jsonData?.family_native_city || -1
+    jsonData?.family_native_city || 0
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
   const [gothraVal, setGothraVal] = useState<string>(
-    jsonData?.Gothra !== undefined ? String(jsonData?.Gothra) : ""
+    jsonData?.Gothra !== "null" ? String(jsonData?.Gothra) : ""
   );
 
   const formik = useFormik({
@@ -111,7 +107,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       fathersProfession: String(jsonData?.Father),
       sister: String(jsonData?.Sister),
       brother: String(jsonData?.Brother),
-      gothra: gothraVal,
+      gothra: jsonData?.Gothra,
       familyStatus: String(jsonData?.Family_Status),
       familyIncome: String(jsonData?.Family_Income),
       familyType: String(jsonData?.Family_Type),
@@ -179,7 +175,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.familyNativeState = selectedNativeState;
     formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
-    formik.values.gothra = gothraVal;
   }, [
     formik.values,
     selectedBrother.id,
@@ -193,7 +188,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
-    gothraVal,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -209,7 +203,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
@@ -249,13 +243,14 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <div className={classes.singleBox}>
                     <Form.Label>Gothra</Form.Label>
                     <Form.Control
-                      as="textarea"
                       name="gothra"
-                      rows={3}
+                      className="text-center"
                       placeholder="About Gothra"
                       onBlur={formik.handleBlur}
-                      onChange={(e) => setGothraVal(e.target.value)}
-                      defaultValue={gothraVal}
+                      onChange={formik.handleChange}
+                      defaultValue={
+                        jsonData?.Gothra != null ? String(jsonData?.Gothra) : ""
+                      }
                     />
                   </div>
                   <DropdownGridSingleSelect

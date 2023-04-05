@@ -97,7 +97,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       placeholder="About your career"
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      defaultValue={jsonData?.about_career ?? ""}
+                      defaultValue={
+                        jsonData?.about_career != null
+                          ? String(jsonData?.about_career)
+                          : ""
+                      }
                     />
                     {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
                       <div className="pt-1">
@@ -114,7 +118,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       placeholder="About your family"
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      defaultValue={jsonData?.about_family ?? ""}
+                      defaultValue={
+                        jsonData?.about_family != null
+                          ? String(jsonData?.about_family)
+                          : ""
+                      }
                     />
                     {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
                       <div className="pt-1">
@@ -131,7 +139,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       placeholder="About your education"
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      defaultValue={jsonData?.about_education ?? ""}
+                      defaultValue={
+                        jsonData?.about_education != null
+                          ? String(jsonData?.about_education)
+                          : ""
+                      }
                     />
                     {formik.touched.aboutEducation &&
                     formik.errors.aboutEducation ? (
@@ -149,7 +161,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       placeholder="Intro yourself"
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      defaultValue={jsonData?.basic_intro ?? ""}
+                      defaultValue={
+                        jsonData?.basic_intro != null
+                          ? String(jsonData?.basic_intro)
+                          : ""
+                      }
                     />
                     {formik.touched.basicIntro && formik.errors.basicIntro ? (
                       <div className="pt-1">

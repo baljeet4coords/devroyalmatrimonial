@@ -25,20 +25,6 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (elementRef.current && !elementRef?.current?.contains(event.target)) {
-        setActiveList(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [elementRef]);
-
   const foundCast = data.find((item) => item.id === defaultValue)?.caste;
 
   const [activeList, setActiveList] = useState<boolean>(false);
@@ -105,7 +91,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
             placeholder={"Select Option"}
             value={placeholderVal}
             onChange={(e) => searchDataFunc(e.target.value)}
-            onClick={() => setActiveList(true)}
+            onClick={() => setActiveList(!activeList)}
           />
         </li>
         <div
@@ -125,7 +111,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
                     });
                   }}
                   className={
-                    item.id ==selectedData.id ? classes.tabActive : ""
+                    item.id == selectedData.id ? classes.tabActive : ""
                   }
                 >
                   <span>{item.caste}</span>

@@ -18,7 +18,7 @@ import {
   GenderRadioButtons,
 } from "../../../components";
 import RightSection from "./RightSection/RightSection";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
 import CastDataList from "../../../components/CastDataList/CastDataList";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +40,7 @@ interface Data {
   val: string;
 }
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+  const dateInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
@@ -193,6 +194,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
+  console.log(selectedProfileFor);
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -219,52 +221,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedCast.id,
     selectedPhotoName,
   ]);
-
-  // for change state in useState when jsondata response update
-  useEffect(() => {
-    setSelectedProfileFor(
-      jsonData?.profile_for !== (null && undefined)
-        ? { id: String(jsonData?.profile_for), val: "" }
-        : { id: "", val: "" }
-    ),
-      setSelectedChallenged(
-        jsonData?.challenged !== (null && undefined)
-          ? { id: String(jsonData?.challenged), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedIsHiv(
-        jsonData?.hiv !== (null && undefined)
-          ? { id: String(jsonData?.hiv), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedMotherTongue(
-        jsonData?.mother_tongue !== (null && undefined)
-          ? { id: String(jsonData?.mother_tongue), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedReligion(
-        jsonData?.religion !== (null && undefined)
-          ? { id: String(jsonData?.religion), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedManglik(
-        jsonData?.manglik !== (null && undefined)
-          ? { id: String(jsonData?.manglik), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedMaritalStatus(
-        jsonData?.marital_status !== (null && undefined)
-          ? { id: String(jsonData?.marital_status), val: "" }
-          : { id: "", val: "" }
-      ),
-      setSelectedChildrenStatus(
-        jsonData?.children_status !== (null && undefined)
-          ? { id: String(jsonData?.children_status), val: "" }
-          : { id: "", val: "" }
-      ),
-      (formik.values.profileHandlerName = jsonData?.profile_handlername),
-      (formik.values.dob = jsonData?.dob);
-  }, [jsonData, jsonData?.profile_handlername]);
 
   useEffect(() => {
     if (selectedMaritalStatus.id) {
@@ -364,6 +320,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
                           defaultValue={jsonData?.dob.split(" ")[0]}
+                          ref={dateInputRef}
+                          onClick={() => {
+                            dateInputRef.current &&
+                              dateInputRef?.current.showPicker();
+                          }}
                         />
                       </li>
                     </div>

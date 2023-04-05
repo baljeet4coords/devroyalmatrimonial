@@ -32,7 +32,7 @@ const StateSingle: React.FC<StateProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
   // const [defaultStateName, setDefaultStateName] = useState<string>( defaultValueState != undefined && stateOfCountry[defaultValueState]?.name);
-  const [selecedData, setSelecedData] = useState(
+  const [selectedData, setSelectedData] = useState(
     (defaultValueState != undefined &&
       stateOfCountry[defaultValueState]?.name) ||
       "Select State"
@@ -42,14 +42,31 @@ const StateSingle: React.FC<StateProps> = ({
   );
 
   useEffect(() => {
-    if (defaultValueCountry != undefined && typeof defaultValueCountry =="number") {
+    if (
+      defaultValueCountry != undefined &&
+      typeof defaultValueCountry == "number"
+    ) {
       setCountryCode(countries[defaultValueCountry].isoCode);
       UpdatesearchHostedArray(
         State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
       );
-      // setSelecedData( "Select State");
     }
   }, [countries, countryCode, defaultValueCountry]);
+
+  const [hasMounted, setHasMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (hasMounted) {
+        setSelectedData("Select State");
+      } else {
+        setHasMounted(true);
+      }
+    }, 200);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [countryCode]);
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = stateOfCountry.filter((item) =>
@@ -65,12 +82,11 @@ const StateSingle: React.FC<StateProps> = ({
     setTimeout(() => {
       setActiveList(false);
     }, 50);
-    setSelecedData(item.name);
+    setSelectedData(item.name);
     const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
     setSelectedState(getIndex);
     setSearchInput("");
     UpdatesearchHostedArray(stateOfCountry);
-  
   };
 
   // To Find the country Which is get defaultValueState
@@ -109,7 +125,7 @@ const StateSingle: React.FC<StateProps> = ({
                 onChange={(e) => searchDataFunc(e.target.value)}
               />
             ) : (
-              <p>{selecedData}</p>
+              <p>{selectedData}</p>
             )}
           </ul>
           <div
@@ -129,7 +145,7 @@ const StateSingle: React.FC<StateProps> = ({
                         getClickedData(item);
                       }}
                       className={
-                        item.name == selecedData ? classes.tabActive : ""
+                        item.name == selectedData ? classes.tabActive : ""
                       }
                     >
                       <span>{item?.name}</span>
