@@ -125,7 +125,6 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     annualIncome.id,
     education.id,
     formik.values,
-    jsonData?.College,
     occupation.id,
     residentialStatus.id,
     selectedCity,
@@ -143,7 +142,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const getSelectedCity = (id: number) => {
     setSelectedCity(id);
   };
-  
+
+  useEffect(() => {
+    if (jsonData && jsonData.College) {
+      formik.values.college = jsonData.College;
+    }
+  }, [jsonData, formik.values]);
+
   return (
     <div className={classes.profile_Container}>
       <Container>
@@ -205,11 +210,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                         placeholder={"Enter College Name"}
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        defaultValue={
-                          jsonData?.College != null
-                            ? String(jsonData?.College)
-                            : ""
-                        }
+                        defaultValue={jsonData?.College}
                       />
                     </li>
                   </div>

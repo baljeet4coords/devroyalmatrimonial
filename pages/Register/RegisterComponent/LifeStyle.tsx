@@ -230,9 +230,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <div className={classes.singleBox}>
                     <Form.Label>Religious Belief</Form.Label>
                     <Form.Control
-                      as="textarea"
                       name="religiousBelief"
-                      rows={3}
                       className="text-center"
                       placeholder="About Religious Belief"
                       onBlur={formik.handleBlur}

@@ -42,9 +42,12 @@ const CitySingle: React.FC<CitySingle> = ({
 
   useEffect(() => {
     if (defaultValueState != undefined) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         UpdatesearchHostedArray(cityOfState);
-      }, 100);
+      }, 500);
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   }, [stateCode]);
 

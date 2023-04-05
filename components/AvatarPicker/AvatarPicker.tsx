@@ -19,6 +19,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
   defaultImage,
 }) => {
   const defaultImageOnly = defaultImage.split("/").pop();
+
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [fileExt, setFilExt] = useState<string>("");
@@ -56,7 +57,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
   };
 
   useEffect(() => {
-    if (defaultImageOnly === "undefined") {
+    if (!defaultImageOnly?.length || defaultImageOnly == "undefined") {
       setCroppedImage("/Images/no-avatar.png");
     }
   }, [defaultImageOnly]);

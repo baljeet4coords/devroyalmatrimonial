@@ -11,6 +11,7 @@ import {
   signupFailure,
   signupSuccess,
 } from "./actions";
+import { persistor } from "../../store/stores";
 
 function* loginSaga(action: AuthActions): any {
   try {
@@ -56,6 +57,7 @@ function* signUpSaga(action: AuthActions): any {
 
 function* logoutSaga() {
   try {
+    yield call([persistor, "purge"]);
     yield put(logoutSuccess());
   } catch (error) {
     yield put(logoutFailure(error));

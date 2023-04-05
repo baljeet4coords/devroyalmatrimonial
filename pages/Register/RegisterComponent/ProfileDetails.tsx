@@ -31,6 +31,7 @@ import { getUserId } from "../../../ducks/auth/selectors";
 import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
+import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -57,17 +58,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   useEffect(() => {
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
-  const { feet, cm, handleFeetChange, setCm, setFeet, handleCmChange } =
-    useHeightConverter();
-
-  useEffect(() => {
-    setCm(jsonData?.height_cm !== undefined ? String(jsonData?.height_cm) : "");
-    setFeet(
-      jsonData?.height_cm !== undefined
-        ? String((jsonData?.height_cm / 30.48).toFixed(1))
-        : ""
-    );
-  }, [jsonData?.height_cm, setCm]);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
@@ -106,9 +96,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     id: String(jsonData?.caste),
   });
 
-  const [selectedPhotoName, setSelectedPhotoName] = useState<string>(
-    jsonData?.photo || ""
-  );
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
   if (selectedPhotoName?.includes("uploads")) {
@@ -204,12 +192,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.isManglik = selectedManglik.id || "";
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
     formik.values.cast = selectedCast.id || "";
-    formik.values.height = cm;
     formik.values.profilepic = selectedPhotoName || "";
   }, [
     jsonData,
     formik.values,
-    cm,
     selectedProfileFor.id,
     selectedChallenged.id,
     selectedIsHiv.id,
@@ -221,6 +207,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedPhotoName,
   ]);
 
+  const onHeightChange = (height: number | null) => {
+    formik.values.height = String(height);
+  };
   useEffect(() => {
     if (selectedMaritalStatus.id) {
       if (selectedMaritalStatus?.id <= "2") {
@@ -273,9 +262,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
     if (jsonData && jsonData.photo) {
       const fileName = jsonData.photo.split("/").pop();
-      setSelectedPhotoName(fileName || "");
+      if (fileName) {
+        setSelectedPhotoName(fileName);
+      } else {
+        setSelectedPhotoName("");
+      }
+    }
+    if (jsonData && jsonData.height_cm) {
+      formik.values.height = String(jsonData.height_cm);
     }
   }, [formik.values, jsonData]);
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -347,7 +344,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>
-                      {gender === "1" ? "Groom" : "Bride"} Name
+                      {selectedProfileFor?.id == "2" ||
+                      selectedProfileFor?.id == "5" ||
+                      gender === "1"
+                        ? "Groom"
+                        : "Bride"}{" "}
+                      Name
                     </Form.Label>
                     <div className={classes.inputBox}>
                       <li className={classes.blankInput}>
@@ -380,35 +382,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     nameid={"Caste"}
                     defaultValue={String(jsonData?.caste)}
                   />
-                  <div className={classes.singleBox}>
-                    <Form.Label>Height in feet</Form.Label>
-                    <div className={classes.inputBox}>
-                      <li className={`${classes.blankInput}`}>
-                        <Form.Control
-                          name="height"
-                          type="text"
-                          value={String(feet)}
-                          placeholder={!feet ? "feet" : ""}
-                          onBlur={formik.handleBlur}
-                          onChange={handleFeetChange}
-                        />
-                      </li>
-                    </div>
-                  </div>
-                  <div className={classes.singleBox}>
-                    <Form.Label>Height in centimeters</Form.Label>
-                    <div className={classes.inputBox}>
-                      <li className={`${classes.blankInput}`}>
-                        <Form.Control
-                          name="heightincms"
-                          type="text"
-                          value={String(Math.ceil(+cm))}
-                          onBlur={formik.handleBlur}
-                          onChange={handleCmChange}
-                        />
-                      </li>
-                    </div>
-                  </div>
+                  <HeightInput
+                    label="Height"
+                    onHeightChange={onHeightChange}
+                    defaultValue={jsonData && +jsonData?.height_cm}
+                  />
                   <DropdownGridSingleSelect
                     title="Challenged"
                     data={Challenged}
