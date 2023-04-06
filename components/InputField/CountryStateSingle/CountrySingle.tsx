@@ -15,17 +15,26 @@ const CountrySingle: React.FC<CountryProps> = ({
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
 
-  let Defaultcountry =
-    (defaultValueCountry != (undefined && null) &&
-      defaultValueCountry != -1 &&
-      countries[defaultValueCountry].name) ||
-    "Select Country";
+  useEffect(() => {
+    let Defaultcountry =
+      (defaultValueCountry != (undefined && null) &&
+        defaultValueCountry != -1 &&
+        countries[defaultValueCountry].name) ||
+      "Select Country";
+    setSelecedData(Defaultcountry);
+  }, [defaultValueCountry]);
+
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
   const [searchInput, setSearchInput] = useState("");
-  const [selecedData, setSelecedData] = useState(Defaultcountry);
+  const [selecedData, setSelecedData] = useState(
+    (defaultValueCountry != (undefined && null) &&
+      defaultValueCountry != -1 &&
+      countries[defaultValueCountry].name) ||
+      "Select Country"
+  );
 
   const searchDataFunc = (query: string) => {
     const searchHostedArrays = countries.filter((item) =>
@@ -56,10 +65,10 @@ const CountrySingle: React.FC<CountryProps> = ({
   };
 
   // To Find the country Which is get defaultValueCountry
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    Defaultcountry = countries[2].name;
-  }, []);
+  // useEffect(() => {
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   Defaultcountry = countries[2].name;
+  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {

@@ -15,7 +15,7 @@
   .inputBox {
     border: 1px solid #d9d9d9;
     border-radius: 2px;
-    padding: 0.5rem 1rem;
+    padding: 0.875rem 1rem;
     text-align: center;
     color: $browser_text;
     cursor: pointer;
@@ -301,7 +301,7 @@
 
     .inputBox {
       margin: 0.6rem 0;
-      padding: 0%;
+      // padding: 0%;
       width: -webkit-fill-available;
 
       .blankInput {
@@ -309,7 +309,7 @@
 
         input {
           text-align: start;
-          padding: 1.5rem 1rem;
+          // padding: 1.5rem 1rem;
         }
       }
     }
@@ -324,7 +324,7 @@
   .singleBox {
     .inputBox {
       margin: 0.6rem 0;
-      padding: 0%;
+      // padding: 0%;
       min-width: initial;
     }
   }

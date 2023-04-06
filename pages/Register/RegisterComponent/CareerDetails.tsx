@@ -119,6 +119,12 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   }, []);
 
   useEffect(() => {
+    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : 0);
+    setSelectedState(jsonData?.state != undefined ? jsonData?.state : 0);
+    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : 0);
+  }, [jsonData?.country, jsonData?.state, jsonData?.city]);
+
+  useEffect(() => {
     formik.values.country = selectedCountry;
     formik.values.state = selectedState;
     formik.values.city = selectedCity;

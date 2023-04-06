@@ -42,6 +42,14 @@ const StateSingle: React.FC<StateProps> = ({
   );
 
   useEffect(() => {
+    let defaultStateIso =
+      defaultValueState != undefined
+        ? searchHostedArray[defaultValueState].name
+        : "Select State";
+    setSelectedData(defaultStateIso);
+  }, [defaultValueState]);
+
+  useEffect(() => {
     if (
       defaultValueCountry != undefined &&
       typeof defaultValueCountry == "number"

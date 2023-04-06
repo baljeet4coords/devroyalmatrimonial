@@ -70,6 +70,14 @@ const CitySingle: React.FC<CitySingle> = ({
     UpdatesearchHostedArray(searchHostedArrays);
   };
 
+  // useEffect(() => {
+  //   setSelectedData(
+  //     (defaultValueCity != (undefined && null) &&
+  //       cityOfState[defaultValueCity]?.name) ||
+  //       "Select City"
+  //   );
+  // }, [cityOfState]);
+
   // For removeing the selcted item if Does not Matter is selected
 
   const getClickedData = (item: ICity) => {
