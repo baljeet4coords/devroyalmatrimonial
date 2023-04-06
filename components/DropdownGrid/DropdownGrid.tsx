@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import classes from "./Dropdown.module.scss";
+import { isEmpty } from "lodash";
 
 interface Data {
   id?: string;
@@ -56,7 +57,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   const [placeholderVal, setPlaceholderVal] = useState(
     findKeyByValue(data, defaultValue) || ""
   );
-    
+
   const searchDataFunc = (query: any) => {
     const searched = Object.keys(data).filter((item) =>
       item.toLowerCase().includes(query.toLowerCase())
@@ -93,7 +94,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
         setActiveList(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -111,11 +111,14 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             name={nameid}
             placeholder={"Select Option"}
             value={
-              placeholderVal &&
-              placeholderVal.split("-")[0].replaceAll("_", " ")
+              placeholderVal
+                ? placeholderVal.split("-")[0].replaceAll("_", " ")
+                : ""
             }
             onChange={(e) => searchDataFunc(e.target.value)}
-            onClick={() => setActiveList(true)}
+            onClick={() => setActiveList(!activeList)}
+            autoComplete="off"
+            autoCorrect="off"
           />
         </li>
         <div
@@ -141,7 +144,11 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                       id: String(unixID),
                     });
                   }}
-                  className={selectedData.id === item.split("-")[1] ? classes.tabActive : ""}
+                  className={
+                    selectedData.id === item.split("-")[1]
+                      ? classes.tabActive
+                      : ""
+                  }
                 >
                   <span>{clearName}</span>
                 </li>

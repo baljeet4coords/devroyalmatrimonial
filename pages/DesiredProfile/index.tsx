@@ -131,15 +131,15 @@ const DesiredProfilePage: React.FC = () => {
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
-
+  const [successMessage, setSuccessMessage] = useState<boolean>(false);
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
       ageGreaterThan: +selectedAgeFrom,
       ageLessThan: +selectedAgeTo,
-      heightGreaterThan: selectedHeightFrom,
-      heightLessThan: selectedHeightTo,
+      heightGreaterThan: String(Math.trunc(+selectedHeightFrom)),
+      heightLessThan: String(Math.trunc(+selectedHeightTo)),
       country: JSON.stringify(country),
       state: JSON.stringify(state),
       city: JSON.stringify(city),
@@ -175,7 +175,7 @@ const DesiredProfilePage: React.FC = () => {
       );
       dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
     }
-    response.data.output === 1 && alert("Partner Preference Saved");
+    response.data.output === 1 && setSuccessMessage(true);
   };
 
   const handleSwitchToggle = (switchValue: string) => {
@@ -505,6 +505,7 @@ const DesiredProfilePage: React.FC = () => {
                     >
                       Save Your Preference
                     </Button>
+                    {successMessage && <h5 className="text-success">Partner Preference Saved</h5>}
                   </div>
                 </form>
               </Col>

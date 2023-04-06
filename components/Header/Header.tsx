@@ -11,8 +11,8 @@ import NavOptions from "./Navoptions";
 import classes from "./Header.module.scss";
 import Link from "next/link";
 import ModalForm from "../HomeForm/ModalLogin";
-import { LoginType } from "../../ducks/auth/types";
-import { loginRequest } from "../../ducks/auth/actions";
+import { LoginType, SignUpType } from "../../ducks/auth/types";
+import { loginRequest, signupRequest } from "../../ducks/auth/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
 import router from "next/router";
@@ -45,11 +45,20 @@ const Header: React.FC = () => {
     }
   }
 
+  const onSubmitFormSignUp = (values: SignUpType) => {
+    dispatch(signupRequest(values));
+  };
+
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [stateSize, setSize] = useState(
-    window.innerWidth <= 992 ? true : false
-  );
+  const [stateSize, setSize] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth <= 992) {
+      setSize(true);
+    } else {
+      setSize(false);
+    }
+  }, []);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -165,6 +174,7 @@ const Header: React.FC = () => {
           onCloseModal={() => setShowLoginModal(false)}
           onSubmitForm={onSubmitForm}
           errors={errors}
+          onSubmitFormSignUp={onSubmitFormSignUp}
         />
       )}
     </>

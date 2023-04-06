@@ -90,7 +90,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     val: "",
   });
   const [selectedNativeCountry, setSelectedNativeCountry] = useState<number>(
-    jsonData?.family_native_country || -1
+    jsonData?.family_native_country || 100
   );
   const [selectedNativeState, setSelectedNativeState] = useState<number>(
     jsonData?.family_native_state || -1
@@ -100,9 +100,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
-  const [gothraVal, setGothraVal] = useState<string>(
-    jsonData?.Gothra !== undefined ? String(jsonData?.Gothra) : ""
-  );
+  const [gothraVal, setGothraVal] = useState<string>("");
 
   const formik = useFormik({
     initialValues: {
@@ -179,9 +177,12 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.familyNativeState = selectedNativeState;
     formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
-    formik.values.gothra = gothraVal;
+    if (jsonData && jsonData.Gothra) {
+      setGothraVal(jsonData.Gothra);
+    }
   }, [
     formik.values,
+    jsonData,
     selectedBrother.id,
     selectedFamilyIncome.id,
     selectedFamilyStatus.id,
@@ -249,12 +250,11 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <div className={classes.singleBox}>
                     <Form.Label>Gothra</Form.Label>
                     <Form.Control
-                      as="textarea"
                       name="gothra"
-                      rows={3}
+                      className="text-center"
                       placeholder="About Gothra"
                       onBlur={formik.handleBlur}
-                      onChange={(e) => setGothraVal(e.target.value)}
+                      onChange={formik.handleChange}
                       defaultValue={gothraVal}
                     />
                   </div>

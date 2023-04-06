@@ -26,6 +26,25 @@
 }
 
 // Modal Form
+.modal_form_signUp {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  Form {
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem;
+    border-radius: 7px;
+    background: #1b1b1b;
+  }
+}
 .modal_form {
   height: 100vh;
   position: fixed;
@@ -39,14 +58,16 @@
   align-items: center;
 
   Form {
-    width: 35vw;
-    position: absolute;
-    padding: 45px;
-    background: #e7e7e6;
+    width: 35%;
+    margin: 0 auto;
+    padding: 3rem;
+    border-radius: 7px;
+    background: #1b1b1b;
 
     .Form_btn {
       border-radius: 0px;
       box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
+      border-radius: 50px;
     }
 
     .modal_links {
@@ -110,24 +131,19 @@
   }
 }
 
-
-@media screen and (max-width: 991px)and (min-width : 678px) {
+@media screen and (max-width: 991px) and (min-width: 500px) {
   .modal_form {
     Form {
-      // min-width: 50%;
-      // max-width: 50%;
-      width: 50%;
+      width: 80%;
       padding: 40px;
 
       .MobileCode {
         padding: 0.8rem 0.4rem;
         background-position: right 0.5rem center;
       }
-
     }
   }
 }
-
 
 @media screen and (max-width: 767px) {
   .Form_Wrapper {
@@ -150,7 +166,6 @@
   }
 }
 
-
 @media screen and (max-width: 500px) {
   .modal_form {
     Form {
@@ -161,11 +176,9 @@
         padding: 0.8rem 0.4rem;
         background-position: right 0.5rem center;
       }
-
     }
   }
 }
-
 
 @media only screen and (max-width: 300px) {
   .Form_Wrapper {
@@ -185,8 +198,6 @@
         padding: 0.8rem 0.4rem;
         background-position: right 0.1rem center;
       }
-
     }
   }
-
 }
