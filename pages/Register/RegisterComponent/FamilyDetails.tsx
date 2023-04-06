@@ -41,15 +41,19 @@ interface Data {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
-  const isLoading = useSelector(selectStep4Loading);
+  // const isLoading = useSelector(selectStep4Loading);
   const jsonData = stepFourDefaultValues?.jsonResponse;
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      isloading(false);
+    }, 100);
   }, [dispatch, userId, isReduxEmpty]);
 
   // when Render page go on the top of the page
@@ -89,10 +93,10 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData?.family_native_country || 100
   );
   const [selectedNativeState, setSelectedNativeState] = useState<number>(
-    jsonData?.family_native_state || 0
+    jsonData?.family_native_state || -1
   );
   const [selectedNativeCity, setSelectedNativeCity] = useState<number>(
-    jsonData?.family_native_city || 0
+    jsonData?.family_native_city || -1
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
@@ -105,7 +109,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       fathersProfession: String(jsonData?.Father),
       sister: String(jsonData?.Sister),
       brother: String(jsonData?.Brother),
-      gothra: jsonData?.Gothra,
+      gothra: gothraVal,
       familyStatus: String(jsonData?.Family_Status),
       familyIncome: String(jsonData?.Family_Income),
       familyType: String(jsonData?.Family_Type),
@@ -190,6 +194,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     selectedNativeCountry,
     selectedNativeState,
     selectedSister.id,
+    gothraVal,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -205,7 +210,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">

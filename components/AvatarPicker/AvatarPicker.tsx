@@ -56,9 +56,11 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
     setCroppedImage(canvas);
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     if (!defaultImageOnly?.length || defaultImageOnly == "undefined") {
       setCroppedImage("/Images/no-avatar.png");
+    }else{
+      setCroppedImage(defaultImage);
     }
   }, [defaultImageOnly]);
 

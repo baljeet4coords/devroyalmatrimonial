@@ -273,6 +273,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, jsonData]);
 
+
+  
   return (
     <>
       <div className={classes.profile_Container}>

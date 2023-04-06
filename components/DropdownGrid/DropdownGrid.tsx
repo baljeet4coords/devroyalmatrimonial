@@ -128,6 +128,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
         >
           <ul>
             {searchedData.map((item) => {
+              
               const [name, id] = item.split("-");
               const clearName = name
                 .replace(/_/g, " ")

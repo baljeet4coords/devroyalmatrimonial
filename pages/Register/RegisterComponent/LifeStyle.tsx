@@ -51,6 +51,10 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, userId, isReduxEmpty]);
 
+  // Loader state
+
+  // const [loading, setLoading] = useState<boolean>(true);
+
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
     val: "",

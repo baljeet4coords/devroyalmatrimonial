@@ -40,19 +40,25 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const isLoading = useSelector(selectStep2Loading);
+  // const isLoading = useSelector(selectStep2Loading);
+  const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
+    setTimeout(() => {
+      isloading(false);
+    }, 100);
   }, [dispatch, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 100
   );
   const [selectedState, setSelectedState] = useState<number>(
-    jsonData?.state || 0
+    jsonData?.state || -1
   );
-  const [selectedCity, setSelectedCity] = useState<number>(jsonData?.city || 0);
+  const [selectedCity, setSelectedCity] = useState<number>(
+    jsonData?.city || -1
+  );
   const [residentialStatus, setResidentialStatus] = useState<Data>({
     id: String(jsonData?.residentialstatus),
     val: "",
@@ -113,6 +119,12 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   }, []);
 
   useEffect(() => {
+    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : 0);
+    setSelectedState(jsonData?.state != undefined ? jsonData?.state : 0);
+    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : 0);
+  }, [jsonData?.country, jsonData?.state, jsonData?.city]);
+
+  useEffect(() => {
     formik.values.country = selectedCountry;
     formik.values.state = selectedState;
     formik.values.city = selectedCity;
@@ -152,7 +164,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">
