@@ -59,6 +59,8 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
 
   //if User select To Value first then set FromValue Less then ToValue
   useEffect(() => {
+    console.log(SelectedData2,"SelectedData2");
+    
     const filterData = data.filter((val) => val <= SelectedData2);
     setFromData(filterData);
   }, [SelectedData2]);

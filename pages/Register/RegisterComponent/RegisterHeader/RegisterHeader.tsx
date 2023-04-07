@@ -13,10 +13,12 @@ interface RegiserHeaderProps {
 const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
   const [stateSize, setSize] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setSize(window.innerWidth <= 992);
     });
+    setSize(window.innerWidth <= 992);
   }, []);
   return (
     <>
@@ -31,9 +33,7 @@ const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
             </div>
           </Link>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <Button variant="link" className="default-anchor p-3">
-              LIVE CHAT
-            </Button>
+            <CustomButton onClick={onLogout}>Logout</CustomButton>
           </Nav>
           <Navbar.Collapse
             id="responsive-navbar-nav"
