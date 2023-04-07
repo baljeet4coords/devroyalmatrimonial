@@ -41,19 +41,19 @@ interface Data {
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
-  // const isLoading = useSelector(selectStep4Loading);
+  const isLoading = useSelector(selectStep4Loading);
   const jsonData = stepFourDefaultValues?.jsonResponse;
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const [loading, isloading] = useState<boolean>(true);
+  // const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      isloading(false);
-    }, 100);
+    // setTimeout(() => {
+    //   isloading(false);
+    // }, 100);
   }, [dispatch, userId, isReduxEmpty]);
 
   // when Render page go on the top of the page
@@ -210,7 +210,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">

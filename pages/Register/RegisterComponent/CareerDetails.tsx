@@ -40,14 +40,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  // const isLoading = useSelector(selectStep2Loading);
-  const [loading, isloading] = useState<boolean>(true);
+  const isLoading = useSelector(selectStep2Loading);
+  // const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    setTimeout(() => {
-      isloading(false);
-    }, 100);
+    // setTimeout(() => {
+    //   isloading(false);
+    // }, 100);
   }, [dispatch, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
@@ -164,7 +164,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   return (
     <div className={classes.profile_Container}>
       <Container>
-        {loading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <Row className="justify-content-center">

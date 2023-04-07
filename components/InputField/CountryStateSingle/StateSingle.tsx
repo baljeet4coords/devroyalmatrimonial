@@ -1,7 +1,6 @@
 import { State, IState, Country, ICountry } from "country-state-city";
 import { useCallback, useEffect, useRef, useState } from "react";
 import classes from "./CountryStateCityMultiple.module.scss";
-import { IoClose } from "react-icons/io5";
 
 interface StateProps {
   title: string;
