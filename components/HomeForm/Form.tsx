@@ -113,6 +113,7 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
         variant="danger"
         type="submit"
         className={`${classes.Form_btn} mt-2 w-100`}
+        disabled={!formik.isValid}
       >
         Register
       </Button>

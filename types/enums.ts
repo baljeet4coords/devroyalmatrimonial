@@ -339,6 +339,7 @@ export enum FamilyType {
 }
 
 export enum BloodGroup {
+  Not_Known = "0",
   A_plus = "1",
   B_plus = "2",
   O_plus = "3",

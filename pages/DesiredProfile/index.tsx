@@ -7,11 +7,7 @@ import {
 } from "../../components";
 import React, { useEffect, useState } from "react";
 import classes from "./DesiredProfile.module.scss";
-import {
-  AgeFromYearList,
-  HeighListInCms,
-  HeightList,
-} from "../../constants/DesiredData";
+import { AgeFromYearList, HeightList } from "../../constants/DesiredData";
 import SingleInput from "../../components/InputField/SingleInputField";
 import DoubleInput from "../../components/InputField/DoubleInputField";
 import {
@@ -42,9 +38,9 @@ import {
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
 import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
-import { partnerPrefEmpty } from "../../constants/DefaultPartnerPrefData";
 import Loader from "../../components/Loader/Loader";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
+import router from "next/router";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -56,7 +52,7 @@ const DesiredProfilePage: React.FC = () => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
-    dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
+    dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>(
@@ -173,7 +169,6 @@ const DesiredProfilePage: React.FC = () => {
         `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
         { ...partnerPrefPostReq, actionType: "u" }
       );
-      dispatch(partnerPrefReq({ ...partnerPrefEmpty, userId: userId }));
     }
     response.data.output === 1 && setSuccessMessage(true);
   };
@@ -199,8 +194,11 @@ const DesiredProfilePage: React.FC = () => {
       </Container>
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
+          <h1>Tell us your preferences</h1>
+          <Button variant="link" onClick={() => router.push("/Register/")}>
+            Back to registeration steps
+          </Button>
           <Row>
-            <h1>Tell us your preferences</h1>
             {isLoading ? (
               <Loader />
             ) : (
@@ -505,7 +503,9 @@ const DesiredProfilePage: React.FC = () => {
                     >
                       Save Your Preference
                     </Button>
-                    {successMessage && <h5 className="text-success">Partner Preference Saved</h5>}
+                    {successMessage && (
+                      <h5 className="text-success">Partner Preference Saved</h5>
+                    )}
                   </div>
                 </form>
               </Col>
