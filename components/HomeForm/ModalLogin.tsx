@@ -8,6 +8,9 @@ import { LoginType } from "../../ducks/auth/types";
 import Errors from "../Errors/Errors";
 import HomeForm from "./Form";
 import { SignUpType } from "../../types/authentication";
+import { useSelector } from "react-redux";
+import router from "next/router";
+import { selectAuthSuccess } from "../../ducks/auth/selectors";
 
 type ModalLoginProps = {
   onCloseModal: () => void;
@@ -24,6 +27,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
 }) => {
   const [loginWithEmail, setLoginWithEmail] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
+  const authSuccess = useSelector(selectAuthSuccess);
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
     callingCodes.push({ countryName: key, callingCode: value });

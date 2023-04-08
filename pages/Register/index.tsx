@@ -33,10 +33,18 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const pageNo = authSuccess?.jsonResponse?.user_status;
-    if (pageNo && pageNo !== "R") {
-      setActive(+pageNo);
-    } else {
+    // P => first time after login pageno come
+    if (pageNo && pageNo == "R") {
       setActive(0);
+    } else if (
+      (pageNo && pageNo === "B") ||
+      pageNo === "S" ||
+      pageNo === "P" ||
+      pageNo === "M"
+    ) {
+      setActive(0);
+    } else {
+      pageNo !== undefined && setActive(+pageNo);
     }
   }, [authSuccess?.jsonResponse?.user_status]);
 

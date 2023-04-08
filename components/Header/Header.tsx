@@ -27,23 +27,24 @@ const Header: React.FC = () => {
     if (authSuccess && authSuccess?.output === 0) {
       setErrors("Wrong Password");
     }
-  }, [authSuccess]);
+    const pageNo = authSuccess?.jsonResponse?.user_status;
+    console.log(pageNo, "pageNo");
 
-  if (authSuccess && authSuccess?.output === 1) {
     if (
-      authSuccess?.jsonResponse?.user_status === "1" ||
-      authSuccess?.jsonResponse?.user_status === "R"
+      (pageNo && pageNo === "P") ||
+      pageNo === "5" ||
+      pageNo === "M" ||
+      pageNo === "B"
     ) {
-      router.push("/Register/");
-    } else if (
-      authSuccess?.jsonResponse?.user_status === "P" ||
-      authSuccess?.jsonResponse?.user_status === "5"
-    ) {
-      router.push("/DesiredProfile/");
+      router.push("/DesiredProfile");
+      console.log("router.push(/DesiredProfile)");
+    } else if (pageNo && pageNo == ("R" || "1" || "2" || "3" || "4")) {
+      router.push("/Register");
+      console.log("router.push(Register");
     } else {
       router.push("/");
     }
-  }
+  }, [authSuccess?.status, authSuccess?.jsonResponse?.user_status]);
 
   const onSubmitFormSignUp = (values: SignUpType) => {
     dispatch(signupRequest(values));
@@ -89,7 +90,9 @@ const Header: React.FC = () => {
     });
   }, []);
   const onSubmitForm = (values: LoginType) => {
-    dispatch(loginRequest(values));
+    setTimeout(() => {
+      dispatch(loginRequest(values));
+    }, 500);
   };
   return (
     <>
