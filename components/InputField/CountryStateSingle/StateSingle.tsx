@@ -24,41 +24,35 @@ const StateSingle: React.FC<StateProps> = ({
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
 
-  // const Defaultstate =
-  //   defaultValueState && stateOfCountry[defaultValueState]?.name;
-
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
-  // const [defaultStateName, setDefaultStateName] = useState<string>( defaultValueState != undefined && stateOfCountry[defaultValueState]?.name);
-  const [selectedData, setSelectedData] = useState(
-    (defaultValueState != undefined &&
-      stateOfCountry[defaultValueState]?.name) ||
-      "Select State"
-  );
   const [searchHostedArray, UpdatesearchHostedArray] = useState<IState[]>(
     State.getStatesOfCountry(countryCode)
   );
 
-  useEffect(() => {
-    let defaultStateIso =
-      defaultValueState != undefined
-        ? searchHostedArray[defaultValueState].name
-        : "Select State";
-    setSelectedData(defaultStateIso);
-  }, [defaultValueState]);
+  const [selectedData, setSelectedData] = useState("Select State");
 
   useEffect(() => {
-    if (
-      defaultValueCountry != undefined &&
-      typeof defaultValueCountry == "number"
-    ) {
+    defaultValueCountry != undefined &&
       setCountryCode(countries[defaultValueCountry].isoCode);
-      UpdatesearchHostedArray(
-        State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
-      );
-    }
-  }, [countries, countryCode, defaultValueCountry]);
+    UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
+    defaultValueState != undefined &&
+      stateOfCountry[defaultValueState] != undefined &&
+      setSelectedData(stateOfCountry[defaultValueState].name);
+  }, [defaultValueState, defaultValueCountry, countries, countryCode]);
+
+  // useEffect(() => {
+  //   if (
+  //     defaultValueCountry != undefined &&
+  //     typeof defaultValueCountry == "number"
+  //   ) {
+  //     setCountryCode(countries[defaultValueCountry].isoCode);
+  //     UpdatesearchHostedArray(
+  //       State.getStatesOfCountry(countries[defaultValueCountry].isoCode)
+  //     );
+  //   }
+  // }, [countries, countryCode, defaultValueCountry]);
 
   const [hasMounted, setHasMounted] = useState<boolean>(false);
 

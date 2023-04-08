@@ -80,6 +80,27 @@ const CitySingle: React.FC<CitySingle> = ({
 
   // For removeing the selcted item if Does not Matter is selected
 
+  useEffect(() => {
+    defaultValueCountry !== undefined &&
+      countries[defaultValueCountry] !== undefined &&
+      setCountryCode(countries[defaultValueCountry].isoCode);
+    defaultValueState != undefined &&
+      stateOfCountry[defaultValueState] !== undefined &&
+      defaultValueState >= 0 &&
+      setStateCode(stateOfCountry[defaultValueState].isoCode);
+    UpdatesearchHostedArray(cityOfState);
+    defaultValueCity != undefined &&
+      defaultValueCity >= 0 &&
+      cityOfState[defaultValueCity] !== undefined &&
+      setSelectedData(cityOfState[defaultValueCity]?.name);
+  }, [
+    countryCode,
+    stateCode,
+    defaultValueCountry,
+    defaultValueState,
+    // selectedData,
+  ]);
+
   const getClickedData = (item: ICity) => {
     setSelectedData(item.name);
     const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);

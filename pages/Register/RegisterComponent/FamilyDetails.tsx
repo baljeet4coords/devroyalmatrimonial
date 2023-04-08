@@ -109,7 +109,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       fathersProfession: String(jsonData?.Father),
       sister: String(jsonData?.Sister),
       brother: String(jsonData?.Brother),
-      gothra: gothraVal,
+      gothra: jsonData?.Gothra,
       familyStatus: String(jsonData?.Family_Status),
       familyIncome: String(jsonData?.Family_Income),
       familyType: String(jsonData?.Family_Type),
@@ -159,10 +159,12 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
         ? jsonData?.family_native_city
         : 0
     );
+    setGothraVal(jsonData?.Gothra != undefined ? jsonData?.Gothra : "");
   }, [
     jsonData?.family_native_country,
     jsonData?.family_native_state,
     jsonData?.family_native_city,
+    jsonData?.Gothra,
   ]);
 
   useEffect(() => {
@@ -177,9 +179,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.familyNativeState = selectedNativeState;
     formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
-    if (jsonData && jsonData.Gothra) {
-      setGothraVal(jsonData.Gothra);
-    }
+    formik.values.gothra = gothraVal;
   }, [
     formik.values,
     jsonData,
@@ -254,8 +254,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       className="text-center"
                       placeholder="About Gothra"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      defaultValue={gothraVal}
+                      onChange={(e) => setGothraVal(e.target.value)}
+                      defaultValue={jsonData?.Gothra && jsonData.Gothra}
                     />
                   </div>
                   <DropdownGridSingleSelect

@@ -67,6 +67,23 @@ const DesiredProfilePage: React.FC = () => {
   const [selectedHeightTo, setSelectedHeightTo] = useState<string>(
     jsonData?.height_less_than ?? ""
   );
+
+  // useeffect for jsonData is not updated in height and age
+  useEffect(() => {
+    jsonData?.age_greater_than &&
+      setSelectedAgeFrom(String(jsonData?.age_greater_than));
+    jsonData?.age_less_than &&
+      setSelectedAgeTo(String(jsonData?.age_less_than));
+    jsonData?.height_greater_than &&
+      setSelectedHeightFrom(String(jsonData?.height_greater_than));
+    jsonData?.height_less_than &&
+      setSelectedHeightTo(String(jsonData?.height_less_than));
+  }, [
+    jsonData?.age_greater_than,
+    jsonData?.age_less_than,
+    jsonData?.height_greater_than,
+    jsonData?.age_less_than,
+  ]);
   const [country, setCountry] = useState<number[]>(jsonData?.country || []);
   const [state, setState] = useState<number[]>(jsonData?.state || []);
   const [city, setCity] = useState<number[]>(jsonData?.city || []);

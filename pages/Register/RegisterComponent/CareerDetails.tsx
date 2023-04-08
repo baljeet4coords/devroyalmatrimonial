@@ -119,9 +119,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   }, []);
 
   useEffect(() => {
-    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : 0);
-    setSelectedState(jsonData?.state != undefined ? jsonData?.state : 0);
-    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : 0);
+    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : selectedCountry);
+    setSelectedState(jsonData?.state != undefined ? jsonData?.state : selectedState);
+    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : selectedCity);
   }, [jsonData?.country, jsonData?.state, jsonData?.city]);
 
   useEffect(() => {
