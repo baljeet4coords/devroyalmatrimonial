@@ -9,8 +9,6 @@ interface Data {
 interface DropdownGridProps {
   title: string;
   data: {};
-  onBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  onChangeInput: (query: string) => void;
   nameid: string;
   selectedDataFn: ({ id, val }: { id?: string; val: string }) => void;
   defaultValue?: string;
@@ -19,8 +17,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
   data,
   nameid,
-  onChangeInput,
-  onBlur,
   selectedDataFn,
   defaultValue,
 }) => {
@@ -67,7 +63,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     );
     setSearchedData(searched);
     setPlaceholderVal(query);
-    onChangeInput(query)
   };
 
   useEffect(() => {
@@ -119,7 +114,6 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                 ? placeholderVal.split("-")[0].replaceAll("_", " ")
                 : ""
             }
-            onBlur={onBlur}
             onChange={(e) => searchDataFunc(e.target.value)}
             onClick={() => setActiveList(!activeList)}
             autoComplete="off"
