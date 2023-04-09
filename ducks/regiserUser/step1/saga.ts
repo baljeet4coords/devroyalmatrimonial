@@ -24,3 +24,4 @@ function* step1Saga(action: Step1Actions): any {
 export default function* rootSaga() {
   yield takeEvery(STEP_1, step1Saga);
 }
+

@@ -21,6 +21,11 @@ import EditEducationAmdCareer from "../../components/EditMyProfile/EditEducation
 import EditFamilyDetails from "../../components/EditMyProfile/EditFamilyDetails";
 import EditLifeStyle from "../../components/EditMyProfile/EditLifeStyleDetails";
 import EditYourLikes from "../../components/EditMyProfile/EditYourLikesDetails";
+import { useDispatch } from "react-redux";
+// import { step1 } from "../../ducks/regiserUser/step1/actions";
+import { myProfileReq } from "../../ducks/myProfile/actions";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
@@ -30,6 +35,13 @@ const MyProfile: React.FC = () => {
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
   const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+  const userId = useSelector(getUserId);
+
+  useEffect(() => {
+    dispatch(myProfileReq({ actionType: "v", userId: 175 }));
+  }, [dispatch, userId]);
 
   return (
     <React.Fragment>

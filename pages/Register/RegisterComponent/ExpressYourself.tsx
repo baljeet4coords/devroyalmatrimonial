@@ -15,6 +15,9 @@ import { step5 } from "../../../ducks/regiserUser/step5/actions";
 import { textAreaSchema } from "../../../schemas/textAreaSchema";
 import { Errors } from "../../../components/";
 import Loader from "../../../components/Loader/Loader";
+import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
+import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
+import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
@@ -72,6 +75,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
+
+  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(100);
+  const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
+  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
   useEffect(() => {
     if (jsonData && jsonData.about_career) {
       formik.values.aboutCareer = jsonData.about_career;
@@ -86,6 +93,16 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       formik.values.basicIntro = jsonData.basic_intro;
     }
   }, [formik.values, jsonData]);
+
+  const getSelectedCountry = (id: number) => {
+    setSelectedBirthCountry(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedBirthState(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedBirthCity(id);
+  };
 
   return (
     <>
@@ -187,6 +204,28 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       </div>
                     ) : null}
                   </div>
+                  <span>
+                    <hr />
+                    <h5 className="text-center p-3">Select your birth place</h5>
+                  </span>
+                  <CountrySingle
+                    title="Birth Country"
+                    setSelectedCountry={getSelectedCountry}
+                    defaultValueCountry={100}
+                  />
+                  <StateSingle
+                    title="Birth State"
+                    setSelectedState={getSelectedState}
+                    defaultValueCountry={selectedBirthCountry}
+                    defaultValueState={0}
+                  />
+                  <CitySingle
+                    title="Birth City"
+                    defaultValueCountry={selectedBirthCountry}
+                    defaultValueState={selectedBirthState}
+                    defaultValueCity={0}
+                    setSelectedCity={getSelectedCity}
+                  />
                   <Button
                     variant="danger"
                     type="submit"

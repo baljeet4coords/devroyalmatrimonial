@@ -273,8 +273,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, jsonData]);
 
-
-  
   return (
     <>
       <div className={classes.profile_Container}>
@@ -328,13 +326,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     <div className={classes.inputBox}>
                       <li className={classes.blankInput}>
                         <Form.Control
-                          type="date"
+                          // type="date"
+                          type="datetime-local"
                           name="dob"
-                          max="2001-01-02"
                           placeholder="DateRange"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
-                          defaultValue={jsonData?.dob.split(" ")[0]}
+                          defaultValue={jsonData?.dob}
                           ref={dateInputRef}
                           onClick={() => {
                             dateInputRef.current &&

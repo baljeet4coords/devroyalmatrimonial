@@ -100,6 +100,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       ? String(jsonData.religious_belief)
       : ""
   );
+  const [housetype, setHousetype] = useState<string>();
+  const [cartype, setCartype] = useState<string>();
 
   const formik = useFormik({
     initialValues: {
@@ -113,6 +115,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       bloodGroup: String(jsonData?.blood_group),
       thalassemia: String(jsonData?.Thalassemia),
       religiousBelief: ReligiousBelief,
+      // cartype : jsonData?.cartype,
+      // housetype : jsonData?.housetype,
     },
     onSubmit: async (values) => {
       let response;
@@ -150,6 +154,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     formik.values.religiousBelief = ReligiousBelief;
+    // formik.values.cartype = cartype||"";
+    // formik.values.housetype = housetype || "";
   }, [
     bloodGroup.id,
     diet.id,
@@ -161,6 +167,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     smoking.id,
     thalassemia.id,
     ReligiousBelief,
+    // cartype,
+    // housetype
   ]);
 
   return (
@@ -210,6 +218,20 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     nameid="ownsHouse"
                     defaultValue={String(jsonData?.Owns_house)}
                   />
+                  {ownsHouse && ownsHouse?.id == "1" && (
+                    <div className={classes.singleBox}>
+                      <Form.Label>Type of House</Form.Label>
+                      <Form.Control
+                        name="house_type"
+                        className="text-center"
+                        placeholder="About Your House"
+                        onBlur={formik.handleBlur}
+                        onChange={(e) => setHousetype(e.target.value)}
+                        defaultValue={housetype}
+                      />
+                    </div>
+                  )}
+
                   <DropdownGridSingleSelect
                     selectedDataFn={setOwnsCar}
                     title="Owns Car"
@@ -217,6 +239,20 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     nameid="ownsCar"
                     defaultValue={String(jsonData?.Owns_car)}
                   />
+
+                  {ownsCar && ownsCar?.id == "1" && (
+                    <div className={classes.singleBox}>
+                      <Form.Label>Type of Car</Form.Label>
+                      <Form.Control
+                        name="car_type"
+                        className="text-center"
+                        placeholder="About Your Car"
+                        onBlur={formik.handleBlur}
+                        onChange={(e) => setCartype(e.target.value)}
+                        defaultValue={cartype}
+                      />
+                    </div>
+                  )}
                   <DropdownGridSingleSelect
                     selectedDataFn={setBloodGroup}
                     title="Blood Group"
