@@ -27,24 +27,11 @@ const Header: React.FC = () => {
     if (authSuccess && authSuccess?.output === 0) {
       setErrors("Wrong Password");
     }
-    const pageNo = authSuccess?.jsonResponse?.user_status;
-    console.log(pageNo, "pageNo");
-
-    if (
-      (pageNo && pageNo === "P") ||
-      pageNo === "5" ||
-      pageNo === "M" ||
-      pageNo === "B"
-    ) {
-      router.push("/DesiredProfile");
-      console.log("router.push(/DesiredProfile)");
-    } else if (pageNo && pageNo == ("R" || "1" || "2" || "3" || "4")) {
-      router.push("/Register");
-      console.log("router.push(Register");
-    } else {
-      router.push("/");
-    }
-  }, [authSuccess?.status, authSuccess?.jsonResponse?.user_status]);
+  }, [
+    authSuccess?.status,
+    authSuccess?.jsonResponse?.user_status,
+    authSuccess,
+  ]);
 
   const onSubmitFormSignUp = (values: SignUpType) => {
     dispatch(signupRequest(values));
@@ -90,9 +77,7 @@ const Header: React.FC = () => {
     });
   }, []);
   const onSubmitForm = (values: LoginType) => {
-    setTimeout(() => {
-      dispatch(loginRequest(values));
-    }, 500);
+    dispatch(loginRequest(values));
   };
   return (
     <>

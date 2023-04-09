@@ -15,7 +15,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
 import { SignUpType } from "../../types/authentication";
-import { getToken, authOutputMessage } from "../../ducks/auth/selectors";
+import {
+  getToken,
+  authOutputMessage,
+  selectAuthSuccess,
+} from "../../ducks/auth/selectors";
 import { signupRequest } from "../../ducks/auth/actions";
 
 const LandingPage: React.FC = () => {
@@ -23,14 +27,30 @@ const LandingPage: React.FC = () => {
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(getToken);
   const authMessage = useSelector(authOutputMessage);
+  const authSuccess = useSelector(selectAuthSuccess);
+  const pageNo = authSuccess?.jsonResponse?.user_status;
+  console.log(pageNo);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (
+      pageNo &&
+      (pageNo === "P" || pageNo === "5" || pageNo === "M" || pageNo === "B")
+    ) {
+      router.push("/DesiredProfile");
+    } else if (
+      pageNo &&
+      (pageNo === "R" ||
+        pageNo === "1" ||
+        pageNo === "2" ||
+        pageNo === "3" ||
+        pageNo === "4")
+    ) {
       router.push("/Register");
+    } else {
+      router.push("/");
     }
-  }, [isAuthenticated]);
+  }, [pageNo]);
 
   useEffect(() => {
     if (authMessage === -2) {
@@ -63,7 +83,7 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6}>
-            <HomeForm onSubmitForm={onSubmitForm} error={error}/>
+            <HomeForm onSubmitForm={onSubmitForm} error={error} />
           </Col>
         </Row>
         <Row className={classes.Home_white_body}>

@@ -37,7 +37,10 @@ import {
 } from "../../ducks/partnerPreferrence/selectors";
 import { partnerPrefReq } from "../../ducks/partnerPreferrence/actions";
 import axios from "axios";
-import { PartnerPreferrence } from "../../ducks/partnerPreferrence/types";
+import {
+  PartnerPreferrence,
+  PartnerPreferrenceResponse,
+} from "../../ducks/partnerPreferrence/types";
 import Loader from "../../components/Loader/Loader";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import router from "next/router";
@@ -49,8 +52,7 @@ const DesiredProfilePage: React.FC = () => {
   const userId = useSelector(getUserId);
 
   const jsonData = partnerPreferrenceResponse?.jsonResponse;
-  const isReduxEmpty =
-    jsonData && Object.values(jsonData).every((value) => !value);
+
   useEffect(() => {
     dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
@@ -82,7 +84,7 @@ const DesiredProfilePage: React.FC = () => {
     jsonData?.age_greater_than,
     jsonData?.age_less_than,
     jsonData?.height_greater_than,
-    jsonData?.age_less_than,
+    jsonData?.height_less_than,
   ]);
   const [country, setCountry] = useState<number[]>(jsonData?.country || []);
   const [state, setState] = useState<number[]>(jsonData?.state || []);
@@ -144,6 +146,7 @@ const DesiredProfilePage: React.FC = () => {
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>(
     jsonData?.mandatory_fields || []
   );
+
   const [successMessage, setSuccessMessage] = useState<boolean>(false);
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
@@ -176,7 +179,7 @@ const DesiredProfilePage: React.FC = () => {
       mandatoryFields: JSON.stringify(selectedSwitches),
     };
     let response;
-    if (isReduxEmpty === undefined) {
+    if (jsonData && Object.keys(jsonData).length === 4) {
       response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
         { ...partnerPrefPostReq, actionType: "c" }
@@ -187,6 +190,7 @@ const DesiredProfilePage: React.FC = () => {
         { ...partnerPrefPostReq, actionType: "u" }
       );
     }
+    dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
     response.data.output === 1 && setSuccessMessage(true);
   };
 
@@ -212,7 +216,15 @@ const DesiredProfilePage: React.FC = () => {
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <h1>Tell us your preferences</h1>
-          <Button variant="link" onClick={() => router.push("/Register/")}>
+          <Button
+            variant="link"
+            onClick={() => {
+              router.push({
+                pathname: "/Register",
+                query: { page: "registeration" },
+              });
+            }}
+          >
             Back to registeration steps
           </Button>
           <Row>
@@ -240,7 +252,7 @@ const DesiredProfilePage: React.FC = () => {
                         : "Age Less than"
                     }
                   />
-                  <div className=" d-flex gap-3 position-relative">
+                  <div className="d-flex gap-3 position-relative">
                     <HeightFromTo
                       data={HeightList}
                       inputName={"Height in feet"}

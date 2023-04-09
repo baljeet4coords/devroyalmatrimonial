@@ -10,7 +10,7 @@ import LifeStyle from "./RegisterComponent/LifeStyle";
 import ProfileDetails from "./RegisterComponent/ProfileDetails";
 import { useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 // import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
@@ -28,25 +28,10 @@ const topHeading = [
 ];
 
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
+  const router = useRouter();
+  const { page } = router.query;
   const [active, setActive] = useState<number>(0);
-  const authSuccess = useSelector(selectAuthSuccess);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const pageNo = authSuccess?.jsonResponse?.user_status;
-    // P => first time after login pageno come
-    if (pageNo && pageNo == "R") {
-      setActive(0);
-    } else if (
-      (pageNo && pageNo === "B") ||
-      pageNo === "S" ||
-      pageNo === "P" ||
-      pageNo === "M"
-    ) {
-      setActive(0);
-    } else {
-      pageNo !== undefined && setActive(+pageNo);
-    }
-  }, [authSuccess?.jsonResponse?.user_status]);
 
   const chooseMessage = (message: number) => {
     setActive(message);
@@ -60,9 +45,14 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   ];
   const onLogout = () => {
     dispatch(logoutRequest());
-    //storage.removeItem("persist:root");
     router.push("/");
   };
+
+  useEffect(() => {
+    if (page === "registeration") {
+      setActive(0);
+    }
+  }, [page]);
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
