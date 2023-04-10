@@ -51,10 +51,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, userId, isReduxEmpty]);
 
-  // Loader state
-
-  // const [loading, setLoading] = useState<boolean>(true);
-
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
     val: "",
@@ -115,8 +111,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       bloodGroup: String(jsonData?.blood_group),
       thalassemia: String(jsonData?.Thalassemia),
       religiousBelief: ReligiousBelief,
-      // cartype : jsonData?.cartype,
-      // housetype : jsonData?.housetype,
+      cartype: jsonData?.car_details,
+      housetype: jsonData?.home_type,
     },
     onSubmit: async (values) => {
       let response;
@@ -154,8 +150,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     formik.values.religiousBelief = ReligiousBelief;
-    // formik.values.cartype = cartype||"";
-    // formik.values.housetype = housetype || "";
+    formik.values.cartype = cartype || "";
+    formik.values.housetype = housetype || "";
   }, [
     bloodGroup.id,
     diet.id,
@@ -167,8 +163,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     smoking.id,
     thalassemia.id,
     ReligiousBelief,
-    // cartype,
-    // housetype
+    cartype,
+    housetype,
   ]);
 
   return (
@@ -227,7 +223,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder="About Your House"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setHousetype(e.target.value)}
-                        defaultValue={housetype}
+                        defaultValue={jsonData?.home_type}
                       />
                     </div>
                   )}
@@ -249,7 +245,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                         placeholder="About Your Car"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setCartype(e.target.value)}
-                        defaultValue={cartype}
+                        defaultValue={jsonData?.car_details}
                       />
                     </div>
                   )}

@@ -41,13 +41,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
   const isLoading = useSelector(selectStep2Loading);
-  // const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    // setTimeout(() => {
-    //   isloading(false);
-    // }, 100);
   }, [dispatch, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(

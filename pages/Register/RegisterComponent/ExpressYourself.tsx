@@ -51,6 +51,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,
       basicIntro: jsonData?.basic_intro,
+      birthCountry: jsonData?.pobCountry,
+      birthState: jsonData?.pobState,
+      birthCity: jsonData?.pobCity,
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
@@ -94,6 +97,17 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     }
   }, [formik.values, jsonData]);
 
+  useEffect(() => {
+    formik.values.birthCountry = selectedBirthCountry;
+    formik.values.birthState = selectedBirthState;
+    formik.values.birthCity = selectedBirthCity;
+  }, [
+    formik.values,
+    selectedBirthCity,
+    selectedBirthCountry,
+    selectedBirthState,
+  ]);
+
   const getSelectedCountry = (id: number) => {
     setSelectedBirthCountry(id);
   };
@@ -103,7 +117,19 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const getSelectedCity = (id: number) => {
     setSelectedBirthCity(id);
   };
-
+  useEffect(() => {
+    setSelectedBirthCountry(
+      jsonData?.pobCountry != undefined
+        ? jsonData?.pobCountry
+        : selectedBirthCountry
+    );
+    setSelectedBirthState(
+      jsonData?.pobState != undefined ? jsonData?.pobState : selectedBirthState
+    );
+    setSelectedBirthCity(
+      jsonData?.pobCity != undefined ? jsonData?.pobCity : selectedBirthCity
+    );
+  }, [jsonData?.pobCity, jsonData?.pobCountry, jsonData?.pobState]);
   return (
     <>
       <div className={classes.profile_Container}>
@@ -211,19 +237,19 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                   <CountrySingle
                     title="Birth Country"
                     setSelectedCountry={getSelectedCountry}
-                    defaultValueCountry={100}
+                    defaultValueCountry={jsonData?.pobCountry}
                   />
                   <StateSingle
                     title="Birth State"
                     setSelectedState={getSelectedState}
                     defaultValueCountry={selectedBirthCountry}
-                    defaultValueState={0}
+                    defaultValueState={jsonData?.pobState}
                   />
                   <CitySingle
                     title="Birth City"
                     defaultValueCountry={selectedBirthCountry}
                     defaultValueState={selectedBirthState}
-                    defaultValueCity={0}
+                    defaultValueCity={jsonData?.pobCity}
                     setSelectedCity={getSelectedCity}
                   />
                   <Button
