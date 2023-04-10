@@ -30,7 +30,6 @@ const LandingPage: React.FC = () => {
   const authMessage = useSelector(authOutputMessage);
   const authSuccess = useSelector(selectAuthSuccess);
   const pageNo = authSuccess?.jsonResponse?.user_status;
-  console.log(pageNo);
 
   useEffect(() => {
     if (

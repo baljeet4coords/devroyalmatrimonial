@@ -84,6 +84,8 @@ export interface IRegisterStep3Response {
   blood_group: number;
   Thalassemia: number;
   religious_belief: number;
+  home_type: string;
+  car_details: string;
 }
 export interface IRegisterStep4 {
   actionType?: "v" | "c" | "u";
@@ -110,9 +112,9 @@ export interface IRegisterStep4Response {
   Family_Type: number;
   Family_Income: number;
   Family_Status: number;
-  family_native_country: number,
-  family_native_state: number,
-  family_native_city: number,
+  family_native_country: number;
+  family_native_state: number;
+  family_native_city: number;
   living_with_parents: number;
 }
 
@@ -130,4 +132,9 @@ export interface IRegisterStep5Response {
   about_career: string | null;
   about_family: string | null;
   about_education: string | null;
+  coverImage: string | null;
+  galleryImages: string | null;
+  pobCity: number;
+  pobCountry: number;
+  pobState: number;
 }

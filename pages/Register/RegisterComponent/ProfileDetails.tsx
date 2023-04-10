@@ -19,8 +19,6 @@ import {
 } from "../../../components";
 import RightSection from "./RightSection/RightSection";
 import { useEffect, useRef, useState } from "react";
-import { useHeightConverter } from "../../../hooks/utils/useHeightConvert";
-import CastDataList from "../../../components/CastDataList/CastDataList";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectStep1Loading,
@@ -32,6 +30,7 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
+import { convertServerTimestamp, convertTimeStamp, defaultTime } from "../../../utils/dayjs";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -108,7 +107,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       userId: userId,
       profilefor: String(jsonData?.profile_for),
       profileHandlerName: jsonData?.profile_handlername,
-      dob: jsonData?.dob,
+      dob: jsonData ? convertServerTimestamp(jsonData?.dob) : defaultTime,
       selectgender: jsonData?.gender,
       fullname: jsonData?.fullname,
       cast: String(jsonData?.caste),
@@ -127,7 +126,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formData.append("userId", String(values.userId));
       formData.append("profilefor", String(values.profilefor));
       formData.append("profileHandlerName", String(values.profileHandlerName));
-      formData.append("dob", String(values.dob));
+      formData.append("dob", String(values.dob && convertTimeStamp(values.dob)));
       formData.append("selectgender", String(values.selectgender));
       formData.append("fullname", String(values.fullname));
       formData.append("cast", String(values.cast));
@@ -182,7 +181,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formik.values.selectgender = "F";
     }
   };
-
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
     formik.values.challenged = selectedChallenged.id || "";
@@ -257,9 +255,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     if (jsonData && jsonData.gender) {
       formik.values.selectgender = jsonData.gender;
     }
-    if (jsonData && jsonData.dob) {
-      formik.values.dob = jsonData.dob;
-    }
     if (jsonData && jsonData.photo) {
       const fileName = jsonData.photo.split("/").pop();
       if (fileName) {
@@ -273,8 +268,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     }
   }, [formik.values, jsonData]);
 
-
-  
   return (
     <>
       <div className={classes.profile_Container}>
@@ -328,13 +321,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     <div className={classes.inputBox}>
                       <li className={classes.blankInput}>
                         <Form.Control
-                          type="date"
+                          type="datetime-local"
                           name="dob"
-                          max="2001-01-02"
                           placeholder="DateRange"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
-                          defaultValue={jsonData?.dob.split(" ")[0]}
+                          defaultValue={jsonData && convertServerTimestamp(jsonData?.dob)}
                           ref={dateInputRef}
                           onClick={() => {
                             dateInputRef.current &&

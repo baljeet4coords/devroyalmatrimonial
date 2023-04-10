@@ -15,6 +15,9 @@ import { step5 } from "../../../ducks/regiserUser/step5/actions";
 import { textAreaSchema } from "../../../schemas/textAreaSchema";
 import { Errors } from "../../../components/";
 import Loader from "../../../components/Loader/Loader";
+import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
+import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
+import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
@@ -48,6 +51,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       aboutFamily: jsonData?.about_family,
       aboutEducation: jsonData?.about_education,
       basicIntro: jsonData?.basic_intro,
+      birthCountry: jsonData?.pobCountry,
+      birthState: jsonData?.pobState,
+      birthCity: jsonData?.pobCity,
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
@@ -72,6 +78,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
       response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
+
+  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(100);
+  const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
+  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
   useEffect(() => {
     if (jsonData && jsonData.about_career) {
       formik.values.aboutCareer = jsonData.about_career;
@@ -87,6 +97,39 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     }
   }, [formik.values, jsonData]);
 
+  useEffect(() => {
+    formik.values.birthCountry = selectedBirthCountry;
+    formik.values.birthState = selectedBirthState;
+    formik.values.birthCity = selectedBirthCity;
+  }, [
+    formik.values,
+    selectedBirthCity,
+    selectedBirthCountry,
+    selectedBirthState,
+  ]);
+
+  const getSelectedCountry = (id: number) => {
+    setSelectedBirthCountry(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedBirthState(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedBirthCity(id);
+  };
+  useEffect(() => {
+    setSelectedBirthCountry(
+      jsonData?.pobCountry != undefined
+        ? jsonData?.pobCountry
+        : selectedBirthCountry
+    );
+    setSelectedBirthState(
+      jsonData?.pobState != undefined ? jsonData?.pobState : selectedBirthState
+    );
+    setSelectedBirthCity(
+      jsonData?.pobCity != undefined ? jsonData?.pobCity : selectedBirthCity
+    );
+  }, [jsonData?.pobCity, jsonData?.pobCountry, jsonData?.pobState]);
   return (
     <>
       <div className={classes.profile_Container}>
@@ -187,6 +230,28 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       </div>
                     ) : null}
                   </div>
+                  <span>
+                    <hr />
+                    <h5 className="text-center p-3">Select your birth place</h5>
+                  </span>
+                  <CountrySingle
+                    title="Birth Country"
+                    setSelectedCountry={getSelectedCountry}
+                    defaultValueCountry={jsonData?.pobCountry}
+                  />
+                  <StateSingle
+                    title="Birth State"
+                    setSelectedState={getSelectedState}
+                    defaultValueCountry={selectedBirthCountry}
+                    defaultValueState={jsonData?.pobState}
+                  />
+                  <CitySingle
+                    title="Birth City"
+                    defaultValueCountry={selectedBirthCountry}
+                    defaultValueState={selectedBirthState}
+                    defaultValueCity={jsonData?.pobCity}
+                    setSelectedCity={getSelectedCity}
+                  />
                   <Button
                     variant="danger"
                     type="submit"
