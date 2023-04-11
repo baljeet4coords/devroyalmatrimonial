@@ -22,10 +22,10 @@ import EditFamilyDetails from "../../components/EditMyProfile/EditFamilyDetails"
 import EditLifeStyle from "../../components/EditMyProfile/EditLifeStyleDetails";
 import EditYourLikes from "../../components/EditMyProfile/EditYourLikesDetails";
 import { useDispatch } from "react-redux";
-// import { step1 } from "../../ducks/regiserUser/step1/actions";
 import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
+import { selectmyProfileSuccess } from "../../ducks/myProfile/selectors";
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
@@ -38,17 +38,19 @@ const MyProfile: React.FC = () => {
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
+  const myProfileObject = useSelector(selectmyProfileSuccess);
 
   useEffect(() => {
-    dispatch(myProfileReq({ actionType: "v", userId: 175 }));
+    dispatch(myProfileReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-
+  
+  console.log(myProfileObject);
+  
   return (
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
           <LoginHeader />
-
           <p>
             Make your profile more intersting by adding cover photo to your
             profile.

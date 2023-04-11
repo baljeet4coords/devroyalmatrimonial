@@ -18,7 +18,7 @@ const initialState: myProfileState = {
   error: null,
 };
 
-export default function step1Reducer(
+export default function myprofileReducer(
   state = initialState,
   action: MyProfileActions
 ): myProfileState {

@@ -9,9 +9,31 @@ interface MyProfileAction {
 interface MyProfileActionSuccessAction {
   type: typeof MYPROFILE_SUCCESS;
   response: {
-    output: number;
-    message: string;
-    jsonResponse: MyProfileResponse;
+    step1: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step2: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step3: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step4: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step5: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
   };
 }
 

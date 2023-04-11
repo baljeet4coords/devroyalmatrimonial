@@ -8,6 +8,7 @@ import { step5Reducer } from "./regiserUser/step5";
 import { step4Reducer } from "./regiserUser/step4";
 import authReducer from "./auth/reducer";
 import { partnerPrefReducer } from "./partnerPreferrence/";
+import { myprofileReducer } from "./myProfile/";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   registerStep4: step4Reducer,
   registerStep5: step5Reducer,
   partnerPrefference: partnerPrefReducer,
+  myProfile: myprofileReducer,
 });
 
 export default rootReducer;
