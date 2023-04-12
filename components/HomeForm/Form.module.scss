@@ -37,6 +37,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   Form {
     width: 100%;
     margin: 0 auto;
@@ -45,6 +46,7 @@
     background: #1b1b1b;
   }
 }
+
 .modal_form {
   height: 100vh;
   position: fixed;
@@ -62,7 +64,7 @@
     margin: 0 auto;
     padding: 3rem;
     border-radius: 7px;
-    background: #1b1b1b;
+    background: #e7e7e6;
 
     .Form_btn {
       border-radius: 0px;
@@ -74,14 +76,29 @@
       color: #065ad8d3;
     }
 
-    Input {
-      border-radius: 0px;
+    .modal_input {
       margin-bottom: 1.5rem;
-      padding: 0.8rem 1.5rem;
-      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
-      background-color: #e7e7e6;
       border: 1px solid gray;
-      cursor: pointer;
+      border-radius: 25px;
+      background-color: #e7e7e6;
+      position: relative;
+
+      Input {
+        padding: 0.8rem 1.5rem;
+        background-color: transparent !important;
+        border: none;
+        cursor: pointer;
+      }
+
+      svg {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 25px;
+        height: 24px;
+        cursor: pointer;
+      }
     }
 
     .Form_Login_check {
@@ -112,13 +129,13 @@
     }
 
     .MobileCode {
-      border-radius: 0px;
-      margin-bottom: 1.5rem;
       padding: 0.8rem 1.5rem;
-      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
-      background-color: #e7e7e6;
-      border: 1px solid gray;
-      border-right: 0;
+      background-color: transparent !important;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      border-right: 1px solid gray;
+      border-radius: 0%;
     }
   }
 
@@ -127,7 +144,10 @@
     top: 2rem;
     right: 2rem;
     background: none;
-    font-size: 1.5rem;
+    border: none;
+    border-radius: 50%;
+    font-size: 2rem;
+    background-color: transparent;
   }
 }
 
@@ -161,6 +181,10 @@
         label {
           display: block;
         }
+      }
+
+      .modal_closeBtn {
+        padding: 0%;
       }
     }
   }

@@ -32,10 +32,7 @@ const LandingPage: React.FC = () => {
   const pageNo = authSuccess?.jsonResponse?.user_status;
 
   useEffect(() => {
-    if (
-      pageNo &&
-      (pageNo === "P" || pageNo === "5" || pageNo === "M" || pageNo === "B")
-    ) {
+    if (pageNo && pageNo === "5") {
       router.push("/DesiredProfile");
     } else if (
       pageNo &&
@@ -46,6 +43,8 @@ const LandingPage: React.FC = () => {
         pageNo === "4")
     ) {
       router.push("/Register");
+    } else if (pageNo && (pageNo === "P" || pageNo === "M" || pageNo === "B")) {
+      router.push("/MyProfile");
     } else {
       router.push("/");
     }

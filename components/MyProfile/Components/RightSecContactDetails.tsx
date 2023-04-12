@@ -4,12 +4,14 @@ import EditContact from "../../EditMyProfile/EditContact";
 import { IoCallOutline } from "react-icons/io5";
 
 interface MyComponentProps {
-  EditDetails:boolean;
+  EditDetails: boolean;
   setEditDetails: (details: boolean) => void;
+  step1Response: any;
 }
 const RightSectionContactDetails: FC<MyComponentProps> = ({
   EditDetails,
   setEditDetails,
+  step1Response,
 }) => {
   const BasicDetails = {
     pin: false,
@@ -17,7 +19,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
     data: [
       {
         name: "Email id",
-        value: "singhsinghsud@gamil.com",
+        value: step1Response?.emailid || "NA",
         verify: true,
         isVerify: false,
       },
@@ -27,7 +29,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Mobile No.",
-        value: "+91-9540494428",
+        value: step1Response?.mobile || "NA",
         verify: true,
         isVerify: true,
       },

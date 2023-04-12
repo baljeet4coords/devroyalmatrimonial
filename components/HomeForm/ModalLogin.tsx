@@ -1,7 +1,7 @@
 import classes from "./Form.module.scss";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { countryCodesObj } from "../../utils/countryCodes";
 import { useFormik } from "formik";
 import { LoginType } from "../../ducks/auth/types";
@@ -11,6 +11,9 @@ import { SignUpType } from "../../types/authentication";
 import { useSelector } from "react-redux";
 import router from "next/router";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { RxCross1, RxCrossCircled } from "react-icons/rx";
+
 
 type ModalLoginProps = {
   onCloseModal: () => void;
@@ -26,12 +29,19 @@ const ModalForm: React.FC<ModalLoginProps> = ({
   errors,
 }) => {
   const [loginWithEmail, setLoginWithEmail] = useState(false);
+  const [passwordShow, setPasswordShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
   const authSuccess = useSelector(selectAuthSuccess);
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
     callingCodes.push({ countryName: key, callingCode: value });
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setPasswordShow(false);
+    }, 2000);
+  }, [passwordShow]);
 
   const formik = useFormik({
     initialValues: {
@@ -119,12 +129,20 @@ const ModalForm: React.FC<ModalLoginProps> = ({
               controlId="formBasicEmail"
             >
               <Form.Control
-                type="password"
+                type={!passwordShow ? "password" : "text"}
                 name="password"
                 placeholder="Password"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
               />
+              {!passwordShow ? (
+                <AiOutlineEye
+                  className={classes.passwordShowHide}
+                  onClick={() => setPasswordShow(true)}
+                />
+              ) : (
+                <AiOutlineEyeInvisible className={classes.passwordShowHide} />
+              )}
             </Form.Group>
             {errors && <Errors error={errors} />}
             <Link
@@ -136,7 +154,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
             <Button
               variant="primary"
               type="submit"
-              className={`${classes.Form_btn} p-3 mb-5 w-100`}
+              className={`${classes.Form_btn} p-3 mb-3 w-100`}
             >
               Login
             </Button>
@@ -157,7 +175,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
           </Form>
 
           <Button className={classes.modal_closeBtn} onClick={onCloseModal}>
-            x
+            <RxCross1 />
           </Button>
         </div>
       )}

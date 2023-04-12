@@ -4,26 +4,24 @@ import classes from "./GlobalDetails.module.scss";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
+  step5Response: any;
 }
-const AboutMeDetails:FC<MyComponentProps> = ({ setAboutMeDetails }) => {
+const AboutMeDetails: FC<MyComponentProps> = ({
+  step5Response,
+  setAboutMeDetails,
+}) => {
   const BasicDetails = [
     {
-      name: "Discribe yourself in 5 words",
-      vlaue: "NA",
-
-    },
-    {
       name: "About my family",
-      vlaue: "NA",
-
+      vlaue: step5Response?.about_family || "NA",
     },
     {
-      name: "Education",
-      vlaue: "NA",
+      name: "About Career",
+      vlaue: step5Response?.about_career || "NA",
     },
     {
-      name: "Occupation",
-      vlaue: "NA",
+      name: "About Education",
+      vlaue: step5Response?.about_education || "NA",
     },
   ];
   return (
@@ -42,17 +40,23 @@ const AboutMeDetails:FC<MyComponentProps> = ({ setAboutMeDetails }) => {
           </span>
         </div>
         <div className={classes.userDiscription}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero aliquam, ipsam unde cum placeat dignissimos a pariatur temporibus, natus aspernatur totam repudiandae! Sit tenetur, qui optio provident est ipsam ipsum, dicta reiciendis aliquid distinctio commodi quidem? Velit voluptatum et tempora, quod ad aperiam, labore earum dolores dignissimos nesciunt eius itaque! 
-          </p>
+          <p>{step5Response?.basic_intro || "NA"}</p>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.map((item) => {
             return (
-                <div className={classes.UserdetailsSec} key={item.name}>
-                  <p className={classes.input_Name}>{item.name}</p>
-                  <p className={item.vlaue === "NA" ? classes.input_Value_NotFilled : classes.input_Value}>{item.vlaue === "NA" ? "Not Field in" : item.vlaue} </p>
-                </div>
+              <div className={classes.UserdetailsSec} key={item.name}>
+                <p className={classes.input_Name}>{item.name}</p>
+                <p
+                  className={
+                    item.vlaue === "NA"
+                      ? classes.input_Value_NotFilled
+                      : classes.input_Value
+                  }
+                >
+                  {item.vlaue === "NA" ? "Not Field in" : item.vlaue}{" "}
+                </p>
+              </div>
             );
           })}
         </div>

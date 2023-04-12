@@ -2,46 +2,74 @@ import { FC } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
+import { BloodGroup, Diet, SmokeDrink } from "../../../types/enums";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
+  step3Response: any;
 }
-const LifeStyleDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
+const LifeStyleDetails: FC<MyComponentProps> = ({
+  step3Response,
+  setEditDetails,
+}) => {
+  function getKeyByValue(value: string, enumObject: any) {
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (val === value) {
+        return key.replaceAll("_", " ");
+      }
+    }
+  }
+
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
     data: [
       {
         name: "Diet",
-        value: "Vegetarian",
+        value: getKeyByValue(String(step3Response?.diet), Diet) || "NA",
       },
       {
         name: "Smoking",
-        value: "Occasionally",
+        value:
+          getKeyByValue(String(step3Response?.smoking), SmokeDrink) || "NA",
       },
       {
         name: "drinking",
-        value: "NA",
+        value:
+          getKeyByValue(String(step3Response?.drinking), SmokeDrink) || "NA",
       },
       {
         name: "Love pets",
-        value: "yes",
+        value: step3Response?.love_pets == 1 ? "Yes" : "No" || "NA",
       },
       {
         name: "Owns House",
-        value: "no",
+        value: step3Response?.Owns_house == 1 ? "Yes" : "No" || "NA",
       },
       {
         name: "Owns car",
-        value: "yes",
+        value: step3Response?.Owns_car == 1 ? "Yes" : "No" || "NA",
+      },
+      {
+        name: "House Details",
+        value: step3Response?.car_details || "NA" || "NA",
+      },
+      {
+        name: "Car Details",
+        value: step3Response?.home_type || "NA" || "NA",
       },
       {
         name: "Blood group",
-        value: "NA",
+        value:
+          getKeyByValue(String(step3Response?.blood_group), BloodGroup) || "NA",
+      },
+      {
+        name: "Religious Belief",
+        value: step3Response?.religious_belief || "NA",
       },
       {
         name: "Thalassemia",
-        value: "NA",
+        value: step3Response?.Thalassemia == 1 ? "Yes" : "No" || "NA",
       },
     ],
   };
