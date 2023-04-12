@@ -1,59 +1,148 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { FiUsers } from "react-icons/fi";
 import classes from "./GlobalDetails.module.scss";
+import {
+  FamilStatus,
+  FamilyIncome,
+  FamilyType,
+  FathersProfession,
+  MothersProfession,
+} from "../../../types/enums";
+import {
+  City,
+  Country,
+  ICity,
+  ICountry,
+  IState,
+  State,
+} from "country-state-city";
 
 interface MyComponentProps {
   setFamilyDetails: (details: boolean) => void;
+  step4Response: any;
 }
-const FamilydetailsInfo:FC<MyComponentProps> = ({ setFamilyDetails }) => {
+const FamilydetailsInfo: FC<MyComponentProps> = ({
+  step4Response,
+  setFamilyDetails,
+}) => {
+  function getKeyByValue(value: string, enumObject: any) {
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (val === value) {
+        return key.replaceAll("_", " ");
+      }
+    }
+  }
+
+  const countries: ICountry[] = Country.getAllCountries();
+  const [countryCode, setCountryCode] = useState<string>(
+    step4Response?.family_native_country != (undefined && null)
+      ? countries[step4Response?.family_native_country].isoCode
+      : "IN"
+  );
+
+  const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  const [stateCode, setStateCode] = useState<string>(
+    step4Response?.family_native_state != (undefined && null)
+      ? stateOfCountry[step4Response?.family_native_state]?.isoCode
+      : "AS"
+  );
+  const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+
+  useEffect(() => {
+    step4Response?.country !== undefined &&
+      countries[step4Response?.family_native_country] !== undefined &&
+      setCountryCode(countries[step4Response?.family_native_country].isoCode);
+    step4Response?.family_native_state != undefined &&
+      stateOfCountry[step4Response?.family_native_state] !== undefined &&
+      step4Response?.family_native_state >= 0 &&
+      setStateCode(stateOfCountry[step4Response?.family_native_state].isoCode);
+  }, [
+    countryCode,
+    stateCode,
+    step4Response?.family_native_country,
+    step4Response?.family_native_state,
+  ]);
+
+  function getCountry() {
+    return (
+      step4Response?.family_native_country &&
+      countries[step4Response?.family_native_country].name
+    );
+  }
+  function getState() {
+    return (
+      step4Response?.family_native_state &&
+      stateOfCountry[step4Response?.family_native_state].name
+    );
+  }
+  function getCity() {
+    return (
+      step4Response?.family_native_city &&
+      cityOfState[step4Response?.family_native_city].name
+    );
+  }
+
   const BasicDetails = {
     pin: true,
     pinValue: "Living with Parents?",
     data: [
       {
         name: "Father's Occupation",
-        value: "Retired",
+        value:
+          getKeyByValue(String(step4Response?.Father), FathersProfession) ||
+          "NA",
       },
       {
         name: "Mother's Occupation",
-        value: "Service-Private",
+        value:
+          getKeyByValue(String(step4Response?.Father), MothersProfession) ||
+          "NA",
       },
       {
         name: "Sister(s)",
-        value: "2 sisters of which 1 married",
+        value: step4Response?.Sister || "NA",
       },
       {
         name: "Brother(s)",
-        value: "2 sisters of which 0 married",
+        value: step4Response?.Brother || "NA",
       },
       {
         name: "Gothra",
-        value: "NA",
-      },
-      {
-        name: "Gothra (maternal)",
-        value: "NA",
+        value: step4Response?.Gothra || "NA",
       },
       {
         name: "Family Status",
-        value: "NA",
+        value:
+          getKeyByValue(String(step4Response?.Family_Status), FamilStatus) ||
+          "NA",
       },
       {
         name: "Family Income",
-        value: "NA",
+        value:
+          getKeyByValue(String(step4Response?.Family_Income), FamilyIncome) ||
+          "NA",
       },
       {
         name: "Family Type",
-        value: "NA",
+        value:
+          getKeyByValue(String(step4Response?.Family_Type), FamilyType) || "NA",
       },
       {
-        name: "Family Based out of",
-        value: "India",
+        name: "Family Native Country",
+        value: getCountry() || "NA",
+      },
+      {
+        name: "Family Native State ",
+        value: getState() || "NA",
+      },
+      {
+        name: "Family Native City",
+        value: getCity() || "NA",
       },
       {
         name: "Living With Parents",
-        value: "Yes",
+        value: step4Response?.living_with_parents == 1 ? "Yes" : "No" || "NA",
       },
     ],
   };
@@ -65,10 +154,7 @@ const FamilydetailsInfo:FC<MyComponentProps> = ({ setFamilyDetails }) => {
             <FiUsers />
             Family Details
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setFamilyDetails(true)}
-          >
+          <span className={classes.Edit} onClick={() => setFamilyDetails(true)}>
             Edit
           </span>
         </div>

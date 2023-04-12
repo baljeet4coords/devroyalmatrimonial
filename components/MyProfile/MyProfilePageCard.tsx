@@ -4,12 +4,20 @@ import { RiComputerFill } from "react-icons/ri";
 import { AiFillFacebook } from "react-icons/ai";
 import HalfCircleProgressBar from "./HalfCircleProgressBar";
 
-const MyProfilePageCard: React.FC = () => {
+interface Step1DataResponse {
+  step1Response: any;
+}
+
+const MyProfilePageCard: React.FC<Step1DataResponse> = ({ step1Response }) => {
+
   return (
     <Container className={classes.cardWrapper}>
       <Row>
         <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
-          <Image src="https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf" alt="avatar"/>
+          <Image
+            src={step1Response?.photo ? `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`: "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"}
+            alt="avatar"
+          />
         </Col>
         <Col sm={5} md={8} lg={6} className={classes.cardInfo}>
           <div className={`${classes.MyProfileMiddle} `}>
@@ -48,13 +56,13 @@ const MyProfilePageCard: React.FC = () => {
           </div>
         </Col>
         <Col sm={4} md={12} lg={3} className={classes.rightBox}>
-        {/* <div className={classes.RightPrograss}>
+          {/* <div className={classes.RightPrograss}>
             25%
         </div> */}
-        <HalfCircleProgressBar />
-        <p className={classes.CompleteProfileHEd}>Complete your profile</p>
-        <p>Last edited on 06th Mar, 2023 </p>
-        <p>Profile view : 0 </p>
+          <HalfCircleProgressBar />
+          <p className={classes.CompleteProfileHEd}>Complete your profile</p>
+          <p>Last edited on 06th Mar, 2023 </p>
+          <p>Profile view : 0 </p>
         </Col>
       </Row>
     </Container>

@@ -26,25 +26,25 @@ const DemoCarousel = () => {
   const images = [
     {
       id: 1,
-      url: "/images/HomePageSlider1.jpg",
+      url: "/Images/HomePageSlider1.jpg",
       title: "Mayank & Prayasha",
       subtile: "subtitle",
     },
     {
       id: 2,
-      url: "/images/HomePageSlider2.jpg",
+      url: "/Images/HomePageSlider2.jpg",
       title: "Mayank & Prayasha",
       subtile: "subtitle",
     },
     {
       id: 3,
-      url: "/images/HomePageSlider3.jpg",
+      url: "/Images/HomePageSlider3.jpg",
       title: "Mayank & Prayasha",
       subtile: "subtitle",
     },
     {
       id: 4,
-      url: "/images/HomePageSlider3.jpg",
+      url: "/Images/HomePageSlider3.jpg",
       title: "Mayank & Prayasha",
       subtile: "subtitle",
     },

@@ -1,67 +1,126 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { BiBook } from "react-icons/bi";
 import { BsPinAngle } from "react-icons/bs";
 import classes from "./GlobalDetails.module.scss";
+import {
+  City,
+  Country,
+  ICity,
+  ICountry,
+  IState,
+  State,
+} from "country-state-city";
+import {
+  AnnualIncomeProfile,
+  EducationTypeAndVal,
+  Occupation,
+  ResidentialStatus,
+} from "../../../types/enums";
 
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
+  step2Response: any;
 }
 const EducationAndCareer: FC<MyComponentProps> = ({
   setEudcationAndCareer,
+  step2Response,
 }) => {
+  const countries: ICountry[] = Country.getAllCountries();
+  const [countryCode, setCountryCode] = useState<string>(
+    step2Response?.country != (undefined && null)
+      ? countries[step2Response?.country].isoCode
+      : "IN"
+  );
+
+  const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+  const [stateCode, setStateCode] = useState<string>(
+    step2Response?.state != (undefined && null)
+      ? stateOfCountry[step2Response?.state]?.isoCode
+      : "AS"
+  );
+  const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+
+  useEffect(() => {
+    step2Response?.country !== undefined &&
+      countries[step2Response?.country] !== undefined &&
+      setCountryCode(countries[step2Response?.country].isoCode);
+    step2Response?.state != undefined &&
+      stateOfCountry[step2Response?.state] !== undefined &&
+      step2Response?.state >= 0 &&
+      setStateCode(stateOfCountry[step2Response?.state].isoCode);
+  }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
+
+  function getCountry() {
+    return step2Response?.country && countries[step2Response?.country].name;
+  }
+  function getState() {
+    return step2Response?.state && stateOfCountry[step2Response?.state].name;
+  }
+  function getCity() {
+    return step2Response?.city && cityOfState[step2Response?.city].name;
+  }
+
+  function getKeyByValue(value: string, enumObject: any) {
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (val === value) {
+        return key.replaceAll("_", " ");
+      }
+    }
+  }
+
   const BasicDetails = {
     pin: true,
     pinValue: "Intersted in setting aborad?",
     data: [
       {
         name: "Country",
-        value: "NA",
+        value: getCountry() || "NA",
       },
       {
         name: "State",
-        value: "NA",
+        value: getState() || "NA",
       },
       {
         name: "City",
-        value: "NA",
+        value: getCity() || "NA",
       },
       {
         name: "Residential Status",
-        value: "NA",
+        value:
+          getKeyByValue(
+            String(step2Response?.residentialstatus),
+            ResidentialStatus
+          ) || "NA",
       },
       {
         name: "Ready to Settle Aboard",
-        value: "yes",
+        value: step2Response?.readytosettleabroad == 1 ? "Yes" : "No" || "NA",
       },
       {
         name: "Higest Education",
-        value: "M.S.(Engineering)",
-      },
-      {
-        name: "Employed In",
-        value: "Private Sector",
+        value:
+          getKeyByValue(
+            String(step2Response?.education),
+            EducationTypeAndVal
+          ) || "NA",
       },
       {
         name: "Annual Income",
-        value: "Rs. 1-2 Lakh",
+        value:
+          getKeyByValue(
+            String(step2Response?.annual_income),
+            AnnualIncomeProfile
+          ) || "NA",
       },
 
       {
-        name: "Other UG Degree",
-        value: "NA",
+        name: "College Name",
+        value: step2Response?.College || "NA",
       },
-      {
-        name: "Other PG Degree",
-        value: "NA",
-      },
-
       {
         name: "Occupation",
-        value: "Admin Professional",
-      },
-      {
-        name: "Organization Name",
-        value: "NA",
+        value:
+          getKeyByValue(String(step2Response?.occupation), Occupation) || "NA",
       },
     ],
   };

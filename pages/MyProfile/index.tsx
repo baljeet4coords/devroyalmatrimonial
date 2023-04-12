@@ -10,8 +10,8 @@ import {
   CriticalDetials,
   EducationAndCareer,
   FamilydetailsInfo,
-  LifeStyleDetails,
-  LikeDetails,
+  LifeStyleDetails, 
+  // LikeDetails,
   MyProfileRightSec,
 } from "../../components/MyProfile/Components";
 import { EditCriticalDetials } from "../../components/EditMyProfile";
@@ -20,7 +20,7 @@ import EditAboutMe from "../../components/EditMyProfile/EditAboutMe";
 import EditEducationAmdCareer from "../../components/EditMyProfile/EditEducationAndCareer";
 import EditFamilyDetails from "../../components/EditMyProfile/EditFamilyDetails";
 import EditLifeStyle from "../../components/EditMyProfile/EditLifeStyleDetails";
-import EditYourLikes from "../../components/EditMyProfile/EditYourLikesDetails";
+// import EditYourLikes from "../../components/EditMyProfile/EditYourLikesDetails";
 import { useDispatch } from "react-redux";
 import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
@@ -34,23 +34,27 @@ const MyProfile: React.FC = () => {
   const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
-  const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
+  // const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const myProfileObject = useSelector(selectmyProfileSuccess);
 
+  const step1Response = myProfileObject?.step1.jsonResponse;
+  const step2Response = myProfileObject?.step2.jsonResponse;
+  const step3Response = myProfileObject?.step3.jsonResponse;
+  const step4Response = myProfileObject?.step4.jsonResponse;
+  const step5Response = myProfileObject?.step5.jsonResponse;
+
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-  
-  console.log(myProfileObject);
-  
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
-          <LoginHeader />
+          <LoginHeader profilePicture={step1Response?.photo} />
           <p>
             Make your profile more intersting by adding cover photo to your
             profile.
@@ -60,26 +64,35 @@ const MyProfile: React.FC = () => {
             <ImImage />
           </div>
         </Container>
-        <MyProfilePageCard />
+        <MyProfilePageCard step1Response={step1Response} />
         <Container className={classes.detailsWrapper}>
           <Row>
             <Col sm={9} md={8} className="p-0">
               {criticalDetails ? (
                 <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
               ) : (
-                <CriticalDetials setCriticalDetails={setCriticalDetails} />
+                <CriticalDetials
+                  step1Response={step1Response}
+                  setCriticalDetails={setCriticalDetails}
+                />
               )}
               <hr />
               {basicDetails ? (
                 <EditBasicDetials setBasicDetails={setBasicDetails} />
               ) : (
-                <BasicDetails setBasicDetails={setBasicDetails} />
+                <BasicDetails
+                  step1Response={step1Response}
+                  setBasicDetails={setBasicDetails}
+                />
               )}
               <hr />
               {aboutMeDetails ? (
                 <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
               ) : (
-                <AboutMeDetails setAboutMeDetails={setAboutMeDetails} />
+                <AboutMeDetails
+                  step5Response={step5Response}
+                  setAboutMeDetails={setAboutMeDetails}
+                />
               )}
               <hr />
               {eudcationAndCareer ? (
@@ -88,6 +101,7 @@ const MyProfile: React.FC = () => {
                 />
               ) : (
                 <EducationAndCareer
+                  step2Response={step2Response}
                   setEudcationAndCareer={setEudcationAndCareer}
                 />
               )}
@@ -95,26 +109,32 @@ const MyProfile: React.FC = () => {
               {familyDetails ? (
                 <EditFamilyDetails setFamilyDetails={setFamilyDetails} />
               ) : (
-                <FamilydetailsInfo setFamilyDetails={setFamilyDetails} />
+                <FamilydetailsInfo
+                  step4Response={step4Response}
+                  setFamilyDetails={setFamilyDetails}
+                />
               )}
               <hr />
               {lifeStyleDetails ? (
                 <EditLifeStyle setEditDetails={setLifeStyleDetails} />
               ) : (
-                <LifeStyleDetails setEditDetails={setLifeStyleDetails} />
+                <LifeStyleDetails
+                  step3Response={step3Response}
+                  setEditDetails={setLifeStyleDetails}
+                />
               )}
               <hr />
-              {yourLikesDetails ? (
+              {/* {yourLikesDetails ? (
                 <EditYourLikes setEditDetails={setYourLikesDetails} />
               ) : (
                 <LikeDetails setEditDetails={setYourLikesDetails} />
-              )}
+              )} */}
               <div className={classes.datecont}>
                 <p>Last updated on 15th Feb, 2023</p>
               </div>
             </Col>
             <Col sm={3} md={4} className="p-0">
-              <MyProfileRightSec />
+              <MyProfileRightSec myProfileObject={myProfileObject} />
             </Col>
           </Row>
         </Container>
