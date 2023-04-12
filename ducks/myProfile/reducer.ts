@@ -5,10 +5,32 @@ import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 interface myProfileState {
   isLoading: boolean;
   response: {
-    output: number;
-    message: string;
-    jsonResponse: MyProfileResponse;
-  } | null;
+    step1: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step2: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step3: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step4: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+    step5: {
+      output: number;
+      message: string;
+      jsonResponse: MyProfileResponse;
+    };
+  };
   error: string | null;
 }
 
