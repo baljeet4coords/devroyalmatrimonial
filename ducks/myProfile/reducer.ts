@@ -41,28 +41,28 @@ const initialState: myProfileState = {
       output: 0,
       message: "",
       jsonResponse: null,
-    };
+    },
     step2: {
       output: 0,
       message: "",
       jsonResponse: null,
-    };
+    },
     step3: {
       output: 0,
       message: "",
       jsonResponse: null,
-    };
+    },
     step4: {
       output: 0,
       message: "",
       jsonResponse: null,
-    };
+    },
     step5: {
       output: 0,
       message: "",
       jsonResponse: null,
-    };
-  };
+    },
+  },
   error: null,
 };
 
