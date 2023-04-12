@@ -36,7 +36,33 @@ interface myProfileState {
 
 const initialState: myProfileState = {
   isLoading: false,
-  response: null,
+  response: {
+    step1: {
+      output: 0;
+      message: "";
+      jsonResponse: null;
+    };
+    step2: {
+      output: 0;
+      message: "";
+      jsonResponse: null;
+    };
+    step3: {
+      output: 0;
+      message: "";
+      jsonResponse: null;
+    };
+    step4: {
+      output: 0;
+      message: "";
+      jsonResponse: null;
+    };
+    step5: {
+      output: 0;
+      message: "";
+      jsonResponse: null;
+    };
+  };
   error: null,
 };
 
