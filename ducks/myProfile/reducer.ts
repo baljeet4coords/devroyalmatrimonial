@@ -8,27 +8,27 @@ interface myProfileState {
     step1: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: {} | null;
     };
     step2: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: {} | null;
     };
     step3: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: {} | null;
     };
     step4: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: {} | null;
     };
     step5: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: {} | null;
     };
   };
   error: string | null;
