@@ -10,7 +10,7 @@ import {
   CriticalDetials,
   EducationAndCareer,
   FamilydetailsInfo,
-  LifeStyleDetails, 
+  LifeStyleDetails,
   // LikeDetails,
   MyProfileRightSec,
 } from "../../components/MyProfile/Components";
@@ -26,6 +26,12 @@ import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import { selectmyProfileSuccess } from "../../ducks/myProfile/selectors";
+import { ImageGallery } from "../../components";
+interface IImageGallery {
+  src: string;
+  width: number;
+  height: number;
+}
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
@@ -34,6 +40,17 @@ const MyProfile: React.FC = () => {
   const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
+  const [images, setImages] = useState<IImageGallery[]>([
+    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+  ]);
   // const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -67,6 +84,7 @@ const MyProfile: React.FC = () => {
         <MyProfilePageCard step1Response={step1Response} />
         <Container className={classes.detailsWrapper}>
           <Row>
+            <ImageGallery images={images} />
             <Col sm={9} md={8} className="p-0">
               {criticalDetails ? (
                 <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
