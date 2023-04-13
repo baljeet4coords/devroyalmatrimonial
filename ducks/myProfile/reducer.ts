@@ -1,4 +1,10 @@
-import { MyProfileResponse } from "./types";
+import {
+  IRegisterStep1Response,
+  IRegisterStep2Response,
+  IRegisterStep3Response,
+  IRegisterStep4Response,
+  IRegisterStep5Response,
+} from "../../types/register/userRegister";
 import { MyProfileActions } from "./actions";
 import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 
@@ -8,61 +14,35 @@ interface myProfileState {
     step1: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep1Response;
     };
     step2: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep2Response;
     };
     step3: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep3Response;
     };
     step4: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep4Response;
     };
     step5: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep5Response;
     };
-  };
+  } | null;
   error: string | null;
 }
 
 const initialState: myProfileState = {
   isLoading: false,
-  response: {
-    step1: {
-      output: 0,
-      message: "",
-      jsonResponse: null,
-    },
-    step2: {
-      output: 0,
-      message: "",
-      jsonResponse: null,
-    },
-    step3: {
-      output: 0,
-      message: "",
-      jsonResponse: null,
-    },
-    step4: {
-      output: 0,
-      message: "",
-      jsonResponse: null,
-    },
-    step5: {
-      output: 0,
-      message: "",
-      jsonResponse: null,
-    },
-  },
+  response: null,
   error: null,
 };
 

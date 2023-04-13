@@ -1,5 +1,12 @@
 import { MyProfile, MyProfileResponse } from "./types";
 import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
+import {
+  IRegisterStep1Response,
+  IRegisterStep2Response,
+  IRegisterStep3Response,
+  IRegisterStep4Response,
+  IRegisterStep5Response,
+} from "../../types/register/userRegister";
 
 interface MyProfileAction {
   type: typeof MYPROFILE;
@@ -12,29 +19,29 @@ interface MyProfileActionSuccessAction {
     step1: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: IRegisterStep1Response;
     };
     step2: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: IRegisterStep2Response;
     };
     step3: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: IRegisterStep3Response;
     };
     step4: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: IRegisterStep4Response;
     };
     step5: {
       output: number;
       message: string;
-      jsonResponse: MyProfileResponse;
+      jsonResponse: IRegisterStep5Response;
     };
-  };
+  } | null;
 }
 
 interface MyProfileActionFailureAction {
