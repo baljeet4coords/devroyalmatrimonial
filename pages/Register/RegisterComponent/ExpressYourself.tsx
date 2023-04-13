@@ -138,9 +138,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
             <Loader />
           ) : (
             <Row className="justify-content-center">
+              <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
               <Col sm={12} md={5}>
-                <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
-                <small>mandatory</small>
                 <Form
                   className={classes.formEdit}
                   onSubmit={formik.handleSubmit}

@@ -214,9 +214,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           <Loader />
         ) : (
           <Row className="justify-content-center">
+            <h1>We would love to know about your family.</h1>
             <Col sm={12} md={5}>
-              <h1>We would love to know about your family.</h1>
-              <small>mandatory</small>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
                 <div className=" text-start d-flex flex-column gap-4">
                   <DropdownGridSingleSelect
