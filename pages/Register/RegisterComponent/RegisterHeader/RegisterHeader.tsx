@@ -33,7 +33,7 @@ const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
             </div>
           </Link>
           <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <CustomButton onClick={onLogout}>Logout</CustomButton>
+            <Link onClick={onLogout} href="/" >Logout</Link>
           </Nav>
           <Navbar.Collapse
             id="responsive-navbar-nav"
@@ -43,7 +43,7 @@ const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
               <Button variant="link" className="default-anchor p-3">
                 LIVE CHAT
               </Button>
-              <CustomButton onClick={onLogout}>Logout</CustomButton>
+              <Link onClick={onLogout} href="/">Logout</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

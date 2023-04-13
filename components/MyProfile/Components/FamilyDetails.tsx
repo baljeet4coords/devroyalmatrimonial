@@ -47,40 +47,39 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       ? stateOfCountry[step4Response?.family_native_state]?.isoCode
       : "AS"
   );
+
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
   useEffect(() => {
-    step4Response?.country !== undefined &&
+    step4Response?.family_native_country !== undefined &&
       countries[step4Response?.family_native_country] !== undefined &&
-      setCountryCode(countries[step4Response?.family_native_country].isoCode);
+      setCountryCode(countries[step4Response?.family_native_country]?.isoCode);
     step4Response?.family_native_state != undefined &&
       stateOfCountry[step4Response?.family_native_state] !== undefined &&
       step4Response?.family_native_state >= 0 &&
-      setStateCode(stateOfCountry[step4Response?.family_native_state].isoCode);
+      setStateCode(stateOfCountry[step4Response?.family_native_state]?.isoCode);
+      // console.log(countryCode , State.getStatesOfCountry("AW"),stateCode,stateOfCountry);
+      
   }, [
     countryCode,
     stateCode,
+    cityOfState,
     step4Response?.family_native_country,
     step4Response?.family_native_state,
   ]);
 
   function getCountry() {
     return (
-      step4Response?.family_native_country &&
-      countries[step4Response?.family_native_country].name
+      step4Response?.family_native_country !== (undefined || null) && countries[step4Response?.family_native_country]?.name
     );
   }
   function getState() {
     return (
-      step4Response?.family_native_state &&
-      stateOfCountry[step4Response?.family_native_state].name
+      step4Response?.family_native_state !== (undefined || null) && stateOfCountry[step4Response?.family_native_state]?.name
     );
   }
   function getCity() {
-    return (
-      step4Response?.family_native_city &&
-      cityOfState[step4Response?.family_native_city].name
-    );
+    return step4Response?.family_native_city !== (undefined || null) && cityOfState[step4Response?.family_native_city]?.name;
   }
 
   const BasicDetails = {

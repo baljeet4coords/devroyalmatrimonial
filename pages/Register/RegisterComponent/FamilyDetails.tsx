@@ -251,7 +251,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     <Form.Label>Gothra</Form.Label>
                     <Form.Control
                       name="gothra"
-                      className="text-center"
                       placeholder="About Gothra"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setGothraVal(e.target.value)}
@@ -308,7 +307,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  className={`${classes.Form_btn} mt-2 w-50`}
                 >
                   Next
                 </Button>

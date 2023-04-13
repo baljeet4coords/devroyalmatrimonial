@@ -126,9 +126,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${
-                  activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
@@ -147,9 +146,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${
-                  activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
@@ -167,9 +165,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${
-                  activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
@@ -187,9 +184,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${
-                  activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >

@@ -435,7 +435,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Button
                     variant="danger"
                     type="submit"
-                    className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                    className={`${classes.Form_btn} mt-2 w-50`}
                   >
                     Next
                   </Button>
