@@ -219,7 +219,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Label>Type of House</Form.Label>
                       <Form.Control
                         name="house_type"
-                        className="text-center"
                         placeholder="About Your House"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setHousetype(e.target.value)}
@@ -241,7 +240,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Label>Type of Car</Form.Label>
                       <Form.Control
                         name="car_type"
-                        className="text-center"
                         placeholder="About Your Car"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setCartype(e.target.value)}
@@ -267,7 +265,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     <Form.Label>Religious Belief</Form.Label>
                     <Form.Control
                       name="religiousBelief"
-                      className="text-center"
                       placeholder="About Religious Belief"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setReligiousBelief(e.target.value)}
@@ -282,7 +279,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  className={`${classes.Form_btn} mt-2 w-50`}
                 >
                   Next
                 </Button>

@@ -130,9 +130,8 @@ const Header: React.FC = () => {
               <Link href="/HelpPage">HELP</Link>
             </Nav>
             <div
-              className={`${classes.navLoginTabs} ${
-                isActive ? classes.active : " "
-              }`}
+              className={`${classes.navLoginTabs} ${isActive ? classes.active : " "
+                }`}
             >
               <Nav className="pe-3">
                 <Button
@@ -143,7 +142,7 @@ const Header: React.FC = () => {
                   LOGIN
                 </Button>
               </Nav>
-              <Nav className="pe-3">
+              <Nav className={`${classes.RegBtn}`}>
                 <Button
                   variant="link"
                   className="default-anchor p-3"

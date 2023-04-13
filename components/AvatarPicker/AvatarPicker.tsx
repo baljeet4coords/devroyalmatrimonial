@@ -88,11 +88,13 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
         />
       )}
       {croppedImage ? (
-        <Image src={croppedImage} alt="avatar" className="w-100" />
+        <div className={classes.avtarWrapper}>
+          <Image src={croppedImage} alt="avatar" className="w-100" />
+        </div>
       ) : (
-        <>
+        <div className={classes.avtarWrapper}>
           <Image src={defaultImage} alt="avatar" className="w-100" />
-        </>
+        </div>
       )}
       {image && (
         <div className={classes.BtnDiv}>

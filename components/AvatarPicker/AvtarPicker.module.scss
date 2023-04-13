@@ -1,6 +1,11 @@
 .Profile_input {
   color: transparent;
 }
+
+.avtarWrapper{
+  padding: 2rem 4rem;
+}
+
 @media only screen and (max-width: 1200px) {
   .Profile_input {
     padding: 1.5rem 0;
@@ -8,6 +13,7 @@
     width: -webkit-fill-available;
     visibility: 0;
   }
+
   .canvasIMG {
     width: 100% !important;
     height: 100% !important;
@@ -15,10 +21,13 @@
 
   .BtnDiv {
     width: 100%;
-
+    text-align: center;
     .Btn {
       margin: auto;
       margin-bottom: 1rem;
     }
+  }
+  .avtarWrapper{
+    padding: 2.5rem;
   }
 }
