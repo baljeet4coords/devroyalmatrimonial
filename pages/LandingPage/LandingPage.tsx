@@ -89,7 +89,7 @@ const LandingPage: React.FC = () => {
           <h1>
             Uniting Compatible <strong>Soulmates</strong>
           </h1>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image
               src="./Images/icons/digi-screen-profile.gif"
               alt="group_pice"
@@ -101,7 +101,7 @@ const LandingPage: React.FC = () => {
               location, hobbies, profession and more.{" "}
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image src="./Images/icons/in-person-verify.gif" alt="group_pice" />
             <h3>In-person verification </h3>
             <p>
@@ -109,7 +109,7 @@ const LandingPage: React.FC = () => {
               authenticated by our agents
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image src="./Images/icons/privacy.gif" alt="group_pice" />
             <h3>Right To Privacy</h3>
             <p>
@@ -209,15 +209,15 @@ const LandingPage: React.FC = () => {
           <h1>
             Find the <strong>One for You</strong>
           </h1>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4}>
             <Image src="./Images/icons/register-user.gif" alt="pic" />
             <p>Register yourself and define partner preferences </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4}>
             <Image src="./Images/icons/recommendation.gif" alt="pic" />
             <p>Browse profiles based on recommendations </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4}>
             <Image src="./Images/icons/send-interest.gif" alt="pic" />
             <p>Send and Accept interests </p>
           </Col>
@@ -264,7 +264,7 @@ const LandingPage: React.FC = () => {
               Get Connected
             </CustomButton>
           </div>
-          <Col sm={12} md={4} className="text-center py-3">
+          <Col sm={12} md={4} className=" py-3">
             <Image src="./Images/icons/relationship-manager.gif" alt="pic" />
             <h3>Your Relationship Manager is waiting for you</h3>
             <p>
@@ -273,7 +273,7 @@ const LandingPage: React.FC = () => {
             </p>
           </Col>
 
-          <Col sm={12} md={4} className="text-center py-3">
+          <Col sm={12} md={4} className=" py-3">
             <Image src="./Images/icons/express-yourself.gif" alt="pic" />
             <h3>Express your preferences</h3>
             <p>
@@ -281,7 +281,7 @@ const LandingPage: React.FC = () => {
               your sentiments and partner preferences.
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center py-3">
+          <Col sm={12} md={4} className=" py-3">
             <Image src="./Images/icons/schedule-meeting.gif" alt="pic" />
             <h3>Schedule meetings</h3>
             <p>
@@ -316,6 +316,13 @@ const LandingPage: React.FC = () => {
               alt="pic"
             />
           </Col>
+        </Row>
+        <Row className={`${classes.Home_white_body} text-center`}>
+          <span>BROWSE</span>
+          <h1>
+            <strong>Matrimonial </strong>Profiles by
+          </h1>
+          <BrowserLink />
         </Row>
         <Row className={classes.Home_dark_body}>
           <span>Unable to find a perfect life partner?</span>
@@ -360,13 +367,6 @@ const LandingPage: React.FC = () => {
             this platform may result in the permanent deletion of the user’s
             account.
           </p>
-        </Row>
-        <Row className={`${classes.Home_white_body} text-center`}>
-          <span>BROWSE</span>
-          <h1>
-            <strong>Matrimonial </strong>Profiles by
-          </h1>
-          <BrowserLink />
         </Row>
       </Container>
       <Footer />

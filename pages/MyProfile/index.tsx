@@ -42,6 +42,9 @@ const MyProfile: React.FC = () => {
   const myProfileObject = useSelector(selectmyProfileSuccess);
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
+  // console.log(isMyprofileLoading);
+  
+
   const step1Response = myProfileObject?.step1.jsonResponse;
   const step2Response = myProfileObject?.step2.jsonResponse;
   const step3Response = myProfileObject?.step3.jsonResponse;

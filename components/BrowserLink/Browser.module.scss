@@ -1,14 +1,14 @@
-
 @import "../../styles/constants.scss";
 
-.browserTopBox{
+.browserTopBox {
     text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     margin-bottom: 20px;
-    span{
+
+    span {
         color: #405765;
         cursor: pointer;
         padding: 0.5rem;
@@ -19,20 +19,39 @@
         // border-radius: 20px;
     }
 }
-.browserBottomBox{
+
+.browserBottomBox {
     text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    a{
+    align-items: baseline;
+
+    a {
         color: $browser_text;
         cursor: pointer;
         padding: 0.3125rem 0.625rem;
         line-height: 24px;
         font-size: 0.8125rem;
     }
+
+    span {
+        list-style-type: none;
+        position: relative;
+        display: inline-block;
+        line-height: 24px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    span:last-child {
+        display: none;
+    }
+
 }
-.active{
-    background-color: #e5e5e5;;
+
+.active {
+    background-color: #e5e5e5;
+    ;
 }
