@@ -1,4 +1,10 @@
-import { MyProfileResponse } from "./types";
+import {
+  IRegisterStep1Response,
+  IRegisterStep2Response,
+  IRegisterStep3Response,
+  IRegisterStep4Response,
+  IRegisterStep5Response,
+} from "../../types/register/userRegister";
 import { MyProfileActions } from "./actions";
 import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 
@@ -8,29 +14,29 @@ interface myProfileState {
     step1: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep1Response | null;
     };
     step2: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep2Response | null;
     };
     step3: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep3Response | null;
     };
     step4: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep4Response | null;
     };
     step5: {
       output: number;
       message: string;
-      jsonResponse: {} | null;
+      jsonResponse: IRegisterStep5Response | null;
     };
-  };
+  } | null;
   error: string | null;
 }
 
