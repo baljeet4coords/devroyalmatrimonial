@@ -82,6 +82,12 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(100);
   const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
   const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
+
+  const [aboutCareer, setAboutCareer] = useState<string>(jsonData && jsonData.about_career ? jsonData.about_career : "");
+  const [aboutFamily, setAboutFamily] = useState<string>(jsonData && jsonData.about_family ? jsonData.about_family : "");
+  const [aboutEducation, setAboutEducation] = useState<string>(jsonData && jsonData.about_education ? jsonData.about_education : "");
+  const [basicIntro, setBasicIntro] = useState<string>(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "");
+
   useEffect(() => {
     if (jsonData && jsonData.about_career) {
       formik.values.aboutCareer = jsonData.about_career;
@@ -101,11 +107,19 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     formik.values.birthCountry = selectedBirthCountry;
     formik.values.birthState = selectedBirthState;
     formik.values.birthCity = selectedBirthCity;
+    formik.values.aboutCareer = aboutCareer;
+    formik.values.aboutFamily = aboutFamily;
+    formik.values.aboutEducation = aboutEducation;
+    formik.values.basicIntro = basicIntro;
   }, [
     formik.values,
     selectedBirthCity,
     selectedBirthCountry,
     selectedBirthState,
+    aboutCareer,
+    aboutEducation,
+    aboutFamily,
+    basicIntro
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -153,7 +167,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your career"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutCareer(e.target.value)}
                       defaultValue={
                         jsonData?.about_career != null
                           ? String(jsonData?.about_career)
@@ -174,7 +188,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your family"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutFamily(e.target.value)}
                       defaultValue={
                         jsonData?.about_family != null
                           ? String(jsonData?.about_family)
@@ -195,7 +209,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your education"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutEducation(e.target.value)}
                       defaultValue={
                         jsonData?.about_education != null
                           ? String(jsonData?.about_education)
@@ -203,7 +217,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -217,7 +231,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="Intro yourself"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setBasicIntro(e.target.value)}
                       defaultValue={
                         jsonData?.basic_intro != null
                           ? String(jsonData?.basic_intro)

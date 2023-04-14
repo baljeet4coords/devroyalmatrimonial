@@ -35,7 +35,7 @@ interface myProfileState {
 }
 
 const initialState: myProfileState = {
-  isLoading: false,
+  isLoading: true,
   response: {
     step1: {
       output: 0,
