@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
 import { SignUpType } from "../../types/authentication";
 import {
-  getToken,
   authOutputMessage,
   selectAuthSuccess,
 } from "../../ducks/auth/selectors";
@@ -62,7 +61,6 @@ const LandingPage: React.FC = () => {
     const refCapture: any = ref.current;
     refCapture.scroll({ top: scrollVal, behavior: "smooth" });
   };
-
 
   const headimage = "cover_img_free_chat.jpg";
 
@@ -124,12 +122,13 @@ const LandingPage: React.FC = () => {
           <h1>
             Overcome the distance on our <strong>Platform</strong>
           </h1>
-          <Col sm={12} md={6}>
+          <Col sm={12} md={6} className="my-auto">
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
@@ -148,8 +147,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
@@ -167,8 +167,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
@@ -186,8 +187,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
@@ -199,7 +201,11 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6} className="align-self-center">
-            <div className={classes.landing_scroll_images} ref={ref} onScroll={() => console.log("gggg")} >
+            <div
+              className={classes.landing_scroll_images}
+              ref={ref}
+              onScroll={() => console.log("gggg")}
+            >
               <Image src="./Images/landing_image_1.png" alt="pic" />
               <Image src="./Images/landing_image_2.png" alt="pic" />
               <Image src="./Images/landing_image_3.png" alt="pic" />
@@ -211,15 +217,15 @@ const LandingPage: React.FC = () => {
           <h1>
             Find the <strong>One for You</strong>
           </h1>
-          <Col sm={12} md={4}>
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/register-user.gif" alt="pic" />
             <p>Register yourself and define partner preferences </p>
           </Col>
-          <Col sm={12} md={4}>
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/recommendation.gif" alt="pic" />
             <p>Browse profiles based on recommendations </p>
           </Col>
-          <Col sm={12} md={4}>
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/send-interest.gif" alt="pic" />
             <p>Send and Accept interests </p>
           </Col>
@@ -266,7 +272,7 @@ const LandingPage: React.FC = () => {
               Get Connected
             </CustomButton>
           </div>
-          <Col sm={12} md={4} className=" py-3">
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/relationship-manager.gif" alt="pic" />
             <h3>Your Relationship Manager is waiting for you</h3>
             <p>
@@ -275,7 +281,7 @@ const LandingPage: React.FC = () => {
             </p>
           </Col>
 
-          <Col sm={12} md={4} className=" py-3">
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/express-yourself.gif" alt="pic" />
             <h3>Express your preferences</h3>
             <p>
@@ -283,7 +289,7 @@ const LandingPage: React.FC = () => {
               your sentiments and partner preferences.
             </p>
           </Col>
-          <Col sm={12} md={4} className=" py-3">
+          <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/schedule-meeting.gif" alt="pic" />
             <h3>Schedule meetings</h3>
             <p>

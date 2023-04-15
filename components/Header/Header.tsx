@@ -15,7 +15,6 @@ import { LoginType, SignUpType } from "../../ducks/auth/types";
 import { loginRequest, signupRequest } from "../../ducks/auth/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
-import router from "next/router";
 
 const Header: React.FC = () => {
   const [errors, setErrors] = useState<string>("");
