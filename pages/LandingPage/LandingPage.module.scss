@@ -26,7 +26,7 @@
     padding-bottom: 1rem;
     margin: 0;
     font-size: 1.75rem;
-    font-weight: 400;
+    font-weight: 600;
 
     strong {
       color: $red_txt;
@@ -68,22 +68,17 @@
 
     .ParentWraper {
       text-align: left;
-      position: relative;
-
-      ::before {
-
+      p::before {
         content: "";
         display: block;
-        width: 50px;
+        width: 35px;
         height: 2px;
         background: #d9475c;
-        left: 13px;
-        top: 59%;
-        position: absolute;
+        margin-bottom: 10px;
 
-        @media screen and (max-width: 767px) {
-          display: none;
-        }
+        // @media screen and (max-width: 767px) {
+        //   display: none;
+        // }
       }
 
       p {
@@ -153,6 +148,15 @@
         font-size: .875rem;
         line-height: 1.21;
         margin: 0;
+      }
+
+      p::before {
+        content: "";
+        display: block;
+        width: 35px;
+        height: 3px;
+        background: #d9475c;
+        margin-bottom: 10px;
       }
 
       @media screen and (max-width: 767px) {

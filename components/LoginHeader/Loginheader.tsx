@@ -38,8 +38,8 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
   }, []);
 
   const onLogout = () => {
-    dispatch(logoutRequest());
     router.push("/");
+    dispatch(logoutRequest());
   };
 
   return (

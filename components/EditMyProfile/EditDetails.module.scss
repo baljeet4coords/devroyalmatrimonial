@@ -89,6 +89,7 @@
     margin-right: 0;
 
     .singleDropdownContainer {
+
         .singleBox {
             div {
                 width: 100%;
@@ -237,7 +238,7 @@
             background-color: $milkWhite_bg;
             width: 75%;
             margin: 0;
-           
+
 
             .inputBoxVal {
                 visibility: hidden;
@@ -386,6 +387,14 @@
             width: 145px;
         }
     }
+    .singleBoxWrapper {
+        width: 75%;
+        margin-left: 25%;
+
+        label{
+            left: -10.4rem;
+        }
+    }
 
 
     .input_max {
@@ -529,8 +538,8 @@
             .EditInputSec {
                 margin: 0.6rem 0;
             }
-            
-            .inputBox{
+
+            .inputBox {
                 width: auto;
             }
         }
@@ -570,6 +579,7 @@
         .typeInHindiSec {
             padding: 0%;
         }
+
         .DetailsTypeSec {
 
             .DetailsTypeLeft {
@@ -584,6 +594,14 @@
 
         .singleBox {
             flex-direction: column;
+        }
+        .singleBoxWrapper {
+            width: 100%;
+            margin-left: 0%;
+    
+            label{
+                left: -10.4rem;
+            }
         }
     }
 

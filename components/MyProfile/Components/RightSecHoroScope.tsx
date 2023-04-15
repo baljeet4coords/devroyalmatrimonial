@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import classes from "../Components/RightSectionMyProfile.module.scss";
-import EditContact from "../../EditMyProfile/EditContact";
-import { IoCallOutline } from "react-icons/io5";
 import { CiCreditCard1 } from "react-icons/ci";
 import EditHoroscopeNotMatch from "../../EditMyProfile/EditHoroscopeNotMatch";
 import CustomButton from "../../Button/CustomButton";
@@ -84,7 +82,13 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
   useEffect(() => {
-    step5Response?.pobCountry !== undefined &&
+    if (countries[0].name === "Does Not Matter") {
+      countries.shift();
+    }
+  }, []);
+
+  useEffect(() => {
+    step5Response?.pobCountry !== (undefined || null) &&
       countries[step5Response?.pobCountry] !== undefined &&
       setCountryCode(countries[step5Response?.pobCountry]?.isoCode);
     step5Response?.pobState != undefined &&
@@ -95,6 +99,8 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
     countryCode,
     stateCode,
     cityOfState,
+    countries,
+    stateOfCountry,
     step5Response?.pobCountry,
     step5Response?.pobState,
   ]);
