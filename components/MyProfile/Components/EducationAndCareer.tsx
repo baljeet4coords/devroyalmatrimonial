@@ -32,6 +32,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       : "IN"
   );
 
+  useEffect(() => {
+    if (countries[0].name === "Does Not Matter") {
+      countries.shift();
+    }
+  }, []);
+
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step2Response?.state != (undefined && null)

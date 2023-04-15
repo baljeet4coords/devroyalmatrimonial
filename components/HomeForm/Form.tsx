@@ -31,6 +31,7 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
     },
     validationSchema: SignupSchema,
     onSubmit: (values) => {
+      setloginSpiner(true)
       onSubmitForm(values);
     },
   });
@@ -120,11 +121,11 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
         type="submit"
         className={`${classes.Form_btn} mt-2 w-100`}
         disabled={!formik.isValid}
-        onClick={() => setloginSpiner(true)}
       >
         {loginSpiner && <Spinner className={classes.loginSpiner} animation="border" variant="light" />}
         Register
       </Button>
+      <Form.Label className="mt-4">By clicking on 'Register Free', you confirm that you accept the <span className={classes.redF12}> Terms of Use </span> and <span className={classes.redF12}> Privacy Policy</span></Form.Label>
     </Form>
   );
 };

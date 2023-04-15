@@ -39,14 +39,9 @@ const Header: React.FC = () => {
 
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [stateSize, setSize] = useState(false);
-  useEffect(() => {
-    if (window.innerWidth <= 992) {
-      setSize(true);
-    } else {
-      setSize(false);
-    }
-  }, []);
+  const [stateSize, setSize] = useState(
+    window.innerWidth <= 992 ? true : false
+  );
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 

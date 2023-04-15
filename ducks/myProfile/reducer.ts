@@ -85,16 +85,16 @@ export default function myprofileReducer(
     case MYPROFILE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         response: action.response,
         error: null,
+        isLoading: false,
       };
     case MYPROFILE_FAILURE:
       return {
         ...state,
-        isLoading: false,
         response: null,
         error: action.error,
+        isLoading: false,
       };
     default:
       return state;

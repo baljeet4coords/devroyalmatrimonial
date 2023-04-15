@@ -41,6 +41,12 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       : "IN"
   );
 
+  useEffect(() => {
+    if (countries[0].name === "Does Not Matter") {
+      countries.shift();
+    }
+  }, []);
+
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step4Response?.family_native_state != (undefined && null)

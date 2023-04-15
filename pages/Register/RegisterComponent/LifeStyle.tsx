@@ -96,8 +96,14 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       ? String(jsonData.religious_belief)
       : ""
   );
-  const [housetype, setHousetype] = useState<string>();
-  const [cartype, setCartype] = useState<string>();
+  const [housetype, setHousetype] = useState<string>(jsonData?.home_type ? jsonData.home_type : "");
+  const [cartype, setCartype] = useState<string>(jsonData?.car_details ? jsonData.car_details : "");
+
+  useEffect(() => {
+    setHousetype(jsonData?.home_type ? jsonData.home_type : "");
+    setCartype(jsonData?.car_details ? jsonData.car_details : "");
+  }, [jsonData])
+
 
   const formik = useFormik({
     initialValues: {
@@ -150,8 +156,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     formik.values.religiousBelief = ReligiousBelief;
-    formik.values.cartype = cartype || "";
-    formik.values.housetype = housetype || "";
+    formik.values.cartype = cartype;
+    formik.values.housetype = housetype;
   }, [
     bloodGroup.id,
     diet.id,

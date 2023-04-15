@@ -62,6 +62,8 @@ const LandingPage: React.FC = () => {
     const refCapture: any = ref.current;
     refCapture.scroll({ top: scrollVal, behavior: "smooth" });
   };
+
+
   const headimage = "cover_img_free_chat.jpg";
 
   const onSubmitForm = (values: SignUpType) => {
@@ -95,7 +97,7 @@ const LandingPage: React.FC = () => {
               alt="group_pice"
             />
             <h3>Diligently Screened Profiles </h3>
-            <p>
+            <p className={classes.peragraphTopLine}>
               Choose a perfect life partner from a wide range of screened
               profiles using customized filters on religion, community,
               location, hobbies, profession and more.{" "}
@@ -197,7 +199,7 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6} className="align-self-center">
-            <div className={classes.landing_scroll_images} ref={ref}>
+            <div className={classes.landing_scroll_images} ref={ref} onScroll={() => console.log("gggg")} >
               <Image src="./Images/landing_image_1.png" alt="pic" />
               <Image src="./Images/landing_image_2.png" alt="pic" />
               <Image src="./Images/landing_image_3.png" alt="pic" />
