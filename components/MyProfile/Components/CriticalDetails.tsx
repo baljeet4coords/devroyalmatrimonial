@@ -34,7 +34,7 @@ const CriticalDetials: FC<MyComponentProps> = ({
   let dobmonth = dob && dob[1];
   const dobDay = dob && dob[2].split(" ")[0];
   if (dobmonth < 10) {
-    dobmonth = dobmonth.split("0")[1];
+    dobmonth = dobmonth?.split("0")[1];
   }
 
   function getKeyByValue(value: string, enumObject: any) {

@@ -192,6 +192,7 @@ const DesiredProfilePage: React.FC = () => {
     }
     dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
     response.data.output === 1 && setSuccessMessage(true);
+    router.push("/MyProfile");
   };
 
   const handleSwitchToggle = (switchValue: string) => {

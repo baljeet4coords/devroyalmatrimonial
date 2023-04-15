@@ -1,5 +1,5 @@
 import classes from "./Form.module.scss";
-import { Form, Button, Row, Col, Image } from "react-bootstrap";
+import { Form, Button, Row, Col, Image, Spinner } from "react-bootstrap";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { countryCodesObj } from "../../utils/countryCodes";
@@ -31,6 +31,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
   const [loginWithEmail, setLoginWithEmail] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
+  const [loginSpiner, setloginSpiner] = useState(false);
   const authSuccess = useSelector(selectAuthSuccess);
   const callingCodes = [];
   for (const [key, value] of Object.entries(countryCodesObj)) {
@@ -155,7 +156,10 @@ const ModalForm: React.FC<ModalLoginProps> = ({
               variant="primary"
               type="submit"
               className={`${classes.Form_btn} p-3 mb-3 w-100`}
+              onClick={() => setloginSpiner(true)}
+            // disabled={loginSpiner}
             >
+              {loginSpiner && <Spinner className={classes.loginSpiner} animation="border" variant="light" />}
               Login
             </Button>
             <Link

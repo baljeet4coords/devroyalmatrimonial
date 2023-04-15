@@ -32,6 +32,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       : "IN"
   );
 
+  useEffect(() => {
+    if (countries[0].name === "Does Not Matter") {
+      countries.shift();
+    }
+  }, []);
+
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step2Response?.state != (undefined && null)
@@ -48,16 +54,18 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
       setStateCode(stateOfCountry[step2Response?.state].isoCode);
+    console.log(countryCode, stateCode, cityOfState[step2Response?.city]?.name, getCity(), "....");
+
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
-    return step2Response?.country && countries[step2Response?.country].name;
+    return step2Response?.country !== (undefined || null) && countries[step2Response?.country]?.name;
   }
   function getState() {
-    return step2Response?.state && stateOfCountry[step2Response?.state].name;
+    return step2Response?.state !== (undefined || null) && stateOfCountry[step2Response?.state]?.name;
   }
   function getCity() {
-    return step2Response?.city && cityOfState[step2Response?.city].name;
+    return step2Response?.city !== (undefined || null) && cityOfState[step2Response?.city]?.name;
   }
 
   function getKeyByValue(value: string, enumObject: any) {

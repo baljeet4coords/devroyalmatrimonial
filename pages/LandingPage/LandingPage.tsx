@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
 import { SignUpType } from "../../types/authentication";
 import {
-  getToken,
   authOutputMessage,
   selectAuthSuccess,
 } from "../../ducks/auth/selectors";
@@ -62,6 +61,7 @@ const LandingPage: React.FC = () => {
     const refCapture: any = ref.current;
     refCapture.scroll({ top: scrollVal, behavior: "smooth" });
   };
+
   const headimage = "cover_img_free_chat.jpg";
 
   const onSubmitForm = (values: SignUpType) => {
@@ -89,19 +89,19 @@ const LandingPage: React.FC = () => {
           <h1>
             Uniting Compatible <strong>Soulmates</strong>
           </h1>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image
               src="./Images/icons/digi-screen-profile.gif"
               alt="group_pice"
             />
             <h3>Diligently Screened Profiles </h3>
-            <p>
+            <p className={classes.peragraphTopLine}>
               Choose a perfect life partner from a wide range of screened
               profiles using customized filters on religion, community,
               location, hobbies, profession and more.{" "}
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image src="./Images/icons/in-person-verify.gif" alt="group_pice" />
             <h3>In-person verification </h3>
             <p>
@@ -109,7 +109,7 @@ const LandingPage: React.FC = () => {
               authenticated by our agents
             </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col sm={12} md={4} className={classes.ParentWraper}>
             <Image src="./Images/icons/privacy.gif" alt="group_pice" />
             <h3>Right To Privacy</h3>
             <p>
@@ -122,7 +122,7 @@ const LandingPage: React.FC = () => {
           <h1>
             Overcome the distance on our <strong>Platform</strong>
           </h1>
-          <Col sm={12} md={6}>
+          <Col sm={12} md={6} className="my-auto">
             <div
               className={`${classes.scrollBox}`}
               style={{
@@ -201,7 +201,11 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6} className="align-self-center">
-            <div className={classes.landing_scroll_images} ref={ref}>
+            <div
+              className={classes.landing_scroll_images}
+              ref={ref}
+              onScroll={() => console.log("gggg")}
+            >
               <Image src="./Images/landing_image_1.png" alt="pic" />
               <Image src="./Images/landing_image_2.png" alt="pic" />
               <Image src="./Images/landing_image_3.png" alt="pic" />
@@ -213,15 +217,15 @@ const LandingPage: React.FC = () => {
           <h1>
             Find the <strong>One for You</strong>
           </h1>
-          <Col sm={12} md={4} className="text-center">
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/register-user.gif" alt="pic" />
             <p>Register yourself and define partner preferences </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/recommendation.gif" alt="pic" />
             <p>Browse profiles based on recommendations </p>
           </Col>
-          <Col sm={12} md={4} className="text-center">
+          <Col className="text-center" sm={12} md={4}>
             <Image src="./Images/icons/send-interest.gif" alt="pic" />
             <p>Send and Accept interests </p>
           </Col>
@@ -321,6 +325,13 @@ const LandingPage: React.FC = () => {
             />
           </Col>
         </Row>
+        <Row className={`${classes.Home_white_body} text-center`}>
+          <span>BROWSE</span>
+          <h1>
+            <strong>Matrimonial </strong>Profiles by
+          </h1>
+          <BrowserLink />
+        </Row>
         <Row className={classes.Home_dark_body}>
           <span>Unable to find a perfect life partner?</span>
           <h1>
@@ -364,13 +375,6 @@ const LandingPage: React.FC = () => {
             this platform may result in the permanent deletion of the user’s
             account.
           </p>
-        </Row>
-        <Row className={`${classes.Home_white_body} text-center`}>
-          <span>BROWSE</span>
-          <h1>
-            <strong>Matrimonial </strong>Profiles by
-          </h1>
-          <BrowserLink />
         </Row>
       </Container>
       <Footer />

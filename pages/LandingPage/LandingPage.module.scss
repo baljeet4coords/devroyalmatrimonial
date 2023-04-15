@@ -3,6 +3,7 @@
 .Home_Page_Wrapper {
   margin-top: -34rem;
   width: 75%;
+  margin-bottom: 4rem;
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -12,6 +13,7 @@
     color: $lightGrey_txt;
     letter-spacing: 1.75px;
     font-size: 0.875rem;
+    font-weight: 600;
 
     @media screen and (max-width: 576px) {
       // width: 100%;
@@ -20,13 +22,15 @@
   }
 
   h1 {
-    font-size: 1.75rem;
-    font-weight: $fw400;
     padding-top: 0.5rem;
     padding-bottom: 1rem;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
 
     strong {
       color: $red_txt;
+      font-weight: 700;
     }
   }
 
@@ -58,19 +62,41 @@
 
   .Home_white_body {
     background-color: $milkWhite_bg;
-    padding: 3rem;
+    padding: 28px 74px 48px 74px;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
+
+    .ParentWraper {
+      text-align: left;
+      p::before {
+        content: "";
+        display: block;
+        width: 35px;
+        height: 2px;
+        background: #d9475c;
+        margin-bottom: 10px;
+
+        // @media screen and (max-width: 767px) {
+        //   display: none;
+        // }
+      }
+
+      p {
+        line-height: 19px;
+      }
+    }
   }
 
   .Home_dark_body {
     background-color: $darkWhite_bg;
-    padding: 3rem;
+    padding: 28px 74px 48px 74px;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
 
     p {
-      text-align: justify;
+      line-height: 24px;
+      padding-bottom: 2rem;
+      font-size: 17px;
     }
 
     .landing_scroll_images {
@@ -116,6 +142,21 @@
 
       .responsiveImage {
         display: none;
+      }
+
+      p {
+        font-size: .875rem;
+        line-height: 1.21;
+        margin: 0;
+      }
+
+      p::before {
+        content: "";
+        display: block;
+        width: 35px;
+        height: 3px;
+        background: #d9475c;
+        margin-bottom: 10px;
       }
 
       @media screen and (max-width: 767px) {
@@ -189,13 +230,16 @@
 
     h1 {
       font-size: 1.75rem;
-      font-weight: 400;
+      font-weight: 500;
       padding-top: 0.5rem;
       padding-bottom: 1rem;
     }
 
     p {
+
       line-height: 27px;
+      font-size: 16px;
+
     }
 
     img {
@@ -266,6 +310,3 @@
     margin: 0%;
   }
 }
-
-
-

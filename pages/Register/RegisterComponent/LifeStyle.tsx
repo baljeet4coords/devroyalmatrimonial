@@ -96,8 +96,14 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       ? String(jsonData.religious_belief)
       : ""
   );
-  const [housetype, setHousetype] = useState<string>();
-  const [cartype, setCartype] = useState<string>();
+  const [housetype, setHousetype] = useState<string>(jsonData?.home_type ? jsonData.home_type : "");
+  const [cartype, setCartype] = useState<string>(jsonData?.car_details ? jsonData.car_details : "");
+
+  useEffect(() => {
+    setHousetype(jsonData?.home_type ? jsonData.home_type : "");
+    setCartype(jsonData?.car_details ? jsonData.car_details : "");
+  }, [jsonData])
+
 
   const formik = useFormik({
     initialValues: {
@@ -150,8 +156,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     formik.values.religiousBelief = ReligiousBelief;
-    formik.values.cartype = cartype || "";
-    formik.values.housetype = housetype || "";
+    formik.values.cartype = cartype;
+    formik.values.housetype = housetype;
   }, [
     bloodGroup.id,
     diet.id,
@@ -174,9 +180,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           <Loader />
         ) : (
           <Row className="justify-content-center">
+            <h1>We would love to know about your Lifestyle.</h1>
             <Col sm={12} md={5}>
-              <h1>We would love to know about your Lifestyle.</h1>
-              <small>mandatory</small>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
                 <div className=" text-start d-flex flex-column gap-4">
                   <DropdownGridSingleSelect
@@ -219,7 +224,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Label>Type of House</Form.Label>
                       <Form.Control
                         name="house_type"
-                        className="text-center"
                         placeholder="About Your House"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setHousetype(e.target.value)}
@@ -241,7 +245,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                       <Form.Label>Type of Car</Form.Label>
                       <Form.Control
                         name="car_type"
-                        className="text-center"
                         placeholder="About Your Car"
                         onBlur={formik.handleBlur}
                         onChange={(e) => setCartype(e.target.value)}
@@ -267,7 +270,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                     <Form.Label>Religious Belief</Form.Label>
                     <Form.Control
                       name="religiousBelief"
-                      className="text-center"
                       placeholder="About Religious Belief"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setReligiousBelief(e.target.value)}
@@ -282,7 +284,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  className={`${classes.Form_btn} mt-2 w-50`}
                 >
                   Next
                 </Button>

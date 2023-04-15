@@ -22,7 +22,41 @@
     font-size: 14px;
     font-weight: 600px;
     font-style: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
+  .passwordWraper {
+    position: relative;
+
+    svg {
+      position: absolute;
+      right: 1rem;
+      font-size: 22px;
+      top: 50%;
+      cursor: pointer;
+      color: black;
+      transform: translateY(3px);
+
+    }
+
+    .PasswordShowAline {
+      transform: translateY(-70%);
+    }
+
+    .PasswordShow {
+      color: #dc3545;
+    }
+  }
+
+
+  .redF12 {
+    color: #dc3545;
+    font-size: 12px;
+    display: inline;
+  }
+
 }
 
 // Modal Form
@@ -67,9 +101,11 @@
     background: #e7e7e6;
 
     .Form_btn {
-      border-radius: 0px;
       box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
       border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .modal_links {
@@ -149,6 +185,12 @@
     font-size: 2rem;
     background-color: transparent;
   }
+}
+
+.loginSpiner {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 991px) and (min-width: 500px) {

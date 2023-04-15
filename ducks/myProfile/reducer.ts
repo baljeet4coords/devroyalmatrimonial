@@ -14,35 +14,61 @@ interface myProfileState {
     step1: {
       output: number;
       message: string;
-      jsonResponse: IRegisterStep1Response;
+      jsonResponse: IRegisterStep1Response | null;
     };
     step2: {
       output: number;
       message: string;
-      jsonResponse: IRegisterStep2Response;
+      jsonResponse: IRegisterStep2Response | null;
     };
     step3: {
       output: number;
       message: string;
-      jsonResponse: IRegisterStep3Response;
+      jsonResponse: IRegisterStep3Response | null;
     };
     step4: {
       output: number;
       message: string;
-      jsonResponse: IRegisterStep4Response;
+      jsonResponse: IRegisterStep4Response | null;
     };
     step5: {
       output: number;
       message: string;
-      jsonResponse: IRegisterStep5Response;
+      jsonResponse: IRegisterStep5Response | null;
     };
   } | null;
   error: string | null;
 }
 
 const initialState: myProfileState = {
-  isLoading: false,
-  response: null,
+  isLoading: true,
+  response: {
+    step1: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+    },
+    step2: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+    },
+    step3: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+    },
+    step4: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+    },
+    step5: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+    },
+  },
   error: null,
 };
 
@@ -59,16 +85,16 @@ export default function myprofileReducer(
     case MYPROFILE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
         response: action.response,
         error: null,
+        isLoading: false,
       };
     case MYPROFILE_FAILURE:
       return {
         ...state,
-        isLoading: false,
         response: null,
         error: action.error,
+        isLoading: false,
       };
     default:
       return state;

@@ -115,9 +115,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   }, []);
 
   useEffect(() => {
-    setSelectedCountry(jsonData?.country != undefined ? jsonData?.country : selectedCountry);
-    setSelectedState(jsonData?.state != undefined ? jsonData?.state : selectedState);
-    setSelectedCity(jsonData?.city != undefined ? jsonData?.city : selectedCity);
+    setSelectedCountry(
+      jsonData?.country != undefined ? jsonData?.country : selectedCountry
+    );
+    setSelectedState(
+      jsonData?.state != undefined ? jsonData?.state : selectedState
+    );
+    setSelectedCity(
+      jsonData?.city != undefined ? jsonData?.city : selectedCity
+    );
   }, [jsonData?.country, jsonData?.state, jsonData?.city]);
 
   useEffect(() => {
@@ -164,9 +170,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
           <Loader />
         ) : (
           <Row className="justify-content-center">
+            <h1>Great! You are about to complete your profile.</h1>
             <Col sm={12} md={5}>
-              <h1>Great! You are about to complete your profile.</h1>
-              <small>mandatory</small>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
                 <CountrySingle
                   title="Country"
@@ -244,7 +249,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                  className={`${classes.Form_btn} mt-2 w-50`}
                 >
                   Next
                 </Button>

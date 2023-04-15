@@ -25,13 +25,8 @@ import { useDispatch } from "react-redux";
 import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
-import { selectmyProfileSuccess } from "../../ducks/myProfile/selectors";
-import { ImageGallery } from "../../components";
-interface IImageGallery {
-  src: string;
-  width: number;
-  height: number;
-}
+import { selectmyProfileLoading, selectmyProfileSuccess } from "../../ducks/myProfile/selectors";
+import Loader from "../../components/Loader/Loader";
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
@@ -40,22 +35,23 @@ const MyProfile: React.FC = () => {
   const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
-  const [images, setImages] = useState<IImageGallery[]>([
-    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
-    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
-    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
-    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
-    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
-    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
-    { src: "./Images/landing_image_1.png", width: 400, height: 300 },
-    { src: "/Images/landing_image_2.png", width: 600, height: 450 },
-    { src: "/Images/landing_image_3.png", width: 800, height: 600 },
-  ]);
+  // const [images, setImages] = useState<IImageGallery[]>([
+  //   { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+  //   { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+  //   { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+  //   { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+  //   { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+  //   { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+  //   { src: "./Images/landing_image_1.png", width: 400, height: 300 },
+  //   { src: "/Images/landing_image_2.png", width: 600, height: 450 },
+  //   { src: "/Images/landing_image_3.png", width: 800, height: 600 },
+  // ]);
   // const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const myProfileObject = useSelector(selectmyProfileSuccess);
+  const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
   const step1Response = myProfileObject?.step1.jsonResponse;
   const step2Response = myProfileObject?.step2.jsonResponse;
@@ -81,81 +77,82 @@ const MyProfile: React.FC = () => {
             <ImImage />
           </div>
         </Container>
-        <MyProfilePageCard step1Response={step1Response} />
-        <Container className={classes.detailsWrapper}>
-          <Row>
-            <ImageGallery images={images} />
-            <Col sm={9} md={8} className="p-0">
-              {criticalDetails ? (
-                <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
-              ) : (
-                <CriticalDetials
-                  step1Response={step1Response}
-                  setCriticalDetails={setCriticalDetails}
-                />
-              )}
-              <hr />
-              {basicDetails ? (
-                <EditBasicDetials setBasicDetails={setBasicDetails} />
-              ) : (
-                <BasicDetails
-                  step1Response={step1Response}
-                  setBasicDetails={setBasicDetails}
-                />
-              )}
-              <hr />
-              {aboutMeDetails ? (
-                <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
-              ) : (
-                <AboutMeDetails
-                  step5Response={step5Response}
-                  setAboutMeDetails={setAboutMeDetails}
-                />
-              )}
-              <hr />
-              {eudcationAndCareer ? (
-                <EditEducationAmdCareer
-                  setEudcationAndCareer={setEudcationAndCareer}
-                />
-              ) : (
-                <EducationAndCareer
-                  step2Response={step2Response}
-                  setEudcationAndCareer={setEudcationAndCareer}
-                />
-              )}
-              <hr />
-              {familyDetails ? (
-                <EditFamilyDetails setFamilyDetails={setFamilyDetails} />
-              ) : (
-                <FamilydetailsInfo
-                  step4Response={step4Response}
-                  setFamilyDetails={setFamilyDetails}
-                />
-              )}
-              <hr />
-              {lifeStyleDetails ? (
-                <EditLifeStyle setEditDetails={setLifeStyleDetails} />
-              ) : (
-                <LifeStyleDetails
-                  step3Response={step3Response}
-                  setEditDetails={setLifeStyleDetails}
-                />
-              )}
-              <hr />
-              {/* {yourLikesDetails ? (
+        {isMyprofileLoading ? <Loader /> : <>
+          <MyProfilePageCard step1Response={step1Response} />
+          <Container className={classes.detailsWrapper}>
+            <Row>
+              <Col sm={9} md={8} className="p-0">
+                {criticalDetails ? (
+                  <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
+                ) : (
+                  <CriticalDetials
+                    step1Response={step1Response}
+                    setCriticalDetails={setCriticalDetails}
+                  />
+                )}
+                <hr />
+                {basicDetails ? (
+                  <EditBasicDetials setBasicDetails={setBasicDetails} />
+                ) : (
+                  <BasicDetails
+                    step1Response={step1Response}
+                    setBasicDetails={setBasicDetails}
+                  />
+                )}
+                <hr />
+                {aboutMeDetails ? (
+                  <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
+                ) : (
+                  <AboutMeDetails
+                    step5Response={step5Response}
+                    setAboutMeDetails={setAboutMeDetails}
+                  />
+                )}
+                <hr />
+                {eudcationAndCareer ? (
+                  <EditEducationAmdCareer
+                    setEudcationAndCareer={setEudcationAndCareer}
+                  />
+                ) : (
+                  <EducationAndCareer
+                    step2Response={step2Response}
+                    setEudcationAndCareer={setEudcationAndCareer}
+                  />
+                )}
+                <hr />
+                {familyDetails ? (
+                  <EditFamilyDetails setFamilyDetails={setFamilyDetails} />
+                ) : (
+                  <FamilydetailsInfo
+                    step4Response={step4Response}
+                    setFamilyDetails={setFamilyDetails}
+                  />
+                )}
+                <hr />
+                {lifeStyleDetails ? (
+                  <EditLifeStyle setEditDetails={setLifeStyleDetails} />
+                ) : (
+                  <LifeStyleDetails
+                    step3Response={step3Response}
+                    setEditDetails={setLifeStyleDetails}
+                  />
+                )}
+                <hr />
+                {/* {yourLikesDetails ? (
                 <EditYourLikes setEditDetails={setYourLikesDetails} />
               ) : (
                 <LikeDetails setEditDetails={setYourLikesDetails} />
               )} */}
-              <div className={classes.datecont}>
-                <p>Last updated on 15th Feb, 2023</p>
-              </div>
-            </Col>
-            <Col sm={3} md={4} className="p-0">
-              <MyProfileRightSec myProfileObject={myProfileObject} />
-            </Col>
-          </Row>
-        </Container>
+                <div className={classes.datecont}>
+                  <p>Last updated on 15th Feb, 2023</p>
+                </div>
+              </Col>
+              <Col sm={3} md={4} className="p-0">
+                <MyProfileRightSec myProfileObject={myProfileObject} />
+              </Col>
+            </Row>
+          </Container>
+        </>}
       </div>
     </React.Fragment>
   );

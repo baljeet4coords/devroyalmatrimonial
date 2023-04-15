@@ -2,32 +2,84 @@
 
 .card {
   position: relative;
-  width: 75%;
+  width: 90%;
   padding: 1.25em;
-  box-shadow: 0 0.625em 1.25em #0006;
-  margin-right: -75px;
+  box-shadow: 0 0.625em 1.25em rgba(0, 0, 0, 0.4);
+  margin-right: -35px;
   border: none;
+  text-align: initial;
+
+
+  .itemList {
+    color: #a3a3a3;
+  }
 
   @media screen and (max-width: 991px) {
     width: 100%;
     margin-right: 0;
   }
 
- 
+  svg {
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 50%;
+    color: #a3a3a3;
+    padding: 0px;
+    border: 2px solid #a3a3a3;
+    border-radius: 50%;
+    padding: 1px;
+  }
+
+  .RightTick {
+    color: #d9475c;
+    border: 2px solid #d9475c;
+
+  }
+
+  .svgPaid {
+    color: #fff;
+    border: 2px solid #ffffff;
+  }
 }
+
+.Cardtitle {
+  font-size: 28px;
+  position: relative;
+}
+
+.Cardtitle::after {
+  content: "";
+  display: block;
+  width: 39px;
+  height: 3px;
+  background: #d9475c;
+  left: 0px;
+  top: -20%;
+  position: absolute;
+}
+
+.CardtitlePaid::after {
+  background: #ffffff;
+}
+
+.cardBtuoonTab {
+  text-align: center;
+}
+
 @media only screen and (max-width: 300px) {
-  .cardBtuoonTab{
+  .cardBtuoonTab {
     padding: 0%;
-    
-    button{
+
+    button {
       padding: 0.7rem 0.5rem;
     }
   }
 }
+
 .redParent {
   background-color: $dark_maroon_bg;
   position: relative;
-  width: 75%;
+  width: 90%;
   padding: 1.25em;
   box-shadow: 0 0.625em 1.25em #0006;
   margin-right: -75px;

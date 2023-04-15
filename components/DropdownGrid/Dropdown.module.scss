@@ -2,6 +2,7 @@
 
 .singleBox {
   width: 100%;
+
   div {
     width: 100%;
 
@@ -17,10 +18,10 @@
     border-radius: 2px;
     padding: 0.875rem 1rem;
     text-align: center;
-    color: $browser_text;
     cursor: pointer;
     position: relative;
     min-width: 275px;
+    color: $browser_text;
     background-color: $milkWhite_bg;
 
     .inputBoxVal {
@@ -49,7 +50,7 @@
         cursor: text;
         display: flex;
         flex-wrap: wrap;
-       overflow-y: auto;
+        overflow-y: auto;
 
         li {
           position: relative;
@@ -81,6 +82,7 @@
     border: none !important;
     background: transparent !important;
     list-style: none;
+
     input {
       padding: 0;
       height: 25px;
@@ -94,6 +96,7 @@
       line-height: normal;
       border-radius: 0;
       width: 100%;
+      text-align: initial;
     }
   }
 

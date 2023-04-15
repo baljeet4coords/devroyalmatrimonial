@@ -15,7 +15,6 @@ import { LoginType, SignUpType } from "../../ducks/auth/types";
 import { loginRequest, signupRequest } from "../../ducks/auth/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
-import router from "next/router";
 
 const Header: React.FC = () => {
   const [errors, setErrors] = useState<string>("");
@@ -39,14 +38,9 @@ const Header: React.FC = () => {
 
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [stateSize, setSize] = useState(false);
-  useEffect(() => {
-    if (window.innerWidth <= 992) {
-      setSize(true);
-    } else {
-      setSize(false);
-    }
-  }, []);
+  const [stateSize, setSize] = useState(
+    window.innerWidth <= 992 ? true : false
+  );
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isActive, setActive] = useState(false);
 
@@ -130,9 +124,8 @@ const Header: React.FC = () => {
               <Link href="/HelpPage">HELP</Link>
             </Nav>
             <div
-              className={`${classes.navLoginTabs} ${
-                isActive ? classes.active : " "
-              }`}
+              className={`${classes.navLoginTabs} ${isActive ? classes.active : " "
+                }`}
             >
               <Nav className="pe-3">
                 <Button
@@ -143,7 +136,7 @@ const Header: React.FC = () => {
                   LOGIN
                 </Button>
               </Nav>
-              <Nav className="pe-3">
+              <Nav className={`${classes.RegBtn}`}>
                 <Button
                   variant="link"
                   className="default-anchor p-3"

@@ -82,30 +82,38 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(100);
   const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
   const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
+
+  const [aboutCareer, setAboutCareer] = useState<string>(jsonData && jsonData.about_career ? jsonData.about_career : "");
+  const [aboutFamily, setAboutFamily] = useState<string>(jsonData && jsonData.about_family ? jsonData.about_family : "");
+  const [aboutEducation, setAboutEducation] = useState<string>(jsonData && jsonData.about_education ? jsonData.about_education : "");
+  const [basicIntro, setBasicIntro] = useState<string>(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "");
+
+
   useEffect(() => {
-    if (jsonData && jsonData.about_career) {
-      formik.values.aboutCareer = jsonData.about_career;
-    }
-    if (jsonData && jsonData.about_family) {
-      formik.values.aboutFamily = jsonData.about_family;
-    }
-    if (jsonData && jsonData.about_education) {
-      formik.values.aboutEducation = jsonData.about_education;
-    }
-    if (jsonData && jsonData.basic_intro) {
-      formik.values.basicIntro = jsonData.basic_intro;
-    }
-  }, [formik.values, jsonData]);
+    setAboutCareer(jsonData && jsonData.about_career ? jsonData.about_career : "");
+    setAboutFamily(jsonData && jsonData.about_family ? jsonData.about_family : "");
+    setAboutEducation(jsonData && jsonData.about_education ? jsonData.about_education : "");
+    setBasicIntro(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "")
+  }, [jsonData,jsonData?.about_career,jsonData?.about_family,jsonData?.about_education,jsonData?.basic_intro])
+
 
   useEffect(() => {
     formik.values.birthCountry = selectedBirthCountry;
     formik.values.birthState = selectedBirthState;
     formik.values.birthCity = selectedBirthCity;
+    formik.values.aboutCareer = aboutCareer;
+    formik.values.aboutFamily = aboutFamily;
+    formik.values.aboutEducation = aboutEducation;
+    formik.values.basicIntro = basicIntro;
   }, [
     formik.values,
     selectedBirthCity,
     selectedBirthCountry,
     selectedBirthState,
+    aboutCareer,
+    aboutEducation,
+    aboutFamily,
+    basicIntro
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -138,9 +146,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
             <Loader />
           ) : (
             <Row className="justify-content-center">
+              <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
               <Col sm={12} md={5}>
-                <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
-                <small>mandatory</small>
                 <Form
                   className={classes.formEdit}
                   onSubmit={formik.handleSubmit}
@@ -153,11 +160,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your career"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutCareer(e.target.value)}
                       defaultValue={
                         jsonData?.about_career != null
-                          ? String(jsonData?.about_career)
-                          : ""
+                        ? String(jsonData?.about_career)
+                        : ""
                       }
                     />
                     {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
@@ -174,7 +181,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your family"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutFamily(e.target.value)}
                       defaultValue={
                         jsonData?.about_family != null
                           ? String(jsonData?.about_family)
@@ -195,7 +202,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="About your education"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setAboutEducation(e.target.value)}
                       defaultValue={
                         jsonData?.about_education != null
                           ? String(jsonData?.about_education)
@@ -203,7 +210,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -217,7 +224,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       rows={3}
                       placeholder="Intro yourself"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
+                      onChange={(e) => setBasicIntro(e.target.value)}
                       defaultValue={
                         jsonData?.basic_intro != null
                           ? String(jsonData?.basic_intro)
@@ -255,7 +262,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                   <Button
                     variant="danger"
                     type="submit"
-                    className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                    className={`${classes.Form_btn} mt-2 w-50`}
                   >
                     Submit
                   </Button>

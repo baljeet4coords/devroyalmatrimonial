@@ -30,7 +30,11 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
-import { convertServerTimestamp, convertTimeStamp, defaultTime } from "../../../utils/dayjs";
+import {
+  convertServerTimestamp,
+  convertTimeStamp,
+  defaultTime,
+} from "../../../utils/dayjs";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -126,7 +130,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
       formData.append("userId", String(values.userId));
       formData.append("profilefor", String(values.profilefor));
       formData.append("profileHandlerName", String(values.profileHandlerName));
-      formData.append("dob", String(values.dob && convertTimeStamp(values.dob)));
+      formData.append(
+        "dob",
+        String(values.dob && convertTimeStamp(values.dob))
+      );
       formData.append("selectgender", String(values.selectgender));
       formData.append("fullname", String(values.fullname));
       formData.append("cast", String(values.cast));
@@ -276,9 +283,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
             <Loader />
           ) : (
             <Row className="justify-content-center">
+              <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
               <Col sm={12} md={5}>
-                <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
-                <small>mandatory</small>
                 <Form
                   className={classes.formEdit}
                   onSubmit={formik.handleSubmit}
@@ -326,7 +332,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                           placeholder="DateRange"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
-                          defaultValue={jsonData && convertServerTimestamp(jsonData?.dob)}
+                          defaultValue={
+                            jsonData && convertServerTimestamp(jsonData?.dob)
+                          }
                           ref={dateInputRef}
                           onClick={() => {
                             dateInputRef.current &&
@@ -435,7 +443,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <Button
                     variant="danger"
                     type="submit"
-                    className={`${classes.Form_btn} mt-2 w-50 mx-auto`}
+                    className={`${classes.Form_btn} mt-2 w-50`}
                   >
                     Next
                   </Button>

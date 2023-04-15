@@ -1,4 +1,10 @@
-import { MyProfile, MyProfileResponse } from "./types";
+import {
+  IRegisterStep1Response,
+  IRegisterStep2Response,
+  IRegisterStep3Response,
+  IRegisterStep4Response,
+  IRegisterStep5Response,
+} from "../../types/register/userRegister";
 import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 import {
   IRegisterStep1Response,
@@ -10,7 +16,10 @@ import {
 
 interface MyProfileAction {
   type: typeof MYPROFILE;
-  payload: MyProfile;
+  payload: {
+    actionType: "v";
+    userId?: number;
+  };
 }
 
 interface MyProfileActionSuccessAction {

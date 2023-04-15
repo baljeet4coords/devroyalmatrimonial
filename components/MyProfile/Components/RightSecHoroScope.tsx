@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import classes from "../Components/RightSectionMyProfile.module.scss";
-import EditContact from "../../EditMyProfile/EditContact";
-import { IoCallOutline } from "react-icons/io5";
 import { CiCreditCard1 } from "react-icons/ci";
 import EditHoroscopeNotMatch from "../../EditMyProfile/EditHoroscopeNotMatch";
 import CustomButton from "../../Button/CustomButton";
@@ -84,32 +82,41 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
 
   useEffect(() => {
-    step5Response?.pobCountry !== undefined &&
+    if (countries[0].name === "Does Not Matter") {
+      countries.shift();
+    }
+  }, []);
+
+  useEffect(() => {
+    step5Response?.pobCountry !== (undefined || null) &&
       countries[step5Response?.pobCountry] !== undefined &&
-      setCountryCode(countries[step5Response?.pobCountry].isoCode);
+      setCountryCode(countries[step5Response?.pobCountry]?.isoCode);
     step5Response?.pobState != undefined &&
       stateOfCountry[step5Response?.pobState] !== undefined &&
       step5Response?.pobState >= 0 &&
-      setStateCode(stateOfCountry[step5Response?.pobState].isoCode);
+      setStateCode(stateOfCountry[step5Response?.pobState]?.isoCode);
   }, [
     countryCode,
     stateCode,
+    cityOfState,
+    countries,
+    stateOfCountry,
     step5Response?.pobCountry,
     step5Response?.pobState,
   ]);
 
   function getCountry() {
     return (
-      step5Response?.pobCountry && countries[step5Response?.pobCountry].name
+      step5Response?.pobCountry !== (undefined || null) && countries[step5Response?.pobCountry]?.name
     );
   }
   function getState() {
     return (
-      step5Response?.pobState && stateOfCountry[step5Response?.pobState].name
+      step5Response?.pobState !== (undefined || null) && stateOfCountry[step5Response?.pobState]?.name
     );
   }
   function getCity() {
-    return step5Response?.pobCity && cityOfState[step5Response?.pobCity].name;
+    return step5Response?.pobCity !== (undefined || null) && cityOfState[step5Response?.pobCity]?.name;
   }
 
   const months = [
@@ -134,13 +141,13 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   const timpOFBirth_H = dob && dob[2].split(" ")[1].split(":")[0];
   const timpOFBirth_M = dob && dob[2].split(" ")[1].split(":")[1];
   if (dobmonth < 10) {
-    dobmonth = dobmonth.split("0")[1];
+    dobmonth = dobmonth?.split("0")[1];
   }
 
   const HoroScopeDMatch = [
     {
       name: "Date of Bitrh",
-      value: ` ${months[dobmonth - 1]} ${dobDay} ${dobYear}|| "NA" `,
+      value: ` ${months[dobmonth - 1]} ${dobDay} ${dobYear}` || "NA",
     },
     {
       name: "Birth Country",
@@ -156,13 +163,12 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
     },
     {
       name: "Time of Birth",
-      value: `${
-        timpOFBirth_H <= 12
-          ? timpOFBirth_H
-          : timpOFBirth_H <= 21
+      value: `${timpOFBirth_H <= 12
+        ? timpOFBirth_H
+        : timpOFBirth_H <= 21
           ? `0 ${timpOFBirth_H - 12}`
           : timpOFBirth_H - 12 || "NA"
-      }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H <= 12 ? "AM" : "PM"}`,
+        }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H <= 12 ? "AM" : "PM"}`,
     },
   ];
   return (
