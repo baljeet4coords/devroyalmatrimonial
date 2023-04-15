@@ -88,20 +88,14 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const [aboutEducation, setAboutEducation] = useState<string>(jsonData && jsonData.about_education ? jsonData.about_education : "");
   const [basicIntro, setBasicIntro] = useState<string>(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "");
 
+
   useEffect(() => {
-    if (jsonData && jsonData.about_career) {
-      formik.values.aboutCareer = jsonData.about_career;
-    }
-    if (jsonData && jsonData.about_family) {
-      formik.values.aboutFamily = jsonData.about_family;
-    }
-    if (jsonData && jsonData.about_education) {
-      formik.values.aboutEducation = jsonData.about_education;
-    }
-    if (jsonData && jsonData.basic_intro) {
-      formik.values.basicIntro = jsonData.basic_intro;
-    }
-  }, [formik.values, jsonData]);
+    setAboutCareer(jsonData && jsonData.about_career ? jsonData.about_career : "");
+    setAboutFamily(jsonData && jsonData.about_family ? jsonData.about_family : "");
+    setAboutEducation(jsonData && jsonData.about_education ? jsonData.about_education : "");
+    setBasicIntro(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "")
+  }, [jsonData,jsonData?.about_career,jsonData?.about_family,jsonData?.about_education,jsonData?.basic_intro])
+
 
   useEffect(() => {
     formik.values.birthCountry = selectedBirthCountry;
@@ -169,8 +163,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       onChange={(e) => setAboutCareer(e.target.value)}
                       defaultValue={
                         jsonData?.about_career != null
-                          ? String(jsonData?.about_career)
-                          : ""
+                        ? String(jsonData?.about_career)
+                        : ""
                       }
                     />
                     {formik.touched.aboutCareer && formik.errors.aboutCareer ? (

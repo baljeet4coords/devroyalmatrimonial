@@ -59,7 +59,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({ step1Response }) => {
           {/* <div className={classes.RightPrograss}>
             25%
         </div> */}
-          <HalfCircleProgressBar />
+          <HalfCircleProgressBar profileComplete ={45} />
           <p className={classes.CompleteProfileHEd}>Complete your profile</p>
           <p>Last edited on 06th Mar, 2023 </p>
           <p>Profile view : 0 </p>

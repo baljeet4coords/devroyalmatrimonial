@@ -2,14 +2,15 @@
 
 .card {
   position: relative;
-  width: 75%;
+  width: 90%;
   padding: 1.25em;
   box-shadow: 0 0.625em 1.25em rgba(0, 0, 0, 0.4);
-  margin-right: -25px;
+  margin-right: -35px;
   border: none;
   text-align: initial;
 
-  .itemList{
+
+  .itemList {
     color: #a3a3a3;
   }
 
@@ -61,6 +62,10 @@
   background: #ffffff;
 }
 
+.cardBtuoonTab {
+  text-align: center;
+}
+
 @media only screen and (max-width: 300px) {
   .cardBtuoonTab {
     padding: 0%;
@@ -74,7 +79,7 @@
 .redParent {
   background-color: $dark_maroon_bg;
   position: relative;
-  width: 75%;
+  width: 90%;
   padding: 1.25em;
   box-shadow: 0 0.625em 1.25em #0006;
   margin-right: -75px;

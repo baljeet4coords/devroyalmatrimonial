@@ -54,7 +54,6 @@ const ModalForm: React.FC<ModalLoginProps> = ({
     // validationSchema: SignupSchema,
     onSubmit: (values) => {
       onSubmitForm({ ...values, from: loginWithEmail ? "email" : "mobile" });
-      // setloginSpiner(false);
     },
   });
 

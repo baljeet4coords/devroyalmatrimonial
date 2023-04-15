@@ -44,8 +44,8 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <ExpressYourself key={4} nextPage={chooseMessage} />,
   ];
   const onLogout = () => {
-    dispatch(logoutRequest());
     router.push("/");
+    dispatch(logoutRequest());
   };
 
   useEffect(() => {
@@ -70,9 +70,8 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "} ${
-                  classes.topButtons
-                }`}
+                className={`${active === index ? classes.active : " "} ${classes.topButtons
+                  }`}
                 onClick={() => chooseMessage(index)}
               >
                 {heading}

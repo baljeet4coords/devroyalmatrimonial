@@ -44,14 +44,16 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-          <div className={classes.singleBox}>
-            {/* <Form.Label>MaritalStatus</Form.Label> */}
-            <DropdownGridSingleSelect
-              title="MaritalStatus"
-              data={MaritalStatus}
-              nameid="maritalstatus"
-              selectedDataFn={setSelectedMaritalStatus}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              {/* <Form.Label>MaritalStatus</Form.Label> */}
+              <DropdownGridSingleSelect
+                title="MaritalStatus"
+                data={MaritalStatus}
+                nameid="maritalstatus"
+                selectedDataFn={setSelectedMaritalStatus}
+              />
+            </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Date of Birth</Form.Label>
@@ -62,6 +64,7 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
               placeholder="DateRange"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              className="my-2"
             />
           </div>
 
