@@ -174,7 +174,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
             "Content-Type": "multipart/form-data",
           },
         };
-        if (response.data.output === 0) {
+        if (response.data.output >= 0) {
           nextPage(1);
         }
       }

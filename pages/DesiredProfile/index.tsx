@@ -217,17 +217,6 @@ const DesiredProfilePage: React.FC = () => {
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
           <h1>Tell us your preferences</h1>
-          <Button
-            variant="link"
-            onClick={() => {
-              router.push({
-                pathname: "/Register",
-                query: { page: "registeration" },
-              });
-            }}
-          >
-            Back to registeration steps
-          </Button>
           <Row>
             {isLoading ? (
               <Loader />

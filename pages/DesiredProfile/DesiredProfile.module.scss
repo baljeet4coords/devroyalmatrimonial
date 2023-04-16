@@ -1,8 +1,7 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-  background: url("../../public/Images/cover-image-register.jpg") no-repeat
-    center center;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
   padding: 3rem 0 5rem 0;
   background-size: cover;
 }
@@ -78,6 +77,7 @@
     width: auto;
     margin: 1rem auto;
   }
+
   .form_wrapper {
     position: relative;
 
@@ -181,9 +181,7 @@
       input {
         border: 1px solid #d9d9d9;
         border-radius: 2px;
-        padding: 0.875rem 2.5rem;
-        text-align: center;
-        // margin: 0.6em;
+        padding: 0.875rem 0.3rem;
 
         &:focus {
           outline: none;
@@ -213,6 +211,7 @@
   display: flex;
   position: relative;
   width: 66%;
+  padding: 0 0.6rem;
 
   div {
     width: 100%;
