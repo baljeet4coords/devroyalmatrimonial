@@ -24,15 +24,21 @@ import {
 import { step3 } from "../../../ducks/regiserUser/step3/actions";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
+import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
+import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 interface Data {
   id?: string;
   val: string;
 }
-const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+const LifeStyle: React.FC<ProfileDetailsProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepThreeDefaultValues = useSelector(selectStep3Success);
   const isLoading = useSelector(selectStep3Loading);
