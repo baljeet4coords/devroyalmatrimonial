@@ -40,10 +40,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const [profileComplete, setProfileComplete] = useState<number>(0);
+
   const isLoading = useSelector(selectStep2Loading);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
+    !isReduxEmpty && setProfileComplete(40)
   }, [dispatch, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
@@ -255,7 +258,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection />
+            <RightSection profileComplete={profileComplete} title="" />
           </Row>
         )}
       </Container>

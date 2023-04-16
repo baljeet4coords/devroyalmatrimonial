@@ -31,8 +31,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const [profileComplete, setProfileComplete] = useState<number>(0);
+
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
+    !isReduxEmpty && setProfileComplete(100);
   }, [dispatch, userId]);
 
   // when Render page go on the top of the page
@@ -268,7 +271,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                   </Button>
                 </Form>
               </Col>
-              <RightSection />
+              <RightSection profileComplete={profileComplete} title="" />
             </Row>
           )}
         </Container>

@@ -19,53 +19,76 @@
 
         .MyProfileMiddle {
             height: 100%;
-            display: flex;
-            padding: 2rem;
-            gap: 3rem;
-            color: dimgray;
-            font-weight: 500;
+            padding: 1rem;
+            // display: flex;
+            // gap: 3rem;
+            // color: dimgray;
+            // font-weight: 500;
 
             .MiddleLeft {
                 height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                // .MiddleIconSecMain {
+                //     display: flex;
+                //     gap: 1rem;
+                //     margin-bottom: 1rem;
 
-                .MiddleIconSecMain {
+                //     .MiddleIconSec {
+                //         display: flex;
+                //         flex-direction: column;
+                //         justify-content: center;
+                //         gap: 0.4rem;
+                //         align-items: center;
+
+                //         svg {
+                //             font-size: 4rem;
+                //             color: rgb(10, 11, 29);
+                //         }
+                //     }
+                // }
+
+                // .PreviewAlbum {
+                //     color: red;
+                //     cursor: pointer;
+                //     font-weight: 500;
+                // }
+
+                // .AddDetailsHeading {
+                //     font-size: 15px;
+                //     font-weight: 600;
+                //     color: black;
+
+                // }
+
+                // .AddDetailsSubHeading {
+                //     font-size: 14px;
+                //     color: grey;
+                //     margin-bottom: 1rem;
+                //     text-transform: capitalize;
+                //     font-weight: 500;
+                // }
+
+                .MiddleLeftHeading {
+                    font-size: 19px;
+                    font-weight: 400;
+                    color: #c5c5c5;
+                    margin-bottom: 0rem;
                     display: flex;
-                    gap: 1rem;
-                    margin-bottom: 1rem;
+                    justify-content: space-between;
 
-                    .MiddleIconSec {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        gap: 0.4rem;
-                        align-items: center;
-
-                        svg {
-                            font-size: 4rem;
-                            color: rgb(10, 11, 29);
-                        }
+                    span {
+                        color: #979090;
                     }
-                }
 
-                .PreviewAlbum {
-                    color: red;
-                    cursor: pointer;
-                    font-weight: 500;
-                }
-
-                .AddDetailsHeading {
-                    font-size: 15px;
-                    font-weight: 600;
-                    color: black;
-
-                }
-
-                .AddDetailsSubHeading {
-                    font-size: 14px;
-                    color: grey;
-                    margin-bottom: 1rem;
-                    text-transform: capitalize;
-                    font-weight: 500;
+                    .Package_type {
+                        color: #d9475c;
+                        // color: #fff;
+                        // background: #d9475c;
+                        // padding: 2px 22px;
+                        // border-radius: 5px;
+                    }
                 }
             }
         }

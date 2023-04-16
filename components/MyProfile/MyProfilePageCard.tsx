@@ -1,24 +1,35 @@
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./MyProfileCard.module.scss";
-import { RiComputerFill } from "react-icons/ri";
-import { AiFillFacebook } from "react-icons/ai";
 import HalfCircleProgressBar from "./HalfCircleProgressBar";
 import { useState } from "react";
+import { PackageType } from "../../types/enums";
+import CustomButton from "../Button/CustomButton";
 
 interface Step1DataResponse {
   step1Response: any;
+  AuthSuccess: any;
   onPreviewAlbum: (visible: boolean) => void;
 }
 
 const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   step1Response,
   onPreviewAlbum,
+  AuthSuccess
 }) => {
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const showGalleryClickHandler = () => {
     setShowGallery(!showGallery);
     onPreviewAlbum(!showGallery);
   };
+
+  function getKeyByValue(value: string, enumObject: any) {
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (val === value) {
+        return key.replaceAll("_", " ");
+      }
+    }
+  }
+
   return (
     <Container className={classes.cardWrapper}>
       <Row>
@@ -35,42 +46,21 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
         <Col sm={5} md={8} lg={6} className={classes.cardInfo}>
           <div className={`${classes.MyProfileMiddle} `}>
             <div className={classes.MiddleLeft}>
-              <p>Upload photo From</p>
-              <div className={classes.MiddleIconSecMain}>
-                <div className={classes.MiddleIconSec}>
-                  <RiComputerFill />
-                  Computer
-                </div>
-                <div className={classes.MiddleIconSec}>
-                  <AiFillFacebook />
-                  Facebook
-                </div>
+              <div>
+                <p className={classes.MiddleLeftHeading}>User Name : <span>{step1Response?.profile_handlername || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>User RM_id : <span >{AuthSuccess?.user_RM_ID || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>Package Type : <span className={classes?.Package_type}>{getKeyByValue(String(AuthSuccess?.package_id), PackageType) ||
+                  "NA"}</span> </p>
+                <p className={classes.MiddleLeftHeading}>Mobile No : <span >{step1Response?.mobile || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>Email Id : <span >{step1Response?.emailid || "NA"} </span> </p>
               </div>
-              <p>you can set photo privacy</p>
-              <Button
-                variant="link"
-                className={classes.PreviewAlbum}
+
+              <CustomButton
                 onClick={showGalleryClickHandler}
               >
                 {!showGallery ? "Preview Album" : "Back to profile"}
-              </Button>
-            </div>
-            <div className={classes.MiddleLeft}>
-              <p className={classes.AddDetailsHeading}>
-                Add Details to your Profile
-              </p>
-              <p className={classes.AddDetailsSubHeading}>
-                Upload Photo : +26%
-              </p>
-              <p className={classes.AddDetailsSubHeading}>
-                Write about you & family : +22%
-              </p>
-              <p className={classes.AddDetailsSubHeading}>
-                Add Family details : +12%
-              </p>
-              <p className={classes.AddDetailsSubHeading}>
-                Add horoscope details : +7%
-              </p>
+              </CustomButton>
+
             </div>
           </div>
         </Col>

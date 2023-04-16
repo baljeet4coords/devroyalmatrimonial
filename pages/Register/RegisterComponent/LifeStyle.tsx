@@ -40,6 +40,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const [profileComplete, setProfileComplete] = useState<number>(0);
 
   useEffect(() => {
     window.scrollTo({
@@ -51,6 +52,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
 
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
+    !isReduxEmpty && setProfileComplete(60)
   }, [dispatch, userId, isReduxEmpty]);
 
   const [diet, setDiet] = useState<Data>({
@@ -290,7 +292,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection profileComplete={profileComplete} />
+            <RightSection profileComplete={profileComplete} title="" />
           </Row>
         )}
       </Container>

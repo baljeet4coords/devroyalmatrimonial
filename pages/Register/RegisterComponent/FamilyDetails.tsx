@@ -47,13 +47,13 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const [profileComplete, setProfileComplete] = useState<number>(0);
+  
   // const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-    // setTimeout(() => {
-    //   isloading(false);
-    // }, 100);
+   !isReduxEmpty && setProfileComplete(80)
   }, [dispatch, userId, isReduxEmpty]);
 
   // when Render page go on the top of the page
@@ -312,7 +312,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection />
+            <RightSection profileComplete={profileComplete} title="" />
           </Row>
         )}
       </Container>

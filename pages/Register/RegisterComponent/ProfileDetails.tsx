@@ -49,6 +49,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
+  const [profileComplete, setProfileComplete] = useState<number>(0);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
 
@@ -57,13 +58,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
     !isReduxEmpty && setProfileComplete(20);
-  }, [dispatch, isReduxEmpty, userId]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
 
-  const [profileComplete, setProfileComplete] = useState<number>(0);
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
     val: "",
@@ -156,11 +156,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
         if (response.data.output === 4) {
           nextPage(1);
         }
@@ -170,11 +170,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
         if (response.data.output === 0) {
           nextPage(1);
         }
@@ -319,11 +319,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                    <GenderRadioButtons
-                      selectedGender={gender}
-                      onChangeGender={onChangeGender}
-                    />
-                  )}
+                      <GenderRadioButtons
+                        selectedGender={gender}
+                        onChangeGender={onChangeGender}
+                      />
+                    )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
                     <div className={classes.inputBox}>
@@ -349,8 +349,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   <div className={classes.singleBox}>
                     <Form.Label>
                       {selectedProfileFor?.id == "2" ||
-                      selectedProfileFor?.id == "5" ||
-                      gender === "1"
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
                         ? "Groom"
                         : "Bride"}{" "}
                       Name

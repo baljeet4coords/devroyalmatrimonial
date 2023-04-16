@@ -33,7 +33,6 @@ function* myprofileSaga(action: MyProfileActions): any {
         step4: step4Response.data,
         step5: step5Response.data,
       };
-      console.log(allStepsObject);
       yield put(myProfileSuccess(allStepsObject));
     }
   } catch (error) {
