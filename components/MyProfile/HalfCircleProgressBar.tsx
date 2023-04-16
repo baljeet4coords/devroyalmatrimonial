@@ -20,7 +20,7 @@ const HalfCircleProgressBar: React.FC<MyProfileProgress> = ({
           strokeLinecap: "butt",
           textSize: "16px",
           pathTransitionDuration: 0.5,
-          pathColor: `rgba(216, 32, 32, ${percentage / 100})`,
+          pathColor: `rgba(56, 186, 27, ${percentage / 100})`,
           textColor: "#f88",
           trailColor: "#d6d6d6",
           backgroundColor: "#3e98c7",

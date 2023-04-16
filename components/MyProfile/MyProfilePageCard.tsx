@@ -47,8 +47,8 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           <div className={`${classes.MyProfileMiddle} `}>
             <div className={classes.MiddleLeft}>
               <div>
-                <p className={classes.MiddleLeftHeading}>User Name : <span>{step1Response?.profile_handlername || "NA"} </span> </p>
-                <p className={classes.MiddleLeftHeading}>User RM_id : <span >{AuthSuccess?.user_RM_ID || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>Name : <span>{step1Response?.profile_handlername || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>RM ID  : <span >{AuthSuccess?.user_RM_ID || "NA"} </span> </p>
                 <p className={classes.MiddleLeftHeading}>Package Type : <span className={classes?.Package_type}>{getKeyByValue(String(AuthSuccess?.package_id), PackageType) ||
                   "NA"}</span> </p>
                 <p className={classes.MiddleLeftHeading}>Mobile No : <span >{step1Response?.mobile || "NA"} </span> </p>
@@ -68,8 +68,8 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           {/* <div className={classes.RightPrograss}>
             25%
         </div> */}
-          <HalfCircleProgressBar profileComplete={45} />
-          <p className={classes.CompleteProfileHEd}>Complete your profile</p>
+          <HalfCircleProgressBar profileComplete={100} />
+          <p className={classes.CompleteProfileHEd}>Profile Completion Status</p>
           <p>Last edited on 06th Mar, 2023 </p>
           <p>Profile view : 0 </p>
         </Col>
