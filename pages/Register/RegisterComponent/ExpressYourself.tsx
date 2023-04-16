@@ -21,9 +21,13 @@ import CountrySingle from "../../../components/InputField/CountryStateSingle/Cou
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 
-const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
+const ExpressYourself: React.FC<ExpressYourselfProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepFiveDefaultValues = useSelector(selectStep5Success);
   const isLoading = useSelector(selectStep5Loading);
@@ -83,19 +87,37 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
   const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
   const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
 
-  const [aboutCareer, setAboutCareer] = useState<string>(jsonData && jsonData.about_career ? jsonData.about_career : "");
-  const [aboutFamily, setAboutFamily] = useState<string>(jsonData && jsonData.about_family ? jsonData.about_family : "");
-  const [aboutEducation, setAboutEducation] = useState<string>(jsonData && jsonData.about_education ? jsonData.about_education : "");
-  const [basicIntro, setBasicIntro] = useState<string>(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "");
-
+  const [aboutCareer, setAboutCareer] = useState<string>(
+    jsonData && jsonData.about_career ? jsonData.about_career : ""
+  );
+  const [aboutFamily, setAboutFamily] = useState<string>(
+    jsonData && jsonData.about_family ? jsonData.about_family : ""
+  );
+  const [aboutEducation, setAboutEducation] = useState<string>(
+    jsonData && jsonData.about_education ? jsonData.about_education : ""
+  );
+  const [basicIntro, setBasicIntro] = useState<string>(
+    jsonData && jsonData.basic_intro ? jsonData.basic_intro : ""
+  );
 
   useEffect(() => {
-    setAboutCareer(jsonData && jsonData.about_career ? jsonData.about_career : "");
-    setAboutFamily(jsonData && jsonData.about_family ? jsonData.about_family : "");
-    setAboutEducation(jsonData && jsonData.about_education ? jsonData.about_education : "");
-    setBasicIntro(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "")
-  }, [jsonData,jsonData?.about_career,jsonData?.about_family,jsonData?.about_education,jsonData?.basic_intro])
-
+    setAboutCareer(
+      jsonData && jsonData.about_career ? jsonData.about_career : ""
+    );
+    setAboutFamily(
+      jsonData && jsonData.about_family ? jsonData.about_family : ""
+    );
+    setAboutEducation(
+      jsonData && jsonData.about_education ? jsonData.about_education : ""
+    );
+    setBasicIntro(jsonData && jsonData.basic_intro ? jsonData.basic_intro : "");
+  }, [
+    jsonData,
+    jsonData?.about_career,
+    jsonData?.about_family,
+    jsonData?.about_education,
+    jsonData?.basic_intro,
+  ]);
 
   useEffect(() => {
     formik.values.birthCountry = selectedBirthCountry;
@@ -113,7 +135,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
     aboutCareer,
     aboutEducation,
     aboutFamily,
-    basicIntro
+    basicIntro,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -163,8 +185,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       onChange={(e) => setAboutCareer(e.target.value)}
                       defaultValue={
                         jsonData?.about_career != null
-                        ? String(jsonData?.about_career)
-                        : ""
+                          ? String(jsonData?.about_career)
+                          : ""
                       }
                     />
                     {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
@@ -210,7 +232,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                       }
                     />
                     {formik.touched.aboutEducation &&
-                      formik.errors.aboutEducation ? (
+                    formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -268,7 +290,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({ nextPage }) => {
                   </Button>
                 </Form>
               </Col>
-              <RightSection />
+              <RightSection profileComplete={profileComplete}/>
             </Row>
           )}
         </Container>

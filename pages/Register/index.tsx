@@ -9,13 +9,15 @@ import FamilyDetails from "./RegisterComponent/FamilyDetails";
 import LifeStyle from "./RegisterComponent/LifeStyle";
 import ProfileDetails from "./RegisterComponent/ProfileDetails";
 import { useSelector } from "react-redux";
-import { selectAuthSuccess } from "../../ducks/auth/selectors";
 import router, { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 // import storage from "redux-persist/es/storage";
 import { logoutRequest } from "../../ducks/auth/actions";
 import storage from "redux-persist/es/storage";
 import { TbPlayerTrackPrev } from "react-icons/tb";
+import { selectProfileCompletion } from "../../ducks/profileCompletion/selector";
+import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import { updateProfileCompleteness } from "../../ducks/profileCompletion/actions";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -29,19 +31,64 @@ const topHeading = [
 
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const router = useRouter();
+  const profileComplete = useSelector(selectProfileCompletion);
   const { page } = router.query;
   const [active, setActive] = useState<number>(0);
   const dispatch = useDispatch();
+  const authSuccess = useSelector(selectAuthSuccess);
+  const pageNo = authSuccess?.jsonResponse?.user_status;
+  console.log(profileComplete, pageNo);
+  
+  useEffect(() => {
+    if (pageNo === "R") {
+      updateProfileCompleteness(0);
+    }
+    if (pageNo === "1") {
+      updateProfileCompleteness(20);
+    }
+    if (pageNo === "2") {
+      updateProfileCompleteness(40);
+    }
+    if (pageNo === "3") {
+      updateProfileCompleteness(60);
+    }
+    if (pageNo === "4") {
+      updateProfileCompleteness(80);
+    }
+    if (pageNo === "P") {
+      updateProfileCompleteness(100);
+    }
+  }, [pageNo]);
 
   const chooseMessage = (message: number) => {
     setActive(message);
   };
   const Components = [
-    <ProfileDetails key={0} nextPage={chooseMessage} />,
-    <CareerDetails key={1} nextPage={chooseMessage} />,
-    <LifeStyle key={2} nextPage={chooseMessage} />,
-    <FamilyDetails key={3} nextPage={chooseMessage} />,
-    <ExpressYourself key={4} nextPage={chooseMessage} />,
+    <ProfileDetails
+      key={0}
+      nextPage={chooseMessage}
+      profileComplete={profileComplete}
+    />,
+    <CareerDetails
+      key={1}
+      nextPage={chooseMessage}
+      profileComplete={profileComplete}
+    />,
+    <LifeStyle
+      key={2}
+      nextPage={chooseMessage}
+      profileComplete={profileComplete}
+    />,
+    <FamilyDetails
+      key={3}
+      nextPage={chooseMessage}
+      profileComplete={profileComplete}
+    />,
+    <ExpressYourself
+      key={4}
+      nextPage={chooseMessage}
+      profileComplete={profileComplete}
+    />,
   ];
   const onLogout = () => {
     router.push("/");
@@ -70,8 +117,9 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "} ${classes.topButtons
-                  }`}
+                className={`${active === index ? classes.active : " "} ${
+                  classes.topButtons
+                }`}
                 onClick={() => chooseMessage(index)}
               >
                 {heading}

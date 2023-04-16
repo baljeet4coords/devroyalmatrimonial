@@ -24,16 +24,22 @@ import CountrySingle from "../../../components/InputField/CountryStateSingle/Cou
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import Loader from "../../../components/Loader/Loader";
+import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
+import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 interface Data {
   id?: string;
   val: string;
 }
 
-const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
+const CareerDetails: React.FC<ProfileDetailsProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepTwoDefaultValues = useSelector(selectStep2Success);
   const jsonData = stepTwoDefaultValues?.jsonResponse;
@@ -44,7 +50,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-  }, [dispatch, userId]);
+  }, [dispatch, isReduxEmpty, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 100
@@ -255,7 +261,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection />
+            <RightSection profileComplete={profileComplete} />
           </Row>
         )}
       </Container>
