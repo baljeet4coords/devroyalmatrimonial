@@ -51,8 +51,9 @@ function HeightInput(props: Props) {
   };
 
   return (
-    <Form.Group>
-      <Form.Label>{props.label}</Form.Label>
+    <Form.Group className="mb-4">
+      <Form.Label className="mb-2">{props.label}</Form.Label>
+
       <div className="d-flex align-items-center">
         <Form.Control
           type="number"
@@ -62,7 +63,7 @@ function HeightInput(props: Props) {
           onChange={handleFeetChange}
           className={classes.heightInput}
         />
-        <span className="mx-2">ft</span>
+        <span className="text-muted px-0 mx-2">ft</span>
         <Form.Control
           type="number"
           min="0"
@@ -72,9 +73,7 @@ function HeightInput(props: Props) {
           onChange={handleInchesChange}
           className={classes.heightInput}
         />
-        <span>in</span>
-      </div>
-      <div className="mt-2 d-flex align-items-center">
+        <span className="text-muted px-0 mx-2">in</span>
         <Form.Control
           type="number"
           min="0"
@@ -83,7 +82,7 @@ function HeightInput(props: Props) {
           onChange={handleCentimetersChange}
           className={classes.heightInput}
         />
-        <span className="mx-2">cms</span>
+        <span className="text-muted px-0 mx-2">cm</span>
       </div>
     </Form.Group>
   );

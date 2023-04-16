@@ -25,8 +25,10 @@
   }
 }
 
+.Form_btnPrev {
+  align-self: end!important;
+}
 @media only screen and (max-width: 950px) {
-
   .register_header_Links,
   .register_header_Links a {
     width: 100%;
@@ -161,7 +163,6 @@
           }
         }
       }
-
     }
 
     .blankInput {
@@ -227,7 +228,7 @@
 }
 
 .formEdit {
-  +button {
+  + button {
     margin-top: 3rem;
   }
 }

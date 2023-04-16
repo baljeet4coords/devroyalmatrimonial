@@ -27,7 +27,9 @@ interface ImageResponse {
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [uploadStatus, setUploadStatus] = useState<string>("");
+  const [uploadStatus, setUploadStatus] = useState<string>(
+    "JPG, JPEG, or PNG type"
+  );
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
   const userId = useSelector(getUserId);
 
@@ -107,7 +109,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             Add more photos
             <ImImage />
           </div>
-          <span>{uploadStatus}</span>
+          <span className="mt-2 text-muted">{uploadStatus}</span>
         </div>
         <input
           type="file"

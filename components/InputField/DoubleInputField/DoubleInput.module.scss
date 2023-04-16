@@ -1,97 +1,90 @@
 @import "../../../styles/constants.scss";
 
 .twoBox {
-    display: flex;
+  display: flex;
+  position: relative;
+  width: 66%;
+
+  div {
+    width: 100%;
+
+    svg {
+      position: absolute;
+      right: 15px;
+      top: 40%;
+    }
+  }
+
+  .inputBox {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1.5rem;
+    text-align: center;
+    margin: 0.6em;
+    color: $browser_text;
+    cursor: pointer;
     position: relative;
-    width: 66%;
+    min-width: 46%;
+    background: #fff;
 
-    div {
+    .inputBoxVal {
+      visibility: hidden;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      padding: 0.5rem;
+      text-align: center;
+      margin: 0.6em;
+      color: $browser_text;
+      cursor: pointer;
+      width: 100%;
+      position: absolute;
+      left: -9px;
+      border: 1px solid $red_bg;
+      background: $milkWhite_bg;
+      box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+      z-index: 9;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0 5px;
         width: 100%;
+        max-height: 300px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        cursor: text;
+        display: grid;
+        grid-template-columns: auto auto auto;
 
-        svg {
-            position: absolute;
-            right: 15px;
-            top: 40%;
+        li {
+          position: relative;
+          margin: 3px 5px 3px 0;
+          padding: 10px 5px;
+          border: 1px solid #d9d9d9;
+          max-width: 100%;
+          border-radius: 3px;
+          background-color: #f5f5f5;
+          line-height: 13px;
+          cursor: default;
+
+          &:hover {
+            background-color: #d9475c;
+            color: #fff;
+          }
         }
-    }
 
-    .inputBox {
-        border: 1px solid #d9d9d9;
-        border-radius: 2px;
-        padding: 0.875rem 1.5rem;
-        text-align: center;
-        margin: 0.6em;
-        color: $browser_text;
-        cursor: pointer;
-        position: relative;
-        min-width: 46%;
-        background: #fff;
-
-        .inputBoxVal {
-            visibility: hidden;
-            border: 1px solid #d9d9d9;
-            border-radius: 2px;
-            padding: 0.875rem 1rem;
-            text-align: center;
-            margin: 0.6em;
-            color: $browser_text;
-            cursor: pointer;
-            width: 100%;
-            position: absolute;
-            left: -9px;
-            border: 1px solid $red_bg;
-            background: $milkWhite_bg;
-            box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-            z-index: 9;
-
-            ul {
-                list-style: none;
-                margin: 0;
-                padding: 0 5px;
-                width: 100%;
-                max-height: 300px;
-                overflow-x: hidden;
-                overflow-y: scroll;
-                cursor: text;
-                display: grid;
-                grid-template-columns: auto auto auto;
-
-                li {
-                    position: relative;
-                    margin: 3px 5px 3px 0;
-                    padding: 10px 20px 10px 5px;
-                    border: 1px solid #d9d9d9;
-                    max-width: 100%;
-                    border-radius: 3px;
-                    background-color: #f5f5f5;
-                    line-height: 13px;
-                    cursor: default;
-
-                    &:hover {
-                        background-color: #d9475c;
-                        color: #fff
-                    }
-                }
-
-                .tabActive {
-                    background-color: #d9475c;
-                    color: #fff
-                }
-            }
+        .tabActive {
+          background-color: #d9475c;
+          color: #fff;
         }
+      }
     }
+  }
 }
-
 
 .active {
-    visibility: visible !important;
+  visibility: visible !important;
 }
-
-
-
-
-
-
 
 // @media only screen and (max-width: 1200px) and (min-width: 768px) {
 //     .twoBox {
@@ -104,25 +97,25 @@
 //     }
 // }
 @media only screen and (max-width: 1200px) and (min-width: 300px) {
-    .twoBox {
-        flex-direction: column;
-        width: 100%;
+  .twoBox {
+    flex-direction: column;
+    width: 100%;
 
-        .inputBox {
-            margin: 0.6rem 0;
-            min-width: auto;
-        }
+    .inputBox {
+      margin: 0.6rem 0;
+      min-width: auto;
     }
+  }
 }
 
 @media only screen and (max-width: 300px) {
-    .twoBox {
-        flex-direction: column;
-        width: 100%;
+  .twoBox {
+    flex-direction: column;
+    width: 100%;
 
-        .inputBox {
-            margin: 0.6rem 0;
-            min-width: auto;
-        }
+    .inputBox {
+      margin: 0.6rem 0;
+      min-width: auto;
     }
+  }
 }

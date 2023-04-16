@@ -3,6 +3,7 @@ import AvatarEditor from "react-avatar-editor";
 import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
 import { Image } from "react-bootstrap";
+import CustomButton from "../Button/CustomButton";
 
 type Avatar = {
   name: string;
@@ -19,6 +20,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
   defaultImage,
 }) => {
   const defaultImageOnly = defaultImage.split("/").pop();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -63,15 +65,21 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
       image === null && setCroppedImage(defaultImage);
     }
   }, [defaultImage]);
-
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   return (
     <>
       <input
         type="file"
         onChange={handleImageChange}
+        ref={fileInputRef}
         id="profilepic"
         name="profilepic"
         className={classes.Profile_input}
+        style={{ display: "none" }}
       />
       {image && (
         <AvatarEditor
@@ -103,6 +111,9 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
           </Button>
         </div>
       )}
+      <CustomButton onClick={handleButtonClick}>
+        Add Profile Picture
+      </CustomButton>
     </>
   );
 };

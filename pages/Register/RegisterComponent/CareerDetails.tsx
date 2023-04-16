@@ -257,7 +257,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50`}
+                  className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                 >
                   Next
                 </Button>
