@@ -57,7 +57,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
 
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
-  }, [dispatch, userId, isReduxEmpty]);
+  }, [dispatch, userId]);
 
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
@@ -296,7 +296,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                 </Button>
               </Form>
             </Col>
-            <RightSection profileComplete={profileComplete} />
+            <RightSection profileComplete={profileComplete} title="" />
           </Row>
         )}
       </Container>

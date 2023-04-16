@@ -46,6 +46,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  // const [profileComplete, setProfileComplete] = useState<number>(0);
+
   const isLoading = useSelector(selectStep2Loading);
 
   useEffect(() => {

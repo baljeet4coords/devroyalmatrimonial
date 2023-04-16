@@ -37,7 +37,7 @@ const Header: React.FC = () => {
   };
 
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(
     window.innerWidth <= 992 ? true : false
   );
@@ -45,10 +45,10 @@ const Header: React.FC = () => {
   const [isActive, setActive] = useState(false);
 
   const showDropdown = () => {
-    setShow(!show);
+    setShow(1);
   };
   const hideDropdown = () => {
-    setShow(false);
+    setShow(0);
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Header: React.FC = () => {
                 title="SEARCH"
                 id="collasible-nav-dropdown"
                 menuVariant="dark"
-                show={show}
+                show={show == 1 ? true : false}
                 onMouseEnter={showDropdown}
                 onMouseLeave={hideDropdown}
               >

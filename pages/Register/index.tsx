@@ -15,9 +15,9 @@ import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../ducks/auth/actions";
 import storage from "redux-persist/es/storage";
 import { TbPlayerTrackPrev } from "react-icons/tb";
-import { selectProfileCompletion } from "../../ducks/profileCompletion/selector";
+// import { selectProfileCompletion } from "../../ducks/profileCompletion/selector";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
-import { updateProfileCompleteness } from "../../ducks/profileCompletion/actions";
+// import { updateProfileCompleteness } from "../../ducks/profileCompletion/actions";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
 }
@@ -31,34 +31,32 @@ const topHeading = [
 
 const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   const router = useRouter();
-  const profileComplete = useSelector(selectProfileCompletion);
+  // const profileComplete = useSelector(selectProfileCompletion);
   const { page } = router.query;
   const [active, setActive] = useState<number>(0);
+  const [profileCompletion, setProfileCompletion] = useState<number>(0);
   const dispatch = useDispatch();
-  const authSuccess = useSelector(selectAuthSuccess);
-  const pageNo = authSuccess?.jsonResponse?.user_status;
-  console.log(profileComplete, pageNo);
-  
-  useEffect(() => {
-    if (pageNo === "R") {
-      updateProfileCompleteness(0);
-    }
-    if (pageNo === "1") {
-      updateProfileCompleteness(20);
-    }
-    if (pageNo === "2") {
-      updateProfileCompleteness(40);
-    }
-    if (pageNo === "3") {
-      updateProfileCompleteness(60);
-    }
-    if (pageNo === "4") {
-      updateProfileCompleteness(80);
-    }
-    if (pageNo === "P") {
-      updateProfileCompleteness(100);
-    }
-  }, [pageNo]);
+  // const authSuccess = useSelector(selectAuthSuccess);
+  // const pageNo = authSuccess?.jsonResponse?.user_status;
+
+
+  // useEffect(() => {
+  //   console.log(pageNo,authSuccess?.jsonResponse);
+
+  //   if (pageNo === "R") {
+  //     setProfileCompletion(0);
+  //   } else if (pageNo === "1") {
+  //     setProfileCompletion(20);
+  //   } else if (pageNo === "2") {
+  //     setProfileCompletion(40);
+  //   } else if (pageNo === "3") {
+  //     setProfileCompletion(60);
+  //   } else if (pageNo === "4") {
+  //     setProfileCompletion(80);
+  //   } else {
+  //     setProfileCompletion(100);
+  //   }
+  // }, [pageNo]);
 
   const chooseMessage = (message: number) => {
     setActive(message);
@@ -67,27 +65,27 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
     <ProfileDetails
       key={0}
       nextPage={chooseMessage}
-      profileComplete={profileComplete}
+      profileComplete={profileCompletion}
     />,
     <CareerDetails
       key={1}
       nextPage={chooseMessage}
-      profileComplete={profileComplete}
+      profileComplete={profileCompletion}
     />,
     <LifeStyle
       key={2}
       nextPage={chooseMessage}
-      profileComplete={profileComplete}
+      profileComplete={profileCompletion}
     />,
     <FamilyDetails
       key={3}
       nextPage={chooseMessage}
-      profileComplete={profileComplete}
+      profileComplete={profileCompletion}
     />,
     <ExpressYourself
       key={4}
       nextPage={chooseMessage}
-      profileComplete={profileComplete}
+      profileComplete={profileCompletion}
     />,
   ];
   const onLogout = () => {
@@ -117,9 +115,8 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "} ${
-                  classes.topButtons
-                }`}
+                className={`${active === index ? classes.active : " "} ${classes.topButtons
+                  }`}
                 onClick={() => chooseMessage(index)}
               >
                 {heading}

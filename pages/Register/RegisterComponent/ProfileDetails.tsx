@@ -155,11 +155,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
         if (response.data.output === 4) {
           nextPage(1);
         }
@@ -169,12 +169,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
-        if (response.data.output === 0) {
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        if (response.data.output >= 0) {
           nextPage(1);
         }
       }
@@ -318,11 +318,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                    <GenderRadioButtons
-                      selectedGender={gender}
-                      onChangeGender={onChangeGender}
-                    />
-                  )}
+                      <GenderRadioButtons
+                        selectedGender={gender}
+                        onChangeGender={onChangeGender}
+                      />
+                    )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
                     <div className={classes.inputBox}>
@@ -348,8 +348,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
                   <div className={classes.singleBox}>
                     <Form.Label>
                       {selectedProfileFor?.id == "2" ||
-                      selectedProfileFor?.id == "5" ||
-                      gender === "1"
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
                         ? "Groom"
                         : "Bride"}{" "}
                       Name

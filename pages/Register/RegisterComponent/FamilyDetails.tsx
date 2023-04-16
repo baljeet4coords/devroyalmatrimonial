@@ -56,8 +56,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-    !isReduxEmpty && dispatch(updateProfileCompleteness(80));
-  }, [dispatch, userId, isReduxEmpty]);
+  }, [dispatch, userId]);
 
   // when Render page go on the top of the page
   useEffect(() => {

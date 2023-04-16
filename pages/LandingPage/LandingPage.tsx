@@ -55,7 +55,7 @@ const LandingPage: React.FC = () => {
     }
   }, [authMessage]);
 
-  const [activeId, setActiveId] = useState<string>();
+  const [activeId, setActiveId] = useState<string>("0");
 
   const refineScroll = (scrollVal: any) => {
     const refCapture: any = ref.current;

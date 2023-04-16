@@ -2,6 +2,37 @@
   background-color: #fff;
   border-radius: 2px;
   padding: 2rem;
+
+  .addMorePhoto {
+    background-color: rgba(0, 0, 0, 0.623);
+    width: auto;
+    padding: 0.3rem 1rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  :last-child {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+
+    a {
+
+      width: 23%;
+
+      background-color: #eeeeee;
+      img {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .addbtn {

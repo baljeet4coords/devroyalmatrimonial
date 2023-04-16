@@ -10,6 +10,7 @@ import { Image } from "react-bootstrap";
 import classes from "./ImageGallery.module.scss";
 import { Button } from "react-bootstrap";
 import { useRef } from "react";
+import { ImImage } from "react-icons/im";
 
 interface ImageGalleryProps {
   images: {
@@ -35,11 +36,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   };
   return (
     <div className={classes.imageGallery}>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between mb-5">
         <h5>Your Photos</h5>
-        <Button className={classes.addBtn} onClick={handleButtonClick}>
+        {/* <Button className={classes.addBtn} onClick={handleButtonClick}>
           Add more photos
-        </Button>
+        </Button> */}
+        <div className={classes.addMorePhoto} onClick={handleButtonClick}>
+          Add more photos
+          <ImImage />
+        </div>
         <input
           type="file"
           ref={fileInputRef}
@@ -53,16 +58,19 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         speed={500}
         plugins={[lgThumbnail, lgZoom]}
         elementClassNames="text-center"
+
       >
-        {images.length < 0
-          ? "No images"
-          : images.map((img, index) => {
+        
+          {images.length < 0
+            ? "No images"
+            : images.map((img, index) => {
               return (
                 <a href={img.src} key={index}>
                   <Image alt={img.alt} src={img.src} />
                 </a>
               );
             })}
+        
       </LightGallery>
     </div>
   );

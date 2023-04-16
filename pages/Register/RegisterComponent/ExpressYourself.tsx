@@ -35,8 +35,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+
   useEffect(() => {
-    dispatch(step5({ actionType: "v", userId: userId }));
+    dispatch(step5({ actionType: "v", userId: userId }))
   }, [dispatch, userId]);
 
   // when Render page go on the top of the page
@@ -232,7 +233,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -290,7 +291,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   </Button>
                 </Form>
               </Col>
-              <RightSection profileComplete={profileComplete}/>
+              <RightSection profileComplete={profileComplete} />
             </Row>
           )}
         </Container>

@@ -24,7 +24,7 @@ import EditLifeStyle from "../../components/EditMyProfile/EditLifeStyleDetails";
 import { useDispatch } from "react-redux";
 import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
-import { getUserId } from "../../ducks/auth/selectors";
+import { getUserId, selectAuthSuccess } from "../../ducks/auth/selectors";
 import {
   selectmyProfileLoading,
   selectmyProfileSuccess,
@@ -56,7 +56,11 @@ const MyProfile: React.FC = () => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const myProfileObject = useSelector(selectmyProfileSuccess);
+  const AuthSuccess = useSelector(selectAuthSuccess);
+
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
+
+
 
   const step1Response = myProfileObject?.step1.jsonResponse;
   const step2Response = myProfileObject?.step2.jsonResponse;
@@ -71,6 +75,7 @@ const MyProfile: React.FC = () => {
   const onPreviewAlbum = (visible: boolean) => {
     setShowGallery(visible);
   };
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
@@ -80,7 +85,7 @@ const MyProfile: React.FC = () => {
             Make your profile more intersting by adding cover photo to your
             profile.
           </p>
-          <div className={classes.changeBackground} onClick={() => {}}>
+          <div className={classes.changeBackground} onClick={() => { }}>
             Change Cover Photo
             <ImImage />
           </div>
@@ -92,6 +97,8 @@ const MyProfile: React.FC = () => {
             <MyProfilePageCard
               step1Response={step1Response}
               onPreviewAlbum={onPreviewAlbum}
+              AuthSuccess={AuthSuccess?.jsonResponse}
+
             />
             <Container className={classes.detailsWrapper}>
               <Row>
