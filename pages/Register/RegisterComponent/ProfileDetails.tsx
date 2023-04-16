@@ -38,18 +38,18 @@ import {
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 interface Data {
   id?: string;
   val: string;
 }
-const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComplete }) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
-  const [profileComplete, setProfileComplete] = useState<number>(0);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
 
@@ -57,7 +57,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
-    !isReduxEmpty && setProfileComplete(20);
   }, [dispatch, userId]);
 
   useEffect(() => {

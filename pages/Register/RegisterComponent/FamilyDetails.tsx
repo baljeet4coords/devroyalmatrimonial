@@ -30,15 +30,21 @@ import CountrySingle from "../../../components/InputField/CountryStateSingle/Cou
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import Loader from "../../../components/Loader/Loader";
+import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
+import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 interface Data {
   id?: string;
   val: string;
 }
-const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
+const FamilyDetails: React.FC<ProfileDetailsProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
   const isLoading = useSelector(selectStep4Loading);
@@ -47,14 +53,10 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const [profileComplete, setProfileComplete] = useState<number>(0);
-  
-  // const [loading, isloading] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
-   !isReduxEmpty && setProfileComplete(80)
-  }, [dispatch, userId, isReduxEmpty]);
+  }, [dispatch, userId]);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -312,7 +314,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection profileComplete={profileComplete} title="" />
+            <RightSection profileComplete={profileComplete} />
           </Row>
         )}
       </Container>

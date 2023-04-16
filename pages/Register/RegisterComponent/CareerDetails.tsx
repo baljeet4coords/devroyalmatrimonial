@@ -24,30 +24,35 @@ import CountrySingle from "../../../components/InputField/CountryStateSingle/Cou
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import Loader from "../../../components/Loader/Loader";
+import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
+import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  profileComplete: number;
 }
 interface Data {
   id?: string;
   val: string;
 }
 
-const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
+const CareerDetails: React.FC<ProfileDetailsProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepTwoDefaultValues = useSelector(selectStep2Success);
   const jsonData = stepTwoDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
-  const [profileComplete, setProfileComplete] = useState<number>(0);
+  // const [profileComplete, setProfileComplete] = useState<number>(0);
 
   const isLoading = useSelector(selectStep2Loading);
 
   useEffect(() => {
     dispatch(step2({ actionType: "v", userId: userId }));
-    !isReduxEmpty && setProfileComplete(40)
-  }, [dispatch, userId]);
+  }, [dispatch, isReduxEmpty, userId]);
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
     jsonData?.country || 100
@@ -258,7 +263,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({ nextPage }: any) => {
                 </Button>
               </Form>
             </Col>
-            <RightSection profileComplete={profileComplete} title="" />
+            <RightSection profileComplete={profileComplete} />
           </Row>
         )}
       </Container>
