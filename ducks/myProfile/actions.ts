@@ -1,10 +1,3 @@
-import {
-  IRegisterStep1Response,
-  IRegisterStep2Response,
-  IRegisterStep3Response,
-  IRegisterStep4Response,
-  IRegisterStep5Response,
-} from "../../types/register/userRegister";
 import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 import {
   IRegisterStep1Response,

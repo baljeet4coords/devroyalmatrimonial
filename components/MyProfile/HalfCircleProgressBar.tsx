@@ -6,10 +6,12 @@ interface MyProfileProgress {
   profileComplete?: number;
 }
 
-const HalfCircleProgressBar: React.FC<MyProfileProgress> = ({ profileComplete }) => {
+const HalfCircleProgressBar: React.FC<MyProfileProgress> = ({
+  profileComplete,
+}) => {
   const percentage = profileComplete ? profileComplete : 0;
   return (
-    <div style={{ width: 160, height: 160 }}>
+    <div style={{ width: 160, height: 160, margin: "auto" }}>
       <CircularProgressbar
         value={percentage}
         text={`${percentage}%`}
