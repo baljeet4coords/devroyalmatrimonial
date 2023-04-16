@@ -1,3 +1,4 @@
+import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 import {
   IRegisterStep1Response,
   IRegisterStep2Response,
@@ -5,7 +6,6 @@ import {
   IRegisterStep4Response,
   IRegisterStep5Response,
 } from "../../types/register/userRegister";
-import { MYPROFILE, MYPROFILE_SUCCESS, MYPROFILE_FAILURE } from "./constants";
 
 interface MyProfileAction {
   type: typeof MYPROFILE;
@@ -43,7 +43,7 @@ interface MyProfileActionSuccessAction {
       message: string;
       jsonResponse: IRegisterStep5Response;
     };
-  };
+  } | null;
 }
 
 interface MyProfileActionFailureAction {

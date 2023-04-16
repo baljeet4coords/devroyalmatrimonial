@@ -25,17 +25,33 @@ import { useDispatch } from "react-redux";
 import { myProfileReq } from "../../ducks/myProfile/actions";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
-import { selectmyProfileLoading, selectmyProfileSuccess } from "../../ducks/myProfile/selectors";
+import {
+  selectmyProfileLoading,
+  selectmyProfileSuccess,
+} from "../../ducks/myProfile/selectors";
 import Loader from "../../components/Loader/Loader";
+import { ImageGallery } from "../../components";
 
 const MyProfile: React.FC = () => {
   const [criticalDetails, setCriticalDetails] = useState<boolean>(false);
+  const [showGallery, setShowGallery] = useState<boolean>(false);
   const [basicDetails, setBasicDetails] = useState<boolean>(false);
   const [aboutMeDetails, setAboutMeDetails] = useState<boolean>(false);
   const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
-  // const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
+  const [images, setImages] = useState([
+    { src: "./Images/landing_image_1.png", alt: "test" },
+    { src: "/Images/landing_image_2.png", alt: "test" },
+    { src: "/Images/landing_image_3.png", alt: "test" },
+    { src: "./Images/landing_image_1.png", alt: "test" },
+    { src: "/Images/landing_image_2.png", alt: "test" },
+    { src: "/Images/landing_image_3.png", alt: "test" },
+    { src: "./Images/landing_image_1.png", alt: "test" },
+    { src: "/Images/landing_image_2.png", alt: "test" },
+    { src: "/Images/landing_image_3.png", alt: "test" },
+  ]);
+  const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
@@ -52,6 +68,9 @@ const MyProfile: React.FC = () => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
+  const onPreviewAlbum = (visible: boolean) => {
+    setShowGallery(visible);
+  };
   return (
     <React.Fragment>
       <div className={classes.bg}>
@@ -61,87 +80,104 @@ const MyProfile: React.FC = () => {
             Make your profile more intersting by adding cover photo to your
             profile.
           </p>
-          <div className={classes.changeBackground}>
+          <div className={classes.changeBackground} onClick={() => {}}>
             Change Cover Photo
             <ImImage />
           </div>
         </Container>
-        {isMyprofileLoading ? <Loader /> : <>
-          <MyProfilePageCard step1Response={step1Response} />
-          <Container className={classes.detailsWrapper}>
-            <Row>
-              <Col sm={9} md={8} className="p-0">
-                {criticalDetails ? (
-                  <EditCriticalDetials setCriticalDetails={setCriticalDetails} />
+        {isMyprofileLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <MyProfilePageCard
+              step1Response={step1Response}
+              onPreviewAlbum={onPreviewAlbum}
+            />
+            <Container className={classes.detailsWrapper}>
+              <Row>
+                {showGallery ? (
+                  <ImageGallery images={images} />
                 ) : (
-                  <CriticalDetials
-                    step1Response={step1Response}
-                    setCriticalDetails={setCriticalDetails}
-                  />
+                  <>
+                    <Col sm={9} md={8} className="p-0">
+                      {criticalDetails ? (
+                        <EditCriticalDetials
+                          setCriticalDetails={setCriticalDetails}
+                        />
+                      ) : (
+                        <CriticalDetials
+                          step1Response={step1Response}
+                          setCriticalDetails={setCriticalDetails}
+                        />
+                      )}
+                      <hr />
+                      {basicDetails ? (
+                        <EditBasicDetials setBasicDetails={setBasicDetails} />
+                      ) : (
+                        <BasicDetails
+                          step1Response={step1Response}
+                          setBasicDetails={setBasicDetails}
+                        />
+                      )}
+                      <hr />
+                      {aboutMeDetails ? (
+                        <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
+                      ) : (
+                        <AboutMeDetails
+                          step5Response={step5Response}
+                          setAboutMeDetails={setAboutMeDetails}
+                        />
+                      )}
+                      <hr />
+                      {eudcationAndCareer ? (
+                        <EditEducationAmdCareer
+                          setEudcationAndCareer={setEudcationAndCareer}
+                        />
+                      ) : (
+                        <EducationAndCareer
+                          step2Response={step2Response}
+                          setEudcationAndCareer={setEudcationAndCareer}
+                        />
+                      )}
+                      <hr />
+                      {familyDetails ? (
+                        <EditFamilyDetails
+                          setFamilyDetails={setFamilyDetails}
+                        />
+                      ) : (
+                        <FamilydetailsInfo
+                          step4Response={step4Response}
+                          setFamilyDetails={setFamilyDetails}
+                        />
+                      )}
+                      <hr />
+                      {lifeStyleDetails ? (
+                        <EditLifeStyle setEditDetails={setLifeStyleDetails} />
+                      ) : (
+                        <LifeStyleDetails
+                          step3Response={step3Response}
+                          setEditDetails={setLifeStyleDetails}
+                        />
+                      )}
+                      <hr />
+                      {/* {yourLikesDetails ? (
+  <EditYourLikes setEditDetails={setYourLikesDetails} />
+) : (
+  <LikeDetails setEditDetails={setYourLikesDetails} />
+)} */}
+                      <div className={classes.datecont}>
+                        <p>Last updated on 15th Feb, 2023</p>
+                      </div>
+                    </Col>
+                    <Col sm={3} md={4} className="p-0">
+                      <MyProfileRightSec myProfileObject={myProfileObject} />
+                    </Col>
+                  </>
                 )}
-                <hr />
-                {basicDetails ? (
-                  <EditBasicDetials setBasicDetails={setBasicDetails} />
-                ) : (
-                  <BasicDetails
-                    step1Response={step1Response}
-                    setBasicDetails={setBasicDetails}
-                  />
-                )}
-                <hr />
-                {aboutMeDetails ? (
-                  <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
-                ) : (
-                  <AboutMeDetails
-                    step5Response={step5Response}
-                    setAboutMeDetails={setAboutMeDetails}
-                  />
-                )}
-                <hr />
-                {eudcationAndCareer ? (
-                  <EditEducationAmdCareer
-                    setEudcationAndCareer={setEudcationAndCareer}
-                  />
-                ) : (
-                  <EducationAndCareer
-                    step2Response={step2Response}
-                    setEudcationAndCareer={setEudcationAndCareer}
-                  />
-                )}
-                <hr />
-                {familyDetails ? (
-                  <EditFamilyDetails setFamilyDetails={setFamilyDetails} />
-                ) : (
-                  <FamilydetailsInfo
-                    step4Response={step4Response}
-                    setFamilyDetails={setFamilyDetails}
-                  />
-                )}
-                <hr />
-                {lifeStyleDetails ? (
-                  <EditLifeStyle setEditDetails={setLifeStyleDetails} />
-                ) : (
-                  <LifeStyleDetails
-                    step3Response={step3Response}
-                    setEditDetails={setLifeStyleDetails}
-                  />
-                )}
-                <hr />
-                {/* {yourLikesDetails ? (
-                <EditYourLikes setEditDetails={setYourLikesDetails} />
-              ) : (
-                <LikeDetails setEditDetails={setYourLikesDetails} />
-              )} */}
-                <div className={classes.datecont}>
-                  <p>Last updated on 15th Feb, 2023</p>
-                </div>
-              </Col>
-              <Col sm={3} md={4} className="p-0">
-                <MyProfileRightSec myProfileObject={myProfileObject} />
-              </Col>
-            </Row>
-          </Container>
-        </>}
+              </Row>
+            </Container>
+          </>
+        )}
       </div>
     </React.Fragment>
   );

@@ -56,12 +56,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
     jsonData && Object.values(jsonData).every((value) => !value);
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
-  }, [dispatch, userId]);
+    !isReduxEmpty && setProfileComplete(20);
+  }, [dispatch, isReduxEmpty, userId]);
 
   useEffect(() => {
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
 
+  const [profileComplete, setProfileComplete] = useState<number>(0);
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
     val: "",
@@ -449,7 +451,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage }) => {
                   </Button>
                 </Form>
               </Col>
-              <RightSection />
+              <RightSection profileComplete={profileComplete} title={""} />
             </Row>
           )}
         </Container>

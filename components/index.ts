@@ -18,6 +18,7 @@ import CountryStateCitlyList from "./CountryStateCityList/CountryStateCityList";
 import StrictRadioCheck from "./StrictRadioCheck/StrictRadioCheck";
 import Errors from "./Errors/Errors";
 import CastListDropDown from "./CastListDropDown/CastListDropDown";
+import ImageGallery from "./ImageGallery/ImageGallery";
 
 export {
   Header,
@@ -40,4 +41,5 @@ export {
   StrictRadioCheck,
   Errors,
   CastListDropDown,
+  ImageGallery,
 };

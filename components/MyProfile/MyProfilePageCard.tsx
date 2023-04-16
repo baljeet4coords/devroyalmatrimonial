@@ -1,21 +1,34 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./MyProfileCard.module.scss";
 import { RiComputerFill } from "react-icons/ri";
 import { AiFillFacebook } from "react-icons/ai";
 import HalfCircleProgressBar from "./HalfCircleProgressBar";
+import { useState } from "react";
 
 interface Step1DataResponse {
   step1Response: any;
+  onPreviewAlbum: (visible: boolean) => void;
 }
 
-const MyProfilePageCard: React.FC<Step1DataResponse> = ({ step1Response }) => {
-
+const MyProfilePageCard: React.FC<Step1DataResponse> = ({
+  step1Response,
+  onPreviewAlbum,
+}) => {
+  const [showGallery, setShowGallery] = useState<boolean>(false);
+  const showGalleryClickHandler = () => {
+    setShowGallery(!showGallery);
+    onPreviewAlbum(!showGallery);
+  };
   return (
     <Container className={classes.cardWrapper}>
       <Row>
         <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
           <Image
-            src={step1Response?.photo ? `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`: "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"}
+            src={
+              step1Response?.photo
+                ? `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
+                : "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
+            }
             alt="avatar"
           />
         </Col>
@@ -34,7 +47,13 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({ step1Response }) => {
                 </div>
               </div>
               <p>you can set photo privacy</p>
-              <p className={classes.PreviewAlbum}>Preview Album</p>
+              <Button
+                variant="link"
+                className={classes.PreviewAlbum}
+                onClick={showGalleryClickHandler}
+              >
+                {!showGallery ? "Preview Album" : "Back to profile"}
+              </Button>
             </div>
             <div className={classes.MiddleLeft}>
               <p className={classes.AddDetailsHeading}>
@@ -59,7 +78,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({ step1Response }) => {
           {/* <div className={classes.RightPrograss}>
             25%
         </div> */}
-          <HalfCircleProgressBar profileComplete ={45} />
+          <HalfCircleProgressBar profileComplete={45} />
           <p className={classes.CompleteProfileHEd}>Complete your profile</p>
           <p>Last edited on 06th Mar, 2023 </p>
           <p>Profile view : 0 </p>
