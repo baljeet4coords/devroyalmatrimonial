@@ -2,7 +2,6 @@ import classes from "./Form.module.scss";
 import { Form, Button, Row, Col, Image, Spinner } from "react-bootstrap";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { countryCodesObj } from "../../utils/countryCodes";
 import { useFormik } from "formik";
 import { LoginType } from "../../ducks/auth/types";
 import Errors from "../Errors/Errors";
@@ -13,7 +12,7 @@ import router from "next/router";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxCross1, RxCrossCircled } from "react-icons/rx";
-
+import { callingCodes } from "../../utils/countryCodesList";
 
 type ModalLoginProps = {
   onCloseModal: () => void;
@@ -32,11 +31,6 @@ const ModalForm: React.FC<ModalLoginProps> = ({
   const [passwordShow, setPasswordShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
   const [loginSpiner, setloginSpiner] = useState(false);
-  const authSuccess = useSelector(selectAuthSuccess);
-  const callingCodes = [];
-  for (const [key, value] of Object.entries(countryCodesObj)) {
-    callingCodes.push({ countryName: key, callingCode: value });
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -157,9 +151,15 @@ const ModalForm: React.FC<ModalLoginProps> = ({
               type="submit"
               className={`${classes.Form_btn} p-3 mb-3 w-100`}
               onClick={() => setloginSpiner(true)}
-            // disabled={loginSpiner}
+              // disabled={loginSpiner}
             >
-              {loginSpiner && <Spinner className={classes.loginSpiner} animation="border" variant="light" />}
+              {loginSpiner && (
+                <Spinner
+                  className={classes.loginSpiner}
+                  animation="border"
+                  variant="light"
+                />
+              )}
               Login
             </Button>
             <Link

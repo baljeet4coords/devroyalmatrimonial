@@ -30,12 +30,16 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
-import { DateTimePicker } from "react-rainbow-components";
+const DateTimePicker = dynamic(
+  () => import("react-rainbow-components/components/DateTimePicker"),
+  { ssr: false } as any
+);
 import {
   convertDateStringTimeStamp,
   convertServerTimestamp,
   convertTimeStamp,
 } from "../../../utils/dayjs";
+import dynamic from "next/dynamic";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;

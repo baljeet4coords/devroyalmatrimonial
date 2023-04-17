@@ -25,7 +25,6 @@
     "@types/redux-saga": "^0.10.5",
     "axios": "^1.3.2",
     "bootstrap": "^5.2.3",
-    "country-codes-list": "^1.6.10",
     "country-state-city": "3.1.2",
     "dayjs": "^1.11.7",
     "eslint": "8.29.0",
@@ -33,8 +32,8 @@
     "formik": "^3.0.0-next.8",
     "lightgallery": "^2.7.1",
     "lodash": "^4.17.21",
-    "next": "13.0.6",
-    "node-sass": "^8.0.0",
+    "next": "^13.3.0",
+    "node-sass": "^7.0.0",
     "react": "18.2.0",
     "react-avatar-editor": "^13.0.0",
     "react-bootstrap": "^2.7.2",
@@ -58,5 +57,15 @@
   },
   "devDependencies": {
     "@types/brainhubeu__react-carousel": "^2.0.5"
-  }
+  },
+  "resolutions": {
+    "**/hoist-non-react-statics": "3.3.2",
+    "**/react-dom": "^16.14.0",
+    "**/react": "^16.14.0"
+  },
+  "nohoist": [
+    "**/react",
+    "**/react-dom",
+    "**/react-rainbow-components"
+  ]
 }

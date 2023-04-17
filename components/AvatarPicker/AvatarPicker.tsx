@@ -2,9 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import AvatarEditor from "react-avatar-editor";
 import classes from "./AvtarPicker.module.scss";
 import { Image } from "react-bootstrap";
-import { Button } from "react-rainbow-components";
-import { Modal } from "react-rainbow-components";
-
+import dynamic from "next/dynamic";
+const Button = dynamic(
+  () => import("react-rainbow-components/components/Button"),
+  { ssr: false } as any
+);
+const Modal = dynamic(
+  () => import("react-rainbow-components/components/Modal"),
+  { ssr: false } as any
+);
 type Avatar = {
   name: string;
   image: string;

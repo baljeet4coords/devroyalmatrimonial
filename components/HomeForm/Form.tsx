@@ -1,12 +1,12 @@
 import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import classes from "./Form.module.scss";
 import { useFormik } from "formik";
-import { countryCodesObj } from "../../utils/countryCodes";
 import { SignupSchema } from "../../schemas/signupSchema";
 import { Errors } from "../";
 import { SignUpType } from "../../types/authentication";
 import { AiFillEye } from "react-icons/ai";
 import { useState } from "react";
+import { callingCodes } from "../../utils/countryCodesList";
 
 export interface SignUpForm {
   onSubmitForm: (values: SignUpType) => void;
@@ -16,11 +16,6 @@ export interface SignUpForm {
 const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginSpiner, setloginSpiner] = useState(false);
-
-  const callingCodes = [];
-  for (const [key, value] of Object.entries(countryCodesObj)) {
-    callingCodes.push({ countryName: key, callingCode: value });
-  }
 
   const formik = useFormik({
     initialValues: {
