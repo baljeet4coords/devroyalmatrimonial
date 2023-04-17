@@ -54,11 +54,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
               />
             </div>
           </Link>
-          <Nav className={`${stateSize ? classes.show : classes.hide}`}>
-            <Button variant="link" className="default-anchor p-3">
-              LIVE CHAT
-            </Button>
-          </Nav>
+          <Nav className={`${stateSize ? classes.show : classes.hide}`}></Nav>
           <Navbar.Collapse
             id="responsive-navbar-nav"
             className={`position-relative ${classes.nav_links_style}`}
@@ -101,43 +97,43 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
               <Link href="/HelpPage">HELP</Link>
             </Nav>
             <Nav className="ms-auto">
-              <Link href="/SearchPage">
+              <Link href="#">
                 <FiBell />
               </Link>
-              <NavDropdown
-                title={
-                  <Link href="/SearchPage">
-                    <Image
-                      className={classes.circleImg}
-                      src={`${process.env.NEXT_PUBLIC_URL}/${profilePicture}`}
-                      alt="avatar"
-                    />
-                  </Link>
-                }
-                id="ProfileDropdown"
-                menuVariant="dark"
-                show={show === 2 ? true : false}
-                onMouseEnter={() => showDropdown(2)}
-                onMouseLeave={hideDropdown}
-                className={classes.profileAvtarDrop}
-                align="end"
-              >
-                <NavDropdown.Item as="li">
-                  <Link href="/MyProfile">My Profile</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item as="li">
-                  <Link href="/DesiredProfile">Desired Partner Profile</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item as="li">
-                  <Link href="/Register">Registerations </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item as="li" className="text-center">
-                  {/* <CustomButton onClick={onLogout}>Logout</CustomButton> */}
-                  <Link href="/" onClick={onLogout}>Logout</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
           </Navbar.Collapse>
+          <NavDropdown
+            title={
+              <Image
+                className={classes.circleImg}
+                src={`${process.env.NEXT_PUBLIC_URL}/${profilePicture}`}
+                alt="avatar"
+              />
+            }
+            id="ProfileDropdown"
+            menuVariant="dark"
+            show={show === 2 ? true : false}
+            onMouseEnter={() => showDropdown(2)}
+            onMouseLeave={hideDropdown}
+            className={classes.profileAvtarDrop}
+            align="end"
+          >
+            <NavDropdown.Item as="li">
+              <Link href="/MyProfile">My Profile</Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item as="li">
+              <Link href="/DesiredProfile">Desired Partner Profile</Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item as="li">
+              <Link href="/Register">Registerations </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item as="li">
+              {/* <CustomButton onClick={onLogout}>Logout</CustomButton> */}
+              <Link href="/" onClick={onLogout}>
+                Logout
+              </Link>
+            </NavDropdown.Item>
+          </NavDropdown>
         </Container>
       </Navbar>
     </>

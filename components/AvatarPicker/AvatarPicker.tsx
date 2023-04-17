@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import AvatarEditor from "react-avatar-editor";
-import { Button } from "react-bootstrap";
 import classes from "./AvtarPicker.module.scss";
 import { Image } from "react-bootstrap";
-import CustomButton from "../Button/CustomButton";
+import { Button } from "react-rainbow-components";
+import { Modal } from "react-rainbow-components";
 
 type Avatar = {
   name: string;
@@ -28,6 +28,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
   const [scale, setScale] = useState<number>(1);
   const editorRef = useRef<AvatarEditor | null>(null);
   const [croppedImage, setCroppedImage] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -56,6 +57,7 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
       setCroppedImage("/Images/no-avatar.png");
     }
     setCroppedImage(canvas);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -65,7 +67,13 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
       image === null && setCroppedImage(defaultImage);
     }
   }, [defaultImage]);
-  const handleButtonClick = () => {
+
+  useEffect(() => {
+    if (image) setIsOpen(true);
+  }, [image]);
+
+  const handleButtonClick = (e: any) => {
+    e.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -81,39 +89,55 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
         className={classes.Profile_input}
         style={{ display: "none" }}
       />
-      {image && (
-        <AvatarEditor
-          ref={editorRef}
-          image={image}
-          width={250}
-          height={250}
-          border={50}
-          borderRadius={250}
-          color={[255, 255, 255, 0.6]} // RGBA
-          scale={scale}
-          onImageReady={() => setScale(1)}
-          className={classes.canvasIMG}
-        />
-      )}
+      <Modal
+        size="small"
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        className="text-center py-3"
+      >
+        <p className="text-muted">
+          Your expression in the picture can also make a big difference. Choose
+          a picture where you are smiling or looking friendly and approachable.
+          unhappy &#128522;
+        </p>
+        {image && (
+          <AvatarEditor
+            ref={editorRef}
+            image={image}
+            width={250}
+            height={250}
+            border={50}
+            borderRadius={250}
+            color={[255, 255, 255, 0.6]} // RGBA
+            scale={scale}
+            onImageReady={() => setScale(1)}
+            className={classes.canvasIMG}
+          />
+        )}
+        {image && (
+          <div className={classes.BtnDiv}>
+            <Button onClick={handleSave} className={classes.Btn}>
+              Crop Image
+            </Button>
+          </div>
+        )}
+      </Modal>
       {croppedImage ? (
         <div className={classes.avtarWrapper}>
-          <Image src={croppedImage} alt="avatar" className="w-100" />
+          <Image src={croppedImage} alt="avatar" className="text-center" />
         </div>
       ) : (
         <div className={classes.avtarWrapper}>
-          <Image src={defaultImage} alt="avatar" className="w-100" />
+          <Image src={defaultImage} alt="avatar" className="text-center" />
         </div>
       )}
-      {image && (
-        <div className={classes.BtnDiv}>
-          <Button onClick={handleSave} className={classes.Btn}>
-            Crop Image
-          </Button>
-        </div>
-      )}
-      <CustomButton onClick={handleButtonClick}>
+      <Button
+        className="rainbow-m-around_medium d-flex mx-auto defaultThemeButton"
+        onClick={(e: any) => handleButtonClick(e)}
+      >
+        {/* <FontAwesomeIcon icon={faCoffee} className="rainbow-m-right_medium" /> */}
         Add Profile Picture
-      </CustomButton>
+      </Button>
     </>
   );
 };

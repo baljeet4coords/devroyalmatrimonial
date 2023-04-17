@@ -15,4 +15,8 @@ export const convertServerTimestamp = (time: string) => {
   return dayjs(time, "YYYY-MM-DD HH:mm").format("YYYY-MM-DD HH:mm");
 };
 
-export const defaultTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+export const convertDateStringTimeStamp = (dateStr: Date) => {
+  const dateObj = new Date(dateStr);
+  return dayjs(dateObj).format("YYYY-MM-DD HH:mm");
+};
+export const defaultTime = dayjs().format("YYYY-MM-DD HH:mm:ss");

@@ -27,7 +27,6 @@
   svg {
     height: 46px;
     width: 30px;
-
   }
 }
 
@@ -73,10 +72,8 @@
 }
 
 .profileAvtarDrop {
-
   height: -webkit-fill-available;
-  padding: 1rem 0.8rem 0.5rem;
-  padding-top: 1.1rem;
+  padding: 9px;
 
   a {
     padding: 0;
@@ -90,16 +87,13 @@
       }
     }
   }
-
 }
-
 
 @media screen and (max-width: 767px) {
   .Navbar_Wrapper {
     width: 100%;
   }
 }
-
 
 @media screen and (max-width: 300px) {
   .show {

@@ -40,9 +40,6 @@ const RegisterHeader: React.FC<RegiserHeaderProps> = ({ onLogout }) => {
             className={`position-relative ${classes.nav_links_style}`}
           >
             <Nav className="ms-auto pe-2">
-              <Button variant="link" className="default-anchor p-3">
-                LIVE CHAT
-              </Button>
               <Link onClick={onLogout} href="/">Logout</Link>
             </Nav>
           </Navbar.Collapse>

@@ -30,10 +30,11 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
+import { DateTimePicker } from "react-rainbow-components";
 import {
+  convertDateStringTimeStamp,
   convertServerTimestamp,
   convertTimeStamp,
-  defaultTime,
 } from "../../../utils/dayjs";
 
 interface ProfileDetailsProps {
@@ -44,8 +45,10 @@ interface Data {
   id?: string;
   val: string;
 }
-const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComplete }) => {
-  const dateInputRef = useRef<HTMLInputElement>(null);
+const ProfileDetails: React.FC<ProfileDetailsProps> = ({
+  nextPage,
+  profileComplete,
+}) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
@@ -103,6 +106,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
   const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
+  const [dob, setDob] = useState<Date>();
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
@@ -112,7 +116,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
       userId: userId,
       profilefor: String(jsonData?.profile_for),
       profileHandlerName: jsonData?.profile_handlername,
-      dob: jsonData ? convertServerTimestamp(jsonData?.dob) : defaultTime,
+      dob: jsonData && convertServerTimestamp(jsonData?.dob),
       selectgender: jsonData?.gender,
       fullname: jsonData?.fullname,
       cast: String(jsonData?.caste),
@@ -155,11 +159,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output === 4) {
           nextPage(1);
         }
@@ -169,11 +173,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output >= 0) {
           nextPage(1);
         }
@@ -199,6 +203,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
     formik.values.cast = selectedCast.id || "";
     formik.values.profilepic = selectedPhotoName || "";
+    setDob(jsonData && convertServerTimestamp(jsonData?.dob));
   }, [
     jsonData,
     formik.values,
@@ -276,6 +281,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
     }
   }, [formik.values, jsonData]);
 
+  const handleDateTimeChange = (value: Date) => {
+    setDob(value);
+    formik.values.dob = convertDateStringTimeStamp(value);
+  };
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -318,38 +328,25 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                      <GenderRadioButtons
-                        selectedGender={gender}
-                        onChangeGender={onChangeGender}
-                      />
-                    )}
+                    <GenderRadioButtons
+                      selectedGender={gender}
+                      onChangeGender={onChangeGender}
+                    />
+                  )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
-                    <div className={classes.inputBox}>
-                      <li className={classes.blankInput}>
-                        <Form.Control
-                          type="datetime-local"
-                          name="dob"
-                          placeholder="DateRange"
-                          onBlur={formik.handleBlur}
-                          onChange={formik.handleChange}
-                          defaultValue={
-                            jsonData && convertServerTimestamp(jsonData?.dob)
-                          }
-                          ref={dateInputRef}
-                          onClick={() => {
-                            dateInputRef.current &&
-                              dateInputRef?.current.showPicker();
-                          }}
-                        />
-                      </li>
-                    </div>
+                    <DateTimePicker
+                      name="dob"
+                      onChange={handleDateTimeChange}
+                      placeholder="DD-MM-YYYY HH:MM"
+                      value={dob}
+                    />
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>
                       {selectedProfileFor?.id == "2" ||
-                        selectedProfileFor?.id == "5" ||
-                        gender === "1"
+                      selectedProfileFor?.id == "5" ||
+                      gender === "1"
                         ? "Groom"
                         : "Bride"}{" "}
                       Name
@@ -367,16 +364,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ nextPage, profileComple
                       </li>
                     </div>
                   </div>
-                  <div className={classes.singleBox}>
+                  <div>
                     <Form.Label>Upload Profile Picture</Form.Label>
-                    <div className={classes.inputBox}>
-                      <li className={classes.blankInput}>
-                        <AvatarPicker
-                          onGetAvatar={profilePicture}
-                          defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
-                        />
-                      </li>
-                    </div>
+                    <AvatarPicker
+                      onGetAvatar={profilePicture}
+                      defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
+                    />
                   </div>
                   <CastListDropDown
                     data={CastListArray}

@@ -10,7 +10,6 @@ import ModalForm from "./HomeForm/ModalLogin";
 import ImageCard from "./ImageCard/ImageCard";
 import LoginHeader from "./LoginHeader/Loginheader";
 import { cardItems } from "./Cards/card";
-import CustomCalendar from "./Calendar/CustomCalendar";
 import DropdownGridSingleSelect from "./DropdownGrid/DropdownGrid";
 import GenderRadioButtons from "./GenderRadioButtons/GenderRadioButtons";
 import AvatarPicker from "./AvatarPicker/AvatarPicker";
@@ -33,7 +32,6 @@ export {
   ImageCard,
   LoginHeader,
   cardItems,
-  CustomCalendar,
   DropdownGridSingleSelect,
   GenderRadioButtons,
   AvatarPicker,
