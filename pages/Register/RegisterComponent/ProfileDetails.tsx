@@ -71,7 +71,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   }, [jsonData?.gender]);
 
   useEffect(() => {
-    if(jsonData) setDob(jsonData?.dob);
+    if(jsonData) setDob(convertTimeStamp(jsonData?.dob));
   }, [jsonData, jsonData?.dob]);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
