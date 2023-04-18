@@ -70,6 +70,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     setGender(jsonData?.gender === "M" ? "1" : "2");
   }, [jsonData?.gender]);
 
+  useEffect(() => {
+    if(jsonData) setDob(jsonData?.dob);
+  }, [jsonData, jsonData?.dob]);
+
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(jsonData?.profile_for),
     val: "",
@@ -110,7 +114,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
-  const [dob, setDob] = useState<Date>();
+  const [dob, setDob] = useState<Date>(convertTimeStamp(jsonData?.dob || ""));
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
@@ -207,9 +211,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
     formik.values.cast = selectedCast.id || "";
     formik.values.profilepic = selectedPhotoName || "";
-    setDob(jsonData && convertServerTimestamp(jsonData?.dob));
   }, [
-    jsonData,
     formik.values,
     selectedProfileFor.id,
     selectedChallenged.id,
@@ -283,13 +285,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.height_cm) {
       formik.values.height = String(jsonData.height_cm);
     }
-  }, [formik.values, jsonData]);
+    if(jsonData && jsonData.dob) {
+      formik.values.dob = jsonData.dob;
+    }
+  }, [jsonData]);
 
   const handleDateTimeChange = (value: Date) => {
     setDob(value);
     formik.values.dob = convertDateStringTimeStamp(value);
   };
-
   return (
     <>
       <div className={classes.profile_Container}>
