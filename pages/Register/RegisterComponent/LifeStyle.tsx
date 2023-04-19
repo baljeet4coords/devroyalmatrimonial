@@ -234,7 +234,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                         title="Type of House"
                         data={HouseType}
                         nameid="house_type"
-                        defaultValue={String(jsonData?.car_details)}
+                        defaultValue={String(jsonData?.home_type)}
                       />
                     </div>
                   )}

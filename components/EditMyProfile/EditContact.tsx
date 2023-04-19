@@ -8,8 +8,9 @@ import { useFormik } from "formik";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
+  step1Response :any;
 }
-const EditContact: FC<MyComponentProps> = ({ setEditDetails }) => {
+const EditContact: FC<MyComponentProps> = ({ setEditDetails ,step1Response }) => {
   const formik = useFormik({
     initialValues: {
       dob: "",
@@ -20,7 +21,7 @@ const EditContact: FC<MyComponentProps> = ({ setEditDetails }) => {
       setEditDetails(false);
     },
   });
-
+  
   return (
     <>
       <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
@@ -44,7 +45,7 @@ const EditContact: FC<MyComponentProps> = ({ setEditDetails }) => {
           <div className={classes.singleBox}>
             <Form.Label>Mobile No.</Form.Label>
             <div className={classes.EditInputSecDisable}>
-              <input type="text" disabled placeholder="+91-9540494428" />
+              <input type="text" disabled placeholder="+91-********28" value={step1Response?.mobile} />
               <span>
                 {" "}
                 <RiLockLine />{" "}

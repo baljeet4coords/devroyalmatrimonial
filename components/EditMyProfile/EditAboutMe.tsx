@@ -10,8 +10,9 @@ import EditCustomButton from "../Button/EditCustomButton";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
+  step5Response: any;
 }
-const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
+const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response }) => {
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);
 
   const formik = useFormik({
@@ -28,6 +29,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
     },
   });
 
+  
   const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
     id?: string;
     val: string;
@@ -66,6 +68,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
               placeholder="I come from a middle-class family. The most important thing in my life is religious beliefs, moral values & respect for elders. I'm an easy-going, sincere,  caring person with a strong work ethic. I'm a modern thinker and follow good values given by our ancestors. I like Painting, love traveling with friends, writing, listening to classical music & watching the latest movies!"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              defaultValue={step5Response?.basic_intro}
             />
             <p>Character Count : 122</p>
             <div className={classes.TextareaDiscrip}>
@@ -78,15 +81,14 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
               </span>
             </div>
           </div>
-          <div className={classes.EditsingleBox}>
-            {/* <Form.Label>Discribe Yourself in 5 words</Form.Label> */}
+          {/* <div className={classes.EditsingleBox}>
             <DropdownGridSingleSelect
               title="Discribe Yourself in 5 words"
               data={DiscribeYourself}
               nameid="DiscribeYourself"
               selectedDataFn={setSelectedMotherTongue}
             />
-          </div>
+          </div> */}
           <div className={classes.EditsingleBox}>
             <Form.Label>About My Family</Form.Label>
             <Form.Control
@@ -96,6 +98,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
               placeholder="Write about your parents and brothers or sisters. Where do they live? What are they doing?"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              defaultValue={step5Response?.about_family}
             />
           </div>
           <div className={classes.EditsingleBox}>
@@ -107,6 +110,8 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
               placeholder="Which institutions have you attended? What course/specializations have you studied?"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              defaultValue={step5Response?.about_education}
+
             />
           </div>
           <div className={classes.EditsingleBox}>
@@ -118,6 +123,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails }) => {
               placeholder="Where are you working currently? You may mention your current job and future career aspirations."
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              defaultValue={step5Response?.about_career}
             />
           </div>
 

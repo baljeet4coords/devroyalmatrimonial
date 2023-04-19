@@ -316,7 +316,7 @@
         .EditInputSec {
             border: 1px solid #d9d9d9;
             position: relative;
-            padding: .7rem 1rem;
+            padding: 0.875rem 1rem;
 
             input {
                 padding: 0%;
@@ -355,7 +355,7 @@
                 float: left;
                 height: 100%;
                 text-align: left;
-                padding: 0.7rem 1rem;
+                padding: 0.875rem 1rem;
             }
 
             span {
@@ -387,13 +387,18 @@
             width: 145px;
         }
     }
+
     .singleBoxWrapper {
         width: 75%;
         margin-left: 25%;
 
-        label{
+        label {
             left: -10.4rem;
         }
+    }
+
+    .singleHeightWrapper{
+        width: 100%;
     }
 
 
@@ -404,10 +409,10 @@
     input {
         border: 1px solid #d9d9d9;
         border-radius: 2px;
-        padding: 0.5rem 1rem;
+        padding: 0.875rem 1rem;
         text-align: left;
         min-width: 75%;
-        width: auto;
+        // width: auto;
 
         &:focus {
             outline: none;
@@ -595,11 +600,12 @@
         .singleBox {
             flex-direction: column;
         }
+
         .singleBoxWrapper {
             width: 100%;
             margin-left: 0%;
-    
-            label{
+
+            label {
                 left: -10.4rem;
             }
         }

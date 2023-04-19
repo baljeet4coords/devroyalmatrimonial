@@ -6,31 +6,101 @@ import { useFormik } from "formik";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
+import { DateTimePicker } from "react-rainbow-components";
+import { convertDateStringTimeStamp, convertServerTimestamp, convertTimeStamp } from "../../utils/dayjs";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
+import axios from "axios";
 
 interface MyComponentProps {
   setCriticalDetails: (details: boolean) => void;
+  step1Response: any;
 }
-const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
+
+interface Data {
+  id?: string;
+  val: string;
+}
+const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails, step1Response }) => {
+  const userId = useSelector(getUserId);
+  const [dob, setDob] = useState<Date>(convertTimeStamp(step1Response?.dob || ""));
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>(step1Response?.photo.split("/")[2]);
+
+  console.log(selectedPhotoName);
+  
+
   const formik = useFormik({
     initialValues: {
-      dob: "",
-      maritalstatus: "",
+      userId: userId,
+      profilefor: String(step1Response?.profile_for),
+      profileHandlerName: step1Response?.profile_handlername,
+      selectgender: step1Response?.gender,
+      fullname: step1Response?.fullname,
+      cast: String(step1Response?.caste),
+      challenged: String(step1Response?.challenged),
+      isHiv: String(step1Response?.hiv),
+      mothertongue: String(step1Response?.mother_tongue),
+      religion: String(step1Response?.religion),
+      isManglik: String(step1Response?.manglik),
+      childrenstatus: String(step1Response?.children_status),
+      height: String(step1Response?.height_cm),
+      profilepic: selectedPhotoName,
+      dob: step1Response && convertServerTimestamp(step1Response?.dob),
+      maritalstatus: String(step1Response?.marital_status),
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append("userId", String(values.userId));
+      formData.append("profilefor", String(values.profilefor));
+      formData.append("profileHandlerName", String(values.profileHandlerName));
+      formData.append(
+        "dob",
+        String(values.dob && convertTimeStamp(values.dob))
+      );
+      formData.append("selectgender", String(values.selectgender));
+      formData.append("fullname", String(values.fullname));
+      formData.append("cast", String(values.cast));
+      formData.append("challenged", String(values.challenged));
+      formData.append("isHiv", String(values.isHiv));
+      formData.append("mothertongue", String(values.mothertongue));
+      formData.append("religion", String(values.religion));
+      formData.append("isManglik", String(values.isManglik));
+      formData.append("maritalstatus", String(values.maritalstatus));
+      formData.append("childrenstatus", String(values.childrenstatus));
+      formData.append("height", String(values.height));
+      formData.append("profilepic", String(values.profilepic));
+      let response;
+      formData.append("actionType", "u");
+      (response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
+        formData
+      )),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
       console.log(JSON.stringify(values, null, 1));
       setCriticalDetails(false);
     },
   });
 
-  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+
+
+  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<Data>({
+    id: String(step1Response?.marital_status),
+    val: "",
+  });
 
   useEffect(() => {
-    formik.initialValues.maritalstatus = selectedMaritalStatus.val;
+    formik.values.maritalstatus = selectedMaritalStatus.id || "";
   }, [formik.initialValues, selectedMaritalStatus]);
 
+
+  const handleDateTimeChange = (value: Date) => {
+    setDob(value);
+    formik.values.dob = convertDateStringTimeStamp(value);
+  };
   return (
     <>
       <div className={classes.content}>
@@ -46,28 +116,26 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails }) => {
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
-              {/* <Form.Label>MaritalStatus</Form.Label> */}
-              <DropdownGridSingleSelect
-                title="MaritalStatus"
-                data={MaritalStatus}
-                nameid="maritalstatus"
-                selectedDataFn={setSelectedMaritalStatus}
+              <Form.Label>Date of Birth</Form.Label>
+              <DateTimePicker
+                name="dob"
+                onChange={handleDateTimeChange}
+                placeholder="DD-MM-YYYY HH:MM"
+                value={dob}
               />
             </div>
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Date of Birth</Form.Label>
-            <Form.Control
-              type="date"
-              name="dob"
-              max="2001-01-02"
-              placeholder="DateRange"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              className="my-2"
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Marital Status"
+                data={MaritalStatus}
+                nameid="maritalstatus"
+                selectedDataFn={setSelectedMaritalStatus}
+                defaultValue={String(step1Response?.marital_status)}
+              />
+            </div>
           </div>
-
           <div className={classes.editDiscriptions}>
             <p>
               We will not allow any change in date of Birth and marital status

@@ -17,8 +17,9 @@ import { CiPillsBottle1 } from "react-icons/ci";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
+  step3Response: any;
 }
-const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
+const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response }) => {
   const [selectedDiet, setSelectedDiet] = useState<{
     id?: string;
     val: string;
@@ -112,71 +113,95 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails }) => {
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedDiet}
-              title="Diet"
-              data={Diet}
-              nameid="diet"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedSmoking}
-              title="Smoking"
-              data={SmokeDrink}
-              nameid="smoking"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedDrinking}
-              title="Drinking"
-              data={SmokeDrink}
-              nameid="drinking"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedLovePets}
-              title="Love Pets"
-              data={Pets}
-              nameid="love_pets"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedOwnsHouse}
-              title="Owns House"
-              data={OwnHouseCar}
-              nameid="own_house"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedOwnsCar}
-              title="Owns Car"
-              data={OwnHouseCar}
-              nameid="own_car"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedBloodGroup}
-              title="Blood Group"
-              data={BloodGroup}
-              nameid="blood_group"
-            />
-          </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedThalassemia}
-              title="Thalassemia "
-              data={Thalassemia}
-              nameid="thalassemia"
-            />
-          </div>
 
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedDiet}
+                title="Diet"
+                data={Diet}
+                nameid="diet"
+                defaultValue={step3Response?.diet}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedSmoking}
+                title="Smoking"
+                data={SmokeDrink}
+                nameid="smoking"
+                defaultValue={step3Response?.smoking}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedDrinking}
+                title="Drinking"
+                data={SmokeDrink}
+                nameid="drinking"
+                defaultValue={step3Response?.drinking}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedLovePets}
+                title="Love Pets"
+                data={Pets}
+                nameid="love_pets"
+                defaultValue={step3Response?.love_pets}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedOwnsHouse}
+                title="Owns House"
+                data={OwnHouseCar}
+                nameid="own_house"
+                defaultValue={step3Response?.Owns_house}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedOwnsCar}
+                title="Owns Car"
+                data={OwnHouseCar}
+                nameid="own_car"
+                defaultValue={step3Response?.Owns_car}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedBloodGroup}
+                title="Blood Group"
+                data={BloodGroup}
+                nameid="blood_group"
+                defaultValue={step3Response?.blood_group}
+              />
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedThalassemia}
+                title="Thalassemia "
+                data={Thalassemia}
+                nameid="thalassemia"
+                defaultValue={step3Response?.Thalassemia}
+              />
+            </div>
+          </div>
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton
               title="Save"

@@ -101,7 +101,7 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       {
         name: "Mother's Occupation",
         value:
-          getKeyByValue(String(step4Response?.Father), MothersProfession) ||
+          getKeyByValue(String(step4Response?.Mother), MothersProfession) ||
           "NA",
       },
       {

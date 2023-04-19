@@ -137,7 +137,6 @@ const MyProfile: React.FC = () => {
       setSelectedFiles(fileList);
     }
   };
-  console.log(`${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}`);
 
   return (
     <React.Fragment>
@@ -148,11 +147,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center center`,
-                }
+                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center center`,
+              }
               : {
-                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-                }
+                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+              }
           }
         >
           <LoginHeader profilePicture={step1Response?.photo} />
@@ -192,6 +191,7 @@ const MyProfile: React.FC = () => {
                     <Col sm={9} md={8} className="p-0">
                       {criticalDetails ? (
                         <EditCriticalDetials
+                          step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
                         />
                       ) : (
@@ -202,7 +202,7 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {basicDetails ? (
-                        <EditBasicDetials setBasicDetails={setBasicDetails} />
+                        <EditBasicDetials step1Response={step1Response} setBasicDetails={setBasicDetails} />
                       ) : (
                         <BasicDetails
                           step1Response={step1Response}
@@ -211,7 +211,7 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {aboutMeDetails ? (
-                        <EditAboutMe setAboutMeDetails={setAboutMeDetails} />
+                        <EditAboutMe step5Response={step5Response} setAboutMeDetails={setAboutMeDetails} />
                       ) : (
                         <AboutMeDetails
                           step5Response={step5Response}
@@ -221,6 +221,7 @@ const MyProfile: React.FC = () => {
                       <hr />
                       {eudcationAndCareer ? (
                         <EditEducationAmdCareer
+                          step2Response={step2Response}
                           setEudcationAndCareer={setEudcationAndCareer}
                         />
                       ) : (
@@ -232,6 +233,7 @@ const MyProfile: React.FC = () => {
                       <hr />
                       {familyDetails ? (
                         <EditFamilyDetails
+                          step4Response={step4Response}
                           setFamilyDetails={setFamilyDetails}
                         />
                       ) : (
@@ -242,7 +244,7 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {lifeStyleDetails ? (
-                        <EditLifeStyle setEditDetails={setLifeStyleDetails} />
+                        <EditLifeStyle step3Response={step3Response} setEditDetails={setLifeStyleDetails} />
                       ) : (
                         <LifeStyleDetails
                           step3Response={step3Response}

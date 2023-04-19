@@ -206,7 +206,12 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
             })}
           </ul>
         ) : (
-          <EditHoroscopeMatch setEditDetails={setEditDetails} />
+          <EditHoroscopeMatch step5Response={step5Response} dob={`${months[dobmonth - 1]} ${dobDay} ${dobYear}`} tob={`${timpOFBirth_H <= 12
+            ? timpOFBirth_H
+            : timpOFBirth_H <= 21
+              ? `0 ${timpOFBirth_H - 12}`
+              : timpOFBirth_H - 12 || "NA"
+            }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H <= 12 ? "AM" : "PM"}`} setEditDetails={setEditDetails} />
         )}
 
         <CustomButton onClick={() => console.log("tab")}>
@@ -288,7 +293,7 @@ export const RightSectionHoroScopeNotMatch: FC<MyComponentProps> = ({
             })}
           </ul>
         ) : (
-          <EditHoroscopeNotMatch setEditDetails={setEditDetails} />
+          <EditHoroscopeNotMatch step1Response={step1Response} setEditDetails={setEditDetails} />
         )}
       </div>
     </>

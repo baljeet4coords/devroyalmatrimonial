@@ -1,14 +1,31 @@
 import { FC } from "react";
+import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import classes from "../MyProfile/Components/RightSectionMyProfile.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
 import { RiLockLine } from "react-icons/ri";
 import { useFormik } from "formik";
+import { Manglik } from "../../types/enums";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
+  step1Response: any;
 }
-const EditHoroscopeNotMatch: FC<MyComponentProps> = ({ setEditDetails }) => {
+const EditHoroscopeNotMatch: FC<MyComponentProps> = ({ setEditDetails, step1Response }) => {
+  const findKeyByValue = (obj: any, value?: string): string => {
+    for (let key in obj) {
+      if (obj[key] === String(value)) {
+        return key;
+      }
+    }
+    return "";
+  };
+
+
+  const [manglik, setManglik] = useState(
+    findKeyByValue(Manglik, step1Response?.manglik) || ""
+  );
+
   const formik = useFormik({
     initialValues: {
       sun_sign: "",
@@ -21,6 +38,8 @@ const EditHoroscopeNotMatch: FC<MyComponentProps> = ({ setEditDetails }) => {
       setEditDetails(false);
     },
   });
+
+
 
   return (
     <>
@@ -70,7 +89,7 @@ const EditHoroscopeNotMatch: FC<MyComponentProps> = ({ setEditDetails }) => {
           <div className={classes.singleBox}>
             <Form.Label>Manglik</Form.Label>
             <div className={classes.EditInputSecDisable}>
-              <input type="text" disabled placeholder="Non-Manglik" />
+              <input type="text" disabled placeholder="Non-Manglik" value={manglik} />
               <span>
                 {" "}
                 <RiLockLine />{" "}
