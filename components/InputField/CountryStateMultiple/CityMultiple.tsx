@@ -68,6 +68,9 @@ const CityMultiple: React.FC<CityMultiple> = ({
         // For removeing the selcted item if Does not Matter is selected
         setCitiesIds([0]);
         updateHostedArray([city]);
+        setTimeout(() => {
+          setActiveList(false);
+        }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, city))) {
           setCitiesIds(citiesIds.filter((indx) => indx > 0));

@@ -109,10 +109,10 @@ const BasicDetails: FC<MyComponentProps> = ({
           <span>Get verified NOW</span>
         </div>
         <div className={classes.Userdetails}>
-          {BasicDetails.map((item) => {
+          {BasicDetails.map((item,index) => {
             return (
               <>
-                <div className={classes.UserdetailsSec} key={item.name}>
+                <div className={classes.UserdetailsSec} key={item.name+index}>
                   <p className={classes.input_Name}>{item.name}</p>
                   <p
                     className={

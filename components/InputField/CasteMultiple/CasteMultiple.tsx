@@ -64,6 +64,9 @@ const CasteMultiple: React.FC<CastMultiple> = ({
         // For removeing the selcted item if Does not Matter is selected
         setCastesIds([0]);
         updateHostedArray([caste]);
+        setTimeout(() => {
+          setActiveList(false);
+        }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, caste))) {
           setCastesIds(castesIds.filter((indx) => indx > 0));

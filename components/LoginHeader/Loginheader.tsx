@@ -122,10 +122,10 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
               <Link href="/MyProfile">My Profile</Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
-              <Link href="/DesiredProfile">Desired Partner Profile</Link>
+              <Link href="/DesiredProfile">Desired Partner preference</Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
-              <Link href="/Register">Registerations </Link>
+              <Link href="/Register">Edit Profile </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               {/* <CustomButton onClick={onLogout}>Logout</CustomButton> */}

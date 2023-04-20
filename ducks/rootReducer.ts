@@ -10,6 +10,7 @@ import authReducer from "./auth/reducer";
 import { partnerPrefReducer } from "./partnerPreferrence/";
 import { myprofileReducer } from "./myProfile/";
 import profileCompletenessReducer from "./profileCompletion/reducer";
+import GalleryReducer from "./Gallery/reducer";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   partnerPrefference: partnerPrefReducer,
   myProfile: myprofileReducer,
   profileComplete: profileCompletenessReducer,
+  myProfileGallery: GalleryReducer,
 });
 
 export default rootReducer;

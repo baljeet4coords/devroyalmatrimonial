@@ -70,6 +70,9 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
         // For removeing the selcted item if Does not Matter is selected
         setStatesIds([0]);
         updateHostedArray([state]);
+        setTimeout(() => {
+          setActiveList(false);
+        }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, state))) {
           setStatesIds(statesIds.filter((indx) => indx > 0));

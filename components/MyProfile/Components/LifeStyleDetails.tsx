@@ -2,7 +2,7 @@ import { FC } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
-import { BloodGroup, Diet, SmokeDrink } from "../../../types/enums";
+import { BloodGroup, CarType, Diet, HouseType, SmokeDrink } from "../../../types/enums";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
@@ -52,11 +52,11 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "House Details",
-        value: step3Response?.car_details || "NA" || "NA",
+        value:  step3Response?.Owns_house == 1 ? getKeyByValue(String(step3Response?.home_type), HouseType) : null,
       },
       {
         name: "Car Details",
-        value: step3Response?.home_type || "NA" || "NA",
+        value: step3Response?.Owns_car == 1 ? getKeyByValue(String(step3Response?.car_details), CarType) : null,
       },
       {
         name: "Blood group",
@@ -88,7 +88,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
             return (
-              <>
+              <>{item.value !== null &&
                 <div className={classes.UserdetailsSec} key={item.name}>
                   <p className={classes.input_Name}>{item.name}</p>
                   <p
@@ -100,7 +100,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
                   >
                     {item.value === "NA" ? "Not Field in" : item.value}{" "}
                   </p>
-                </div>
+                </div>}
               </>
             );
           })}
