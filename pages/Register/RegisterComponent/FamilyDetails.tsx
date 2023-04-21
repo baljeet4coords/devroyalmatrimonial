@@ -154,12 +154,12 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     setSelectedNativeState(
       jsonData?.family_native_state != undefined
         ? jsonData?.family_native_state
-        : 0
+        : -1
     );
     setSelectedNativeCity(
       jsonData?.family_native_city != undefined
         ? jsonData?.family_native_city
-        : 0
+        : -1
     );
     setGothraVal(jsonData?.Gothra != undefined ? jsonData?.Gothra : "");
   }, [

@@ -52,7 +52,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "House Details",
-        value:  step3Response?.Owns_house == 1 ? getKeyByValue(String(step3Response?.home_type), HouseType) : null,
+        value: step3Response?.Owns_house == 1 ? getKeyByValue(String(step3Response?.home_type), HouseType) : null,
       },
       {
         name: "Car Details",

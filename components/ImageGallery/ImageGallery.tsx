@@ -15,7 +15,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import { useDispatch } from "react-redux";
-import { galleryReq } from "../../ducks/Gallery/actions";
+import { galleryPostReq, galleryReq } from "../../ducks/Gallery/actions";
 import { selectGallerySuccess } from "../../ducks/Gallery/selectors";
 
 interface ImageGalleryProps {
@@ -38,9 +38,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   );
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
 
-
-  // console.log(gallerySuccessResponse?.jsonResponse.galleryImages, 'gallerySuccessResponse');
-
   useEffect(() => {
     userId && dispatch(galleryReq({ userId: userId }));
   }, [dispatch, userId]);
@@ -52,13 +49,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
           formData.append("image", file);
-        }
+        },
+        //dispach formdata
+        dispatch(galleryPostReq({ userId: userId }))
         );
+        console.log(imageResponse,"imageResponse");
         try {
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
-            // gallerySuccessResponse?.jsonResponse && gallerySuccessResponse?.jsonResponse?.galleryImages.length > 0 ? [...gallerySuccessResponse?.jsonResponse?.galleryImages, formData] : formData,
-            formData,
+              formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -66,7 +65,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             }
           );
           setUploadStatus("Files uploaded successfully");
-          console.log(formData,"formData");
 
           const getImages = async () => {
             const response = await axios.post(

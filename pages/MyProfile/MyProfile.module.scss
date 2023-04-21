@@ -1,11 +1,16 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-  padding: 3rem 0 7rem 0;
-  background-size: cover;
+  padding: 0rem 0 7rem 0;
+  background-size: cover !important;
+  // background-position: inherit !important;
+  // background-origin: border-box !important;
+
   color: gray;
   text-align: center;
   height: 398px;
+  width: 75%;
+
   p {
     font-size: 23px;
     margin: 7rem 0 2rem 0;
@@ -16,7 +21,6 @@
     background-color: rgba(0, 0, 0, 0.623);
     width: auto;
     float: right;
-    margin-right: 12rem;
     padding: 0.5rem 1rem;
     color: white;
     display: flex;

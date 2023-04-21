@@ -17,6 +17,7 @@ import {
   IState,
   State,
 } from "country-state-city";
+import { BortherSisterCount } from "../../../types/enums";
 
 interface MyComponentProps {
   setFamilyDetails: (details: boolean) => void;
@@ -64,8 +65,8 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       stateOfCountry[step4Response?.family_native_state] !== undefined &&
       step4Response?.family_native_state >= 0 &&
       setStateCode(stateOfCountry[step4Response?.family_native_state]?.isoCode);
-      // console.log(countryCode , State.getStatesOfCountry("AW"),stateCode,stateOfCountry);
-      
+    // console.log(countryCode , State.getStatesOfCountry("AW"),stateCode,stateOfCountry);
+
   }, [
     countryCode,
     stateCode,
@@ -106,11 +107,11 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       },
       {
         name: "Sister(s)",
-        value: step4Response?.Sister || "NA",
+        value: getKeyByValue(String(step4Response?.Sister), BortherSisterCount) || "NA",
       },
       {
         name: "Brother(s)",
-        value: step4Response?.Brother || "NA",
+        value: getKeyByValue(String(step4Response?.Brother), BortherSisterCount) || "NA",
       },
       {
         name: "Gothra",

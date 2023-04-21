@@ -130,6 +130,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     },
     onSubmit: async (values) => {
       let response;
+      
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,

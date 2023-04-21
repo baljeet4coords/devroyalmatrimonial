@@ -1,6 +1,13 @@
 import { GalleryResponse } from "./types";
 import { GalleryActions } from "./actions";
-import { GALLERY, GALLERY_SUCCESS, GALLERY_FAILURE } from "./constants";
+import {
+  GALLERY_GET,
+  GALLERY_SUCCESS,
+  GALLERY_FAILURE,
+  GALLERY_POST,
+  GALLERY_POST_SUCCESS,
+  GALLERY_POST_FAILURE,
+} from "./constants";
 
 interface GalleryState {
   isLoading: boolean;
@@ -23,7 +30,12 @@ export default function GalleryReducer(
   action: GalleryActions
 ): GalleryState {
   switch (action.type) {
-    case GALLERY:
+    case GALLERY_GET:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case GALLERY_POST:
       return {
         ...state,
         isLoading: true,
@@ -35,7 +47,21 @@ export default function GalleryReducer(
         response: action.response,
         error: null,
       };
+    case GALLERY_POST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        response: action.response,
+        error: null,
+      };
     case GALLERY_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        response: null,
+        error: action.error,
+      };
+    case GALLERY_POST_FAILURE:
       return {
         ...state,
         isLoading: false,
