@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import Form from "react-bootstrap/Form";
 import RightSection from "./RightSection/RightSection";
@@ -26,18 +26,21 @@ import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
+import router from "next/router";
+import { isNull } from "lodash";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  DisabledHeadingMessage: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
-  id?: string;
+  id?: string | null;
   val: string;
 }
 const LifeStyle: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete,
+  profileComplete, DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepThreeDefaultValues = useSelector(selectStep3Success);
@@ -58,6 +61,9 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   useEffect(() => {
     dispatch(step3({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
+
+  const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
+  const [loadingSpiner, setloadingSpiner] = useState(false);
 
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
@@ -113,6 +119,17 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     val: "",
   });
 
+  useEffect(() => {
+    if (ownsCar.id == "2") {
+      setCartype({ id: null, val: "" })
+    }
+    if (ownsHouse.id == "2") {
+      setHousetype({ id: null, val: "" })
+    }
+  }, [ownsCar.id, ownsHouse.id])
+
+
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -125,12 +142,13 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
       bloodGroup: String(jsonData?.blood_group),
       thalassemia: String(jsonData?.Thalassemia),
       religiousBelief: ReligiousBelief,
-      cartype: jsonData?.car_details,
-      housetype: jsonData?.home_type,
+      cartype: jsonData?.car_details || null,
+      housetype: jsonData?.home_type || null,
     },
     onSubmit: async (values) => {
+      setloadingSpiner(true);
       let response;
-      
+
       if (isReduxEmpty === undefined) {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
@@ -142,7 +160,13 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
           { actionType: "u", ...values }
         );
       }
-      response.data.output > 0 && nextPage(3);
+      if (response.data.output > 0) {
+        DisabledHeadingMessage(3);
+        nextPage(3);
+        setloadingSpiner(false);
+      } else {
+        setloadingSpiner(false);
+      }
     },
   });
 
@@ -165,8 +189,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     formik.values.religiousBelief = ReligiousBelief;
-    formik.values.cartype = cartype.id || "";
-    formik.values.housetype = housetype.id || "";
+    formik.values.cartype = cartype.id || null;
+    formik.values.housetype = housetype.id || null;
   }, [
     bloodGroup.id,
     diet.id,
@@ -182,6 +206,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     housetype,
   ]);
 
+  function handleSkip() {
+    setSkiploadingSpiner(true)
+    router.push("/DesiredProfile")
+  }
+
   return (
     <div className={classes.profile_Container}>
       <Container>
@@ -189,6 +218,16 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
           <Loader />
         ) : (
           <Row className="justify-content-center">
+            <Button variant="danger" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+              {skiploadingSpiner && (
+                <Spinner
+                  className={classes.loginSpiner}
+                  animation="border"
+                  variant="light"
+                />
+              )}
+              skip to Partner Profile
+            </Button>
             <h1>We would love to know about your Lifestyle.</h1>
             <Col sm={12} md={5}>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
@@ -293,6 +332,13 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                 >
+                  {loadingSpiner && (
+                    <Spinner
+                      className={classes.loginSpiner}
+                      animation="border"
+                      variant="light"
+                    />
+                  )}
                   Next
                 </Button>
               </Form>

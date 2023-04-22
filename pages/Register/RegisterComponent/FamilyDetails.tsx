@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import Form from "react-bootstrap/Form";
 import RightSection from "./RightSection/RightSection";
@@ -30,11 +30,11 @@ import CountrySingle from "../../../components/InputField/CountryStateSingle/Cou
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import Loader from "../../../components/Loader/Loader";
-import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
-import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
+import router from "next/router";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  DisabledHeadingMessage: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -43,7 +43,7 @@ interface Data {
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete,
+  profileComplete,DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
@@ -103,6 +103,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
   const [gothraVal, setGothraVal] = useState<string>("");
+  const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
+  const [loadingSpiner, setloadingSpiner] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -121,8 +123,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
       livingWithParents: String(jsonData?.living_with_parents),
     },
     onSubmit: async (values: IRegisterStep4) => {
-      console.log(values, "values");
-
+      setloadingSpiner(true)
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -141,7 +142,13 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
           }
         );
       }
-      response.data.output > 0 && nextPage(4);
+      if (response.data.output > 0) {
+        DisabledHeadingMessage(4);
+        nextPage(4);
+        setloadingSpiner(false);
+      } else {
+        setloadingSpiner(false);
+      }
     },
   });
 
@@ -209,6 +216,10 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     setSelectedNativeCity(id);
   };
 
+  function handleSkip() {
+    setSkiploadingSpiner(true)
+    router.push("/DesiredProfile")
+  }
   return (
     <div className={classes.profile_Container}>
       <Container>
@@ -216,6 +227,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
           <Loader />
         ) : (
           <Row className="justify-content-center">
+            <Button variant="danger" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+              {skiploadingSpiner && (
+                <Spinner
+                  className={classes.loginSpiner}
+                  animation="border"
+                  variant="light"
+                />
+              )}
+              skip to Partner Profile
+            </Button>
             <h1>We would love to know about your family.</h1>
             <Col sm={12} md={5}>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
@@ -310,6 +331,13 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                 >
+                  {loadingSpiner && (
+                    <Spinner
+                      className={classes.loginSpiner}
+                      animation="border"
+                      variant="light"
+                    />
+                  )}
                   Next
                 </Button>
               </Form>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
 import RightSection from "./RightSection/RightSection";
@@ -40,6 +40,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     dispatch(step5({ actionType: "v", userId: userId }))
   }, [dispatch, userId]);
 
+
+  const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
+  const [loadingSpiner, setloadingSpiner] = useState(false);
   // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
@@ -62,6 +65,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
+      setloadingSpiner(true)
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -100,6 +104,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [basicIntro, setBasicIntro] = useState<string>(
     jsonData && jsonData.basic_intro ? jsonData.basic_intro : ""
   );
+
+
 
   useEffect(() => {
     setAboutCareer(
@@ -161,6 +167,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
       jsonData?.pobCity != undefined ? jsonData?.pobCity : selectedBirthCity
     );
   }, [jsonData?.pobCity, jsonData?.pobCountry, jsonData?.pobState]);
+
+  function handleSkip() {
+    setSkiploadingSpiner(true)
+    router.push("/DesiredProfile")
+  }
   return (
     <>
       <div className={classes.profile_Container}>
@@ -169,6 +180,16 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
             <Loader />
           ) : (
             <Row className="justify-content-center">
+              <Button variant="danger" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+                {skiploadingSpiner && (
+                  <Spinner
+                    className={classes.loginSpiner}
+                    animation="border"
+                    variant="light"
+                  />
+                )}
+                skip to Partner Profile
+              </Button>
               <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
               <Col sm={12} md={5}>
                 <Form
@@ -287,6 +308,13 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                   >
+                    {loadingSpiner && (
+                      <Spinner
+                        className={classes.loginSpiner}
+                        animation="border"
+                        variant="light"
+                      />
+                    )}
                     Submit
                   </Button>
                 </Form>

@@ -35,7 +35,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [elementRef]);
-  
+
   const findKeyByValue = (obj: any, value?: string): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {
@@ -122,9 +122,8 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
           />
         </li>
         <div
-          className={`${activeList ? classes.active : ""} ${
-            classes.inputBoxVal
-          }`}
+          className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+            }`}
         >
           <ul>
             {searchedData.map((item) => {

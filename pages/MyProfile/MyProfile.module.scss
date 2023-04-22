@@ -3,9 +3,6 @@
 .background_header {
   padding: 0rem 0 7rem 0;
   background-size: cover !important;
-  // background-position: inherit !important;
-  // background-origin: border-box !important;
-
   color: gray;
   text-align: center;
   height: 398px;
@@ -13,8 +10,9 @@
 
   p {
     font-size: 23px;
-    margin: 7rem 0 2rem 0;
+    margin: 0rem 0 2rem 0;
     font-weight: 500;
+    padding-top: 2rem;
   }
 
   .changeBackground {
@@ -73,14 +71,20 @@
 
 @media only screen and (max-width: 990px) and (min-width: 768px) {
   .background_header {
+    width: 100%;
+
     p {
       max-width: 75%;
-      margin: 7rem auto 2rem;
+      margin: 0rem auto 2rem;
     }
   }
 }
 
 @media only screen and (max-width: 540px) and (min-width: 423px) {
+  .background_header {
+    width: 100%;
+  }
+
   .detailsWrapper {
     width: 100%;
   }
@@ -93,6 +97,9 @@
       float: inherit;
       justify-content: center;
     }
+  }
+  .background_header {
+    width: 100%;
   }
 
   .detailsWrapper {

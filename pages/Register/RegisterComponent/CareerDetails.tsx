@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { DropdownGridSingleSelect } from "../../../components";
 import classes from "./Component.module.scss";
 import { Form } from "react-bootstrap";
@@ -29,6 +29,7 @@ import { updateProfileCompleteness } from "../../../ducks/profileCompletion/acti
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  DisabledHeadingMessage: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -38,7 +39,7 @@ interface Data {
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete,
+  profileComplete,DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepTwoDefaultValues = useSelector(selectStep2Success);
@@ -83,6 +84,10 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     id: String(jsonData?.annual_income),
     val: "",
   });
+  const [loginSpiner, setloginSpiner] = useState(false);
+
+
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -97,6 +102,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
       annualIncome: String(jsonData?.annual_income),
     },
     onSubmit: async (values) => {
+      setloginSpiner(true)
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -109,7 +115,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
           { ...values, actionType: "u" }
         );
       }
-      response.data.output > 0 && nextPage(2);
+      if (response.data.output > 0) {
+        DisabledHeadingMessage(2);
+        nextPage(2);
+        setloginSpiner(false);
+      } else {
+        setloginSpiner(false);
+      }
     },
   });
 
@@ -259,6 +271,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                 >
+                  {loginSpiner && (
+                    <Spinner
+                      className={classes.loginSpiner}
+                      animation="border"
+                      variant="light"
+                    />
+                  )}
                   Next
                 </Button>
               </Form>
