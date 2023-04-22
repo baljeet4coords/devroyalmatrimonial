@@ -14,6 +14,9 @@ import { ImImage } from "react-icons/im";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
+import { useDispatch } from "react-redux";
+import { galleryPostReq, galleryReq } from "../../ducks/Gallery/actions";
+import { selectGallerySuccess } from "../../ducks/Gallery/selectors";
 
 interface ImageGalleryProps {
   images: {
@@ -25,13 +28,19 @@ interface ImageResponse {
   galleryImages?: string[];
 }
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
+  const dispatch = useDispatch();
+  const userId = useSelector(getUserId);
+  const gallerySuccessResponse = useSelector(selectGallerySuccess);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadStatus, setUploadStatus] = useState<string>(
     "JPG, JPEG, or PNG type"
   );
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
-  const userId = useSelector(getUserId);
+
+  useEffect(() => {
+    userId && dispatch(galleryReq({ userId: userId }));
+  }, [dispatch, userId]);
 
   useEffect(() => {
     async function uploadFiles() {
@@ -40,11 +49,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       if (selectedFiles.length > 0) {
         selectedFiles.forEach((file) => {
           formData.append("image", file);
-        });
+        },
+        //dispach formdata
+        dispatch(galleryPostReq({ userId: userId }))
+        );
+        console.log(imageResponse,"imageResponse");
         try {
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
-            formData,
+              formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -52,6 +65,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             }
           );
           setUploadStatus("Files uploaded successfully");
+
           const getImages = async () => {
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
@@ -59,6 +73,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             );
             if (response.data.jsonResponse) {
               setImageResponse(response.data.jsonResponse);
+              console.log(response.data.jsonResponse, "response.data.jsonResponse");
+
             }
           };
           getImages();
@@ -86,7 +102,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     getImages();
   }, [userId]);
 
-  const onInit = () => {};
+  const onInit = () => { };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -127,15 +143,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       >
         {imageResponse && imageResponse.galleryImages?.length
           ? imageResponse.galleryImages.map((img, index) => {
-              return (
-                <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                  <Image
-                    alt={"RM"}
-                    src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                  />
-                </a>
-              );
-            })
+            return (
+              <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                <Image
+                  alt={"RM"}
+                  src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                />
+              </a>
+            );
+          })
           : "No images"}
       </LightGallery>
     </div>

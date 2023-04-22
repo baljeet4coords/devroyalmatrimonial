@@ -67,6 +67,9 @@ const CountryMultiple: React.FC<CountryProps> = ({
       if (getIndex == 0) {
         setCountriesIds([0]);
         updateHostedArray([country]);
+        setTimeout(() => {
+          setActiveList(false);
+        }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, country))) {
           setCountriesIds(countriesIds.filter((indx) => indx > 0));

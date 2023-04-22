@@ -198,8 +198,8 @@ const DesiredProfilePage: React.FC = () => {
   const handleSwitchToggle = (switchValue: string) => {
     const newSelectedSwitches = selectedSwitches.includes(switchValue)
       ? selectedSwitches.filter(
-          (selectedSwitch) => selectedSwitch !== switchValue
-        )
+        (selectedSwitch) => selectedSwitch !== switchValue
+      )
       : [...selectedSwitches, switchValue];
     setSelectedSwitches(newSelectedSwitches);
   };

@@ -55,6 +55,9 @@ const SingleInput: React.FC<MyComponentProps> = ({
     const getIndex = String(combinedData.indexOf(val));
     if (getIndex == "0") {
       updateHostedArray(["0"]);
+      setTimeout(() => {
+        setActiveList(false);
+      }, 0);
     } else {
       if (HostedArray.indexOf(getIndex) === -1) {
         updateHostedArray(HostedArray.filter((indx) => indx > "0"));
@@ -107,20 +110,19 @@ const SingleInput: React.FC<MyComponentProps> = ({
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((uid: string) => {
-                  const [name, id] = combinedData[+uid].split("-");
-                  return (
-                    <li key={id}>
-                      <span>{name.replaceAll("_", " ")}</span>
-                      <IoClose onClick={() => getClickedDeleteData(+uid)} />
-                    </li>
-                  );
-                })
+                const [name, id] = combinedData[+uid].split("-");
+                return (
+                  <li key={id}>
+                    <span>{name.replaceAll("_", " ")}</span>
+                    <IoClose onClick={() => getClickedDeleteData(+uid)} />
+                  </li>
+                );
+              })
               : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

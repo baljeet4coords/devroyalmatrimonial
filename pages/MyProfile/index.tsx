@@ -141,20 +141,20 @@ const MyProfile: React.FC = () => {
   return (
     <React.Fragment>
       <div className={classes.bg}>
+        <LoginHeader profilePicture={step1Response?.photo} />
         <Container
           fluid
           className={classes.background_header}
           style={
             imageResponse?.coverImage
               ? {
-                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center center`,
+                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
               }
               : {
                 background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
               }
           }
         >
-          <LoginHeader profilePicture={step1Response?.photo} />
           {!imageResponse?.coverImage && (
             <p>
               Make your profile more intersting by adding cover photo to your

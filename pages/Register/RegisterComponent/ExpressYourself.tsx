@@ -84,9 +84,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     },
   });
 
-  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(100);
-  const [selectedBirthState, setSelectedBirthState] = useState<number>(0);
-  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(0);
+  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(jsonData?.pobCountry || 0);
+  const [selectedBirthState, setSelectedBirthState] = useState<number>(jsonData?.pobState || -1);
+  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(jsonData?.pobCity || -1);
 
   const [aboutCareer, setAboutCareer] = useState<string>(
     jsonData && jsonData.about_career ? jsonData.about_career : ""

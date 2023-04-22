@@ -28,8 +28,10 @@ const BasicDetails: FC<MyComponentProps> = ({
   }
 
   function HeightConvertr(cmHeight: number) {
-    const [feet, cm] = (cmHeight / 30.48).toFixed(2).split(".");
-    return `${feet} ' ${cm}`;
+    const totalInches = cmHeight / 2.54;
+    const feet = Math.floor(totalInches / 12).toString();
+    const remainingInches = (totalInches % 12).toFixed(0);
+    return `${feet} ' ${remainingInches}`;
   }
   function castGet(idd: number) {
     const castname = CastListArray.map((cast) => {
@@ -77,11 +79,9 @@ const BasicDetails: FC<MyComponentProps> = ({
 
     {
       name: "Profile Manage by",
-      vlaue: `${
-        step1Response?.gender == "M" ? "His" : "Her"
-      } profile is managed by ${
-        getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "NA"
-      }`,
+      vlaue: `${step1Response?.gender == "M" ? "His" : "Her"
+        } profile is managed by ${getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "NA"
+        }`,
     },
   ];
   return (
@@ -109,10 +109,10 @@ const BasicDetails: FC<MyComponentProps> = ({
           <span>Get verified NOW</span>
         </div>
         <div className={classes.Userdetails}>
-          {BasicDetails.map((item) => {
+          {BasicDetails.map((item, index) => {
             return (
               <>
-                <div className={classes.UserdetailsSec} key={item.name}>
+                <div className={classes.UserdetailsSec} key={item.name + index}>
                   <p className={classes.input_Name}>{item.name}</p>
                   <p
                     className={
