@@ -111,8 +111,8 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
             formik.touched.password && formik.errors.password
               ? classes.PasswordShowAline
               : showPassword
-              ? classes.PasswordShow
-              : ""
+                ? classes.PasswordShow
+                : ""
           }
           onClick={() => setShowPassword(!showPassword)}
         />
@@ -139,7 +139,7 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
         Register
       </Button>
       <Form.Label className="mt-4">
-        By clicking on `&apos;`Register Free`&apos;`, you confirm that you
+        By clicking on Register Free, you confirm that you
         accept the <span className={classes.redF12}> Terms of Use </span> and{" "}
         <span className={classes.redF12}> Privacy Policy</span>
       </Form.Label>

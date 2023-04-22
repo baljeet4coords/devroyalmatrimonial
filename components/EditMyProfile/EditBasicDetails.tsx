@@ -10,6 +10,8 @@ import {
   Manglik,
   MaritalStatus,
   MotherTongue,
+  ProfileFor,
+  Religion,
 } from "../../types/enums";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
@@ -22,19 +24,27 @@ import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
 import { useSelector } from "react-redux";
 import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
+import CastListDropDown from "../CastListDropDown/CastListDropDown";
+import { CastListArray } from "../../constants/CastListArray";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
+  step1Response: any;
 }
-const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
+interface Data {
+  id?: string;
+  val: string;
+}
+const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response }) => {
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const jsonData = stepOneDefaultValues?.jsonResponse;
+
 
   const formik = useFormik({
     initialValues: {
       profileVerification: false,
       fullname: "Himanshu singh",
-      gender: "Male",
+      gender: step1Response?.gender == "M" ? "Male" : "Female",
       cast: "",
       height: "",
       challenged: "",
@@ -67,12 +77,32 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     val: string;
   }>({ id: "", val: "" });
 
-  const selectedCast = (string: string) => {
-    // const id = string.split("-")[0];
-    const val = string.split("-")[1];
-    formik.values.cast = val;
+  const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
+    id: String(step1Response?.profile_for),
+    val: "",
+  });
+  // const selectedCast = (string: string) => {
+  //   // const id = string.split("-")[0];
+  //   const val = string.split("-")[1];
+  //   formik.values.cast = val;
+  // };
+  const [selectedCast, setSelectedCast] = useState<Data>({
+    val: "",
+    id: String(jsonData?.caste),
+  });
+
+  const findKeyByValue = (obj: any, value?: string): string => {
+    for (let key in obj) {
+      if (obj[key] === String(value)) {
+        return key;
+      }
+    }
+    return "";
   };
 
+  const [religion, setReligion] = useState(
+    findKeyByValue(Religion, step1Response?.religion) || ""
+  );
   const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
 
   useEffect(() => {
@@ -81,7 +111,8 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
       (formik.values.isHiv = selectedIsHiv.val),
       (formik.values.mothertongue = selectedMotherTongue.val),
       (formik.values.religion = selectedMotherTongue.val),
-      (formik.values.isManglik = selectedManglik.val);
+      (formik.values.isManglik = selectedManglik.val),
+      (formik.values.cast = selectedCast?.id || '');
   }, [
     cm,
     selectedchallenged,
@@ -89,6 +120,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
     selectedMotherTongue,
     selectedManglik,
     formik.values,
+    selectedCast,
   ]);
 
   return (
@@ -118,14 +150,17 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
           <div className={classes.singleBox}>
             <Form.Label>Full Name</Form.Label>
             <div className={classes.EditInputSec}>
-              <input
-                name="fullname"
-                type="text"
-                placeholder="Enter Full Name"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                defaultValue={formik.initialValues.fullname}
-              />
+              <li className={classes.blankInput}>
+                <Form.Control
+                  name="profileHandlerName"
+                  type="text"
+                  placeholder="Enter your name"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  defaultValue={step1Response?.profile_handlername}
+                  autoComplete="off"
+                />
+              </li>
               <p>
                 Show to all <CiSettings />{" "}
               </p>
@@ -150,62 +185,73 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Cast</Form.Label>
-            <CastDataList options={CastList} selectedOption={selectedCast} />
+            <CastListDropDown
+              data={CastListArray}
+              selectedDataFn={setSelectedCast}
+              title="Caste"
+              nameid={"Caste"}
+              defaultValue={String(step1Response?.caste)}
+            />
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Height</Form.Label>
             <div className={classes.inputBox}>
-              <li className={`${classes.blankInput} d-flex`}>
-                <Form.Control
-                  name="height"
-                  type="text"
-                  placeholder={`${cm} in cms`}
-                  onBlur={formik.handleBlur}
-                  onChange={handleCmChange}
-                  defaultValue={jsonData?.height_cm}
-                />
-                <Form.Control
-                  name="height"
-                  type="text"
-                  placeholder={`${feet} in ft.`}
-                  onBlur={formik.handleBlur}
-                  onChange={handleFeetChange}
-                />
-              </li>
+              <Form.Control
+                name="height"
+                type="number"
+                placeholder={`${cm} in cms`}
+                onBlur={formik.handleBlur}
+                onChange={handleCmChange}
+                defaultValue={step1Response?.height_cm}
+              />
+              <Form.Control
+                name="height"
+                type="text"
+                placeholder={`${feet} in ft.`}
+                onBlur={formik.handleBlur}
+                onChange={handleFeetChange}
+              />
             </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="Challenged"
-              data={Challenged}
-              nameid="challenged"
-              selectedDataFn={setSelectedchallenged}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Challenged"
+                data={Challenged}
+                nameid="challenged"
+                selectedDataFn={setSelectedchallenged}
+                defaultValue={String(step1Response?.challenged)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="HIV"
-              data={isHiv}
-              nameid="hiv"
-              selectedDataFn={setSelectedIsHiv}
-              defaultValue={String(jsonData?.hiv)}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="HIV"
+                data={isHiv}
+                nameid="hiv"
+                selectedDataFn={setSelectedIsHiv}
+                defaultValue={String(step1Response?.hiv)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="MotherTongue"
-              data={MotherTongue}
-              nameid="mothertongue"
-              selectedDataFn={setSelectedMotherTongue}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="MotherTongue"
+                data={MotherTongue}
+                nameid="mothertongue"
+                selectedDataFn={setSelectedMotherTongue}
+                defaultValue={String(step1Response?.mother_tongue)}
+              />
+            </div>
           </div>
           <div className={classes.singleBox}>
             <Form.Label>Religion</Form.Label>
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={"Hindu"}
+                value={religion}
                 disabled
                 placeholder="Enter Gender"
                 onBlur={formik.handleBlur}
@@ -218,25 +264,26 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails }) => {
             </div>
           </div>
 
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="Add Manglik"
-              data={Manglik}
-              nameid="addmanglik"
-              selectedDataFn={setSelectedManglik}
-              defaultValue={String(jsonData?.manglik)}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Add Manglik"
+                data={Manglik}
+                nameid="addmanglik"
+                selectedDataFn={setSelectedManglik}
+                defaultValue={String(step1Response?.manglik)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Profile Managed By</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                defaultValue={formik.initialValues.profilefor}
-                placeholder="Profile Managed By"
-                name="profilefor"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <Form.Label>Profile Managed For</Form.Label>
+              <DropdownGridSingleSelect
+                title=""
+                data={ProfileFor}
+                nameid="profilefor"
+                selectedDataFn={setSelectedProfileFor}
+                defaultValue={String(step1Response?.profile_for)}
               />
             </div>
           </div>

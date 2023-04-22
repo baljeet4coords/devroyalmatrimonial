@@ -96,7 +96,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
             })}
           </ul>
         ) : (
-          <EditContact setEditDetails={setEditDetails} />
+          <EditContact  step1Response={step1Response} setEditDetails={setEditDetails} />
         )}
       </div>
     </>

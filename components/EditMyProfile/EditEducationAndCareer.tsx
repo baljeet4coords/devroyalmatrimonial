@@ -5,7 +5,6 @@ import { Form } from "react-bootstrap";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { Employed_In, HighestEducationList } from "../../constants/DesiredData";
 import { BiBook } from "react-icons/bi";
 import {
   AnnualIncomeProfile,
@@ -13,12 +12,18 @@ import {
   ReadyToSettleAbroad,
   ResidentialStatus,
 } from "../../types/enums";
+import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
+import StateSingle from "../InputField/CountryStateSingle/StateSingle";
+import CitySingle from "../InputField/CountryStateSingle/CitySingle";
+import { EducationTypeAndVal } from "../../types/enums";
 
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
+  step2Response: any;
 }
 const EditEducationAmdCareer: FC<MyComponentProps> = ({
   setEudcationAndCareer,
+  step2Response
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -61,6 +66,15 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
     id?: string;
     val: string;
   }>({ id: "", val: "" });
+  const [selectedCountry, setSelectedCountry] = useState<number>(
+    step2Response?.country || 100
+  );
+  const [selectedState, setSelectedState] = useState<number>(
+    step2Response?.state || -1
+  );
+  const [selectedCity, setSelectedCity] = useState<number>(
+    step2Response?.city || -1
+  );
 
   useEffect(() => {
     (formik.values.residential_status = selectedResidentialStatus.val || ""),
@@ -79,6 +93,30 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
     SelectedEmployedIn.id,
   ]);
 
+  useEffect(() => {
+    setSelectedCountry(
+      step2Response?.country != undefined ? step2Response?.country : selectedCountry
+    );
+    setSelectedState(
+      step2Response?.state != undefined ? step2Response?.state : selectedState
+    );
+    setSelectedCity(
+      step2Response?.city != undefined ? step2Response?.city : selectedCity
+    );
+  }, [step2Response?.country, step2Response?.state, step2Response?.city]);
+
+
+  const getSelectedCountry = (id: number) => {
+    setSelectedCountry(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedState(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedCity(id);
+  };
+
+
   return (
     <>
       <div className={classes.content}>
@@ -89,85 +127,90 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
           </div>
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-          <div className={classes.singleBox}>
-            <Form.Label>Country Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                defaultValue={formik.initialValues.country}
-                name="country"
-                placeholder="Country Living in"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <CountrySingle
+                title="Country"
+                setSelectedCountry={getSelectedCountry}
+                defaultValueCountry={step2Response?.country}
               />
             </div>
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>State Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                name="state"
-                defaultValue={formik.initialValues.state}
-                placeholder="State Living in"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <StateSingle
+                title="State"
+                setSelectedState={getSelectedState}
+                defaultValueCountry={selectedCountry}
+                defaultValueState={step2Response?.state}
               />
             </div>
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>City Living in</Form.Label>
-            <div className={classes.EditInputSec}>
-              <input
-                type="text"
-                name="city"
-                defaultValue={formik.initialValues.city}
-                placeholder="City Living in"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <CitySingle
+                title="City"
+                defaultValueCountry={selectedCountry}
+                defaultValueState={selectedState}
+                defaultValueCity={step2Response?.city}
+                setSelectedCity={getSelectedCity}
               />
             </div>
           </div>
-
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedResidentialStatus}
-              title="Residential Status"
-              data={ResidentialStatus}
-              nameid="residential_status"
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedResidentialStatus}
+                title="Residential Status"
+                data={ResidentialStatus}
+                nameid="residential_status"
+                defaultValue={String(step2Response?.residentialstatus)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedSettingAboard}
-              title="Intersting in Setting Aboard"
-              data={ReadyToSettleAbroad}
-              nameid="setting_aboard"
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedSettingAboard}
+                title="Intersting in Setting Aboard"
+                data={ReadyToSettleAbroad}
+                nameid="setting_aboard"
+                defaultValue={String(step2Response?.readytosettleabroad)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="Higest Educations"
-              data={HighestEducationList}
-              nameid="highest_education"
-              selectedDataFn={setSelectedHigestEducations}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Higest Educations"
+                data={EducationTypeAndVal}
+                nameid="highest_education"
+                selectedDataFn={setSelectedHigestEducations}
+                defaultValue={String(step2Response?.education)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              title="Annual Income"
-              data={AnnualIncomeProfile}
-              nameid="annual_income"
-              selectedDataFn={setSelectedAnnualIncome}
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Annual Income"
+                data={AnnualIncomeProfile}
+                nameid="annual_income"
+                selectedDataFn={setSelectedAnnualIncome}
+                defaultValue={String(step2Response?.annual_income)}
+              />
+            </div>
           </div>
-          <div className={classes.singleBox}>
-            <DropdownGridSingleSelect
-              selectedDataFn={setSelectedEmployedIn}
-              title="Employed In"
-              data={Employed_In}
-              nameid="employed_in"
-            />
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                selectedDataFn={setSelectedEmployedIn}
+                title="Employed In"
+                data={Occupation}
+                nameid="employed_in"
+                defaultValue={String(step2Response?.occupation)}
+              />
+            </div>
           </div>
 
           <div className={classes.EditbuttonGroup}>
