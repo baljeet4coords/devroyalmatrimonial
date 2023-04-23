@@ -15,6 +15,7 @@ interface DropdownGridProps {
   nameid: string;
   selectedDataFn: ({ id, val }: Data) => void;
   defaultValue?: string;
+  setErrorState?: (details: boolean) => void;
 }
 const CastListDropDown: React.FC<DropdownGridProps> = ({
   title,
@@ -22,6 +23,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
   nameid,
   selectedDataFn,
   defaultValue,
+  setErrorState,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +56,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
     setSelectedData(data);
     selectedDataFn(data);
     setPlaceholderVal(data.val);
+    activeList && setErrorState !== undefined && setErrorState(true);
     setActiveList(false);
   };
 
@@ -69,6 +72,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        activeList && setErrorState !== undefined && setErrorState(true);
         setActiveList(false);
       }
     };
@@ -78,7 +82,7 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [elementRef]);
+  }, [elementRef, activeList]);
 
   return (
     <div className={classes.singleBox} ref={elementRef}>
@@ -95,9 +99,8 @@ const CastListDropDown: React.FC<DropdownGridProps> = ({
           />
         </li>
         <div
-          className={`${activeList ? classes.active : ""} ${
-            classes.inputBoxVal
-          }`}
+          className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+            }`}
         >
           <ul>
             {searchedData.map((item) => {

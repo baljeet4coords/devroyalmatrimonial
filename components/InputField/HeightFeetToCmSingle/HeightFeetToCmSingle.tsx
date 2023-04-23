@@ -51,7 +51,7 @@ function HeightInput(props: Props) {
   };
 
   return (
-    <Form.Group className="mb-4">
+    <Form.Group className="mb-0">
       <Form.Label className="mb-2">{props.label}</Form.Label>
 
       <div className="d-flex align-items-center">

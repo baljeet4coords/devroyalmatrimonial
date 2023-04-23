@@ -73,6 +73,12 @@
   flex-direction: column;
   gap: 2rem;
 
+  .errorMessage{
+    font-size: 14px;
+    color: #f00;
+    margin-top: -5%;
+  }
+
   label {
     margin: 0.5rem 0 0 -11rem;
     position: absolute;

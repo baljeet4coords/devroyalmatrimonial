@@ -12,6 +12,7 @@ interface DropdownGridProps {
   nameid: string;
   selectedDataFn: ({ id, val }: { id?: string; val: string }) => void;
   defaultValue?: string;
+  setErrorState?: (details: boolean) => void;
 }
 const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   title,
@@ -19,22 +20,11 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   nameid,
   selectedDataFn,
   defaultValue,
+  setErrorState,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (elementRef.current && !elementRef?.current?.contains(event.target)) {
-        setActiveList(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [elementRef]);
 
   const findKeyByValue = (obj: any, value?: string): string => {
     for (let key in obj) {
@@ -76,6 +66,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
     setSelectedData(data);
     selectedDataFn(data);
     setPlaceholderVal(data.val);
+    activeList && setErrorState !== undefined && setErrorState(true);
     setActiveList(false);
   };
 
@@ -91,15 +82,17 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        activeList && setErrorState !== undefined && setErrorState(true);
         setActiveList(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [elementRef]);
+  }, [elementRef, activeList]);
+
+
 
   return (
     <div className={classes.singleBox} ref={elementRef}>
@@ -116,7 +109,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
                 : ""
             }
             onChange={(e) => searchDataFunc(e.target.value)}
-            onClick={() => setActiveList(!activeList)}
+            onClick={() => setActiveList(true)}
             autoComplete="off"
             autoCorrect="off"
           />
