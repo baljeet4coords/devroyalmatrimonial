@@ -15,6 +15,7 @@ interface CitySingle {
   defaultValueState?: number;
   defaultValueCity?: number;
   setSelectedCity: (id: number) => void;
+  setErrorState?: (details: boolean) => void;
 }
 
 const CitySingle: React.FC<CitySingle> = ({
@@ -23,6 +24,7 @@ const CitySingle: React.FC<CitySingle> = ({
   setSelectedCity,
   defaultValueState,
   defaultValueCity,
+  setErrorState
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
@@ -57,7 +59,7 @@ const CitySingle: React.FC<CitySingle> = ({
   const [selectedData, setSelectedData] = useState(
     (defaultValueCity != (undefined && null) &&
       cityOfState[defaultValueCity]?.name) ||
-      "Select City"
+    "Select City"
   );
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICity[]>(cityOfState);
@@ -106,6 +108,7 @@ const CitySingle: React.FC<CitySingle> = ({
     const getIndex = cityOfState.findIndex((obj) => obj.name === item.name);
     setSelectedCity(getIndex);
     setSearchInput("");
+    activeList && setErrorState !== undefined && setErrorState(true);
     UpdatesearchHostedArray(cityOfState);
     setTimeout(() => {
       setActiveList(false);
@@ -130,6 +133,7 @@ const CitySingle: React.FC<CitySingle> = ({
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        activeList && setErrorState !== undefined && setErrorState(true);
         setActiveList(false);
       }
     };
@@ -139,7 +143,7 @@ const CitySingle: React.FC<CitySingle> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [elementRef]);
+  }, [elementRef, activeList]);
 
   const [hasMounted, setHasMounted] = useState<boolean>(false);
 
@@ -173,9 +177,8 @@ const CitySingle: React.FC<CitySingle> = ({
             )}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

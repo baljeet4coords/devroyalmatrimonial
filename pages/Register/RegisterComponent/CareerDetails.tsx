@@ -26,10 +26,11 @@ import CitySingle from "../../../components/InputField/CountryStateSingle/CitySi
 import Loader from "../../../components/Loader/Loader";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
+import * as Yup from 'yup';
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
-  DisabledHeadingMessage: (a: number) => void;
+  DisabledHeadingMessage?: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -39,7 +40,7 @@ interface Data {
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete,DisabledHeadingMessage
+  profileComplete, DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepTwoDefaultValues = useSelector(selectStep2Success);
@@ -84,8 +85,19 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     id: String(jsonData?.annual_income),
     val: "",
   });
-  const [loginSpiner, setloginSpiner] = useState(false);
 
+  const [countryTouched, setCountryTouched] = useState(false);
+  const [countryTouchedDefault, setcountryTouchedDefault] = useState(true);
+  const [stateTouched, setStateTouched] = useState(false);
+  const [cityTouched, setCityTouched] = useState(false);
+  const [residentialStatusTouched, setResidentialStatusTouched] = useState(false);
+  const [readyToSettleAbroadTouched, setReadyToSettleAbroadTouched] = useState(false);
+  const [educationTouched, setEducationTouched] = useState(false);
+  const [occupationTouched, setOccupationTouched] = useState(false);
+  const [annualIncomeTouched, setAnnualIncomeTouched] = useState(false);
+
+  const [loginSpiner, setloginSpiner] = useState(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
 
   const formik = useFormik({
@@ -101,6 +113,11 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
       occupation: String(jsonData?.occupation),
       annualIncome: String(jsonData?.annual_income),
     },
+    validationSchema: Yup.object({
+      college: Yup.string()
+        .min(3, 'Must be 3 characters or more')
+        .required('Required'),
+    }),
     onSubmit: async (values) => {
       setloginSpiner(true)
       let response;
@@ -116,7 +133,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
         );
       }
       if (response.data.output > 0) {
-        DisabledHeadingMessage(2);
+        // DisabledHeadingMessage(2);
         nextPage(2);
         setloginSpiner(false);
       } else {
@@ -155,6 +172,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.education = education.id || "";
     formik.values.occupation = occupation.id || "";
     formik.values.annualIncome = annualIncome.id || "";
+
+
+    if ( selectedCountry != null && selectedState >= 0 && selectedCity >= 0 &&
+      residentialStatus.id != "null" && settleAboard.id != "null" && education.id != "null" &&
+      occupation.id != "null" && annualIncome.id !== "null") {
+      setNextDisable(false)
+    }
+
   }, [
     annualIncome.id,
     education.id,
@@ -193,75 +218,164 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
             <h1>Great! You are about to complete your profile.</h1>
             <Col sm={12} md={5}>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
-                <CountrySingle
-                  title="Country"
-                  setSelectedCountry={getSelectedCountry}
-                  defaultValueCountry={jsonData?.country}
-                />
-                <StateSingle
-                  title="State"
-                  setSelectedState={getSelectedState}
-                  defaultValueCountry={selectedCountry}
-                  defaultValueState={jsonData?.state}
-                />
-                <CitySingle
-                  title="City"
-                  defaultValueCountry={selectedCountry}
-                  defaultValueState={selectedState}
-                  defaultValueCity={jsonData?.city}
-                  setSelectedCity={getSelectedCity}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setResidentialStatus}
-                  title="Residential Status"
-                  data={ResidentialStatus}
-                  nameid="residentialStatus"
-                  defaultValue={String(jsonData?.residentialstatus)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setSettleAbroad}
-                  title="Ready to settle abroad"
-                  data={ReadyToSettleAbroad}
-                  nameid="readyToSettleAbroad"
-                  defaultValue={String(jsonData?.readytosettleabroad)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setEducation}
-                  title="Highest Degree"
-                  data={EducationTypeAndVal}
-                  nameid="education"
-                  defaultValue={String(jsonData?.education)}
-                />
-                <div className={classes.singleBox}>
-                  <Form.Label>College Name</Form.Label>
-                  <div className={classes.inputBox}>
-                    <li className={classes.blankInput}>
-                      <Form.Control
-                        type="text"
-                        name="college"
-                        className={classes.inputplacholder}
-                        placeholder={"Enter College Name"}
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        defaultValue={jsonData?.College}
-                      />
-                    </li>
-                  </div>
+                <div>
+                  <CountrySingle
+                    title="Country"
+                    setSelectedCountry={getSelectedCountry}
+                    defaultValueCountry={jsonData?.country}
+                    setErrorState={setCountryTouched}
+                    setErrorStateDefault={setcountryTouchedDefault}
+                  />
+                  {countryTouched && countryTouchedDefault ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+                    : ""
+                  }
                 </div>
-                <DropdownGridSingleSelect
-                  selectedDataFn={setOccupation}
-                  title="Employed In"
-                  data={Occupation}
-                  nameid="occupation"
-                  defaultValue={String(jsonData?.occupation)}
-                />
-                <DropdownGridSingleSelect
-                  selectedDataFn={setannualIncome}
-                  title="Annual Income"
-                  data={AnnualIncomeProfile}
-                  nameid="annualIncome"
-                  defaultValue={String(jsonData?.annual_income)}
-                />
+                <div>
+                  <StateSingle
+                    title="State"
+                    setSelectedState={getSelectedState}
+                    defaultValueCountry={selectedCountry}
+                    defaultValueState={jsonData?.state}
+                    setErrorState={setStateTouched}
+                  />
+                  {stateTouched && selectedState < 0 ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <CitySingle
+                    title="City"
+                    defaultValueCountry={selectedCountry}
+                    defaultValueState={selectedState}
+                    defaultValueCity={jsonData?.city}
+                    setSelectedCity={getSelectedCity}
+                    setErrorState={setCityTouched}
+                  />
+                  {cityTouched && selectedCity < 0 ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setResidentialStatus}
+                    title="Residential Status"
+                    data={ResidentialStatus}
+                    nameid="residentialStatus"
+                    defaultValue={String(jsonData?.residentialstatus)}
+                    setErrorState={setResidentialStatusTouched}
+                  />
+                  {residentialStatusTouched && residentialStatus.id == "null" ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setSettleAbroad}
+                    title="Ready to settle abroad"
+                    data={ReadyToSettleAbroad}
+                    nameid="readyToSettleAbroad"
+                    defaultValue={String(jsonData?.readytosettleabroad)}
+                    setErrorState={setReadyToSettleAbroadTouched}
+                  />
+                  {readyToSettleAbroadTouched && settleAboard.id == "null" ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setEducation}
+                    title="Highest Degree"
+                    data={EducationTypeAndVal}
+                    nameid="education"
+                    defaultValue={String(jsonData?.education)}
+                    setErrorState={setEducationTouched}
+                  />
+                  {educationTouched && education.id == "null" ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <div className={classes.singleBox}>
+                    <Form.Label>College Name</Form.Label>
+                    <div className={classes.inputBox}>
+                      <li className={classes.blankInput}>
+                        <Form.Control
+                          type="text"
+                          name="college"
+                          className={classes.inputplacholder}
+                          placeholder={"Enter College Name"}
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          defaultValue={jsonData?.College}
+                        />
+                      </li>
+                    </div>
+                  </div>
+                  {formik.touched.college && formik.errors.college ?
+                    <div>
+                      <span className={classes.errorMessage}>{formik.errors.college}</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setOccupation}
+                    title="Employed In"
+                    data={Occupation}
+                    nameid="occupation"
+                    defaultValue={String(jsonData?.occupation)}
+                    setErrorState={setOccupationTouched}
+                  />
+                  {occupationTouched && occupation.id == "null" ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
+                <div>
+                  <DropdownGridSingleSelect
+                    selectedDataFn={setannualIncome}
+                    title="Annual Income"
+                    data={AnnualIncomeProfile}
+                    nameid="annualIncome"
+                    defaultValue={String(jsonData?.annual_income)}
+                    setErrorState={setAnnualIncomeTouched}
+                  />
+                  {annualIncomeTouched && annualIncome.id == "null" ?
+                    <div>
+                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    </div>
+
+                    : ""
+                  }
+                </div>
                 <hr />
                 <h5 className="text-center p-3">
                   Here is your chance to make your profile stand out!
@@ -270,6 +384,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                  disabled={nextDisable}
                 >
                   {loginSpiner && (
                     <Spinner

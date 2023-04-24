@@ -43,30 +43,30 @@ type FormValues = {
   profilepic: string;
 };
 
-const validate = (values: FormValues) => {
-  const errors: Partial<FormValues> = {};
+// const validate = (values: FormValues) => {
+//   const errors: Partial<FormValues> = {};
 
-  if (!values.profileHandlerName) {
-    errors.profileHandlerName = "Required";
-  } else if (values.profileHandlerName.length < 3) {
-    errors.profileHandlerName = "Must be 3 characters or more";
-  }
+//   if (!values.profileHandlerName) {
+//     errors.profileHandlerName = "Required";
+//   } else if (values.profileHandlerName.length < 3) {
+//     errors.profileHandlerName = "Must be 3 characters or more";
+//   }
 
 
-  if (!values.fullname) {
-    errors.fullname = "Required";
-  } else if (values.fullname.length < 3) {
-    errors.fullname = "Must be 3 characters or more";
-  }
+//   if (!values.fullname) {
+//     errors.fullname = "Required";
+//   } else if (values.fullname.length < 3) {
+//     errors.fullname = "Must be 3 characters or more";
+//   }
 
-  if (!values.profilepic) {
-    errors.profilepic = "Required";
-  } else {
-    errors.profilepic = "";
-  }
+//   if (!values.profilepic) {
+//     errors.profilepic = "Required";
+//   } else {
+//     errors.profilepic = "";
+//   }
 
-  return errors;
-};
+//   return errors;
+// };
 
 
 import {
@@ -78,7 +78,7 @@ import dynamic from "next/dynamic";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
-  DisabledHeadingMessage: (a: number) => void;
+  DisabledHeadingMessage?: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -167,27 +167,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [maritalStatusTouched, setMaritalStatusTouched] = useState<boolean>(false);
   const [childrenStatusTouched, setChildrenStatusTouched] = useState<boolean>(false);
   const [heightTouched, setHeightTouched] = useState<boolean>(false);
+  const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-
-
-  // useEffect(() => {
-  //   if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
-  //     setNextDisable(false)
-  //   } else {
-  //     setNextDisable(true)
-  //   }
-  // }, [selectedProfileFor,
-  //   selectedCast,
-  //   selectedChallenged,
-  //   selectedIsHiv,
-  //   selectedMotherTongue,
-  //   selectedReligion,
-  //   selectedManglik,
-  //   selectedMaritalStatus,
-  //   selectedChildrenStatus,
-  //   selectedMaritalStatus.id,
-  //   heightTouched
-  // ])
+  const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
 
 
 
@@ -217,7 +199,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       height: String(jsonData?.height_cm),
       profilepic: selectedPhotoName,
     },
-  
+    validationSchema: Yup.object({
+      fullname: Yup.string()
+        .min(3, 'Must be 3 characters or more')
+        .required('Required'),
+      profileHandlerName: Yup.string()
+        .min(3, 'Must be 3 characters or more')
+        .required('Required'),
+      profilepic: Yup.string()
+        .required('Required'),
+    }),
     onSubmit: async (values) => {
       setloginSpiner(true)
       const formData = new FormData();
@@ -269,7 +260,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           },
         };
         if (response.data.output >= 0) {
-          DisabledHeadingMessage(1);
+          // DisabledHeadingMessage(1);
           nextPage(1);
           setloginSpiner(false);
         }
@@ -294,11 +285,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if ((selectedMaritalStatus.id || "") >= "2") {
       setChildrenStatusTouched(false);
     }
-    if (formik.values.height > "0") {
-      setHivTouched(true)
-    }
 
-  }, [selectedMaritalStatus, formik.values.height])
+  }, [selectedMaritalStatus])
 
 
   useEffect(() => {
@@ -312,10 +300,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.cast = selectedCast.id || "";
     formik.values.profilepic = selectedPhotoName || "";
 
-    if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
+    if (heightTouched && selectedProfileFor.id != "undefined" && selectedCast.id != "undefined" && selectedChallenged.id != "undefined" &&
+      selectedIsHiv.id != "undefined" && selectedMotherTongue.id != "undefined" && selectedReligion.id != "undefined" &&
+      selectedManglik.id != "undefined" && selectedMaritalStatus.id !== "undefined") {
       setNextDisable(false)
-    } else {
-      setNextDisable(true)
     }
   }, [
     formik.values,
@@ -333,6 +321,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
 
   const onHeightChange = (height: number | null) => {
     formik.values.height = String(height);
+    setheightSelectedVal(height);
     if (height != null && height > 0) {
       setHeightTouched(true);
     }
@@ -401,8 +390,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   }, [jsonData]);
 
   const handleDateTimeChange = (value: Date) => {
-    setDob(value);
-    formik.values.dob = convertDateStringTimeStamp(value);
+    if (value.getFullYear() <= 2005) {
+      setDob(value);
+      formik.values.dob = convertDateStringTimeStamp(value);
+    }
   };
 
 
@@ -438,6 +429,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     }
                   </div>
                   {selectedProfileFor?.id !== "1" && (
+                    <div>
                       <div className={classes.singleBox}>
                         <Form.Label>Profile Handler</Form.Label>
                         <div className={classes.inputBox}>
@@ -453,14 +445,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           </li>
                         </div>
                       </div>
-                      // {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
-                      //   <div>
-                      //     <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
-                      //   </div>
+                      {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
+                        <div>
+                          <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
+                        </div>
 
-                      //   : ""
-                      // }
-                    // </div>
+                        : ""
+                      }
+                    </div>
                   )}
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
@@ -477,6 +469,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       onChange={handleDateTimeChange}
                       placeholder="DD-MM-YYYY HH:MM"
                       value={dob}
+                      minDate={new Date(1954, 1, 1)}
+                      maxDate={new Date(2005, 0, 1)}
                       required
                     />
                   </div>
@@ -510,7 +504,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         <div>
                           <span className={classes.errorMessage}>{formik.errors.fullname}</span>
                         </div>
-
                         : ""
                       }
                     </div>
@@ -519,9 +512,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     <Form.Label>Upload Profile Picture</Form.Label>
                     <AvatarPicker
                       onGetAvatar={profilePicture}
+                      setErrorState={setAvtarTouched}
                       defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
                     />
-                    {selectedPhotoName.length == 0 && formik.errors.profilepic ?
+                    {avtarTouched && selectedPhotoName.length == 0 ?
                       <div>
                         <span className={classes.errorMessage}>{formik.errors.profilepic}</span>
                       </div>
@@ -546,11 +540,19 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       : ""
                     }
                   </div>
-                  <HeightInput
-                    label="Height"
-                    onHeightChange={onHeightChange}
-                    defaultValue={jsonData && +jsonData?.height_cm}
-                  />
+                  <div>
+
+                    <HeightInput
+                      label="Height"
+                      onHeightChange={onHeightChange}
+                      defaultValue={jsonData && +jsonData?.height_cm}
+                    />
+                    {heightTouched && heightSelectedVal == 0 ?
+                      <div>
+                        <span className={classes.errorMessage}>Please enter valid height input</span>
+                      </div>
+                      : ""}
+                  </div>
                   <div>
                     <DropdownGridSingleSelect
                       title="Challenged"

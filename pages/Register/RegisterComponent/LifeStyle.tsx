@@ -28,10 +28,12 @@ import { updateProfileCompleteness } from "../../../ducks/profileCompletion/acti
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import router from "next/router";
 import { isNull } from "lodash";
+import * as Yup from 'yup';
+
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
-  DisabledHeadingMessage: (a: number) => void;
+  DisabledHeadingMessage?: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -105,11 +107,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     val: "",
   });
 
-  const [ReligiousBelief, setReligiousBelief] = useState<string>(
-    jsonData?.religious_belief !== undefined
-      ? String(jsonData.religious_belief)
-      : ""
-  );
+  // const [ReligiousBelief, setReligiousBelief] = useState<string>(
+  //   jsonData?.religious_belief !== undefined
+  //     ? String(jsonData.religious_belief)
+  //     : ""
+  // );
   const [housetype, setHousetype] = useState<Data>({
     id: String(jsonData?.home_type),
     val: "",
@@ -118,6 +120,19 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     id: String(jsonData?.car_details),
     val: "",
   });
+
+
+  const [dietTouched, setdietTouched] = useState<boolean>(false);
+  const [smokingTouched, setSmokingTouched] = useState<boolean>(false);
+  const [drinkingTouched, setDrinkingTouched] = useState<boolean>(false);
+  const [lovePetsTouched, setLovePetsTouched] = useState<boolean>(false);
+  const [ownsHouseTouched, setOwnsHouseTouched] = useState<boolean>(false);
+  const [typeofHouseTouched, setTypeofHouseTouched] = useState<boolean>(false);
+  const [ownsCarTouched, setOwnsCarTouched] = useState<boolean>(false);
+  const [typeofCarTouched, setTypeofCarTouched] = useState<boolean>(false);
+  const [bloodGroupTouched, setBloodGroupTouched] = useState<boolean>(false);
+  const [thalassemiaTouched, setThalassemiaTouched] = useState<boolean>(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
   useEffect(() => {
     if (ownsCar.id == "2") {
@@ -141,10 +156,15 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
       ownsCar: String(jsonData?.Owns_car),
       bloodGroup: String(jsonData?.blood_group),
       thalassemia: String(jsonData?.Thalassemia),
-      religiousBelief: ReligiousBelief,
+      religiousBelief: jsonData?.religious_belief,
       cartype: jsonData?.car_details || null,
       housetype: jsonData?.home_type || null,
     },
+    validationSchema: Yup.object({
+      religiousBelief: Yup.string()
+        .min(3, 'Must be 3 characters or more')
+        .required('Required'),
+    }),
     onSubmit: async (values) => {
       setloadingSpiner(true);
       let response;
@@ -161,7 +181,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
         );
       }
       if (response.data.output > 0) {
-        DisabledHeadingMessage(3);
+        // DisabledHeadingMessage(3);
         nextPage(3);
         setloadingSpiner(false);
       } else {
@@ -171,13 +191,13 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   });
 
   // to update json data when first time relode
-  useEffect(() => {
-    setReligiousBelief(
-      jsonData?.religious_belief !== (null && undefined)
-        ? String(jsonData?.religious_belief)
-        : ""
-    );
-  }, [jsonData, jsonData?.religious_belief]);
+  // useEffect(() => {
+  //   setReligiousBelief(
+  //     jsonData?.religious_belief !== (null && undefined)
+  //       ? String(jsonData?.religious_belief)
+  //       : ""
+  //   );
+  // }, [jsonData, jsonData?.religious_belief]);
 
   useEffect(() => {
     formik.values.diet = diet.id || "";
@@ -188,9 +208,24 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     formik.values.ownsCar = ownsCar.id || "";
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
-    formik.values.religiousBelief = ReligiousBelief;
+    // formik.values.religiousBelief = ReligiousBelief;
     formik.values.cartype = cartype.id || null;
     formik.values.housetype = housetype.id || null;
+
+    if (diet.id != "undefined" && smoking.id != "undefined" && drinking.id != "undefined" &&
+      lovePets.id != "undefined" && ownsHouse.id !== "undefined" && ownsCar.id !== "undefined" && bloodGroup.id !== "undefined"
+      && thalassemia.id !== "undefined") {
+      if ((ownsHouse.id == "2" && ownsCar.id == "2") || ownsHouse.id == "2" || ownsCar.id == "2") {
+        setNextDisable(false)
+      }
+
+      if (ownsHouse.id == "1" && housetype.id == "undefined" || ownsCar.id == "1" && cartype.id == "undefined") {
+        setNextDisable(true);
+      } else {
+        setNextDisable(false)
+      }
+
+    }
   }, [
     bloodGroup.id,
     diet.id,
@@ -201,7 +236,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     ownsHouse.id,
     smoking.id,
     thalassemia.id,
-    ReligiousBelief,
+    // ReligiousBelief,
     cartype,
     housetype,
   ]);
@@ -210,6 +245,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     setSkiploadingSpiner(true)
     router.push("/DesiredProfile")
   }
+
+  // function handleReligiousChange(e: any) {
+  //   formik.handleChange,
+  //     setReligiousBelief(e.target.value)
+  // }
 
   return (
     <div className={classes.profile_Container}>
@@ -232,105 +272,230 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
             <Col sm={12} md={5}>
               <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
                 <div className=" text-start d-flex flex-column gap-4">
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setDiet}
-                    title="Diet"
-                    data={Diet}
-                    nameid="diet"
-                    defaultValue={String(jsonData?.diet)}
-                  />
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setSmoking}
-                    title="Smoking"
-                    data={SmokeDrink}
-                    nameid="smoking"
-                    defaultValue={String(jsonData?.smoking)}
-                  />
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setDrinking}
-                    title="Drinking"
-                    data={SmokeDrink}
-                    nameid="drinking"
-                    defaultValue={String(jsonData?.drinking)}
-                  />
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setLovePets}
-                    title="Love Pets"
-                    data={Pets}
-                    nameid="lovePets"
-                    defaultValue={String(jsonData?.love_pets)}
-                  />
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setOwnsHouse}
-                    title="Owns House"
-                    data={OwnHouseCar}
-                    nameid="ownsHouse"
-                    defaultValue={String(jsonData?.Owns_house)}
-                  />
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setDiet}
+                      title="Diet"
+                      data={Diet}
+                      nameid="diet"
+                      defaultValue={String(jsonData?.diet)}
+                      setErrorState={setdietTouched}
+                    />
+                    {dietTouched && diet.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setSmoking}
+                      title="Smoking"
+                      data={SmokeDrink}
+                      nameid="smoking"
+                      defaultValue={String(jsonData?.smoking)}
+                      setErrorState={setSmokingTouched}
+                    />
+                    {smokingTouched && smoking.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setDrinking}
+                      title="Drinking"
+                      data={SmokeDrink}
+                      nameid="drinking"
+                      defaultValue={String(jsonData?.drinking)}
+                      setErrorState={setDrinkingTouched}
+                    />
+                    {drinkingTouched && drinking.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setLovePets}
+                      title="Love Pets"
+                      data={Pets}
+                      nameid="lovePets"
+                      defaultValue={String(jsonData?.love_pets)}
+                      setErrorState={setLovePetsTouched}
+                    />
+                    {lovePetsTouched && lovePets.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setOwnsHouse}
+                      title="Owns House"
+                      data={OwnHouseCar}
+                      nameid="ownsHouse"
+                      defaultValue={String(jsonData?.Owns_house)}
+                      setErrorState={setOwnsHouseTouched}
+                    />
+                    {ownsHouseTouched && ownsHouse.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
                   {ownsHouse && ownsHouse?.id == "1" && (
-                    <div className={classes.singleBox}>
-                      <DropdownGridSingleSelect
-                        selectedDataFn={setHousetype}
-                        title="Type of House"
-                        data={HouseType}
-                        nameid="house_type"
-                        defaultValue={String(jsonData?.home_type)}
-                      />
+                    <div>
+                      <div className={classes.singleBox}>
+                        <DropdownGridSingleSelect
+                          selectedDataFn={setHousetype}
+                          title="Type of House"
+                          data={HouseType}
+                          nameid="house_type"
+                          defaultValue={String(jsonData?.home_type)}
+                          setErrorState={setTypeofHouseTouched}
+                        />
+                      </div>
+                      {typeofHouseTouched && housetype.id == "undefined" ?
+                        <div>
+                          <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        </div>
+
+                        : ""
+                      }
                     </div>
                   )}
 
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setOwnsCar}
-                    title="Owns Car"
-                    data={OwnHouseCar}
-                    nameid="ownsCar"
-                    defaultValue={String(jsonData?.Owns_car)}
-                  />
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setOwnsCar}
+                      title="Owns Car"
+                      data={OwnHouseCar}
+                      nameid="ownsCar"
+                      defaultValue={String(jsonData?.Owns_car)}
+                      setErrorState={setOwnsCarTouched}
+                    />
+                    {ownsCarTouched && ownsCar.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
 
                   {ownsCar && ownsCar?.id == "1" && (
-                    <div className={classes.singleBox}>
-                      <DropdownGridSingleSelect
-                        selectedDataFn={setCartype}
-                        title="Type of Car"
-                        data={CarType}
-                        nameid="car_type"
-                        defaultValue={String(jsonData?.car_details)}
-                      />
+                    <div>
+                      <div className={classes.singleBox}>
+                        <DropdownGridSingleSelect
+                          selectedDataFn={setCartype}
+                          title="Type of Car"
+                          data={CarType}
+                          nameid="car_type"
+                          defaultValue={String(jsonData?.car_details)}
+                          setErrorState={setTypeofCarTouched}
+                        />
+                      </div>
+                      {typeofCarTouched && cartype.id == "undefined" ?
+                        <div>
+                          <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        </div>
+
+                        : ""
+                      }
                     </div>
                   )}
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setBloodGroup}
-                    title="Blood Group"
-                    data={BloodGroup}
-                    nameid="bloodGroup"
-                    defaultValue={String(jsonData?.blood_group)}
-                  />
-                  <DropdownGridSingleSelect
-                    selectedDataFn={setThalassemia}
-                    title="Thalassemia "
-                    data={Thalassemia}
-                    nameid="thalassemia"
-                    defaultValue={String(jsonData?.Thalassemia)}
-                  />
-                  <div className={classes.singleBox}>
-                    <Form.Label>Religious Belief</Form.Label>
-                    <Form.Control
-                      name="religiousBelief"
-                      placeholder="About Religious Belief"
-                      onBlur={formik.handleBlur}
-                      onChange={(e) => setReligiousBelief(e.target.value)}
-                      defaultValue={
-                        jsonData?.religious_belief !== (null && undefined)
-                          ? jsonData?.religious_belief
-                          : ReligiousBelief
-                      }
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setBloodGroup}
+                      title="Blood Group"
+                      data={BloodGroup}
+                      nameid="bloodGroup"
+                      defaultValue={String(jsonData?.blood_group)}
+                      setErrorState={setBloodGroupTouched}
                     />
+                    {bloodGroupTouched && bloodGroup.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      selectedDataFn={setThalassemia}
+                      title="Thalassemia "
+                      data={Thalassemia}
+                      nameid="thalassemia"
+                      defaultValue={String(jsonData?.Thalassemia)}
+                      setErrorState={setThalassemiaTouched}
+                    />
+                    {thalassemiaTouched && thalassemia.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <div className={classes.singleBox}>
+                      {/* <Form.Label>Religious Belief</Form.Label>
+                      <Form.Control
+                        name="religiousBelief"
+                        placeholder="About Religious Belief"
+                        onBlur={formik.handleBlur}
+                        onChange={(e) => handleReligiousChange(e)}
+                        defaultValue={
+                          jsonData?.religious_belief !== (null && undefined)
+                            ? jsonData?.religious_belief
+                            : ReligiousBelief
+                        }
+                      /> */}
+                      <Form.Label>Religious Belief</Form.Label>
+                      <div className={classes.inputBox}>
+                        <li className={classes.blankInput}>
+                          <Form.Control
+                            type="text"
+                            name="religiousBelief"
+                            className={classes.inputplacholder}
+                            placeholder={"About Religious Belief"}
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            defaultValue={jsonData?.religious_belief}
+                          />
+                        </li>
+                      </div>
+                    </div>
+                    {formik.touched.religiousBelief && formik.errors.religiousBelief ?
+                      <div>
+                        <span className={classes.errorMessage}>{formik.errors.religiousBelief}</span>
+                      </div>
+
+                      : ""
+                    }
                   </div>
                 </div>
                 <Button
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                  disabled={nextDisable}
                 >
                   {loadingSpiner && (
                     <Spinner
