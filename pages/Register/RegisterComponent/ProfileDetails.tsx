@@ -217,7 +217,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       height: String(jsonData?.height_cm),
       profilepic: selectedPhotoName,
     },
-    validate,
+  
     onSubmit: async (values) => {
       setloginSpiner(true)
       const formData = new FormData();
@@ -438,7 +438,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     }
                   </div>
                   {selectedProfileFor?.id !== "1" && (
-                    <div>
                       <div className={classes.singleBox}>
                         <Form.Label>Profile Handler</Form.Label>
                         <div className={classes.inputBox}>
@@ -454,14 +453,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           </li>
                         </div>
                       </div>
-                      {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
-                        <div>
-                          <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
-                        </div>
+                      // {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
+                      //   <div>
+                      //     <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
+                      //   </div>
 
-                        : ""
-                      }
-                    </div>
+                      //   : ""
+                      // }
+                    // </div>
                   )}
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
