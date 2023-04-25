@@ -24,8 +24,11 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-
-
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [elementRef]);
+  
   const findKeyByValue = (obj: any, value?: string): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {

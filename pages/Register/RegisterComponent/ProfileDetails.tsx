@@ -68,7 +68,6 @@ type FormValues = {
 //   return errors;
 // };
 
-
 import {
   convertDateStringTimeStamp,
   convertServerTimestamp,
@@ -171,6 +170,25 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [nextDisable, setNextDisable] = useState<boolean>(true);
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
 
+  // useEffect(() => {
+  //   if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
+  //     setNextDisable(false)
+  //   } else {
+  //     setNextDisable(true)
+  //   }
+  // }, [selectedProfileFor,
+  //   selectedCast,
+  //   selectedChallenged,
+  //   selectedIsHiv,
+  //   selectedMotherTongue,
+  //   selectedReligion,
+  //   selectedManglik,
+  //   selectedMaritalStatus,
+  //   selectedChildrenStatus,
+  //   selectedMaritalStatus.id,
+  //   heightTouched
+  // ])
+  const [profileforTouched, setprofileforTouched] = useState<boolean>(false);
 
 
   if (selectedPhotoName?.includes("uploads")) {
@@ -277,7 +295,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }
   };
 
-
   useEffect(() => {
     if ((selectedMaritalStatus.id || "") == "1") {
       setChildrenStatusTouched(true);
@@ -287,7 +304,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }
 
   }, [selectedMaritalStatus])
-
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -428,6 +444,21 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       : ""
                     }
                   </div>
+                  <DropdownGridSingleSelect
+                    title="Profile For"
+                    data={ProfileFor}
+                    nameid="profilefor"
+                    selectedDataFn={setSelectedProfileFor}
+                    defaultValue={String(jsonData?.profile_for)}
+                  />
+                  {profileforTouched && selectedProfileFor.id == "undefined" ||
+                    selectedProfileFor.id && +selectedProfileFor.id >= 0 && +selectedProfileFor <= 6 ?
+                    <div>
+                      <span>Please select valid input</span>
+                    </div>
+
+                    : ""
+                  }
                   {selectedProfileFor?.id !== "1" && (
                     <div>
                       <div className={classes.singleBox}>
@@ -506,6 +537,25 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         </div>
                         : ""
                       }
+                    <Form.Label>
+                      {selectedProfileFor?.id == "2" ||
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
+                        ? "Groom"
+                        : "Bride"}{" "}
+                      Name
+                    </Form.Label>
+                    <div className={classes.inputBox}>
+                      <li className={classes.blankInput}>
+                        <Form.Control
+                          name="fullname"
+                          type="text"
+                          placeholder="Select Option"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          defaultValue={jsonData?.fullname}
+                        />
+                      </li>
                     </div>
                   </div>
                   <div>
