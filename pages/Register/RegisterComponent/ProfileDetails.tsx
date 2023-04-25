@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import classes from "./Component.module.scss";
 import { useFormik } from "formik";
 import {
@@ -30,10 +30,12 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
+
 const DateTimePicker = dynamic(
   () => import("react-rainbow-components/components/DateTimePicker"),
   { ssr: false } as any
 );
+
 import {
   convertDateStringTimeStamp,
   convertServerTimestamp,
@@ -43,6 +45,7 @@ import dynamic from "next/dynamic";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
+  DisabledHeadingMessage: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -52,6 +55,7 @@ interface Data {
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
   profileComplete,
+  DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
@@ -71,7 +75,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   }, [jsonData?.gender]);
 
   useEffect(() => {
-    if(jsonData) setDob(convertTimeStamp(jsonData?.dob));
+    if (jsonData) setDob(convertTimeStamp(jsonData?.dob));
   }, [jsonData, jsonData?.dob]);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
@@ -115,6 +119,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [gender, setGender] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
   const [dob, setDob] = useState<Date>(convertTimeStamp(jsonData?.dob || ""));
+  const [loginSpiner, setloginSpiner] = useState(false);
+  const [profileforTouched, setprofileforTouched] = useState<boolean>(false);
+
+
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
@@ -125,7 +133,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       profilefor: String(jsonData?.profile_for),
       profileHandlerName: jsonData?.profile_handlername,
       dob: jsonData && convertServerTimestamp(jsonData?.dob),
-      selectgender: jsonData?.gender,
+      selectgender: jsonData?.gender || "F",
       fullname: jsonData?.fullname,
       cast: String(jsonData?.caste),
       challenged: String(jsonData?.challenged),
@@ -139,6 +147,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       profilepic: selectedPhotoName,
     },
     onSubmit: async (values) => {
+      setloginSpiner(true)
       const formData = new FormData();
       formData.append("userId", String(values.userId));
       formData.append("profilefor", String(values.profilefor));
@@ -167,13 +176,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
         if (response.data.output === 4) {
           nextPage(1);
+          setloginSpiner(false);
         }
       } else {
         formData.append("actionType", "u");
@@ -181,13 +191,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
         if (response.data.output >= 0) {
+          DisabledHeadingMessage(1);
           nextPage(1);
+          setloginSpiner(false);
         }
       }
     },
@@ -201,6 +213,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formik.values.selectgender = "F";
     }
   };
+
+
+
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
     formik.values.challenged = selectedChallenged.id || "";
@@ -285,7 +300,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.height_cm) {
       formik.values.height = String(jsonData.height_cm);
     }
-    if(jsonData && jsonData.dob) {
+    if (jsonData && jsonData.dob) {
       formik.values.dob = jsonData.dob;
     }
   }, [jsonData]);
@@ -294,6 +309,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     setDob(value);
     formik.values.dob = convertDateStringTimeStamp(value);
   };
+
+
   return (
     <>
       <div className={classes.profile_Container}>
@@ -315,6 +332,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     selectedDataFn={setSelectedProfileFor}
                     defaultValue={String(jsonData?.profile_for)}
                   />
+                  {profileforTouched && selectedProfileFor.id == "undefined" ||
+                    selectedProfileFor.id && +selectedProfileFor.id >= 0 && +selectedProfileFor <= 6 ?
+                    <div>
+                      <span>Please select valid input</span>
+                    </div>
+
+                    : ""
+                  }
                   {selectedProfileFor?.id !== "1" && (
                     <div className={classes.singleBox}>
                       <Form.Label>Profile Handler</Form.Label>
@@ -336,11 +361,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                    <GenderRadioButtons
-                      selectedGender={gender}
-                      onChangeGender={onChangeGender}
-                    />
-                  )}
+                      <GenderRadioButtons
+                        selectedGender={gender}
+                        onChangeGender={onChangeGender}
+                      />
+                    )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
                     <DateTimePicker
@@ -353,8 +378,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   <div className={classes.singleBox}>
                     <Form.Label>
                       {selectedProfileFor?.id == "2" ||
-                      selectedProfileFor?.id == "5" ||
-                      gender === "1"
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
                         ? "Groom"
                         : "Bride"}{" "}
                       Name
@@ -447,6 +472,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                   >
+                    {loginSpiner && (
+                      <Spinner
+                        className={classes.loginSpiner}
+                        animation="border"
+                        variant="light"
+                      />
+                    )}
                     Next
                   </Button>
                 </Form>

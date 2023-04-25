@@ -20,55 +20,12 @@
     .MyProfileMiddle {
       height: 100%;
       padding: 1rem;
-      // display: flex;
-      // gap: 3rem;
-      // color: dimgray;
-      // font-weight: 500;
 
       .MiddleLeft {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        // .MiddleIconSecMain {
-        //     display: flex;
-        //     gap: 1rem;
-        //     margin-bottom: 1rem;
-
-        //     .MiddleIconSec {
-        //         display: flex;
-        //         flex-direction: column;
-        //         justify-content: center;
-        //         gap: 0.4rem;
-        //         align-items: center;
-
-        //         svg {
-        //             font-size: 4rem;
-        //             color: rgb(10, 11, 29);
-        //         }
-        //     }
-        // }
-
-        // .PreviewAlbum {
-        //     color: red;
-        //     cursor: pointer;
-        //     font-weight: 500;
-        // }
-
-        // .AddDetailsHeading {
-        //     font-size: 15px;
-        //     font-weight: 600;
-        //     color: black;
-
-        // }
-
-        // .AddDetailsSubHeading {
-        //     font-size: 14px;
-        //     color: grey;
-        //     margin-bottom: 1rem;
-        //     text-transform: capitalize;
-        //     font-weight: 500;
-        // }
 
         .MiddleLeftHeading {
           font-size: 18px;
@@ -84,10 +41,6 @@
 
           .Package_type {
             color: #d9475c;
-            // color: #fff;
-            // background: #d9475c;
-            // padding: 2px 22px;
-            // border-radius: 5px;
           }
         }
       }
@@ -114,31 +67,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    // .RightPrograss {
-    //     border: 1rem solid rgb(14, 14, 63);
-    //     border-radius: 50%;
-    //     height: 6rem;
-    //     width: 6rem;
-    //     // border-bottom-left-radius: 0%;
-    //     // border-bottom-right-radius: 0%;
-    //     // border-bottom: none;
-    //     // border-left: none;
-    //     // border-right: none;
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     font-size: 22px;
-    //     position: relative;
-
-    //     ::after{
-    //         content: "hwkkio";
-    //         position: absolute;
-    //         height: 150PX;
-    //         width: 150PX;
-    //         background-color: #c3c3c3;
-    //     }
-    // }
 
     div {
       position: relative;
@@ -176,7 +104,7 @@
 
 @media only screen and (max-width: 990px) and (min-width: 768px) {
   .cardWrapper {
-    margin-top: 3rem;
+    margin-top: 1rem;
 
     img {
       width: 100%;
@@ -254,7 +182,7 @@
   }
 
   .cardWrapper {
-    margin-top: 3rem;
+    margin-top: 1rem;
     width: 100%;
 
     img {
@@ -262,6 +190,7 @@
     }
 
     .cardInfo {
+
       // .UserName_Section {
       //     min-height: 50px;
       // }

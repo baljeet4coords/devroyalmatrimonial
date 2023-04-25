@@ -28,7 +28,9 @@
 .Form_btnPrev {
   align-self: end !important;
 }
+
 @media only screen and (max-width: 950px) {
+
   .register_header_Links,
   .register_header_Links a {
     width: 100%;
@@ -43,7 +45,7 @@
 
 @media only screen and (max-width: 768px) {
   .Form_btn {
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 
@@ -234,7 +236,7 @@
 }
 
 .formEdit {
-  + button {
+  +button {
     margin-top: 3rem;
   }
 }
@@ -392,4 +394,31 @@
       }
     }
   }
+}
+
+
+.Skip_Btn {
+  width: 20%;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  .loginSpiner {
+    height: 18px;
+    width: 18px;
+  }
+}
+
+.loginSpiner {
+  height: 18px;
+  width: 18px;
+}
+
+.Form_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
