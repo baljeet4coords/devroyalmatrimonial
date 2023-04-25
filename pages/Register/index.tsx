@@ -34,70 +34,64 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   // const profileComplete = useSelector(selectProfileCompletion);
   const { page } = router.query;
   const [active, setActive] = useState<number>(0);
-  const [disabledHeading, setDisabledHeading] = useState<number>(0);
+  // const [disabledHeading, setDisabledHeading] = useState<number>(0);
   const [profileCompletion, setProfileCompletion] = useState<number>(0);
   const dispatch = useDispatch();
-  const authSuccess = useSelector(selectAuthSuccess);
-  const pageNo = authSuccess?.jsonResponse?.user_status;
+  // const authSuccess = useSelector(selectAuthSuccess);
+  // const pageNo = authSuccess?.jsonResponse?.user_status;
 
 
 
-  useEffect(() => {
-    console.log(pageNo, "pageNo");
-    if (pageNo == "R") {
-      setDisabledHeading(0)
-    } else if (pageNo == "1") {
-      setDisabledHeading(1)
-    } else if (pageNo == "2") {
-      setDisabledHeading(2)
-    } else if (pageNo == "3") {
-      setDisabledHeading(3)
-    } else {
-      setDisabledHeading(4)
-    }
-  }, [pageNo])
+  // useEffect(() => {
+  //   console.log(pageNo, "pageNo");
+  //   if (pageNo == "R") {
+  //     setDisabledHeading(0)
+  //   } else if (pageNo == "1") {
+  //     setDisabledHeading(1)
+  //   } else if (pageNo == "2") {
+  //     setDisabledHeading(2)
+  //   } else if (pageNo == "3") {
+  //     setDisabledHeading(3)
+  //   } else {
+  //     setDisabledHeading(4)
+  //   }
+  // }, [pageNo])
 
 
 
   const chooseMessage = (message: number) => {
-    if (disabledHeading >= message) {
-      setActive(message);
-    }
+    setActive(message);
   };
 
-  const disheadingMessage = (message: number) => {
+  // const disheadingMessage = (message: number) => {
 
-    if (disabledHeading < message) {
-      setTimeout(() => {
-        setDisabledHeading(message);
-        setActive(message);
-      }, 100);
-    }
-  }
+  //   if (disabledHeading < message) {
+  //     setTimeout(() => {
+  //       setDisabledHeading(message);
+  //       setActive(message);
+  //     }, 100);
+  //   }
+  // }
   const Components = [
     <ProfileDetails
       key={0}
       nextPage={chooseMessage}
       profileComplete={profileCompletion}
-      DisabledHeadingMessage={disheadingMessage}
     />,
     <CareerDetails
       key={1}
       nextPage={chooseMessage}
       profileComplete={profileCompletion}
-      DisabledHeadingMessage={disheadingMessage}
     />,
     <LifeStyle
       key={2}
       nextPage={chooseMessage}
       profileComplete={profileCompletion}
-      DisabledHeadingMessage={disheadingMessage}
     />,
     <FamilyDetails
       key={3}
       nextPage={chooseMessage}
       profileComplete={profileCompletion}
-      DisabledHeadingMessage={disheadingMessage}
     />,
     <ExpressYourself
       key={4}
@@ -132,7 +126,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "} ${disabledHeading < index ? classes.disabledheading : ""} ${classes.topButtons
+                className={`${active === index ? classes.active : " "}  ${classes.topButtons
                   }`}
                 onClick={() => chooseMessage(index)}
               >

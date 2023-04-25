@@ -34,7 +34,7 @@ import router from "next/router";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
-  DisabledHeadingMessage: (a: number) => void;
+  DisabledHeadingMessage?: (a: number) => void;
   profileComplete: number;
 }
 interface Data {
@@ -143,7 +143,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
         );
       }
       if (response.data.output > 0) {
-        DisabledHeadingMessage(4);
+        // DisabledHeadingMessage(4);
         nextPage(4);
         setloadingSpiner(false);
       } else {

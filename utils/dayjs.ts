@@ -7,11 +7,11 @@ dayjs.extend(require("dayjs/plugin/timezone"));
 
 dayjs.locale("hi");
 
-export const convertTimeStamp = (time: string) => {
+export const convertTimeStamp = (time: string | Date) => {
   return dayjs(time, "DD-MM-YYYY HH:mm").format("YYYY-MM-DD HH:mm");
 };
 
-export const convertServerTimestamp = (time: string) => {
+export const convertServerTimestamp = (time: string | Date) => {
   return dayjs(time, "YYYY-MM-DD HH:mm").format("YYYY-MM-DD HH:mm");
 };
 

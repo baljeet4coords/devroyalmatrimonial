@@ -6,12 +6,16 @@ interface CountryProps {
   setSelectedCountry: (id: number) => void;
   defaultValueCountry?: number;
   title: string;
+  setErrorState?: (details: boolean) => void;
+  setErrorStateDefault?: (details: boolean) => void;
 }
 
 const CountrySingle: React.FC<CountryProps> = ({
   defaultValueCountry,
   setSelectedCountry,
   title,
+  setErrorState,
+  setErrorStateDefault,
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
 
@@ -33,7 +37,7 @@ const CountrySingle: React.FC<CountryProps> = ({
     (defaultValueCountry != (undefined && null) &&
       defaultValueCountry != -1 &&
       countries[defaultValueCountry].name) ||
-      "Select Country"
+    "Select Country"
   );
 
   const searchDataFunc = (query: string) => {
@@ -58,6 +62,8 @@ const CountrySingle: React.FC<CountryProps> = ({
     const getIndex = countries.findIndex((obj) => obj.name === item.name);
     setSearchInput("");
     UpdatesearchHostedArray(countries);
+    activeList && setErrorState !== undefined && setErrorState(false);
+    setErrorStateDefault && setErrorStateDefault(false)
     setTimeout(() => {
       setActiveList(false);
     }, 100);
@@ -73,6 +79,7 @@ const CountrySingle: React.FC<CountryProps> = ({
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        activeList && setErrorState !== undefined && setErrorState(true);
         setActiveList(false);
       }
     };
@@ -82,7 +89,7 @@ const CountrySingle: React.FC<CountryProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [elementRef]);
+  }, [elementRef, activeList]);
 
   return (
     <>
@@ -101,9 +108,8 @@ const CountrySingle: React.FC<CountryProps> = ({
             )}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

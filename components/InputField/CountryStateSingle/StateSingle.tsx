@@ -7,6 +7,7 @@ interface StateProps {
   defaultValueCountry?: number;
   defaultValueState?: number;
   setSelectedState: (id: number) => void;
+  setErrorState?: (details: boolean) => void;
 }
 
 const StateSingle: React.FC<StateProps> = ({
@@ -14,6 +15,7 @@ const StateSingle: React.FC<StateProps> = ({
   defaultValueCountry,
   setSelectedState,
   defaultValueState,
+  setErrorState
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
@@ -102,6 +104,7 @@ const StateSingle: React.FC<StateProps> = ({
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (elementRef.current && !elementRef?.current?.contains(event.target)) {
+        activeList && setErrorState !== undefined && setErrorState(true);
         setActiveList(false);
       }
     };
@@ -111,7 +114,7 @@ const StateSingle: React.FC<StateProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [elementRef]);
+  }, [elementRef, activeList]);
 
   return (
     <>
@@ -130,9 +133,8 @@ const StateSingle: React.FC<StateProps> = ({
             )}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

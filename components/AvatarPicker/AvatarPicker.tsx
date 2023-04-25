@@ -19,11 +19,13 @@ type Avatar = {
 interface AvatarPickerProps {
   onGetAvatar: (name: string, file: Blob | null) => void;
   defaultImage: string;
+  setErrorState?: (details: boolean) => void;
 }
 
 const AvatarPicker: React.FC<AvatarPickerProps> = ({
   onGetAvatar,
   defaultImage,
+  setErrorState
 }) => {
   const defaultImageOnly = defaultImage.split("/").pop();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,8 +76,15 @@ const AvatarPicker: React.FC<AvatarPickerProps> = ({
     }
   }, [defaultImage]);
 
+
   useEffect(() => {
     if (image) setIsOpen(true);
+  }, [image]);
+
+  useEffect(() => {
+    if (image) {
+      setErrorState !== undefined && setErrorState(true);
+    }
   }, [image]);
 
   const handleButtonClick = (e: any) => {
