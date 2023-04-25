@@ -30,11 +30,43 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
-
+import * as Yup from 'yup';
 const DateTimePicker = dynamic(
   () => import("react-rainbow-components/components/DateTimePicker"),
   { ssr: false } as any
 );
+// import { formikErrorSchema } from '../../../schemas/profileDetailsSchema'
+
+type FormValues = {
+  profileHandlerName: string | undefined;
+  fullname: string | undefined;
+  profilepic: string;
+};
+
+const validate = (values: FormValues) => {
+  const errors: Partial<FormValues> = {};
+
+  if (!values.profileHandlerName) {
+    errors.profileHandlerName = "Required";
+  } else if (values.profileHandlerName.length < 3) {
+    errors.profileHandlerName = "Must be 3 characters or more";
+  }
+
+
+  if (!values.fullname) {
+    errors.fullname = "Required";
+  } else if (values.fullname.length < 3) {
+    errors.fullname = "Must be 3 characters or more";
+  }
+
+  if (!values.profilepic) {
+    errors.profilepic = "Required";
+  } else {
+    errors.profilepic = "";
+  }
+
+  return errors;
+};
 
 import {
   convertDateStringTimeStamp,
@@ -52,6 +84,9 @@ interface Data {
   id?: string;
   val: string;
 }
+
+
+
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
   profileComplete,
@@ -120,6 +155,38 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [image, setImage] = useState<Blob | string>("");
   const [dob, setDob] = useState<Date>(convertTimeStamp(jsonData?.dob || ""));
   const [loginSpiner, setloginSpiner] = useState(false);
+
+  const [profileforTouched, setprofileforTouched] = useState<boolean>(false);
+  const [casteTouched, setCasteTouched] = useState<boolean>(false);
+  const [challengedTouched, setChallengedTouched] = useState<boolean>(false);
+  const [hivTouched, setHivTouched] = useState<boolean>(false);
+  const [motherToungeTouched, setMotherToungeTouched] = useState<boolean>(false);
+  const [religionTouched, setReligionTouched] = useState<boolean>(false);
+  const [manglikTouched, setManglikTouched] = useState<boolean>(false);
+  const [maritalStatusTouched, setMaritalStatusTouched] = useState<boolean>(false);
+  const [childrenStatusTouched, setChildrenStatusTouched] = useState<boolean>(false);
+  const [heightTouched, setHeightTouched] = useState<boolean>(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
+
+
+  // useEffect(() => {
+  //   if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
+  //     setNextDisable(false)
+  //   } else {
+  //     setNextDisable(true)
+  //   }
+  // }, [selectedProfileFor,
+  //   selectedCast,
+  //   selectedChallenged,
+  //   selectedIsHiv,
+  //   selectedMotherTongue,
+  //   selectedReligion,
+  //   selectedManglik,
+  //   selectedMaritalStatus,
+  //   selectedChildrenStatus,
+  //   selectedMaritalStatus.id,
+  //   heightTouched
+  // ])
   const [profileforTouched, setprofileforTouched] = useState<boolean>(false);
 
 
@@ -127,6 +194,9 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
   }
+
+
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -146,6 +216,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       height: String(jsonData?.height_cm),
       profilepic: selectedPhotoName,
     },
+    validate,
     onSubmit: async (values) => {
       setloginSpiner(true)
       const formData = new FormData();
@@ -214,7 +285,18 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }
   };
 
+  useEffect(() => {
+    if ((selectedMaritalStatus.id || "") == "1") {
+      setChildrenStatusTouched(true);
+    }
+    if ((selectedMaritalStatus.id || "") >= "2") {
+      setChildrenStatusTouched(false);
+    }
+    if (formik.values.height > "0") {
+      setHivTouched(true)
+    }
 
+  }, [selectedMaritalStatus, formik.values.height])
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -226,6 +308,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
     formik.values.cast = selectedCast.id || "";
     formik.values.profilepic = selectedPhotoName || "";
+
+    if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
+      setNextDisable(false)
+    } else {
+      setNextDisable(true)
+    }
   }, [
     formik.values,
     selectedProfileFor.id,
@@ -237,10 +325,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     selectedMaritalStatus.id,
     selectedCast.id,
     selectedPhotoName,
+    heightTouched
   ]);
 
   const onHeightChange = (height: number | null) => {
     formik.values.height = String(height);
+    if (height != null && height > 0) {
+      setHeightTouched(true);
+    }
   };
   useEffect(() => {
     if (selectedMaritalStatus.id) {
@@ -325,6 +417,23 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   className={classes.formEdit}
                   onSubmit={formik.handleSubmit}
                 >
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Profile For"
+                      data={ProfileFor}
+                      nameid="profilefor"
+                      selectedDataFn={setSelectedProfileFor}
+                      defaultValue={String(jsonData?.profile_for)}
+                      setErrorState={setprofileforTouched}
+                    />
+                    {profileforTouched && selectedProfileFor.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
                   <DropdownGridSingleSelect
                     title="Profile For"
                     data={ProfileFor}
@@ -341,21 +450,29 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     : ""
                   }
                   {selectedProfileFor?.id !== "1" && (
-                    <div className={classes.singleBox}>
-                      <Form.Label>Profile Handler</Form.Label>
-                      <div className={classes.inputBox}>
-                        <li className={classes.blankInput}>
-                          <Form.Control
-                            name="profileHandlerName"
-                            type="text"
-                            placeholder="Enter your name"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
-                            defaultValue={jsonData?.profile_handlername}
-                            autoComplete="off"
-                          />
-                        </li>
+                    <div>
+                      <div className={classes.singleBox}>
+                        <Form.Label>Profile Handler</Form.Label>
+                        <div className={classes.inputBox}>
+                          <li className={classes.blankInput}>
+                            <Form.Control
+                              name="profileHandlerName"
+                              type="text"
+                              placeholder="Enter your name"
+                              onBlur={formik.handleBlur}
+                              onChange={formik.handleChange}
+                              defaultValue={jsonData?.profile_handlername}
+                            />
+                          </li>
+                        </div>
                       </div>
+                      {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
+                        <div>
+                          <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
+                        </div>
+
+                        : ""
+                      }
                     </div>
                   )}
                   {(selectedProfileFor?.id == "1" ||
@@ -373,9 +490,42 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       onChange={handleDateTimeChange}
                       placeholder="DD-MM-YYYY HH:MM"
                       value={dob}
+                      required
                     />
                   </div>
                   <div className={classes.singleBox}>
+                    <div>
+                      <Form.Label>
+                        {selectedProfileFor?.id == "2" ||
+                          selectedProfileFor?.id == "5" ||
+                          gender === "1"
+                          ? "Groom"
+                          : "Bride"}{" "}
+                        Name
+                      </Form.Label>
+                      <div className={classes.inputBox}>
+                        <li className={classes.blankInput}>
+                          <Form.Control
+                            name="fullname"
+                            type="text"
+                            placeholder={`${selectedProfileFor?.id == "2" ||
+                              selectedProfileFor?.id == "5" ||
+                              gender === "1"
+                              ? "Write Groom Name"
+                              : "Write Bride Name"}`}
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            defaultValue={jsonData?.fullname}
+                          />
+                        </li>
+                      </div>
+                      {formik.touched.fullname && formik.errors.fullname ?
+                        <div>
+                          <span className={classes.errorMessage}>{formik.errors.fullname}</span>
+                        </div>
+
+                        : ""
+                      }
                     <Form.Label>
                       {selectedProfileFor?.id == "2" ||
                         selectedProfileFor?.id == "5" ||
@@ -403,74 +553,162 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       onGetAvatar={profilePicture}
                       defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
                     />
+                    {selectedPhotoName.length == 0 && formik.errors.profilepic ?
+                      <div>
+                        <span className={classes.errorMessage}>{formik.errors.profilepic}</span>
+                      </div>
+
+                      : ""
+                    }
                   </div>
-                  <CastListDropDown
-                    data={CastListArray}
-                    selectedDataFn={setSelectedCast}
-                    title="Caste"
-                    nameid={"Caste"}
-                    defaultValue={String(jsonData?.caste)}
-                  />
+                  <div>
+                    <CastListDropDown
+                      data={CastListArray}
+                      selectedDataFn={setSelectedCast}
+                      title="Caste"
+                      nameid={"Caste"}
+                      defaultValue={String(jsonData?.caste)}
+                      setErrorState={setCasteTouched}
+                    />
+                    {casteTouched && selectedCast.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
                   <HeightInput
                     label="Height"
                     onHeightChange={onHeightChange}
                     defaultValue={jsonData && +jsonData?.height_cm}
                   />
-                  <DropdownGridSingleSelect
-                    title="Challenged"
-                    data={Challenged}
-                    nameid="challenged"
-                    selectedDataFn={setSelectedChallenged}
-                    defaultValue={String(jsonData?.challenged)}
-                  />
-                  <DropdownGridSingleSelect
-                    title="HIV"
-                    data={isHiv}
-                    nameid="hiv"
-                    selectedDataFn={setSelectedIsHiv}
-                    defaultValue={String(jsonData?.hiv)}
-                  />
-                  <DropdownGridSingleSelect
-                    title="Mother Tongue"
-                    data={MotherTongue}
-                    nameid="mothertongue"
-                    selectedDataFn={setSelectedMotherTongue}
-                    defaultValue={String(jsonData?.mother_tongue)}
-                  />
-                  <DropdownGridSingleSelect
-                    title="Religion"
-                    data={Religion}
-                    nameid="religion"
-                    selectedDataFn={setSelectedReligion}
-                    defaultValue={String(jsonData?.religion)}
-                  />
-                  <DropdownGridSingleSelect
-                    title="Manglik"
-                    data={Manglik}
-                    nameid="addmanglik"
-                    selectedDataFn={setSelectedManglik}
-                    defaultValue={String(jsonData?.manglik)}
-                  />
-                  <DropdownGridSingleSelect
-                    title="Marital Status"
-                    data={MaritalStatus}
-                    nameid="maritalstatus"
-                    selectedDataFn={setSelectedMaritalStatus}
-                    defaultValue={String(jsonData?.marital_status)}
-                  />
-                  {(selectedMaritalStatus.id || "") >= "2" && (
+                  <div>
                     <DropdownGridSingleSelect
-                      title="Children Status"
-                      data={ChildrenStatus}
-                      nameid="childrenstatus"
-                      selectedDataFn={setSelectedChildrenStatus}
-                      defaultValue={String(jsonData?.children_status)}
+                      title="Challenged"
+                      data={Challenged}
+                      nameid="challenged"
+                      selectedDataFn={setSelectedChallenged}
+                      defaultValue={String(jsonData?.challenged)}
+                      setErrorState={setChallengedTouched}
                     />
+                    {challengedTouched && selectedChallenged.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="HIV"
+                      data={isHiv}
+                      nameid="hiv"
+                      selectedDataFn={setSelectedIsHiv}
+                      defaultValue={String(jsonData?.hiv)}
+                      setErrorState={setHivTouched}
+                    />
+                    {hivTouched && selectedIsHiv.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Mother Tongue"
+                      data={MotherTongue}
+                      nameid="mothertongue"
+                      selectedDataFn={setSelectedMotherTongue}
+                      defaultValue={String(jsonData?.mother_tongue)}
+                      setErrorState={setMotherToungeTouched}
+                    />
+                    {motherToungeTouched && selectedMotherTongue.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Religion"
+                      data={Religion}
+                      nameid="religion"
+                      selectedDataFn={setSelectedReligion}
+                      defaultValue={String(jsonData?.religion)}
+                      setErrorState={setReligionTouched}
+                    />
+                    {religionTouched && selectedReligion.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Manglik"
+                      data={Manglik}
+                      nameid="addmanglik"
+                      selectedDataFn={setSelectedManglik}
+                      defaultValue={String(jsonData?.manglik)}
+                      setErrorState={setManglikTouched}
+                    />
+                    {manglikTouched && selectedManglik.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Marital Status"
+                      data={MaritalStatus}
+                      nameid="maritalstatus"
+                      selectedDataFn={setSelectedMaritalStatus}
+                      defaultValue={String(jsonData?.marital_status)}
+                      setErrorState={setMaritalStatusTouched}
+                    />
+                    {maritalStatusTouched && selectedMaritalStatus.id == "undefined" ?
+                      <div>
+                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      </div>
+
+                      : ""
+                    }
+                  </div>
+                  {(selectedMaritalStatus.id || "") >= "2" && (
+                    <div>
+                      <DropdownGridSingleSelect
+                        title="Children Status"
+                        data={ChildrenStatus}
+                        nameid="childrenstatus"
+                        selectedDataFn={setSelectedChildrenStatus}
+                        defaultValue={String(jsonData?.children_status)}
+                        setErrorState={setChildrenStatusTouched}
+                      />
+                      {childrenStatusTouched && selectedChildrenStatus.id == "undefined" ?
+                        <div>
+                          <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        </div>
+
+                        : ""
+                      }
+                    </div>
                   )}
                   <Button
                     variant="danger"
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                    disabled={nextDisable}
                   >
                     {loginSpiner && (
                       <Spinner
@@ -487,7 +725,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
             </Row>
           )}
         </Container>
-      </div>
+      </div >
     </>
   );
 };
