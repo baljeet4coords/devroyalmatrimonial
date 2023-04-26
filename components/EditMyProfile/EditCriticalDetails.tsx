@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Form } from "react-bootstrap";
 import { FiUserX } from "react-icons/fi";
 import { MaritalStatus } from "../../types/enums";
@@ -6,8 +7,15 @@ import { useFormik } from "formik";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
-import { DateTimePicker } from "react-rainbow-components";
-import { convertDateStringTimeStamp, convertServerTimestamp, convertTimeStamp } from "../../utils/dayjs";
+const DateTimePicker = dynamic(
+  () => import("react-rainbow-components/components/DateTimePicker"),
+  { ssr: false } as any
+);
+import {
+  convertDateStringTimeStamp,
+  convertServerTimestamp,
+  convertTimeStamp,
+} from "../../utils/dayjs";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import axios from "axios";
@@ -21,13 +29,19 @@ interface Data {
   id?: string;
   val: string;
 }
-const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails, step1Response }) => {
+const EditCriticalDetials: FC<MyComponentProps> = ({
+  setCriticalDetails,
+  step1Response,
+}) => {
   const userId = useSelector(getUserId);
-  const [dob, setDob] = useState<Date>(convertTimeStamp(step1Response?.dob || ""));
-  const [selectedPhotoName, setSelectedPhotoName] = useState<string>(step1Response?.photo.split("/")[2]);
+  const [dob, setDob] = useState<Date>(
+    convertTimeStamp(step1Response?.dob || "")
+  );
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>(
+    step1Response?.photo.split("/")[2]
+  );
 
   console.log(selectedPhotoName);
-  
 
   const formik = useFormik({
     initialValues: {
@@ -75,17 +89,15 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails, step1Re
         `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
         formData
       )),
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
       console.log(JSON.stringify(values, null, 1));
       setCriticalDetails(false);
     },
   });
-
-
 
   const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<Data>({
     id: String(step1Response?.marital_status),
@@ -95,7 +107,6 @@ const EditCriticalDetials: FC<MyComponentProps> = ({ setCriticalDetails, step1Re
   useEffect(() => {
     formik.values.maritalstatus = selectedMaritalStatus.id || "";
   }, [formik.initialValues, selectedMaritalStatus]);
-
 
   const handleDateTimeChange = (value: Date) => {
     setDob(value);
