@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Alert } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import React, { useState, useRef, useEffect } from "react";
 import classes from "./MyProfile.module.scss";
@@ -148,11 +148,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
-              }
+                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
+                }
               : {
-                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-              }
+                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+                }
           }
         >
           {!imageResponse?.coverImage && (
@@ -171,7 +171,7 @@ const MyProfile: React.FC = () => {
               style={{ display: "none" }}
             />
           </div>
-          <span>{uploadStatus}</span>
+          {uploadStatus && <Alert variant="success text-center">{uploadStatus}</Alert>}
         </Container>
         {isMyprofileLoading ? (
           <Loader />
@@ -202,7 +202,10 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {basicDetails ? (
-                        <EditBasicDetials step1Response={step1Response} setBasicDetails={setBasicDetails} />
+                        <EditBasicDetials
+                          step1Response={step1Response}
+                          setBasicDetails={setBasicDetails}
+                        />
                       ) : (
                         <BasicDetails
                           step1Response={step1Response}
@@ -211,7 +214,10 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {aboutMeDetails ? (
-                        <EditAboutMe step5Response={step5Response} setAboutMeDetails={setAboutMeDetails} />
+                        <EditAboutMe
+                          step5Response={step5Response}
+                          setAboutMeDetails={setAboutMeDetails}
+                        />
                       ) : (
                         <AboutMeDetails
                           step5Response={step5Response}
@@ -244,7 +250,10 @@ const MyProfile: React.FC = () => {
                       )}
                       <hr />
                       {lifeStyleDetails ? (
-                        <EditLifeStyle step3Response={step3Response} setEditDetails={setLifeStyleDetails} />
+                        <EditLifeStyle
+                          step3Response={step3Response}
+                          setEditDetails={setLifeStyleDetails}
+                        />
                       ) : (
                         <LifeStyleDetails
                           step3Response={step3Response}
