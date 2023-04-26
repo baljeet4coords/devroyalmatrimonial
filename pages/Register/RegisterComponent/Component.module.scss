@@ -30,7 +30,6 @@
 }
 
 @media only screen and (max-width: 950px) {
-
   .register_header_Links,
   .register_header_Links a {
     width: 100%;
@@ -72,8 +71,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-
-  .errorMessage{
+  .errorMessage {
     font-size: 14px;
     color: #f00;
     margin-top: -5%;
@@ -242,7 +240,7 @@
 }
 
 .formEdit {
-  +button {
+  + button {
     margin-top: 3rem;
   }
 }
@@ -401,7 +399,6 @@
     }
   }
 }
-
 
 .Skip_Btn {
   width: 20%;
