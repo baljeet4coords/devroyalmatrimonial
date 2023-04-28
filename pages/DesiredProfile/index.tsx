@@ -280,7 +280,7 @@ const DesiredProfilePage: React.FC = () => {
                   <div className=" d-flex gap-3 position-relative">
                     <StateMultiple
                       onChangeState={setState}
-                      defaultState={jsonData?.country || []}
+                      defaultState={jsonData?.state || []}
                     />
                     <StrictRadioCheck
                       handleSwitchToggle={handleSwitchToggle}

@@ -193,6 +193,90 @@
   margin-right: 10px;
 }
 
+//--------------------- otp modal -------------------------
+
+.modal_Inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // background-color: #fcfcfcf6;
+  padding: 1rem;
+  flex-direction: column;
+  gap: 2rem;
+
+  .modal_middle {
+    text-align: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+
+    .otpImg_container {
+      background-color: #f6f6f6;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      height: 6rem;
+      width: 6rem;
+      padding: 1rem;
+
+      .otpImage {
+        height: 100%;
+        width: 100%;
+        color: #dc3545;
+      }
+    }
+
+    h3 {
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0%;
+      color: #918c8c;
+
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+
+
+.OtpBtn_Container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  .verify_otp {
+    color: white;
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+
+    &:hover {
+      color: #dc3545;
+      background-color: #fff;
+      border: 1px solid #dc3545;
+
+      .loginSpiner {
+        color: #dc3545 !important;
+      }
+    }
+  }
+
+}
+
+// footer {
+//   border: none;
+// }
+
+
+
+
+
+
 @media screen and (max-width: 991px) and (min-width: 500px) {
   .modal_form {
     Form {

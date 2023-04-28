@@ -157,7 +157,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
                   placeholder="Enter your name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  defaultValue={step1Response?.profile_handlername}
+                  defaultValue={step1Response?.fullname}
                   autoComplete="off"
                 />
               </li>
