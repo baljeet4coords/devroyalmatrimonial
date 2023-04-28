@@ -37,9 +37,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const userId = useSelector(getUserId);
 
   useEffect(() => {
-    dispatch(step5({ actionType: "v", userId: userId }))
+    dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
-
 
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
@@ -65,7 +64,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
-      setloadingSpiner(true)
+      setloadingSpiner(true);
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -88,9 +87,15 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     },
   });
 
-  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(jsonData?.pobCountry || 0);
-  const [selectedBirthState, setSelectedBirthState] = useState<number>(jsonData?.pobState || -1);
-  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(jsonData?.pobCity || -1);
+  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(
+    jsonData?.pobCountry || 0
+  );
+  const [selectedBirthState, setSelectedBirthState] = useState<number>(
+    jsonData?.pobState || -1
+  );
+  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(
+    jsonData?.pobCity || -1
+  );
 
   const [aboutCareer, setAboutCareer] = useState<string>(
     jsonData && jsonData.about_career ? jsonData.about_career : ""
@@ -104,8 +109,6 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [basicIntro, setBasicIntro] = useState<string>(
     jsonData && jsonData.basic_intro ? jsonData.basic_intro : ""
   );
-
-
 
   useEffect(() => {
     setAboutCareer(
@@ -169,8 +172,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   }, [jsonData?.pobCity, jsonData?.pobCountry, jsonData?.pobState]);
 
   function handleSkip() {
-    setSkiploadingSpiner(true)
-    router.push("/DesiredProfile")
+    setSkiploadingSpiner(true);
+    router.push("/DesiredProfile");
   }
   return (
     <>
@@ -180,12 +183,16 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
             <Loader />
           ) : (
             <Row className="justify-content-center">
-              <Button variant="danger" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+              <Button
+                variant="link"
+                className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`}
+                onClick={handleSkip}
+              >
                 {skiploadingSpiner && (
                   <Spinner
                     className={classes.loginSpiner}
                     animation="border"
-                    variant="light"
+                    variant="danger"
                   />
                 )}
                 skip to Partner Profile
@@ -254,7 +261,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                      formik.errors.aboutEducation ? (
+                    formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>

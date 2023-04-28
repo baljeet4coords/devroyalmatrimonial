@@ -30,7 +30,7 @@ import { step1 } from "../../../ducks/regiserUser/step1/actions";
 import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 const DateTimePicker = dynamic(
   () => import("react-rainbow-components/components/DateTimePicker"),
   { ssr: false } as any
@@ -51,7 +51,6 @@ type FormValues = {
 //   } else if (values.profileHandlerName.length < 3) {
 //     errors.profileHandlerName = "Must be 3 characters or more";
 //   }
-
 
 //   if (!values.fullname) {
 //     errors.fullname = "Required";
@@ -85,12 +84,10 @@ interface Data {
   val: string;
 }
 
-
-
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
   profileComplete,
-  DisabledHeadingMessage
+  DisabledHeadingMessage,
 }) => {
   const dispatch = useDispatch();
   const stepOneDefaultValues = useSelector(selectStep1Success);
@@ -160,11 +157,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [casteTouched, setCasteTouched] = useState<boolean>(false);
   const [challengedTouched, setChallengedTouched] = useState<boolean>(false);
   const [hivTouched, setHivTouched] = useState<boolean>(false);
-  const [motherToungeTouched, setMotherToungeTouched] = useState<boolean>(false);
+  const [motherToungeTouched, setMotherToungeTouched] =
+    useState<boolean>(false);
   const [religionTouched, setReligionTouched] = useState<boolean>(false);
   const [manglikTouched, setManglikTouched] = useState<boolean>(false);
-  const [maritalStatusTouched, setMaritalStatusTouched] = useState<boolean>(false);
-  const [childrenStatusTouched, setChildrenStatusTouched] = useState<boolean>(false);
+  const [maritalStatusTouched, setMaritalStatusTouched] =
+    useState<boolean>(false);
+  const [childrenStatusTouched, setChildrenStatusTouched] =
+    useState<boolean>(false);
   const [heightTouched, setHeightTouched] = useState<boolean>(false);
   const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
@@ -188,15 +188,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   //   selectedMaritalStatus.id,
   //   heightTouched
   // ])
-  const [profileforTouched, setprofileforTouched] = useState<boolean>(false);
-
 
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
   }
-
-
 
   const formik = useFormik({
     initialValues: {
@@ -219,16 +215,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     },
     validationSchema: Yup.object({
       fullname: Yup.string()
-        .min(3, 'Must be 3 characters or more')
-        .required('Required'),
+        .min(3, "Must be 3 characters or more")
+        .required("Required"),
       profileHandlerName: Yup.string()
-        .min(3, 'Must be 3 characters or more')
-        .required('Required'),
-      profilepic: Yup.string()
-        .required('Required'),
+        .min(3, "Must be 3 characters or more")
+        .required("Required"),
+      profilepic: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
-      setloginSpiner(true)
+      setloginSpiner(true);
       const formData = new FormData();
       formData.append("userId", String(values.userId));
       formData.append("profilefor", String(values.profilefor));
@@ -257,11 +252,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output === 4) {
           nextPage(1);
           setloginSpiner(false);
@@ -272,11 +267,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output >= 0) {
           // DisabledHeadingMessage(1);
           nextPage(1);
@@ -302,8 +297,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if ((selectedMaritalStatus.id || "") >= "2") {
       setChildrenStatusTouched(false);
     }
-
-  }, [selectedMaritalStatus])
+  }, [selectedMaritalStatus]);
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -316,10 +310,18 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.cast = selectedCast.id || "";
     formik.values.profilepic = selectedPhotoName || "";
 
-    if (heightTouched && selectedProfileFor.id != "undefined" && selectedCast.id != "undefined" && selectedChallenged.id != "undefined" &&
-      selectedIsHiv.id != "undefined" && selectedMotherTongue.id != "undefined" && selectedReligion.id != "undefined" &&
-      selectedManglik.id != "undefined" && selectedMaritalStatus.id !== "undefined") {
-      setNextDisable(false)
+    if (
+      heightTouched &&
+      selectedProfileFor.id != "undefined" &&
+      selectedCast.id != "undefined" &&
+      selectedChallenged.id != "undefined" &&
+      selectedIsHiv.id != "undefined" &&
+      selectedMotherTongue.id != "undefined" &&
+      selectedReligion.id != "undefined" &&
+      selectedManglik.id != "undefined" &&
+      selectedMaritalStatus.id !== "undefined"
+    ) {
+      setNextDisable(false);
     }
   }, [
     formik.values,
@@ -332,7 +334,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     selectedMaritalStatus.id,
     selectedCast.id,
     selectedPhotoName,
-    heightTouched
+    heightTouched,
   ]);
 
   const onHeightChange = (height: number | null) => {
@@ -412,7 +414,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }
   };
 
-
   return (
     <>
       <div className={classes.profile_Container}>
@@ -436,29 +437,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.profile_for)}
                       setErrorState={setprofileforTouched}
                     />
-                    {profileforTouched && selectedProfileFor.id == "undefined" ?
-                      <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                    {profileforTouched &&
+                    selectedProfileFor.id == "undefined" ? (
+                      <div className={classes.errorMessage}>
+                        <span>Please select valid input</span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
-                  <DropdownGridSingleSelect
-                    title="Profile For"
-                    data={ProfileFor}
-                    nameid="profilefor"
-                    selectedDataFn={setSelectedProfileFor}
-                    defaultValue={String(jsonData?.profile_for)}
-                  />
-                  {profileforTouched && selectedProfileFor.id == "undefined" ||
-                    selectedProfileFor.id && +selectedProfileFor.id >= 0 && +selectedProfileFor <= 6 ?
-                    <div>
-                      <span>Please select valid input</span>
-                    </div>
-
-                    : ""
-                  }
                   {selectedProfileFor?.id !== "1" && (
                     <div>
                       <div className={classes.singleBox}>
@@ -476,23 +463,26 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           </li>
                         </div>
                       </div>
-                      {formik.touched.profileHandlerName && formik.errors.profileHandlerName ?
+                      {formik.touched.profileHandlerName &&
+                      formik.errors.profileHandlerName ? (
                         <div>
-                          <span className={classes.errorMessage}>{formik.errors.profileHandlerName}</span>
+                          <span className={classes.errorMessage}>
+                            {formik.errors.profileHandlerName}
+                          </span>
                         </div>
-
-                        : ""
-                      }
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                      <GenderRadioButtons
-                        selectedGender={gender}
-                        onChangeGender={onChangeGender}
-                      />
-                    )}
+                    <GenderRadioButtons
+                      selectedGender={gender}
+                      onChangeGender={onChangeGender}
+                    />
+                  )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
                     <DateTimePicker
@@ -509,8 +499,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     <div>
                       <Form.Label>
                         {selectedProfileFor?.id == "2" ||
-                          selectedProfileFor?.id == "5" ||
-                          gender === "1"
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
                           ? "Groom"
                           : "Bride"}{" "}
                         Name
@@ -520,42 +510,28 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           <Form.Control
                             name="fullname"
                             type="text"
-                            placeholder={`${selectedProfileFor?.id == "2" ||
+                            placeholder={`${
+                              selectedProfileFor?.id == "2" ||
                               selectedProfileFor?.id == "5" ||
                               gender === "1"
-                              ? "Write Groom Name"
-                              : "Write Bride Name"}`}
+                                ? "Write Groom Name"
+                                : "Write Bride Name"
+                            }`}
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             defaultValue={jsonData?.fullname}
                           />
                         </li>
                       </div>
-                      {formik.touched.fullname && formik.errors.fullname ?
+                      {formik.touched.fullname && formik.errors.fullname ? (
                         <div>
-                          <span className={classes.errorMessage}>{formik.errors.fullname}</span>
+                          <span className={classes.errorMessage}>
+                            {formik.errors.fullname}
+                          </span>
                         </div>
-                        : ""
-                      }
-                    <Form.Label>
-                      {selectedProfileFor?.id == "2" ||
-                        selectedProfileFor?.id == "5" ||
-                        gender === "1"
-                        ? "Groom"
-                        : "Bride"}{" "}
-                      Name
-                    </Form.Label>
-                    <div className={classes.inputBox}>
-                      <li className={classes.blankInput}>
-                        <Form.Control
-                          name="fullname"
-                          type="text"
-                          placeholder="Select Option"
-                          onBlur={formik.handleBlur}
-                          onChange={formik.handleChange}
-                          defaultValue={jsonData?.fullname}
-                        />
-                      </li>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                   <div>
@@ -565,13 +541,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setAvtarTouched}
                       defaultImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${userId}/${selectedPhotoName}`}
                     />
-                    {avtarTouched && selectedPhotoName.length == 0 ?
+                    {avtarTouched && selectedPhotoName.length == 0 ? (
                       <div>
-                        <span className={classes.errorMessage}>{formik.errors.profilepic}</span>
+                        <span className={classes.errorMessage}>
+                          {formik.errors.profilepic}
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <CastListDropDown
@@ -582,26 +560,31 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.caste)}
                       setErrorState={setCasteTouched}
                     />
-                    {casteTouched && selectedCast.id == "undefined" ?
+                    {casteTouched && selectedCast.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
-
                     <HeightInput
                       label="Height"
                       onHeightChange={onHeightChange}
                       defaultValue={jsonData && +jsonData?.height_cm}
                     />
-                    {heightTouched && heightSelectedVal == 0 ?
+                    {heightTouched && heightSelectedVal == 0 ? (
                       <div>
-                        <span className={classes.errorMessage}>Please enter valid height input</span>
+                        <span className={classes.errorMessage}>
+                          Please enter valid height input
+                        </span>
                       </div>
-                      : ""}
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -612,13 +595,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.challenged)}
                       setErrorState={setChallengedTouched}
                     />
-                    {challengedTouched && selectedChallenged.id == "undefined" ?
+                    {challengedTouched &&
+                    selectedChallenged.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -629,13 +615,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.hiv)}
                       setErrorState={setHivTouched}
                     />
-                    {hivTouched && selectedIsHiv.id == "undefined" ?
+                    {hivTouched && selectedIsHiv.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -646,13 +634,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.mother_tongue)}
                       setErrorState={setMotherToungeTouched}
                     />
-                    {motherToungeTouched && selectedMotherTongue.id == "undefined" ?
+                    {motherToungeTouched &&
+                    selectedMotherTongue.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -663,13 +654,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.religion)}
                       setErrorState={setReligionTouched}
                     />
-                    {religionTouched && selectedReligion.id == "undefined" ?
+                    {religionTouched && selectedReligion.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -680,13 +673,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.manglik)}
                       setErrorState={setManglikTouched}
                     />
-                    {manglikTouched && selectedManglik.id == "undefined" ?
+                    {manglikTouched && selectedManglik.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -697,13 +692,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       defaultValue={String(jsonData?.marital_status)}
                       setErrorState={setMaritalStatusTouched}
                     />
-                    {maritalStatusTouched && selectedMaritalStatus.id == "undefined" ?
+                    {maritalStatusTouched &&
+                    selectedMaritalStatus.id == "undefined" ? (
                       <div>
-                        <span className={classes.errorMessage}>Please select value from dropdown</span>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
                       </div>
-
-                      : ""
-                    }
+                    ) : (
+                      ""
+                    )}
                   </div>
                   {(selectedMaritalStatus.id || "") >= "2" && (
                     <div>
@@ -715,13 +713,16 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         defaultValue={String(jsonData?.children_status)}
                         setErrorState={setChildrenStatusTouched}
                       />
-                      {childrenStatusTouched && selectedChildrenStatus.id == "undefined" ?
+                      {childrenStatusTouched &&
+                      selectedChildrenStatus.id == "undefined" ? (
                         <div>
-                          <span className={classes.errorMessage}>Please select value from dropdown</span>
+                          <span className={classes.errorMessage}>
+                            Please select value from dropdown
+                          </span>
                         </div>
-
-                        : ""
-                      }
+                      ) : (
+                        ""
+                      )}
                     </div>
                   )}
                   <Button
@@ -745,7 +746,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
             </Row>
           )}
         </Container>
-      </div >
+      </div>
     </>
   );
 };

@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 interface MyComponentProps {
   inputName: string;
   data: {};
+  isFromRegistered?: boolean;
   onChange: (data: string[]) => void;
   defaultValues: string[];
 }
@@ -14,6 +15,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
   data,
   onChange,
   defaultValues,
+  isFromRegistered,
 }) => {
   const combinedData = Object?.entries(data).map(
     ([key, value]) => `${key}-${value}`
@@ -96,7 +98,12 @@ const SingleInput: React.FC<MyComponentProps> = ({
 
   return (
     <React.Fragment>
-      <div className={classes.singleBox} ref={elementRef}>
+      <div
+        className={`${isFromRegistered && classes.singleBoxReg} ${
+          classes.singleBox
+        }`}
+        ref={elementRef}
+      >
         <label>{inputName}</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           {activeList && (
@@ -110,19 +117,20 @@ const SingleInput: React.FC<MyComponentProps> = ({
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((uid: string) => {
-                const [name, id] = combinedData[+uid].split("-");
-                return (
-                  <li key={id}>
-                    <span>{name.replaceAll("_", " ")}</span>
-                    <IoClose onClick={() => getClickedDeleteData(+uid)} />
-                  </li>
-                );
-              })
+                  const [name, id] = combinedData[+uid].split("-");
+                  return (
+                    <li key={id}>
+                      <span>{name.replaceAll("_", " ")}</span>
+                      <IoClose onClick={() => getClickedDeleteData(+uid)} />
+                    </li>
+                  );
+                })
               : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
-              }`}
+            className={`${activeList ? classes.active : ""} ${
+              classes.inputBoxVal
+            }`}
             ref={elementRef}
           >
             <ul>

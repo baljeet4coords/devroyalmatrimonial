@@ -227,12 +227,12 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
           <Loader />
         ) : (
           <Row className="justify-content-center">
-            <Button variant="danger" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+            <Button variant="link" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
               {skiploadingSpiner && (
                 <Spinner
                   className={classes.loginSpiner}
                   animation="border"
-                  variant="light"
+                  variant="danger"
                 />
               )}
               skip to Partner Profile

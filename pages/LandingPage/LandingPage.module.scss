@@ -139,13 +139,16 @@
       opacity: 1;
       width: 70%;
       cursor: pointer;
+      @media screen and (max-width: 767px) {
+        opacity: 1 !important;
+      }
 
       .responsiveImage {
         display: none;
       }
 
       p {
-        font-size: .875rem;
+        font-size: 0.875rem;
         line-height: 1.21;
         margin: 0;
       }
@@ -236,10 +239,8 @@
     }
 
     p {
-
       line-height: 27px;
       font-size: 16px;
-
     }
 
     img {
@@ -292,8 +293,6 @@
     padding-right: 2.5rem;
   }
 }
-
-
 
 @media only screen and (max-width: 540px) and (min-width: 423px) {
   .firstTopBox {
