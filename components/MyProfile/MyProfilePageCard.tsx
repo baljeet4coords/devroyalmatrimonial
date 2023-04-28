@@ -30,6 +30,9 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
     }
   }
 
+  console.log(step1Response,"step1Response");
+  
+
   return (
     <Container className={classes.cardWrapper}>
       <Row>
@@ -47,7 +50,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           <div className={`${classes.MyProfileMiddle} `}>
             <div className={classes.MiddleLeft}>
               <div>
-                <p className={classes.MiddleLeftHeading}>Name : <span>{step1Response?.profile_handlername || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>Name : <span>{step1Response?.fullname || "NA"} </span> </p>
                 <p className={classes.MiddleLeftHeading}>RM ID  : <span >{AuthSuccess?.user_RM_ID || "NA"} </span> </p>
                 <p className={classes.MiddleLeftHeading}>Package Type : <span className={classes?.Package_type}>{getKeyByValue(String(AuthSuccess?.package_id), PackageType) ||
                   "NA"}</span> </p>

@@ -114,23 +114,12 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   //     : ""
   // );
   const [housetype, setHousetype] = useState<string[]>(
-    !jsonData?.home_type ? [] : JSON.parse(jsonData?.home_type)
+    jsonData?.home_type || []
   );
   const [cartype, setCartype] = useState<string[]>(
-    !jsonData?.car_details ? [] : JSON.parse(jsonData?.car_details)
+    jsonData?.car_details || []
   );
 
-  const [dietTouched, setdietTouched] = useState<boolean>(false);
-  const [smokingTouched, setSmokingTouched] = useState<boolean>(false);
-  const [drinkingTouched, setDrinkingTouched] = useState<boolean>(false);
-  const [lovePetsTouched, setLovePetsTouched] = useState<boolean>(false);
-  const [ownsHouseTouched, setOwnsHouseTouched] = useState<boolean>(false);
-  const [typeofHouseTouched, setTypeofHouseTouched] = useState<boolean>(false);
-  const [ownsCarTouched, setOwnsCarTouched] = useState<boolean>(false);
-  const [typeofCarTouched, setTypeofCarTouched] = useState<boolean>(false);
-  const [bloodGroupTouched, setBloodGroupTouched] = useState<boolean>(false);
-  const [thalassemiaTouched, setThalassemiaTouched] = useState<boolean>(false);
-  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
   useEffect(() => {
     if (ownsCar.id == "2") {
@@ -215,34 +204,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     // formik.values.religiousBelief = ReligiousBelief;
-
-    if (
-      diet.id != "undefined" &&
-      smoking.id != "undefined" &&
-      drinking.id != "undefined" &&
-      lovePets.id != "undefined" &&
-      ownsHouse.id !== "undefined" &&
-      ownsCar.id !== "undefined" &&
-      bloodGroup.id !== "undefined" &&
-      thalassemia.id !== "undefined"
-    ) {
-      if (
-        (ownsHouse.id == "2" && ownsCar.id == "2") ||
-        ownsHouse.id == "2" ||
-        ownsCar.id == "2"
-      ) {
-        setNextDisable(false);
-      }
-
-      if (
-        (ownsHouse.id == "1" && !housetype.length) ||
-        (ownsCar.id == "1" && !cartype.length)
-      ) {
-        setNextDisable(true);
-      } else {
-        setNextDisable(false);
-      }
-    }
   }, [
     bloodGroup.id,
     diet.id,
@@ -263,10 +224,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     router.push("/DesiredProfile");
   }
 
-  // function handleReligiousChange(e: any) {
-  //   formik.handleChange,
-  //     setReligiousBelief(e.target.value)
-  // }
+  useEffect(() => {
+    if (jsonData && jsonData.religious_belief) {
+      formik.values.religiousBelief = jsonData.religious_belief;
+    }
+  }, [jsonData, formik.values]);
 
   return (
     <div className={classes.profile_Container}>
@@ -300,17 +262,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={Diet}
                       nameid="diet"
                       defaultValue={String(jsonData?.diet)}
-                      setErrorState={setdietTouched}
                     />
-                    {dietTouched && diet.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -319,17 +271,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={SmokeDrink}
                       nameid="smoking"
                       defaultValue={String(jsonData?.smoking)}
-                      setErrorState={setSmokingTouched}
                     />
-                    {smokingTouched && smoking.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
 
                   <div>
@@ -339,17 +281,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={SmokeDrink}
                       nameid="drinking"
                       defaultValue={String(jsonData?.drinking)}
-                      setErrorState={setDrinkingTouched}
                     />
-                    {drinkingTouched && drinking.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -358,17 +290,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={Pets}
                       nameid="lovePets"
                       defaultValue={String(jsonData?.love_pets)}
-                      setErrorState={setLovePetsTouched}
                     />
-                    {lovePetsTouched && lovePets.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -377,49 +299,17 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={OwnHouseCar}
                       nameid="ownsHouse"
                       defaultValue={String(jsonData?.Owns_house)}
-                      setErrorState={setOwnsHouseTouched}
                     />
-                    {ownsHouseTouched && ownsHouse.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   {ownsHouse && ownsHouse?.id == "1" && (
                     <SingleInput
                       data={HouseType}
                       inputName={"Type of House"}
                       onChange={setHousetype}
-                      defaultValues={
-                        !jsonData?.home_type
-                          ? []
-                          : JSON.parse(jsonData?.home_type)
+                      defaultValues={jsonData?.home_type || []
                       }
                       isFromRegistered={true}
                     />
-                    /*<div>
-                      <div className={classes.singleBox}>
-                        <DropdownGridSingleSelect
-                          selectedDataFn={setHousetype}
-                          title="Type of House"
-                          data={HouseType}
-                          nameid="house_type"
-                          defaultValue={String(jsonData?.home_type)}
-                          setErrorState={setTypeofHouseTouched}
-                        />
-                      </div>
-                      {typeofHouseTouched && housetype.id == "undefined" ?
-                        <div>
-                          <span className={classes.errorMessage}>Please select value from dropdown</span>
-                        </div>
-
-                        : ""
-                      } 
-                    </div>*/
                   )}
 
                   <div>
@@ -429,17 +319,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={OwnHouseCar}
                       nameid="ownsCar"
                       defaultValue={String(jsonData?.Owns_car)}
-                      setErrorState={setOwnsCarTouched}
                     />
-                    {ownsCarTouched && ownsCar.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
 
                   {ownsCar && ownsCar?.id == "1" && (
@@ -447,34 +327,10 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={CarType}
                       inputName={"Type of car"}
                       onChange={setCartype}
-                      defaultValues={
-                        !jsonData?.car_details
-                          ? []
-                          : JSON.parse(jsonData?.car_details)
+                      defaultValues={jsonData?.car_details || []
                       }
                       isFromRegistered={true}
                     />
-                    // <div>
-                    //   <div className={classes.singleBox}>
-                    //     <DropdownGridSingleSelect
-                    //       selectedDataFn={setCartype}
-                    //       title="Type of Car"
-                    //       data={CarType}
-                    //       nameid="car_type"
-                    //       defaultValue={String(jsonData?.car_details)}
-                    //       setErrorState={setTypeofCarTouched}
-                    //     />
-                    //   </div>
-                    //   {typeofCarTouched && cartype.id == "undefined" ? (
-                    //     <div>
-                    //       <span className={classes.errorMessage}>
-                    //         Please select value from dropdown
-                    //       </span>
-                    //     </div>
-                    //   ) : (
-                    //     ""
-                    //   )}
-                    // </div>
                   )}
                   <div>
                     <DropdownGridSingleSelect
@@ -483,17 +339,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={BloodGroup}
                       nameid="bloodGroup"
                       defaultValue={String(jsonData?.blood_group)}
-                      setErrorState={setBloodGroupTouched}
                     />
-                    {bloodGroupTouched && bloodGroup.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <DropdownGridSingleSelect
@@ -502,32 +348,10 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={Thalassemia}
                       nameid="thalassemia"
                       defaultValue={String(jsonData?.Thalassemia)}
-                      setErrorState={setThalassemiaTouched}
                     />
-                    {thalassemiaTouched && thalassemia.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <div className={classes.singleBox}>
-                      {/* <Form.Label>Religious Belief</Form.Label>
-                      <Form.Control
-                        name="religiousBelief"
-                        placeholder="About Religious Belief"
-                        onBlur={formik.handleBlur}
-                        onChange={(e) => handleReligiousChange(e)}
-                        defaultValue={
-                          jsonData?.religious_belief !== (null && undefined)
-                            ? jsonData?.religious_belief
-                            : ReligiousBelief
-                        }
-                      /> */}
                       <Form.Label>Religious Belief</Form.Label>
                       <div className={classes.inputBox}>
                         <li className={classes.blankInput}>
@@ -544,7 +368,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       </div>
                     </div>
                     {formik.touched.religiousBelief &&
-                    formik.errors.religiousBelief ? (
+                      formik.errors.religiousBelief ? (
                       <div>
                         <span className={classes.errorMessage}>
                           {formik.errors.religiousBelief}
@@ -559,7 +383,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
-                  disabled={nextDisable}
                 >
                   {loadingSpiner && (
                     <Spinner

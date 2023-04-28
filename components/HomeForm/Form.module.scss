@@ -193,6 +193,20 @@
   margin-right: 10px;
 }
 
+//--------------------- otp modal -------------------------
+.modal_Inner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcfcfcf6;
+  padding: 2rem;
+}
+
+
+
+
+
+
 @media screen and (max-width: 991px) and (min-width: 500px) {
   .modal_form {
     Form {
