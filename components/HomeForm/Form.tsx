@@ -5,24 +5,54 @@ import { SignupSchema } from "../../schemas/signupSchema";
 import { Errors } from "../";
 import { SignUpType } from "../../types/authentication";
 import { AiFillEye } from "react-icons/ai";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { callingCodes } from "../../utils/countryCodesList";
 import OTP_modal from "./OTP_modal";
+import axios from "axios";
 
 export interface SignUpForm {
-  onSubmitForm: (values: SignUpType) => void;
+  onSubmitForm: (values: SignUpType, otp: string, scopeType: string) => void;
   error: string;
+  errorForOTP: string;
+  isLoading: boolean;
+  setIsOpenHandler: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
 }
-
-const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
+const OTP_SCOPE = "R";
+const HomeForm: React.FC<SignUpForm> = ({
+  onSubmitForm,
+  error,
+  errorForOTP,
+  isLoading,
+  setIsOpenHandler,
+  isOpen,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [loadingSpiner, setloadingSpiner] = useState(false);
+  const [message, setMessage] = useState<string>("");
 
+  const sendOtpPost = async (phoneWithIsd: string, successMsg: string) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/sms/send-otp`,
+      { isdMobile: phoneWithIsd, otpScope: OTP_SCOPE }
+    );
+    console.log(response);
+    if (response.data.output > 0) {
+      setMessage(successMsg);
+    } else {
+      setMessage("There was some error");
+    }
+  };
 
-  function setIsOpenHandler(value: boolean) {
-    setIsOpen(value)
-  }
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (message) {
+      timeoutId = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [message]);
+
   const formik = useFormik({
     initialValues: {
       emailid: "",
@@ -32,18 +62,22 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
     },
     validationSchema: SignupSchema,
     onSubmit: () => {
-      setIsOpen(true)
+      const phoneWithIsd =
+        formik.values.countryCode.substring(1) + formik.values.mobile;
+      // sendOtpPost(phoneWithIsd, "OTP has been sent to given phone number");
     },
   });
 
-  const fromSubmit = () => {
-    setloadingSpiner(true)
+  const fromSubmit = (otp: string) => {
     const formValue = formik.values;
-    onSubmitForm(formValue);
-  }
+    onSubmitForm(formValue, otp, OTP_SCOPE);
+  };
 
-
-
+  const resendOtp = () => {
+    const phoneWithIsd =
+      formik.values.countryCode.substring(1) + formik.values.mobile;
+    sendOtpPost(phoneWithIsd, "OTP has been resent to given phone number");
+  };
   return (
     <>
       <Form
@@ -125,8 +159,8 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
               formik.touched.password && formik.errors.password
                 ? classes.PasswordShowAline
                 : showPassword
-                  ? classes.PasswordShow
-                  : ""
+                ? classes.PasswordShow
+                : ""
             }
             onClick={() => setShowPassword(!showPassword)}
           />
@@ -142,16 +176,25 @@ const HomeForm: React.FC<SignUpForm> = ({ onSubmitForm, error }) => {
           type="submit"
           className={`${classes.Form_btn} mt-2 w-100`}
           disabled={!formik.isValid}
+          onClick={() => setIsOpenHandler(true)}
         >
-          Get OTP
+          {isLoading ? <Spinner /> : "Get OTP"}
         </Button>
         <Form.Label className="mt-4">
-          By clicking on Register Free, you confirm that you
-          accept the <span className={classes.redF12}> Terms of Use </span> and{" "}
+          By clicking on Register Free, you confirm that you accept the{" "}
+          <span className={classes.redF12}> Terms of Use </span> and{" "}
           <span className={classes.redF12}> Privacy Policy</span>
         </Form.Label>
       </Form>
-      <OTP_modal isOpen={isOpen} setIsOpenHandler={setIsOpenHandler} fromSubmit={fromSubmit} loadingSpiner={loadingSpiner} />
+      <OTP_modal
+        isOpen={isOpen}
+        resendOtp={resendOtp}
+        setIsOpenHandler={setIsOpenHandler}
+        fromSubmit={fromSubmit}
+        loadingSpiner={isLoading}
+        message={message}
+        errorForOTP={errorForOTP}
+      />
     </>
   );
 };

@@ -20,9 +20,13 @@ import {
   selectAuthSuccess,
 } from "../../ducks/auth/selectors";
 import { signupRequest } from "../../ducks/auth/actions";
+import axios from "axios";
 
 const LandingPage: React.FC = () => {
   const [error, setError] = useState<string>("");
+  const [errorForOTP, setErrorForOTP] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOTPOpen, setIsOTPOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
@@ -64,8 +68,38 @@ const LandingPage: React.FC = () => {
 
   const headimage = "cover_img_free_chat.jpg";
 
-  const onSubmitForm = (values: SignUpType) => {
-    dispatch(signupRequest(values));
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (errorForOTP) {
+      timeoutId = setTimeout(() => {
+        setErrorForOTP("");
+      }, 3000);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [errorForOTP]);
+
+  const onSubmitForm = async (
+    values: SignUpType,
+    otp: string,
+    otpScope: string
+  ) => {
+    if (otp) {
+      const isdMobile = values.countryCode.substring(1) + values.mobile;
+      setIsLoading(true);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/sms/verify-otp`,
+        { otp, isdMobile, otpScope }
+      );
+      if (response.data.output < 0) {
+        setErrorForOTP("Wrong OTP Provided");
+      } else {
+        dispatch(signupRequest(values));
+      }
+      setIsLoading(false);
+      setIsOTPOpen(false);
+    } else {
+      setErrorForOTP("Please enter OTP");
+    }
   };
 
   return (
@@ -81,7 +115,14 @@ const LandingPage: React.FC = () => {
             </div>
           </Col>
           <Col sm={12} md={6}>
-            <HomeForm onSubmitForm={onSubmitForm} error={error} />
+            <HomeForm
+              onSubmitForm={onSubmitForm}
+              error={error}
+              errorForOTP={errorForOTP}
+              isLoading={isLoading}
+              setIsOpenHandler={setIsOTPOpen}
+              isOpen={isOTPOpen}
+            />
           </Col>
         </Row>
         <Row className={classes.Home_white_body}>

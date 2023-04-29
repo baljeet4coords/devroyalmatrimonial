@@ -38,7 +38,6 @@
       cursor: pointer;
       color: black;
       transform: translateY(3px);
-
     }
 
     .PasswordShowAline {
@@ -50,13 +49,11 @@
     }
   }
 
-
   .redF12 {
     color: #dc3545;
     font-size: 12px;
     display: inline;
   }
-
 }
 
 // Modal Form
@@ -243,13 +240,10 @@
   }
 }
 
-
-
 .OtpBtn_Container {
   display: flex;
   justify-content: center;
   gap: 1rem;
-
   .verify_otp {
     color: white;
     background-color: #dc3545;
@@ -265,17 +259,11 @@
       }
     }
   }
-
 }
 
 // footer {
 //   border: none;
 // }
-
-
-
-
-
 
 @media screen and (max-width: 991px) and (min-width: 500px) {
   .modal_form {
