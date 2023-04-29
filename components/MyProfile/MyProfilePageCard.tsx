@@ -30,7 +30,6 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
     }
   }
 
-  console.log(step1Response,"step1Response");
   
 
   return (

@@ -1,4 +1,4 @@
-import { Gallery, GalleryResponse } from "./types";
+import { Gallery, GalleryResponse, GallerySetPost } from "./types";
 import {
   GALLERY_GET,
   GALLERY_SUCCESS,
@@ -15,7 +15,7 @@ interface GalleryAction {
 
 interface GalleryActionPost {
   type: typeof GALLERY_POST;
-  payload?: Gallery;
+  payload?: GallerySetPost;
 }
 
 interface GalleryActionSuccessAction {

@@ -6,3 +6,7 @@ export type GalleryResponse = {
 export type Gallery = {
   userId?: number;
 };
+
+export type GallerySetPost = {
+  data?: any;
+};

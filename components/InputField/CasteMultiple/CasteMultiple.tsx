@@ -26,7 +26,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
   const ListOfCaste: ICastListArray[] = [DoesNotMatter, ...CastListArray];
   const [castesIds, setCastesIds] = useState<number[]>(defaultValues);
   const [HostedArray, updateHostedArray] = useState<ICastListArray[]>(
-    CastListArray.filter((_, index) => defaultValues.includes(index))
+    CastListArray.filter((cast) => defaultValues.includes(Number(cast.id)))
   );
   const [activeList, setActiveList] = useState<boolean>(false);
 
@@ -60,6 +60,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
         (obj) => obj.caste === caste.caste
       );
 
+
       if (getIndex == 0) {
         // For removeing the selcted item if Does not Matter is selected
         setCastesIds([0]);
@@ -69,9 +70,10 @@ const CasteMultiple: React.FC<CastMultiple> = ({
         }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, caste))) {
+          console.log(getIndex, castesIds, caste, "getIndex, caste");
           setCastesIds(castesIds.filter((indx) => indx > 0));
           updateHostedArray(HostedArray.filter((item) => item.id != "0"));
-          setCastesIds((prev) => [...prev, getIndex]);
+          setCastesIds((prev) => [...prev, Number(caste.id)]);
           updateHostedArray((prevArray) => [...prevArray, caste]);
         }
       }
@@ -85,7 +87,8 @@ const CasteMultiple: React.FC<CastMultiple> = ({
     const getIndex = searchHostedArray.findIndex(
       (obj) => obj.caste === itemname
     );
-    const casteidsCode = castesIds.filter((item) => item !== getIndex);
+
+    const casteidsCode = castesIds.filter((item) => item !== Number(id));
     const newArray = HostedArray.filter((item) => item.id !== id);
     updateHostedArray(newArray);
     setCastesIds(casteidsCode);
@@ -126,21 +129,20 @@ const CasteMultiple: React.FC<CastMultiple> = ({
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((item) => {
-                  return (
-                    <li key={item.id}>
-                      <span>{item.caste}</span>
-                      <IoClose
-                        onClick={() => getClickedDeleteData(item.id, item)}
-                      />
-                    </li>
-                  );
-                })
+                return (
+                  <li key={item.id}>
+                    <span>{item.caste}</span>
+                    <IoClose
+                      onClick={() => getClickedDeleteData(item.id, item)}
+                    />
+                  </li>
+                );
+              })
               : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

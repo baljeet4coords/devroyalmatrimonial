@@ -51,15 +51,23 @@ function* gallerySagaPost(action: GalleryActions): any {
     if (action.type === GALLERY_POST) {
       const response = yield call(
         axios.post,
-        `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
-        action.payload
+        `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
+        action.payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-
       const responseData = response.data;
-      console.log(
-        GalleryRes?.response?.jsonResponse?.galleryImages,
-        "gallerySagaPost"
-      );
+
+      console.log(responseData, "gallerySagaPost");
+      // const allimage = [
+      //   ...responseOfGalery.data.jsonResponse.galleryImages,
+      //   ...responseData.jsonResponse.galleryImages,
+      // ];
+      // console.log(allimage, "allimage");
+
       yield put(galleryPostSuccess(responseData));
     }
   } catch (error) {
