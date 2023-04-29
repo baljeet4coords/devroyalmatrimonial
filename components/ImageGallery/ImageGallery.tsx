@@ -50,20 +50,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         selectedFiles.forEach((file) => {
           formData.append("image", file);
         },
-        //dispach formdata
-        dispatch(galleryPostReq({ userId: userId }))
+          //dispach formdata
         );
-        console.log(imageResponse,"imageResponse");
         try {
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
-              formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
+          dispatch(galleryPostReq(formData))
+          // const response = await axios.post(
+          //   `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
+          //   formData,
+          //   {
+          //     headers: {
+          //       "Content-Type": "multipart/form-data",
+          //     },
+          //   }
+          // );
+          // console.log(response, "response response response");
+
           setUploadStatus("Files uploaded successfully");
 
           const getImages = async () => {
@@ -73,8 +74,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             );
             if (response.data.jsonResponse) {
               setImageResponse(response.data.jsonResponse);
-              console.log(response.data.jsonResponse, "response.data.jsonResponse");
-
             }
           };
           getImages();
@@ -89,18 +88,26 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     uploadFiles();
   }, [selectedFiles, userId]);
 
+  // useEffect(() => {
+  //   const getImages = async () => {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
+  //       { userId: userId }
+  //     );
+  //     if (response.data.jsonResponse) {
+  //       setImageResponse(response.data.jsonResponse);
+  //     }
+  //   };
+  //   getImages();
+  // }, [userId]);
+
   useEffect(() => {
-    const getImages = async () => {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
-        { userId: userId }
-      );
-      if (response.data.jsonResponse) {
-        setImageResponse(response.data.jsonResponse);
-      }
-    };
-    getImages();
-  }, [userId]);
+    if (gallerySuccessResponse && gallerySuccessResponse.jsonResponse) {
+      setImageResponse(gallerySuccessResponse.jsonResponse);
+    }
+  }, [gallerySuccessResponse?.jsonResponse])
+
+
 
   const onInit = () => { };
   const handleButtonClick = () => {

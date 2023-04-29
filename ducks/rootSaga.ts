@@ -7,8 +7,7 @@ import { step5Saga } from "./regiserUser/step5";
 import { watchLogin, watchLogout, watchSignup } from "./auth/saga";
 import { partnerPrefferenceSaga } from "./partnerPreferrence";
 import { myprofileSaga } from "./myProfile";
-import { gallerySaga } from "./Gallery";
-
+import { gallerySaga, gallerySagaPost } from "./Gallery";
 
 function* rootSaga() {
   yield all([
@@ -22,7 +21,8 @@ function* rootSaga() {
     step5Saga(),
     partnerPrefferenceSaga(),
     myprofileSaga(),
-    gallerySaga()
+    gallerySaga(),
+    gallerySagaPost(),
   ]);
 }
 

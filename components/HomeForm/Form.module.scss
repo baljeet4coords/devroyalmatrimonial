@@ -247,12 +247,11 @@
   .verify_otp {
     color: white;
     background-color: #dc3545;
-    border: 1px solid #dc3545;
+    border: 2px solid #dc3545;
 
     &:hover {
       color: #dc3545;
       background-color: #fff;
-      border: 1px solid #dc3545;
 
       .loginSpiner {
         color: #dc3545 !important;
