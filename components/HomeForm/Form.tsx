@@ -158,8 +158,8 @@ const HomeForm: React.FC<SignUpForm> = ({
               formik.touched.password && formik.errors.password
                 ? classes.PasswordShowAline
                 : showPassword
-                ? classes.PasswordShow
-                : ""
+                  ? classes.PasswordShow
+                  : ""
             }
             onClick={() => setShowPassword(!showPassword)}
           />
@@ -170,6 +170,10 @@ const HomeForm: React.FC<SignUpForm> = ({
           ) : null}
         </Form.Group>
         {error && <Errors error={error} />}
+
+        <div className={classes.Password_Char_Info}>
+          Your password must be at least 8 characters long and contain at least one uppercase letter, one special character (such as !, @, #, $, %, ^, &, or *), and one number
+        </div>
         <Button
           variant="danger"
           type="submit"
@@ -177,7 +181,7 @@ const HomeForm: React.FC<SignUpForm> = ({
           disabled={!formik.isValid}
           onClick={() => setIsOpenHandler(true)}
         >
-          {isLoading ? <Spinner /> : "Get OTP"}
+          {isLoading ? <Spinner /> : "Register"}
         </Button>
         <Form.Label className="mt-4">
           By clicking on Register Free, you confirm that you accept the{" "}

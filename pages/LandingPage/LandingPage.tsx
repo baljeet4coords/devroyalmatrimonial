@@ -56,6 +56,7 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     if (authMessage === -2) {
       setError("User is already present with these credentials");
+      setErrorForOTP(error)
     }
   }, [authMessage]);
 
@@ -73,7 +74,7 @@ const LandingPage: React.FC = () => {
     if (errorForOTP) {
       timeoutId = setTimeout(() => {
         setErrorForOTP("");
-      }, 3000);
+      }, 5000);
     }
     return () => clearTimeout(timeoutId);
   }, [errorForOTP]);
@@ -83,22 +84,28 @@ const LandingPage: React.FC = () => {
     otp: string,
     otpScope: string
   ) => {
-    if (otp) {
+
+    if (/^[0-9]{6,6}$/.test(otp)) {
       const isdMobile = values.countryCode.substring(1) + values.mobile;
       setIsLoading(true);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/sms/verify-otp`,
         { otp, isdMobile, otpScope }
       );
+      console.log(response, "respossms");
+
       if (response.data.output < 0) {
         setErrorForOTP("Wrong OTP Provided");
       } else {
         dispatch(signupRequest(values));
+        setIsOTPOpen(false);
+      }
+      if (!response) {
+        setIsLoading(false)
       }
       setIsLoading(false);
-      setIsOTPOpen(false);
     } else {
-      setErrorForOTP("Please enter OTP");
+      setErrorForOTP("Please enter valid OTP");
     }
   };
 
@@ -167,9 +174,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${
-                  activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
@@ -188,9 +194,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${
-                  activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
@@ -208,9 +213,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${
-                  activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
@@ -228,9 +232,8 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${
-                  activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
-                }`,
+                opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
+                  }`,
               }}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >

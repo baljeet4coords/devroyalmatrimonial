@@ -16,6 +16,15 @@
     font-size: 14px;
   }
 
+  .Password_Char_Info {
+    background-color: #0000006e;
+    padding: 0.4rem 0.8rem;
+    margin-top: 0.6rem;
+    line-height: 12px;
+    letter-spacing: 0.61px;
+    font-size: 10px;
+  }
+
   .Form_btn {
     border-radius: 3px;
     padding: 5px;
@@ -244,6 +253,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+
   .verify_otp {
     color: white;
     background-color: #dc3545;
