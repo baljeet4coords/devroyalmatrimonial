@@ -35,7 +35,6 @@ const HomeForm: React.FC<SignUpForm> = ({
       `${process.env.NEXT_PUBLIC_URL}/sms/send-otp`,
       { isdMobile: phoneWithIsd, otpScope: OTP_SCOPE }
     );
-    console.log(response);
     if (response.data.output > 0) {
       setMessage(successMsg);
     } else {
@@ -64,7 +63,7 @@ const HomeForm: React.FC<SignUpForm> = ({
     onSubmit: () => {
       const phoneWithIsd =
         formik.values.countryCode.substring(1) + formik.values.mobile;
-      // sendOtpPost(phoneWithIsd, "OTP has been sent to given phone number");
+      sendOtpPost(phoneWithIsd, "OTP has been sent to given phone number");
     },
   });
 

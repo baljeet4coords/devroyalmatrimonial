@@ -61,7 +61,14 @@ const BrowseProfile: NextPage = () => {
               </div>
             </Col>
             <Col sm={12} md={7} lg={6}>
-              <HomeForm onSubmitForm={() => { } } error={""} />
+              <HomeForm
+                onSubmitForm={() => {}}
+                error={""}
+                errorForOTP=""
+                isLoading={false}
+                setIsOpenHandler={() => {}}
+                isOpen={false}
+              />
             </Col>
             <Row className={classes.Browse_colord_body}>
               <Col sm={12} md={4}>

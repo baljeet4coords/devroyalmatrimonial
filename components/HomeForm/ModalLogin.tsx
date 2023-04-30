@@ -186,7 +186,14 @@ const ModalForm: React.FC<ModalLoginProps> = ({
       {registerShow && (
         <div className={classes.modal_form_signUp}>
           <div>
-            <HomeForm onSubmitForm={onSubmitFormSignUp} error={errors} />
+            <HomeForm
+              onSubmitForm={onSubmitFormSignUp}
+              error={errors}
+              errorForOTP=""
+              isLoading={false}
+              setIsOpenHandler={() => {}}
+              isOpen={false}
+            />
             <Button
               variant="primary"
               type="submit"

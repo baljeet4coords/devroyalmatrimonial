@@ -47,23 +47,23 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       const formData = new FormData();
       formData.append("userId", String(userId));
       if (selectedFiles.length > 0) {
-        selectedFiles.forEach((file) => {
-          formData.append("image", file);
-        },
+        selectedFiles.forEach(
+          (file) => {
+            formData.append("image", file);
+          }
           //dispach formdata
         );
         try {
-          dispatch(galleryPostReq(formData))
-          // const response = await axios.post(
-          //   `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
-          //   formData,
-          //   {
-          //     headers: {
-          //       "Content-Type": "multipart/form-data",
-          //     },
-          //   }
-          // );
-          // console.log(response, "response response response");
+          // dispatch(galleryPostReq(formData))
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_URL}/userImage/setGalleryImages`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
 
           setUploadStatus("Files uploaded successfully");
 
@@ -88,28 +88,26 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     uploadFiles();
   }, [selectedFiles, userId]);
 
-  // useEffect(() => {
-  //   const getImages = async () => {
-  //     const response = await axios.post(
-  //       `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
-  //       { userId: userId }
-  //     );
-  //     if (response.data.jsonResponse) {
-  //       setImageResponse(response.data.jsonResponse);
-  //     }
-  //   };
-  //   getImages();
-  // }, [userId]);
+  useEffect(() => {
+    const getImages = async () => {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
+        { userId: userId }
+      );
+      if (response.data.jsonResponse) {
+        setImageResponse(response.data.jsonResponse);
+      }
+    };
+    getImages();
+  }, [userId]);
 
   useEffect(() => {
     if (gallerySuccessResponse && gallerySuccessResponse.jsonResponse) {
       setImageResponse(gallerySuccessResponse.jsonResponse);
     }
-  }, [gallerySuccessResponse?.jsonResponse])
+  }, [gallerySuccessResponse?.jsonResponse]);
 
-
-
-  const onInit = () => { };
+  const onInit = () => {};
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -150,15 +148,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       >
         {imageResponse && imageResponse.galleryImages?.length
           ? imageResponse.galleryImages.map((img, index) => {
-            return (
-              <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                <Image
-                  alt={"RM"}
-                  src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                />
-              </a>
-            );
-          })
+              return (
+                <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                  <Image
+                    alt={"RM"}
+                    src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                  />
+                </a>
+              );
+            })
           : "No images"}
       </LightGallery>
     </div>

@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button } from "react-rainbow-components";
+const Button = dynamic(
+  () => import("react-rainbow-components/components/Button"),
+  { ssr: false } as any
+);
+const Modal = dynamic(
+  () => import("react-rainbow-components/components/Modal"),
+  { ssr: false } as any
+);
 import classes from "./Form.module.scss";
-import OtpInput from "react-otp-input";
+const OtpInput = dynamic(() => import("react-otp-input"), {
+  ssr: false,
+} as any);
 import { Image, Spinner } from "react-bootstrap";
+import dynamic from "next/dynamic";
 
 export interface SignUpForm {
   isOpen: boolean;
