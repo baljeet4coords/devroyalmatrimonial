@@ -40,6 +40,7 @@ const OTP_modal: React.FC<SignUpForm> = ({
   const [err, setErr] = useState<string>("");
 
   const handleRegister = (otp: string) => {
+    setOtp("")
     fromSubmit(otp);
   };
 
@@ -62,9 +63,9 @@ const OTP_modal: React.FC<SignUpForm> = ({
       const intervalId = setInterval(() => {
         setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
       }, 1000);
-
       return () => clearInterval(intervalId);
     }
+    setOtp("")
   }, [isOpen, timeLeft]);
 
   const handleResendClick = () => {
@@ -143,10 +144,11 @@ const OTP_modal: React.FC<SignUpForm> = ({
             renderInput={(props) => <input {...props} />}
           />
           {errorForOTP ? (
-            <p className="text-danger">{errorForOTP}</p>
-          ) : (
+            errorForOTP ? <p className="text-danger">{errorForOTP}</p> : null
+          ) : message ? (
             <p className="text-success">{message}</p>
-          )}
+          ) : null
+          }
         </div>
       </Modal>
     </div>

@@ -140,24 +140,29 @@ const Header: React.FC = () => {
                 <Button
                   variant="link"
                   className="default-anchor p-3"
-                  onClick={() => setShowLoginModal(true)}
-                  style={{ opacity: `${isActive ? 1 : 0}` }}
+                  onClick={() => window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                  })}
+                style={{ opacity: `${isActive ? 1 : 0}` }}
                 >
-                  REGISTER FREE
-                </Button>
-              </Nav>
-            </div>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {showLoginModal && (
+                REGISTER FREE
+              </Button>
+            </Nav>
+          </div>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar >
+      { showLoginModal && (
         <ModalForm
-          onCloseModal={() => setShowLoginModal(false)}
+          onCloseModal={setShowLoginModal}
           onSubmitForm={onSubmitForm}
           errors={errors}
           onSubmitFormSignUp={onSubmitFormSignUp}
         />
-      )}
+      )
+}
     </>
   );
 };
