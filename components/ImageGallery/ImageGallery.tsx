@@ -46,6 +46,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     async function uploadFiles() {
       const formData = new FormData();
       formData.append("userId", String(userId));
+      const prevImg = [];
+      if (imageResponse?.galleryImages?.length) {
+        for (let i = 0; i < imageResponse?.galleryImages?.length; i++) {
+          const image = imageResponse.galleryImages[i];
+          const parts = image.split('/');
+          const filename = parts[parts.length - 1];
+          prevImg.push(filename);
+        }
+      }
+      // console.log(prevImg, "arrya");
+
+      formData.append("PrevImg", prevImg)
       if (selectedFiles.length > 0) {
         selectedFiles.forEach(
           (file) => {
@@ -107,7 +119,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     }
   }, [gallerySuccessResponse?.jsonResponse]);
 
-  const onInit = () => {};
+  const onInit = () => { };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -148,15 +160,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       >
         {imageResponse && imageResponse.galleryImages?.length
           ? imageResponse.galleryImages.map((img, index) => {
-              return (
-                <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                  <Image
-                    alt={"RM"}
-                    src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                  />
-                </a>
-              );
-            })
+            return (
+              <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                <Image
+                  alt={"RM"}
+                  src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                />
+              </a>
+            );
+          })
           : "No images"}
       </LightGallery>
     </div>
