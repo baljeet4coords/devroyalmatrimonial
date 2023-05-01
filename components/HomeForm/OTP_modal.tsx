@@ -39,6 +39,7 @@ const OTP_modal: React.FC<SignUpForm> = ({
   const [attempts, setAttempts] = useState<number>(3);
   const [err, setErr] = useState<string>("");
 
+  
   const handleRegister = (otp: string) => {
     setOtp("")
     fromSubmit(otp);

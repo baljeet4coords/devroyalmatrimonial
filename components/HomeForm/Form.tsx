@@ -77,6 +77,13 @@ const HomeForm: React.FC<SignUpForm> = ({
       formik.values.countryCode.substring(1) + formik.values.mobile;
     sendOtpPost(phoneWithIsd, "OTP has been resent to given phone number");
   };
+
+  const handelsetIsOTPOpen = () => {
+    if (formik.values.emailid && formik.values.password && formik.values.mobile) {
+      setIsOpenHandler(true)
+    }
+  }
+
   return (
     <>
       <Form
@@ -178,10 +185,14 @@ const HomeForm: React.FC<SignUpForm> = ({
           variant="danger"
           type="submit"
           className={`${classes.Form_btn} mt-2 w-100`}
-          disabled={!formik.isValid}
-          onClick={() => setIsOpenHandler(true)}
+          disabled={error && true || !formik.isValid}
+          onClick={handelsetIsOTPOpen}
         >
-          {isLoading ? <Spinner /> : "Register"}
+          {isLoading ? <Spinner
+            className={classes.loginSpiner}
+            animation="border"
+            variant="light"
+          /> : "Register"}
         </Button>
         <Form.Label className="mt-4">
           By clicking on Register Free, you confirm that you accept the{" "}
