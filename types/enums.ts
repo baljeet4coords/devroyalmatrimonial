@@ -379,10 +379,10 @@ export enum MothersProfession {
   Teacher = "7",
   Retired = "8",
   Expired = "9",
-  Doctor = "9",
-  Legal = "10",
-  Law_Enforcement = "11",
-  Others = "12",
+  Doctor = "10",
+  Legal = "11",
+  Law_Enforcement = "12",
+  Others = "13",
 }
 
 export enum profile_platform {
