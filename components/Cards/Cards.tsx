@@ -25,7 +25,11 @@ const HomeCard = (props: any) => {
         })}
       </ListGroup>
       <Card.Body className={classes.cardBtuoonTab}>
-        <CustomButton onClick={() => console.log("tab")}>
+        <CustomButton onClick={() => window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
+        })}>
           {props.onTitle.category === "Free"
             ? "Register For Free"
             : "Know more membership packages today"}
