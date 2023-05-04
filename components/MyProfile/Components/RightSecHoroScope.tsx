@@ -20,44 +20,7 @@ interface MyComponentProps {
   step1Response: any;
   step5Response: any;
 }
-// const HoroScopeD = {
-//   Match: [
-//     {
-//       name: "Date of Bitrh",
-//       value: "Fer 13,1992",
-//     },
-//     {
-//       name: "Place of Birth",
-//       value: "NA",
-//     },
-//     {
-//       name: "Time of Birth",
-//       value: "NA",
-//     },
-//   ],
-//   NotMatch: [
-//     {
-//       name: "Sun Sign",
-//       value: "NA",
-//     },
-//     {
-//       name: "Rashi/Moon sign",
-//       value: "NA",
-//     },
-//     {
-//       name: "Nakshatra",
-//       value: "NA",
-//     },
-//     {
-//       name: "Manglic",
-//       value: "Non-Manglic",
-//     },
-//     {
-//       name: "Horoscope Privacy",
-//       value: "NA",
-//     },
-//   ],
-// };
+
 
 export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   EditDetails,
@@ -168,7 +131,7 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
         : timpOFBirth_H <= 21
           ? `0 ${timpOFBirth_H - 12}`
           : timpOFBirth_H - 12 || "NA"
-        }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H <= 12 ? "AM" : "PM"}`,
+        }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H < 12 ? "AM" : "PM"}`,
     },
   ];
   return (

@@ -43,7 +43,7 @@ interface Data {
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete,DisabledHeadingMessage
+  profileComplete, DisabledHeadingMessage
 }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
@@ -105,6 +105,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const [gothraVal, setGothraVal] = useState<string>("");
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
   const formik = useFormik({
     initialValues: {
@@ -189,6 +190,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.familyNativeCity = selectedNativeCity;
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
     formik.values.gothra = gothraVal;
+
+
+    if (selectedMothersOccupation.id !== "undefined" && selectedFathersOccupation.id !== "undefined" && selectedSister.id !== "undefined"
+      && selectedBrother.id !== "undefined" && selectedFamilyStatus.id !== "undefined" && selectedFamilyIncome.id !== "undefined" &&
+      selectedFamilyType.id !== "undefined" && selectedNativeCountry >= 0 && selectedNativeState >= 0 && selectedNativeCity >= 0 && selectedLivingWithParents.id !== "undefined" && formik.values.gothra) {
+      setNextDisable(false)
+    }else{
+      setNextDisable(true)
+    }
+
   }, [
     formik.values,
     jsonData,
@@ -330,6 +341,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                  disabled={nextDisable}
                 >
                   {loadingSpiner && (
                     <Spinner

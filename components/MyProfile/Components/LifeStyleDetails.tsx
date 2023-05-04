@@ -50,15 +50,15 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Love pets",
-        value: step3Response?.love_pets == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.love_pets == 1 ? "Yes" :step3Response?.love_pets == 2 ? "No" : "NA",
       },
       {
         name: "Owns House",
-        value: step3Response?.Owns_house == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Owns_house == 1 ? "Yes" :step3Response?.Owns_house == 2 ? "No" : "NA",
       },
       {
         name: "Owns car",
-        value: step3Response?.Owns_car == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Owns_car == 1 ? "Yes" :step3Response?.Owns_car == 2 ? "No" : "NA",
       },
       {
         name: "House Details",
@@ -79,7 +79,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Thalassemia",
-        value: step3Response?.Thalassemia == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Thalassemia == 1 ? "Yes" :step3Response?.Thalassemia == 2 ?  "No" : "NA",
       },
     ],
   };

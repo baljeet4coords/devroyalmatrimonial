@@ -42,6 +42,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
 
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
+
   // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
@@ -88,7 +90,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   });
 
   const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(
-    jsonData?.pobCountry || 0
+    jsonData?.pobCountry || 100
   );
   const [selectedBirthState, setSelectedBirthState] = useState<number>(
     jsonData?.pobState || -1
@@ -137,6 +139,14 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     formik.values.aboutFamily = aboutFamily;
     formik.values.aboutEducation = aboutEducation;
     formik.values.basicIntro = basicIntro;
+
+    if (aboutCareer && aboutFamily && aboutEducation && basicIntro && selectedBirthCountry >= 0 && selectedBirthState >= 0 && selectedBirthCity >= 0) {
+      setNextDisable(false)
+    }else{
+      setNextDisable(true)
+    }
+
+
   }, [
     formik.values,
     selectedBirthCity,
@@ -261,7 +271,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -314,6 +324,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     variant="danger"
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                    disabled={nextDisable}
                   >
                     {loadingSpiner && (
                       <Spinner

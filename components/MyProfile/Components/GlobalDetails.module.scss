@@ -49,6 +49,7 @@
             span {
                 color: #979090;
             }
+
         }
     }
 
@@ -162,6 +163,15 @@
             .DetailsTypeLeft {
                 flex-wrap: wrap;
                 row-gap: normal;
+            }
+        }
+
+        .Username {
+            p {
+                span {
+                    font-size: 1.2rem !important;
+                }
+                
             }
         }
     }
