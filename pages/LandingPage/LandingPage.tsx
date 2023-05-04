@@ -56,6 +56,10 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     if (authMessage === -2) {
       setError("User is already present with these credentials");
+      setTimeout(() => {
+        console.log(error);
+        return setError("")
+      }, 5000);
       setErrorForOTP(error)
     }
   }, [authMessage]);
@@ -92,11 +96,10 @@ const LandingPage: React.FC = () => {
         `${process.env.NEXT_PUBLIC_URL}/sms/verify-otp`,
         { otp, isdMobile, otpScope }
       );
-      console.log(response, "respossms");
-
       if (response.data.output < 0) {
         setErrorForOTP("Wrong OTP Provided");
       } else {
+        setIsLoading(true)
         dispatch(signupRequest(values));
         setIsOTPOpen(false);
       }
@@ -108,6 +111,8 @@ const LandingPage: React.FC = () => {
       setErrorForOTP("Please enter valid OTP");
     }
   };
+
+
 
   return (
     <>
