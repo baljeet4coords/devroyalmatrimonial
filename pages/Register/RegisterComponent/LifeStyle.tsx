@@ -67,6 +67,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
 
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
+
 
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
@@ -204,6 +206,18 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     // formik.values.religiousBelief = ReligiousBelief;
+    if (diet.id != "undefined" && smoking.id != "undefined" && drinking.id != "undefined" &&
+      lovePets.id != "undefined" && ownsHouse.id !== "undefined" && ownsCar.id !== "undefined" && bloodGroup.id !== "undefined"
+      && thalassemia.id !== "undefined" && formik.values.religiousBelief) {
+
+      if (ownsHouse.id == "1" && !housetype.length || ownsCar.id == "1" && !cartype.length) {
+        setNextDisable(true);
+      } else {
+        setNextDisable(false)
+      }
+    } else {
+      setNextDisable(true);
+    }
   }, [
     bloodGroup.id,
     diet.id,
@@ -383,6 +397,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                   variant="danger"
                   type="submit"
                   className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                  disabled={nextDisable}
                 >
                   {loadingSpiner && (
                     <Spinner

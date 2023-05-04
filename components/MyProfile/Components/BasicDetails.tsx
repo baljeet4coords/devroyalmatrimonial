@@ -80,10 +80,12 @@ const BasicDetails: FC<MyComponentProps> = ({
     {
       name: "Profile Manage by",
       vlaue: `${step1Response?.gender == "M" ? "His" : "Her"
-        } profile is managed by ${step1Response?.profile_for == ("2" || "3") ? "parents" : step1Response?.profile_for == ("4" || "5") ? "siblings" : getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "NA"
+        } profile is managed by ${step1Response?.profile_for == "2" || step1Response?.profile_for == "3" ? "parents" : step1Response?.profile_for == "4" || step1Response?.profile_for == "5" ? "siblings" : getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "NA"
         }`,
     },
   ];
+
+
   return (
     <>
       <div className={classes.content}>

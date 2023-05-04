@@ -148,7 +148,7 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       },
       {
         name: "Living With Parents",
-        value: step4Response?.living_with_parents == 1 ? "Yes" : "No" || "NA",
+        value: step4Response?.living_with_parents == 1 ? "Yes" :step4Response?.living_with_parents == 2 ? "No" : "NA",
       },
     ],
   };

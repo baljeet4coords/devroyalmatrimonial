@@ -19,13 +19,20 @@ import { selectAuthSuccess } from "../../ducks/auth/selectors";
 const Header: React.FC = () => {
   const [errors, setErrors] = useState<string>("");
   const authSuccess = useSelector(selectAuthSuccess);
+  const [loginSpiner, setloginSpiner] = useState(false);
+
   useEffect(() => {
     if (authSuccess?.status === false) {
       setErrors("No user with this credentials can be found");
+      setloginSpiner(false)
     }
     if (authSuccess && authSuccess?.output === 0) {
       setErrors("Wrong Password");
+      setloginSpiner(false)
     }
+    setTimeout(() => {
+      return setErrors("")
+    }, 5000);
   }, [
     authSuccess?.status,
     authSuccess?.jsonResponse?.user_status,
@@ -145,24 +152,26 @@ const Header: React.FC = () => {
                     left: 0,
                     behavior: "smooth",
                   })}
-                style={{ opacity: `${isActive ? 1 : 0}` }}
+                  style={{ opacity: `${isActive ? 1 : 0}` }}
                 >
-                REGISTER FREE
-              </Button>
-            </Nav>
-          </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar >
-      { showLoginModal && (
+                  REGISTER FREE
+                </Button>
+              </Nav>
+            </div>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar >
+      {showLoginModal && (
         <ModalForm
           onCloseModal={setShowLoginModal}
           onSubmitForm={onSubmitForm}
           errors={errors}
           onSubmitFormSignUp={onSubmitFormSignUp}
+          loginSpiner={loginSpiner}
+          setloginSpiner={setloginSpiner}
         />
       )
-}
+      }
     </>
   );
 };

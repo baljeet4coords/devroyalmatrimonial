@@ -20,6 +20,16 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
     }
   }
 
+  function getKeysByValueArr(values: string[], enumObject: Record<string, string>) {
+    const matchingKeys = [];
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (values.includes(val)) {
+        matchingKeys.push(key.replaceAll("_", " "));
+      }
+    }
+    return matchingKeys;
+  }
+
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
@@ -40,23 +50,23 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Love pets",
-        value: step3Response?.love_pets == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.love_pets == 1 ? "Yes" :step3Response?.love_pets == 2 ? "No" : "NA",
       },
       {
         name: "Owns House",
-        value: step3Response?.Owns_house == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Owns_house == 1 ? "Yes" :step3Response?.Owns_house == 2 ? "No" : "NA",
       },
       {
         name: "Owns car",
-        value: step3Response?.Owns_car == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Owns_car == 1 ? "Yes" :step3Response?.Owns_car == 2 ? "No" : "NA",
       },
       {
         name: "House Details",
-        value: step3Response?.Owns_house == 1 ? getKeyByValue(String(step3Response?.home_type), HouseType) : null,
+        value: step3Response?.Owns_house == 1 ? getKeysByValueArr((step3Response?.home_type), HouseType) : null,
       },
       {
         name: "Car Details",
-        value: step3Response?.Owns_car == 1 ? getKeyByValue(String(step3Response?.car_details), CarType) : null,
+        value: step3Response?.Owns_car == 1 ? getKeysByValueArr((step3Response?.car_details), CarType) : null,
       },
       {
         name: "Blood group",
@@ -69,7 +79,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Thalassemia",
-        value: step3Response?.Thalassemia == 1 ? "Yes" : "No" || "NA",
+        value: step3Response?.Thalassemia == 1 ? "Yes" :step3Response?.Thalassemia == 2 ?  "No" : "NA",
       },
     ],
   };
@@ -98,7 +108,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
                         : classes.input_Value
                     }
                   >
-                    {item.value === "NA" ? "Not Field in" : item.value}{" "}
+                    {item.value === "NA" ? "Not Field in" : typeof item.value !== "string" ? item?.value?.map((item: string) => { return item }).join(" , ") : item.value}{" "}
                   </p>
                 </div>}
               </>

@@ -13,6 +13,8 @@ import { callingCodes } from "../../utils/countryCodesList";
 
 type ModalLoginProps = {
   onCloseModal: (val: boolean) => void;
+  loginSpiner: boolean;
+  setloginSpiner: (val: boolean) => void;
   errors: string;
   onSubmitForm: (values: LoginType) => void;
   onSubmitFormSignUp: (values: SignUpType) => void;
@@ -22,12 +24,14 @@ const ModalForm: React.FC<ModalLoginProps> = ({
   onCloseModal,
   onSubmitForm,
   onSubmitFormSignUp,
+  loginSpiner,
+  setloginSpiner,
   errors,
 }) => {
   const [loginWithEmail, setLoginWithEmail] = useState(false);
   const [passwordShow, setPasswordShow] = useState(false);
   // const [registerShow, setRegisterShow] = useState(false);
-  const [loginSpiner, setloginSpiner] = useState(false);
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -140,7 +144,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
               <AiOutlineEyeInvisible className={classes.passwordShowHide} />
             )}
           </Form.Group>
-          {errors && <Errors error={errors} />}
+          {formik.values.mobile && errors && <Errors error={errors} />}
           <Link
             className={`${classes.modal_links} d-flex justify-content-center mb-3`}
             href="/"
