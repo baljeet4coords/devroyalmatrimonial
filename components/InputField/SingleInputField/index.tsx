@@ -27,6 +27,14 @@ const SingleInput: React.FC<MyComponentProps> = ({
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
   const [searchInput, setSearchInput] = useState("");
+  const [stateSize, setSize] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setSize(window.innerWidth <= 767);
+    });
+    window.dispatchEvent(new Event("resize"));
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -74,63 +82,56 @@ const SingleInput: React.FC<MyComponentProps> = ({
     onChange(HostedArray);
   }, [HostedArray]);
 
-  // const getClickedData = useCallback(
-  //   ({ val, id }: { val: string; id: string }) => {
-  //     const getIndex = String(combinedData.indexOf(val));
-  //     if (getIndex == "0") {
-  //       updateHostedArray(["0"]);
-  //     } else {
-  //       if (HostedArray.indexOf(getIndex) === -1) {
-  //         updateHostedArray(HostedArray.filter((indx) => indx > "0"));
-  //         updateHostedArray((prevArray) => [...prevArray, getIndex]);
-  //       }
-  //     }
-  //     UpdatesearchHostedArray(combinedData);
-  //     setSearchInput("");
-  //   },
-  //   [HostedArray, onChange]
-  // );
-
   const getClickedDeleteData = (id: number) => {
     const newArray = HostedArray.filter((item) => +item !== id);
     updateHostedArray(newArray);
   };
 
+  function HandleCloseDropdown() {
+    setTimeout(() => {
+      setActiveList(false)
+    }, 50);
+  }
+
   return (
     <React.Fragment>
       <div
-        className={`${isFromRegistered && classes.singleBoxReg} ${
-          classes.singleBox
-        }`}
+        className={`${isFromRegistered && classes.singleBoxReg} ${classes.singleBox
+          }`}
         ref={elementRef}
       >
         <label>{inputName}</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           {activeList && (
-            <input
-              type="text"
-              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
-              value={searchInput}
-              onChange={(e) => searchDataFunc(e.target.value)}
-            />
+            <div className={classes.inputbox_Sections}>
+              <input
+                type="text"
+                placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+              {stateSize && <div onClick={HandleCloseDropdown}>
+                <IoClose />close
+              </div>}
+            </div>
+
           )}
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((uid: string) => {
-                  const [name, id] = combinedData[+uid].split("-");
-                  return (
-                    <li key={id}>
-                      <span>{name.replaceAll("_", " ")}</span>
-                      <IoClose onClick={() => getClickedDeleteData(+uid)} />
-                    </li>
-                  );
-                })
+                const [name, id] = combinedData[+uid].split("-");
+                return (
+                  <li key={id}>
+                    <span>{name.replaceAll("_", " ")}</span>
+                    <IoClose onClick={() => getClickedDeleteData(+uid)} />
+                  </li>
+                );
+              })
               : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>

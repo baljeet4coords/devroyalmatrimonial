@@ -2,13 +2,15 @@
 
 ///single input box css
 .singleBoxReg {
-  width: 100%!important;
+  width: 100% !important;
   display: flex;
   position: relative;
+
   .inputBox {
-    margin: 0!important;
+    margin: 0 !important;
   }
 }
+
 .singleBox {
   display: flex;
   position: relative;
@@ -66,15 +68,41 @@
 
     .ul_maxh_64 {
       max-height: 64px;
+      margin-top: 0.5rem;
     }
 
     input {
       border: 1px solid #d9d9d9 !important;
       border-radius: 2px;
       padding: 0.175rem 0.5rem !important;
-      text-align: center;
-      margin: 0.6em;
-      margin-top: 0 !important;
+    }
+
+    .inputbox_Sections {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      div {
+        background-color: #dc3545;
+        padding: 0.31rem;
+        color: #fff;
+        border-radius: 6px;
+        width: auto;
+        line-height: normal;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+
+        svg {
+          position: initial;
+          /* margin-right: 0.3rem; */
+          font-size: larger;
+        }
+      }
+
+      @media only screen and (max-width: 667px) {
+        font-size: smaller;
+       }
     }
   }
 
@@ -176,6 +204,7 @@
     }
   }
 }
+
 // @media only screen and (max-width: 767px) and (min-width: 300px) {
 //     .singleBox {
 //         flex-direction: column;

@@ -31,6 +31,14 @@ const CountryMultiple: React.FC<CountryProps> = ({
   const [searchHostedArray, UpdatesearchHostedArray] =
     useState<ICountry[]>(countries);
   const [searchInput, setSearchInput] = useState("");
+  const [stateSize, setSize] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setSize(window.innerWidth <= 767);
+    });
+    window.dispatchEvent(new Event("resize"));
+  }, []);
 
   // To add Does not Matter in cuntry ,state and city
   useEffect(() => {
@@ -112,37 +120,47 @@ const CountryMultiple: React.FC<CountryProps> = ({
     };
   }, [elementRef]);
 
+  function HandleCloseDropdown() {
+    setTimeout(() => {
+      setActiveList(false)
+    }, 50);
+  }
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
         <label>Preferred Country</label>
         <div className={classes.inputBox} onClick={() => setActiveList(true)}>
           {activeList && (
-            <input
-              type="text"
-              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
-              value={searchInput}
-              onChange={(e) => searchDataFunc(e.target.value)}
-            />
+            <div className={classes.inputbox_Sections}>
+              <input
+                type="text"
+                placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+              />
+              {stateSize && <div onClick={HandleCloseDropdown}>
+                <IoClose />close
+              </div>}
+            </div>
+
           )}
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((item) => {
-                  return (
-                    <li key={item.isoCode}>
-                      <span>{item.name}</span>
-                      <IoClose
-                        onClick={() => getClickedDeleteData(item.isoCode, item)}
-                      />
-                    </li>
-                  );
-                })
+                return (
+                  <li key={item.isoCode}>
+                    <span>{item.name}</span>
+                    <IoClose
+                      onClick={() => getClickedDeleteData(item.isoCode, item)}
+                    />
+                  </li>
+                );
+              })
               : !activeList && <span>Select Some Options</span>}
           </ul>
           <div
-            className={`${activeList ? classes.active : ""} ${
-              classes.inputBoxVal
-            }`}
+            className={`${activeList ? classes.active : ""} ${classes.inputBoxVal
+              }`}
             ref={elementRef}
           >
             <ul>
