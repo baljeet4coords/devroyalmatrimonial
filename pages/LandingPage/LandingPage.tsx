@@ -58,9 +58,9 @@ const LandingPage: React.FC = () => {
       setError("User is already present with these credentials");
       setTimeout(() => {
         console.log(error);
-        return setError("")
+        return setError("");
       }, 5000);
-      setErrorForOTP(error)
+      setErrorForOTP(error);
     }
   }, [authMessage, authSuccess]);
 
@@ -88,7 +88,6 @@ const LandingPage: React.FC = () => {
     otp: string,
     otpScope: string
   ) => {
-
     if (/^[0-9]{6,6}$/.test(otp)) {
       const isdMobile = values.countryCode.substring(1) + values.mobile;
       setIsLoading(true);
@@ -99,19 +98,17 @@ const LandingPage: React.FC = () => {
       if (response.data.output < 0) {
         setErrorForOTP("Wrong OTP Provided");
       } else {
-        setIsLoading(true)
+        setIsLoading(true);
         dispatch(signupRequest(values));
         setIsOTPOpen(false);
       }
       if (!response) {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } else {
       setErrorForOTP("Please enter valid OTP");
     }
   };
-
-
 
   return (
     <>
@@ -121,7 +118,7 @@ const LandingPage: React.FC = () => {
         <Row className={`${classes.firstTopBox} pb-4`}>
           <Col sm={12} md={6} className="d-flex align-items-center">
             <div className={classes.Home_heading}>
-              <h1>Now, chat for free!</h1>
+              <h1>Your search over here !</h1>
               <span>Finding your perfect match just became easier</span>
             </div>
           </Col>
@@ -178,8 +175,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "0" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               ref={refTab}
               onClick={() => [refineScroll(0), setActiveId("0")]}
@@ -198,8 +196,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "476" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(476), setActiveId("476")]}
             >
@@ -217,8 +216,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox} `}
               style={{
-                opacity: `${activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "1029" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(1029), setActiveId("1029")]}
             >
@@ -236,8 +236,9 @@ const LandingPage: React.FC = () => {
             <div
               className={`${classes.scrollBox}`}
               style={{
-                opacity: `${activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
-                  }`,
+                opacity: `${
+                  activeId === "906" ? 1 : activeId === undefined ? 1 : 0.5
+                }`,
               }}
               onClick={() => [refineScroll(0), setActiveId("0")]}
             >
