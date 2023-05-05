@@ -26,7 +26,7 @@ import CitySingle from "../../../components/InputField/CountryStateSingle/CitySi
 import Loader from "../../../components/Loader/Loader";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -40,7 +40,8 @@ interface Data {
 
 const CareerDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete, DisabledHeadingMessage
+  profileComplete,
+  DisabledHeadingMessage,
 }) => {
   const dispatch = useDispatch();
   const stepTwoDefaultValues = useSelector(selectStep2Success);
@@ -90,15 +91,16 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
   const [countryTouchedDefault, setcountryTouchedDefault] = useState(true);
   const [stateTouched, setStateTouched] = useState(false);
   const [cityTouched, setCityTouched] = useState(false);
-  const [residentialStatusTouched, setResidentialStatusTouched] = useState(false);
-  const [readyToSettleAbroadTouched, setReadyToSettleAbroadTouched] = useState(false);
+  const [residentialStatusTouched, setResidentialStatusTouched] =
+    useState(false);
+  const [readyToSettleAbroadTouched, setReadyToSettleAbroadTouched] =
+    useState(false);
   const [educationTouched, setEducationTouched] = useState(false);
   const [occupationTouched, setOccupationTouched] = useState(false);
   const [annualIncomeTouched, setAnnualIncomeTouched] = useState(false);
 
   const [loginSpiner, setloginSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-
 
   const formik = useFormik({
     initialValues: {
@@ -115,11 +117,11 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     },
     validationSchema: Yup.object({
       college: Yup.string()
-        .min(3, 'Must be 3 characters or more')
-        .required('Required'),
+        .min(3, "Must be 3 characters or more")
+        .required("Required"),
     }),
     onSubmit: async (values) => {
-      setloginSpiner(true)
+      setloginSpiner(true);
       let response;
       if (isReduxEmpty) {
         response = await axios.post(
@@ -173,13 +175,18 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.occupation = occupation.id || "";
     formik.values.annualIncome = annualIncome.id || "";
 
-
-    if ( selectedCountry != null && selectedState >= 0 && selectedCity >= 0 &&
-      residentialStatus.id != "null" && settleAboard.id != "null" && education.id != "null" &&
-      occupation.id != "null" && annualIncome.id !== "null") {
-      setNextDisable(false)
+    if (
+      selectedCountry != null &&
+      selectedState >= 0 &&
+      selectedCity >= 0 &&
+      residentialStatus.id != "null" &&
+      settleAboard.id != "null" &&
+      education.id != "null" &&
+      occupation.id != "null" &&
+      annualIncome.id !== "null"
+    ) {
+      setNextDisable(false);
     }
-
   }, [
     annualIncome.id,
     education.id,
@@ -226,12 +233,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     setErrorState={setCountryTouched}
                     setErrorStateDefault={setcountryTouchedDefault}
                   />
-                  {countryTouched && countryTouchedDefault ?
+                  {countryTouched && countryTouchedDefault ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <StateSingle
@@ -241,13 +251,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValueState={jsonData?.state}
                     setErrorState={setStateTouched}
                   />
-                  {stateTouched && selectedState < 0 ?
+                  {stateTouched && selectedState < 0 ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <CitySingle
@@ -258,13 +270,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     setSelectedCity={getSelectedCity}
                     setErrorState={setCityTouched}
                   />
-                  {cityTouched && selectedCity < 0 ?
+                  {cityTouched && selectedCity < 0 ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <DropdownGridSingleSelect
@@ -275,13 +289,16 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValue={String(jsonData?.residentialstatus)}
                     setErrorState={setResidentialStatusTouched}
                   />
-                  {residentialStatusTouched && residentialStatus.id == "null" ?
+                  {residentialStatusTouched &&
+                  residentialStatus.id == "null" ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <DropdownGridSingleSelect
@@ -292,13 +309,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValue={String(jsonData?.readytosettleabroad)}
                     setErrorState={setReadyToSettleAbroadTouched}
                   />
-                  {readyToSettleAbroadTouched && settleAboard.id == "null" ?
+                  {readyToSettleAbroadTouched && settleAboard.id == "null" ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <DropdownGridSingleSelect
@@ -309,13 +328,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValue={String(jsonData?.education)}
                     setErrorState={setEducationTouched}
                   />
-                  {educationTouched && education.id == "null" ?
+                  {educationTouched && education.id == "null" ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <div className={classes.singleBox}>
@@ -334,13 +355,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                       </li>
                     </div>
                   </div>
-                  {formik.touched.college && formik.errors.college ?
+                  {formik.touched.college && formik.errors.college ? (
                     <div>
-                      <span className={classes.errorMessage}>{formik.errors.college}</span>
+                      <span className={classes.errorMessage}>
+                        {formik.errors.college}
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <DropdownGridSingleSelect
@@ -351,13 +374,15 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValue={String(jsonData?.occupation)}
                     setErrorState={setOccupationTouched}
                   />
-                  {occupationTouched && occupation.id == "null" ?
+                  {occupationTouched && occupation.id == "null" ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div>
                   <DropdownGridSingleSelect
@@ -368,18 +393,17 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     defaultValue={String(jsonData?.annual_income)}
                     setErrorState={setAnnualIncomeTouched}
                   />
-                  {annualIncomeTouched && annualIncome.id == "null" ?
+                  {annualIncomeTouched && annualIncome.id == "null" ? (
                     <div>
-                      <span className={classes.errorMessage}>Please select value from dropdown</span>
+                      <span className={classes.errorMessage}>
+                        Please select value from dropdown
+                      </span>
                     </div>
-
-                    : ""
-                  }
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <hr />
-                <h5 className="text-center p-3">
-                  Here is your chance to make your profile stand out!
-                </h5>
                 <Button
                   variant="danger"
                   type="submit"
