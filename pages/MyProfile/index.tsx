@@ -171,7 +171,9 @@ const MyProfile: React.FC = () => {
               style={{ display: "none" }}
             />
           </div>
-          {uploadStatus && <Alert variant="success text-center">{uploadStatus}</Alert>}
+          {uploadStatus && (
+            <Alert variant="success text-center">{uploadStatus}</Alert>
+          )}
         </Container>
         {isMyprofileLoading ? (
           <Loader />

@@ -252,11 +252,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output === 4) {
           nextPage(1);
           setloginSpiner(false);
@@ -267,11 +267,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
           `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
           formData
         )),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
         if (response.data.output >= 0) {
           // DisabledHeadingMessage(1);
           nextPage(1);
@@ -413,7 +413,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formik.values.dob = convertDateStringTimeStamp(value);
     }
   };
-
+  const today = new Date();
+  const maxDate = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+  const minDate = new Date("1970-12-31");
   return (
     <>
       <div className={classes.profile_Container}>
@@ -438,7 +444,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setprofileforTouched}
                     />
                     {profileforTouched &&
-                      selectedProfileFor.id == "undefined" ? (
+                    selectedProfileFor.id == "undefined" ? (
                       <div className={classes.errorMessage}>
                         <span>Please select valid input</span>
                       </div>
@@ -464,7 +470,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         </div>
                       </div>
                       {formik.touched.profileHandlerName &&
-                        formik.errors.profileHandlerName ? (
+                      formik.errors.profileHandlerName ? (
                         <div>
                           <span className={classes.errorMessage}>
                             {formik.errors.profileHandlerName}
@@ -478,11 +484,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                      <GenderRadioButtons
-                        selectedGender={gender}
-                        onChangeGender={onChangeGender}
-                      />
-                    )}
+                    <GenderRadioButtons
+                      selectedGender={gender}
+                      onChangeGender={onChangeGender}
+                    />
+                  )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date of Birth</Form.Label>
                     <DateTimePicker
@@ -490,8 +496,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       onChange={handleDateTimeChange}
                       placeholder="DD-MM-YYYY HH:MM"
                       value={dob}
-                      minDate={new Date(1954, 1, 1)}
-                      maxDate={new Date(2005, 0, 1)}
+                      minDate={minDate}
+                      maxDate={maxDate}
                       required
                     />
                   </div>
@@ -499,8 +505,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     <div>
                       <Form.Label>
                         {selectedProfileFor?.id == "2" ||
-                          selectedProfileFor?.id == "5" ||
-                          gender === "1"
+                        selectedProfileFor?.id == "5" ||
+                        gender === "1"
                           ? "Groom"
                           : "Bride"}{" "}
                         Name
@@ -510,12 +516,13 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           <Form.Control
                             name="fullname"
                             type="text"
-                            placeholder={`${selectedProfileFor?.id == "2" ||
+                            placeholder={`${
+                              selectedProfileFor?.id == "2" ||
                               selectedProfileFor?.id == "5" ||
                               gender === "1"
-                              ? "Write Groom Name"
-                              : "Write Bride Name"
-                              }`}
+                                ? "Write Groom Name"
+                                : "Write Bride Name"
+                            }`}
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             defaultValue={jsonData?.fullname}
@@ -595,7 +602,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setChallengedTouched}
                     />
                     {challengedTouched &&
-                      selectedChallenged.id == "undefined" ? (
+                    selectedChallenged.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -634,7 +641,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setMotherToungeTouched}
                     />
                     {motherToungeTouched &&
-                      selectedMotherTongue.id == "undefined" ? (
+                    selectedMotherTongue.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -692,7 +699,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setMaritalStatusTouched}
                     />
                     {maritalStatusTouched &&
-                      selectedMaritalStatus.id == "undefined" ? (
+                    selectedMaritalStatus.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -713,7 +720,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         setErrorState={setChildrenStatusTouched}
                       />
                       {childrenStatusTouched &&
-                        selectedChildrenStatus.id == "undefined" ? (
+                      selectedChildrenStatus.id == "undefined" ? (
                         <div>
                           <span className={classes.errorMessage}>
                             Please select value from dropdown
