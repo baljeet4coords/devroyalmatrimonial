@@ -12,7 +12,7 @@ import axios from "axios";
 
 export interface SignUpForm {
   onSubmitForm: (values: SignUpType, otp: string, scopeType: string) => void;
-  error: string;
+  setIsLoadingHandler: (details: boolean) => void;
   errorForOTP: string;
   isLoading: boolean;
   setIsOpenHandler: Dispatch<SetStateAction<boolean>>;
@@ -21,12 +21,13 @@ export interface SignUpForm {
 const OTP_SCOPE = "R";
 const HomeForm: React.FC<SignUpForm> = ({
   onSubmitForm,
-  error,
+  setIsLoadingHandler,
   errorForOTP,
   isLoading,
   setIsOpenHandler,
   isOpen,
 }) => {
+  const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [nextDisable, setNextDisable] = useState(true);
@@ -61,10 +62,37 @@ const HomeForm: React.FC<SignUpForm> = ({
       countryCode: "+91",
     },
     validationSchema: SignupSchema,
-    onSubmit: () => {
+    onSubmit: async () => {
       const phoneWithIsd =
         formik.values.countryCode.substring(1) + formik.values.mobile;
-      sendOtpPost(phoneWithIsd, "OTP has been sent to given phone number");
+
+      if (formik.values.emailid && formik.values.password && formik.values.mobile) {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/auth/isUserRegistered`,
+          {
+            countryCode: formik.values.countryCode,
+            mobile: formik.values.mobile,
+            emailid: formik.values.emailid
+          }
+        );
+        const responseData = response.data;
+        if (responseData.output === -10) {
+          setError(responseData.message)
+          setTimeout(() => {
+            return setError("");
+          }, 5000);
+          setIsLoadingHandler(false);
+        } else if (responseData.output === -20) {
+          setError(responseData.message)
+          setTimeout(() => {
+            return setError("");
+          }, 5000);
+          setIsLoadingHandler(false);
+        } else {
+          setIsOpenHandler(true)
+          sendOtpPost(phoneWithIsd, "OTP has been sent to given phone number");
+        }
+      }
     },
   });
 
@@ -88,11 +116,6 @@ const HomeForm: React.FC<SignUpForm> = ({
     sendOtpPost(phoneWithIsd, "OTP has been resent to given phone number");
   };
 
-  const handelsetIsOTPOpen = () => {
-    if (formik.values.emailid && formik.values.password && formik.values.mobile) {
-      setIsOpenHandler(true)
-    }
-  }
 
   // error && !nextDisable && console.log("error && !nextDisable ")
   return (
@@ -197,7 +220,6 @@ const HomeForm: React.FC<SignUpForm> = ({
           type="submit"
           className={`${classes.Form_btn} mt-2 w-100`}
           disabled={error && true || !formik.isValid || nextDisable}
-          onClick={handelsetIsOTPOpen}
         >
           {isLoading ? <Spinner
             className={classes.loginSpiner}

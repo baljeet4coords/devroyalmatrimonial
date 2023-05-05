@@ -23,14 +23,12 @@ import { signupRequest } from "../../ducks/auth/actions";
 import axios from "axios";
 
 const LandingPage: React.FC = () => {
-  const [error, setError] = useState<string>("");
   const [errorForOTP, setErrorForOTP] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOTPOpen, setIsOTPOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const refTab = useRef(null);
   const dispatch = useDispatch();
-  const authMessage = useSelector(authOutputMessage);
   const authSuccess = useSelector(selectAuthSuccess);
   const pageNo = authSuccess?.jsonResponse?.user_status;
 
@@ -52,18 +50,6 @@ const LandingPage: React.FC = () => {
       router.push("/");
     }
   }, [pageNo]);
-
-  useEffect(() => {
-    if (authMessage === -2) {
-      setError("User is already present with these credentials");
-      setTimeout(() => {
-        console.log(error);
-        return setError("");
-      }, 5000);
-      setErrorForOTP(error);
-      setIsLoading(false);
-    }
-  }, [authMessage, authSuccess]);
 
   const [activeId, setActiveId] = useState<string>("0");
 
@@ -127,8 +113,8 @@ const LandingPage: React.FC = () => {
           <Col sm={12} md={6}>
             <HomeForm
               onSubmitForm={onSubmitForm}
-              error={error}
               errorForOTP={errorForOTP}
+              setIsLoadingHandler={setIsLoading}
               isLoading={isLoading}
               setIsOpenHandler={setIsOTPOpen}
               isOpen={isOTPOpen}
