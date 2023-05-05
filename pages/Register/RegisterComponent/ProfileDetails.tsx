@@ -31,6 +31,7 @@ import { CastListArray } from "../../../constants/CastListArray";
 import Loader from "../../../components/Loader/Loader";
 import HeightInput from "../../../components/InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
 import * as Yup from "yup";
+import dynamic from "next/dynamic";
 const DateTimePicker = dynamic(
   () => import("react-rainbow-components/components/DateTimePicker"),
   { ssr: false } as any
@@ -76,7 +77,6 @@ import {
   convertServerTimestamp,
   convertTimeStamp,
 } from "../../../utils/dayjs";
-import dynamic from "next/dynamic";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -497,26 +497,28 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date/Time of Birth</Form.Label>
-                    <Application
-                      theme={{
-                        rainbow: {
-                          palette: {
-                            brand: "#d9475c",
+                    <div>
+                      <Application
+                        theme={{
+                          rainbow: {
+                            palette: {
+                              brand: "#d9475c",
+                            },
                           },
-                        },
-                      }}
-                    >
-                      <DateTimePicker
-                        name="dob"
-                        okLabel="OK"
-                        onChange={handleDateTimeChange}
-                        placeholder="DD-MM-YYYY HH:MM"
-                        value={dob}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        required
-                      />
-                    </Application>
+                        }}
+                      >
+                        <DateTimePicker
+                          name="dob"
+                          okLabel="OK"
+                          onChange={handleDateTimeChange}
+                          placeholder="DD-MM-YYYY HH:MM"
+                          value={dob}
+                          minDate={minDate}
+                          maxDate={maxDate}
+                          required
+                        />
+                      </Application>
+                    </div>
                   </div>
                   <div className={classes.singleBox}>
                     <div>
