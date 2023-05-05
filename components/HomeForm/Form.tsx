@@ -29,6 +29,7 @@ const HomeForm: React.FC<SignUpForm> = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState<string>("");
+  const [nextDisable, setNextDisable] = useState(true);
 
   const sendOtpPost = async (phoneWithIsd: string, successMsg: string) => {
     const response = await axios.post(
@@ -67,6 +68,15 @@ const HomeForm: React.FC<SignUpForm> = ({
     },
   });
 
+  useEffect(() => {
+    if (formik.values.emailid && formik.values.mobile && formik.values.password) {
+      setNextDisable(false)
+    } else {
+      setNextDisable(true)
+    }
+  }, [formik.values.emailid, formik.values.mobile, formik.values.password])
+
+
   const fromSubmit = (otp: string) => {
     const formValue = formik.values;
     onSubmitForm(formValue, otp, OTP_SCOPE);
@@ -84,6 +94,7 @@ const HomeForm: React.FC<SignUpForm> = ({
     }
   }
 
+  // error && !nextDisable && console.log("error && !nextDisable ")
   return (
     <>
       <Form
@@ -176,7 +187,7 @@ const HomeForm: React.FC<SignUpForm> = ({
             </div>
           ) : null}
         </Form.Group>
-        {error && <Errors error={error} />}
+        {error && !nextDisable && <Errors error={error} />}
 
         <div className={classes.Password_Char_Info}>
           Your password must be at least 8 characters long and contain at least one uppercase letter, one special character (such as !, @, #, $, %, ^, &, or *), and one number
@@ -185,7 +196,7 @@ const HomeForm: React.FC<SignUpForm> = ({
           variant="danger"
           type="submit"
           className={`${classes.Form_btn} mt-2 w-100`}
-          disabled={error && true || !formik.isValid}
+          disabled={error && true || !formik.isValid || nextDisable}
           onClick={handelsetIsOTPOpen}
         >
           {isLoading ? <Spinner

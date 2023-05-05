@@ -102,6 +102,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   );
   const [selectedLivingWithParents, setSelectedLivingWithParents] =
     useState<Data>({ id: String(jsonData?.living_with_parents), val: "" });
+
   const [gothraVal, setGothraVal] = useState<string>("");
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
@@ -196,7 +197,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
       && selectedBrother.id !== "undefined" && selectedFamilyStatus.id !== "undefined" && selectedFamilyIncome.id !== "undefined" &&
       selectedFamilyType.id !== "undefined" && selectedNativeCountry >= 0 && selectedNativeState >= 0 && selectedNativeCity >= 0 && selectedLivingWithParents.id !== "undefined" && formik.values.gothra) {
       setNextDisable(false)
-    }else{
+    } else {
       setNextDisable(true)
     }
 
