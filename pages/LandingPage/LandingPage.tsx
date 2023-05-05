@@ -62,7 +62,7 @@ const LandingPage: React.FC = () => {
       }, 5000);
       setErrorForOTP(error);
     }
-  }, [authMessage]);
+  }, [authMessage, authSuccess]);
 
   const [activeId, setActiveId] = useState<string>("0");
 
@@ -105,7 +105,6 @@ const LandingPage: React.FC = () => {
       if (!response) {
         setIsLoading(false);
       }
-      setIsLoading(false);
     } else {
       setErrorForOTP("Please enter valid OTP");
     }
