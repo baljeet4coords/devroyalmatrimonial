@@ -35,6 +35,10 @@ const DateTimePicker = dynamic(
   () => import("react-rainbow-components/components/DateTimePicker"),
   { ssr: false } as any
 );
+const Application = dynamic(
+  () => import("react-rainbow-components/components/Application"),
+  { ssr: false } as any
+);
 // import { formikErrorSchema } from '../../../schemas/profileDetailsSchema'
 
 type FormValues = {
@@ -146,6 +150,15 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     val: "",
     id: String(jsonData?.caste),
   });
+
+  const today = new Date();
+  const maxDate = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+
+  const minDate = new Date("1949-12-31");
 
   const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
@@ -413,13 +426,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formik.values.dob = convertDateStringTimeStamp(value);
     }
   };
-  const today = new Date();
-  const maxDate = new Date(
-    today.getFullYear() - 18,
-    today.getMonth(),
-    today.getDate()
-  );
-  const minDate = new Date("1970-12-31");
   return (
     <>
       <div className={classes.profile_Container}>
@@ -490,16 +496,27 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     />
                   )}
                   <div className={classes.singleBox}>
-                    <Form.Label>Date of Birth</Form.Label>
-                    <DateTimePicker
-                      name="dob"
-                      onChange={handleDateTimeChange}
-                      placeholder="DD-MM-YYYY HH:MM"
-                      value={dob}
-                      minDate={minDate}
-                      maxDate={maxDate}
-                      required
-                    />
+                    <Form.Label>Date/Time of Birth</Form.Label>
+                    <Application
+                      theme={{
+                        rainbow: {
+                          palette: {
+                            brand: "#d9475c",
+                          },
+                        },
+                      }}
+                    >
+                      <DateTimePicker
+                        name="dob"
+                        okLabel="OK"
+                        onChange={handleDateTimeChange}
+                        placeholder="DD-MM-YYYY HH:MM"
+                        value={dob}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        required
+                      />
+                    </Application>
                   </div>
                   <div className={classes.singleBox}>
                     <div>

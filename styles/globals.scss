@@ -6,6 +6,7 @@ body {
   margin: 0;
   font-family: "Schibsted Grotesk", sans-serif;
   font-weight: 400;
+  font-size: 16px !important;
 }
 
 a {
@@ -29,9 +30,9 @@ a {
   top: 98%;
 }
 .defaultThemeButton {
-  background-color: #d9475c!important;
-  border-color: #d9475c!important;
-  color: #fff!important;
+  background-color: #d9475c !important;
+  border-color: #d9475c !important;
+  color: #fff !important;
 }
 .dropdown-menu {
   background-color: $transparent_maroon;
