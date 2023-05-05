@@ -2,7 +2,13 @@ import { FC } from "react";
 import { BsPinAngle } from "react-icons/bs";
 import { CiPillsBottle1 } from "react-icons/ci";
 import classes from "./GlobalDetails.module.scss";
-import { BloodGroup, CarType, Diet, HouseType, SmokeDrink } from "../../../types/enums";
+import {
+  BloodGroup,
+  CarType,
+  Diet,
+  HouseType,
+  SmokeDrink,
+} from "../../../types/enums";
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
@@ -20,7 +26,10 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
     }
   }
 
-  function getKeysByValueArr(values: string[], enumObject: Record<string, string>) {
+  function getKeysByValueArr(
+    values: string[],
+    enumObject: Record<string, string>
+  ) {
     const matchingKeys = [];
     for (const [key, val] of Object.entries(enumObject)) {
       if (values.includes(val)) {
@@ -29,7 +38,11 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
     }
     return matchingKeys;
   }
-
+  const returnThalassemia = () => {
+    if (step3Response?.Thalassemia == 1) return "No";
+    if (step3Response?.Thalassemia == 2) return "Major";
+    if (step3Response?.Thalassemia == 3) return "Minor";
+  };
   const BasicDetails = {
     pin: true,
     pinValue: "Open to pets?",
@@ -50,23 +63,44 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Love pets",
-        value: step3Response?.love_pets == 1 ? "Yes" :step3Response?.love_pets == 2 ? "No" : "NA",
+        value:
+          step3Response?.love_pets == 1
+            ? "Yes"
+            : step3Response?.love_pets == 2
+            ? "No"
+            : "NA",
       },
       {
         name: "Owns House",
-        value: step3Response?.Owns_house == 1 ? "Yes" :step3Response?.Owns_house == 2 ? "No" : "NA",
+        value:
+          step3Response?.Owns_house == 1
+            ? "Yes"
+            : step3Response?.Owns_house == 2
+            ? "No"
+            : "NA",
       },
       {
         name: "Owns car",
-        value: step3Response?.Owns_car == 1 ? "Yes" :step3Response?.Owns_car == 2 ? "No" : "NA",
+        value:
+          step3Response?.Owns_car == 1
+            ? "Yes"
+            : step3Response?.Owns_car == 2
+            ? "No"
+            : "NA",
       },
       {
         name: "House Details",
-        value: step3Response?.Owns_house == 1 ? getKeysByValueArr((step3Response?.home_type), HouseType) : null,
+        value:
+          step3Response?.Owns_house == 1
+            ? getKeysByValueArr(step3Response?.home_type, HouseType)
+            : null,
       },
       {
         name: "Car Details",
-        value: step3Response?.Owns_car == 1 ? getKeysByValueArr((step3Response?.car_details), CarType) : null,
+        value:
+          step3Response?.Owns_car == 1
+            ? getKeysByValueArr(step3Response?.car_details, CarType)
+            : null,
       },
       {
         name: "Blood group",
@@ -79,7 +113,7 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Thalassemia",
-        value: step3Response?.Thalassemia == 1 ? "Yes" :step3Response?.Thalassemia == 2 ?  "No" : "NA",
+        value: returnThalassemia(),
       },
     ],
   };
@@ -98,19 +132,29 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
             return (
-              <>{item.value !== null &&
-                <div className={classes.UserdetailsSec} key={item.name}>
-                  <p className={classes.input_Name}>{item.name}</p>
-                  <p
-                    className={
-                      item.value === "NA"
-                        ? classes.input_Value_NotFilled
-                        : classes.input_Value
-                    }
-                  >
-                    {item.value === "NA" ? "Not Field in" : typeof item.value !== "string" ? item?.value?.map((item: string) => { return item }).join(" , ") : item.value}{" "}
-                  </p>
-                </div>}
+              <>
+                {item.value !== null && (
+                  <div className={classes.UserdetailsSec} key={item.name}>
+                    <p className={classes.input_Name}>{item.name}</p>
+                    <p
+                      className={
+                        item.value === "NA"
+                          ? classes.input_Value_NotFilled
+                          : classes.input_Value
+                      }
+                    >
+                      {item.value === "NA"
+                        ? "Not Field in"
+                        : typeof item.value !== "string"
+                        ? item?.value
+                            ?.map((item: string) => {
+                              return item;
+                            })
+                            .join(" , ")
+                        : item.value}{" "}
+                    </p>
+                  </div>
+                )}
               </>
             );
           })}
