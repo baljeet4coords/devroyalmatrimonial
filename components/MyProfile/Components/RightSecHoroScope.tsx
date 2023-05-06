@@ -142,12 +142,12 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
             <CiCreditCard1 />
             Horoscope Details
           </div>
-          {!EditDetails && (
+          {/* {!EditDetails && (
             <span className={classes.Edit} onClick={() => setEditDetails(true)}>
               {" "}
               Edit
             </span>
-          )}
+          )} */}
         </div>
         {!EditDetails ? (
           <ul>
@@ -177,9 +177,9 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
             }  - ${timpOFBirth_M || "NA"} ${timpOFBirth_H <= 12 ? "AM" : "PM"}`} setEditDetails={setEditDetails} />
         )}
 
-        <CustomButton onClick={() => console.log("tab")}>
+        {/* <CustomButton onClick={() => console.log("tab")}>
           Unlock Janampatri
-        </CustomButton>
+        </CustomButton> */}
       </div>
     </>
   );
@@ -229,12 +229,12 @@ export const RightSectionHoroScopeNotMatch: FC<MyComponentProps> = ({
           <div className={classes.input_Value}>
             Horoscope match is not necessary
           </div>
-          {!EditDetails && (
+          {/* {!EditDetails && (
             <span className={classes.Edit} onClick={() => setEditDetails(true)}>
               {" "}
               Edit
             </span>
-          )}
+          )} */}
         </div>
         {!EditDetails ? (
           <ul>

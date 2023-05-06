@@ -71,12 +71,12 @@ const LikeDetails: FC<MyComponentProps> = ({ setEditDetails }) => {
             );
           })}
         </div>
-        {BasicDetails.pin && (
+        {/* {BasicDetails.pin && (
           <div className={classes.pin}>
             <BsPinAngle />
             {BasicDetails.pinValue}
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

@@ -14,7 +14,7 @@ interface Step1DataResponse {
 const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   step1Response,
   onPreviewAlbum,
-  AuthSuccess
+  AuthSuccess,
 }) => {
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const showGalleryClickHandler = () => {
@@ -30,11 +30,9 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
     }
   }
 
-  
-
   return (
     <Container className={classes.cardWrapper}>
-      <Row>
+      <Row className={classes.mobileRow}>
         <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
           <Image
             src={
@@ -42,6 +40,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
                 ? `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
                 : "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
             }
+            className={classes.mobileAvatar}
             alt="avatar"
           />
         </Col>
@@ -49,20 +48,32 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           <div className={`${classes.MyProfileMiddle} `}>
             <div className={classes.MiddleLeft}>
               <div>
-                <p className={classes.MiddleLeftHeading}>Name : <span>{step1Response?.fullname || "NA"} </span> </p>
-                <p className={classes.MiddleLeftHeading}>RM ID  : <span >{AuthSuccess?.user_RM_ID || "NA"} </span> </p>
-                <p className={classes.MiddleLeftHeading}>Package Type : <span className={classes?.Package_type}>{getKeyByValue(String(AuthSuccess?.package_id), PackageType) ||
-                  "NA"}</span> </p>
-                <p className={classes.MiddleLeftHeading}>Mobile No : <span >{step1Response?.mobile || "NA"} </span> </p>
-                <p className={classes.MiddleLeftHeading}>Email Id : <span >{step1Response?.emailid || "NA"} </span> </p>
+                <p className={classes.MiddleLeftHeading}>
+                  Name : <span>{step1Response?.fullname || "NA"} </span>{" "}
+                </p>
+                <p className={classes.MiddleLeftHeading}>
+                  RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
+                </p>
+                {/* <p className={classes.MiddleLeftHeading}>
+                  Package Type :
+                  <span className={classes?.Package_type}>
+                    {getKeyByValue(
+                      String(AuthSuccess?.package_id),
+                      PackageType
+                    ) || "NA"}
+                  </span>
+                </p> */}
+                <p className={classes.MiddleLeftHeading}>
+                  Mobile No : <span>{step1Response?.mobile || "NA"} </span>{" "}
+                </p>
+                <p className={classes.MiddleLeftHeading}>
+                  Email Id : <span>{step1Response?.emailid || "NA"} </span>{" "}
+                </p>
               </div>
 
-              <CustomButton
-                onClick={showGalleryClickHandler}
-              >
+              <CustomButton onClick={showGalleryClickHandler}>
                 {!showGallery ? "Preview Album" : "Back to profile"}
               </CustomButton>
-
             </div>
           </div>
         </Col>
@@ -71,7 +82,9 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
             25%
         </div> */}
           <HalfCircleProgressBar profileComplete={100} />
-          <p className={classes.CompleteProfileHEd}>Profile Completion Status</p>
+          <p className={classes.CompleteProfileHEd}>
+            Profile Completion Status
+          </p>
           {/* <p>Last edited on 06th Mar, 2023 </p> */}
           <p>Profile view : 0 </p>
         </Col>

@@ -269,7 +269,7 @@ const MyProfile: React.FC = () => {
   <LikeDetails setEditDetails={setYourLikesDetails} />
 )} */}
                       <div className={classes.datecont}>
-                        <p>Last updated on 15th Feb, 2023</p>
+                        {/* <p>Last updated on 15th Feb, 2023</p> */}
                       </div>
                     </Col>
                     <Col sm={3} md={4} className="p-0">

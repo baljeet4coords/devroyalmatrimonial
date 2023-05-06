@@ -64,12 +64,12 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
             <IoCallOutline />
             Contact Details
           </div>
-          {!EditDetails && (
+          {/* {!EditDetails && (
             <span className={classes.Edit} onClick={() => setEditDetails(true)}>
               {" "}
               Edit
             </span>
-          )}
+          )} */}
         </div>
         {!EditDetails ? (
           <ul>
@@ -87,7 +87,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
                             : classes.isverifyFalse
                         }
                       >
-                        {item.isVerify ? "Verifyed" : "Verify "}{" "}
+                        {/* {item.isVerify ? "Verified" : "Verify "}{" "} */}
                       </span>
                     )}{" "}
                   </p>
