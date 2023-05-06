@@ -94,9 +94,9 @@ const BasicDetails: FC<MyComponentProps> = ({
             <FiUser />
             Basic Details
           </div>
-          <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
+          {/* <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
             Edit
-          </span>
+          </span> */}
         </div>
         <div className={classes.Username}>
           <p>

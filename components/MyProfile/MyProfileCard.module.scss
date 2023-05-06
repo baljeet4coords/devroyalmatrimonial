@@ -190,7 +190,6 @@
     }
 
     .cardInfo {
-
       // .UserName_Section {
       //     min-height: 50px;
       // }
@@ -225,6 +224,18 @@
         align-items: center;
         text-align: center;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .mobileRow {
+    margin-top: -150px;
+    .mobileAvatar {
+      width: 200px;
+      margin: 0 auto 1rem;
+      border-radius: 100%;
+      border: 8px solid #fff;
     }
   }
 }

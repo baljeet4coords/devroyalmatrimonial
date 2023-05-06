@@ -61,12 +61,12 @@ const CriticalDetials: FC<MyComponentProps> = ({
               - Can be edit only once in lifetime
             </span>
           </div>
-          <span
+          {/* <span
             className={classes.Edit}
             onClick={() => setCriticalDetails(true)}
           >
             Edit
-          </span>
+          </span> */}
         </div>
         <div className={classes.Userdetails}>
           <div className={classes.UserdetailsSec}>

@@ -74,12 +74,11 @@
 .profileAvtarDrop {
   height: -webkit-fill-available;
   padding: 9px;
-
   a {
     padding: 0;
     margin-right: 0;
     text-transform: capitalize;
-
+    display: block !important;
     a {
       ::after {
         content: none;

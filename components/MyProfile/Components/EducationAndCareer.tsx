@@ -140,12 +140,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
             <BiBook />
             Education & Career
           </div>
-          <span
+          {/* <span
             className={classes.Edit}
             onClick={() => setEudcationAndCareer(true)}
           >
             Edit
-          </span>
+          </span> */}
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
@@ -167,12 +167,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
             );
           })}
         </div>
-        {BasicDetails.pin && (
+        {/* {BasicDetails.pin && (
           <div className={classes.pin}>
             <BsPinAngle />
             {BasicDetails.pinValue}
           </div>
-        )}
+        )} */}
       </div>
     </>
   );
