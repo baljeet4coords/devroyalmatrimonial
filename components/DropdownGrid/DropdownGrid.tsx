@@ -23,7 +23,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   setErrorState,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
-  
+
   const findKeyByValue = (obj: any, value?: string): string => {
     for (let key in obj) {
       if (obj[key] === String(value)) {
@@ -47,11 +47,12 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
   );
 
   const searchDataFunc = (query: any) => {
+    const modifiedQuery = query.replace(/ /g, "_");
     const searched = Object.keys(data).filter((item) =>
-      item.toLowerCase().includes(query.toLowerCase())
+      item.toLowerCase().includes(modifiedQuery.toLowerCase())
     );
     setSearchedData(searched);
-    setPlaceholderVal(query);
+    setPlaceholderVal(modifiedQuery);
   };
 
   useEffect(() => {

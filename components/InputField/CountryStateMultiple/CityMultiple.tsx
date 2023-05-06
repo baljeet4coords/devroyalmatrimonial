@@ -32,6 +32,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
     return [DoesNotMatter, ...(City.getCitiesOfCountry("IN") || [])];
   }, [DoesNotMatter]);
   const elementRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [citiesIds, setCitiesIds] = useState<number[]>(defaultCity);
   const [HostedArray, updateHostedArray] = useState<ICity[]>(
     cityOfState.filter((_, index) => defaultCity.includes(index))
@@ -88,6 +89,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
         }
         setSearchInput("");
         UpdatesearchHostedArray(cityOfState);
+        inputRef.current?.focus();
       }
     },
     [HostedArray, citiesIds, cityOfState, onChangeCity]
@@ -141,6 +143,7 @@ const CityMultiple: React.FC<CityMultiple> = ({
                 placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
                 value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
+                ref={inputRef}
               />
               {stateSize && <div onClick={HandleCloseDropdown}>
                 <IoClose />close

@@ -19,6 +19,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
   defaultValues,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const DoesNotMatter: ModifiedDataState = {
     id: "0",
     caste: "Does Not Matter",
@@ -34,6 +35,14 @@ const CasteMultiple: React.FC<CastMultiple> = ({
     useState<ICastListArray[]>(ListOfCaste);
 
   const [searchInput, setSearchInput] = useState("");
+  const [stateSize, setSize] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setSize(window.innerWidth <= 767);
+    });
+    window.dispatchEvent(new Event("resize"));
+  }, []);
 
   useEffect(() => {
     if (searchHostedArray[0].caste != "Does Not Matter") {
@@ -79,6 +88,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
       }
       setSearchInput("");
       UpdatesearchHostedArray(ListOfCaste);
+      inputRef.current?.focus();
     },
     [HostedArray, castesIds]
   );
@@ -108,6 +118,12 @@ const CasteMultiple: React.FC<CastMultiple> = ({
     };
   }, [elementRef]);
 
+  function HandleCloseDropdown() {
+    setTimeout(() => {
+      setActiveList(false)
+    }, 50);
+  }
+
   return (
     <>
       <div className={classes.singleBox} ref={elementRef}>
@@ -119,12 +135,19 @@ const CasteMultiple: React.FC<CastMultiple> = ({
           }}
         >
           {activeList && (
-            <input
-              type="text"
-              placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
-              value={searchInput}
-              onChange={(e) => searchDataFunc(e.target.value)}
-            />
+            <div className={classes.inputbox_Sections}>
+              <input
+                type="text"
+                placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
+                value={searchInput}
+                onChange={(e) => searchDataFunc(e.target.value)}
+                ref={inputRef}
+              />
+              {stateSize && <div onClick={HandleCloseDropdown}>
+                <IoClose />close
+              </div>}
+            </div>
+
           )}
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
