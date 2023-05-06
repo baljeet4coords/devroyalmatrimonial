@@ -31,6 +31,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
     ...State.getStatesOfCountry("IN"),
   ];
   const elementRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [statesIds, setStatesIds] = useState<number[]>(defaultState);
   const [HostedArray, updateHostedArray] = useState<IState[]>(
     stateOfCountry.filter((_, index) => defaultState.includes(index))
@@ -94,6 +95,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
       }
       UpdatesearchHostedArray(stateOfCountry);
       setSearchInput("");
+      inputRef.current?.focus();
     },
     [HostedArray, onChangeState, statesIds]
   );
@@ -140,6 +142,7 @@ const StateMultiple: React.FC<StateMultipleProps> = ({
                 placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
                 value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
+                ref={inputRef}
               />
            {stateSize&&   <div onClick={HandleCloseDropdown}>
                 <IoClose />close

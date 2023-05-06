@@ -32,6 +32,7 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { ImageGallery } from "../../components";
 import axios from "axios";
+import { isNull } from "lodash";
 
 interface ImageResponse {
   coverImage?: string[];
@@ -46,11 +47,12 @@ const MyProfile: React.FC = () => {
   const [eudcationAndCareer, setEudcationAndCareer] = useState<boolean>(false);
   const [familyDetails, setFamilyDetails] = useState<boolean>(false);
   const [lifeStyleDetails, setLifeStyleDetails] = useState<boolean>(false);
-  const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
+  // const [yourLikesDetails, setYourLikesDetails] = useState<boolean>(false);
   const [uploadStatus, setUploadStatus] = useState<string>("");
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
@@ -122,8 +124,17 @@ const MyProfile: React.FC = () => {
     getImages();
   }, [userId]);
 
+  useEffect(() => {
+    console.log(window.scrollY, "window.innerHeight");
+  }, [window.scrollY])
+
+
   const onPreviewAlbum = (visible: boolean) => {
     setShowGallery(visible);
+    if (galleryRef.current === null) {
+      window.innerWidth <= 667 ? window.scrollTo(0, 1000) : window.scrollTo(0, 700);
+    }
+
   };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -148,11 +159,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
-                }
+                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
+              }
               : {
-                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-                }
+                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+              }
           }
         >
           {!imageResponse?.coverImage && (
@@ -187,7 +198,7 @@ const MyProfile: React.FC = () => {
             <Container className={classes.detailsWrapper}>
               <Row>
                 {showGallery ? (
-                  <ImageGallery images={[]} />
+                  <ImageGallery galleryRef={galleryRef} images={[]} />
                 ) : (
                   <>
                     <Col sm={9} md={8} className="p-0">

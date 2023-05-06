@@ -26,6 +26,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
   );
   const [activeList, setActiveList] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [searchInput, setSearchInput] = useState("");
   const [stateSize, setSize] = useState(false);
 
@@ -54,8 +55,9 @@ const SingleInput: React.FC<MyComponentProps> = ({
     useState<string[]>(combinedData);
 
   const searchDataFunc = (query: string) => {
+    const modifiedQuery = query.replace(/ /g, "_");
     const searchHostedArrays = combinedData.filter((item) =>
-      item.toLowerCase().includes(query.toLowerCase())
+      item.toLowerCase().includes(modifiedQuery.toLowerCase())
     );
     setSearchInput(query);
     UpdatesearchHostedArray(searchHostedArrays);
@@ -76,6 +78,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
     }
     UpdatesearchHostedArray(combinedData);
     setSearchInput("");
+    inputRef.current?.focus();
   };
 
   useEffect(() => {
@@ -109,6 +112,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                 placeholder={HostedArray.length < 1 ? "Select Some Options" : ""}
                 value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
+                ref={inputRef}
               />
               {stateSize && <div onClick={HandleCloseDropdown}>
                 <IoClose />close

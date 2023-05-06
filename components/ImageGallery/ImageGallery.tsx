@@ -23,11 +23,12 @@ interface ImageGalleryProps {
     src: string;
     alt: string;
   }[];
+  galleryRef: React.RefObject<HTMLDivElement>;
 }
 interface ImageResponse {
   galleryImages?: string[];
 }
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, galleryRef }) => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const gallerySuccessResponse = useSelector(selectGallerySuccess);
@@ -113,7 +114,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     }
   }, [gallerySuccessResponse?.jsonResponse]);
 
-  const onInit = () => {};
+  const onInit = () => { };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -128,7 +129,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   };
 
   return (
-    <div className={classes.imageGallery}>
+    <div className={classes.imageGallery} ref={galleryRef}>
       <div className="d-flex justify-content-between mb-5">
         <h5>Your Photos</h5>
         <div>
@@ -136,9 +137,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             Add more photos
             <ImImage />
           </div>
-          <span className="mt-2 text-muted">
-            {uploadStatus || "Should be less than 5 mb"}
-          </span>
+          <span className="mt-2 text-muted">{uploadStatus}</span>
         </div>
         <input
           type="file"
@@ -156,15 +155,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       >
         {imageResponse && imageResponse.galleryImages?.length
           ? imageResponse.galleryImages.map((img, index) => {
-              return (
-                <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                  <Image
-                    alt={"RM"}
-                    src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                  />
-                </a>
-              );
-            })
+            return (
+              <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                <Image
+                  alt={"RM"}
+                  src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                />
+              </a>
+            );
+          })
           : "No images"}
       </LightGallery>
     </div>

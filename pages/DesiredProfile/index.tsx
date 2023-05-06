@@ -513,7 +513,7 @@ const DesiredProfilePage: React.FC = () => {
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>HIV</Form.Label>
-                    <Form.Control type="text" value={hiv.id} disabled />
+                    <Form.Control type="text" className={classes.single_Input} value={hiv.id} disabled />
                   </div>
                   <div className={classes.buttonWrapper}>
                     <Button
