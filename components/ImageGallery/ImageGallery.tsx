@@ -136,7 +136,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             Add more photos
             <ImImage />
           </div>
-          <span className="mt-2 text-muted">{uploadStatus}</span>
+          <span className="mt-2 text-muted">
+            {uploadStatus || "Should be less than 5 mb"}
+          </span>
         </div>
         <input
           type="file"
