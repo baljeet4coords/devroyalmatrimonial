@@ -105,11 +105,11 @@ const BasicDetails: FC<MyComponentProps> = ({
           </p>
         </div>
 
-        <div className={classes.UserVerified}>
+        {/* <div className={classes.UserVerified}>
           <MdVerified />
           your profile verification is pending...
           <span>Get verified NOW</span>
-        </div>
+        </div> */}
         <div className={classes.Userdetails}>
           {BasicDetails.map((item, index) => {
             return (

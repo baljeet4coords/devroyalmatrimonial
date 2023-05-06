@@ -167,7 +167,7 @@ const MyProfile: React.FC = () => {
           }
         >
           {!imageResponse?.coverImage && (
-            <p>
+            <p className="text-white">
               Make your profile more intersting by adding cover photo to your
               profile.
             </p>
