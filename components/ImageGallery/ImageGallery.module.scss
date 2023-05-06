@@ -25,13 +25,25 @@
     a {
 
       width: 23%;
-
       background-color: #eeeeee;
+
       img {
         width: 100%;
-        height: 100%;
+        height: 20rem;
         object-fit: cover;
       }
+
+      @media only screen and (max-width: 888px) {
+       width: 31%;
+      }
+      @media only screen and (max-width: 667px) {
+       width: 100%;
+      }
+
+    }
+
+    @media only screen and (max-width: 667px) {
+      flex-direction: column;
     }
   }
 }
