@@ -341,7 +341,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                     disabled={nextDisable}
                   >
-                    {isLoading && (
+                    {loadingSpiner && (
                       <Spinner
                         className={classes.loginSpiner}
                         animation="border"

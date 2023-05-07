@@ -33,7 +33,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   return (
     <Container className={classes.cardWrapper}>
       <Row className={classes.mobileRow}>
-        <Col sm={3} md={4} lg={3} className="p-0 d-flex justify-content-end">
+        <Col sm={3} md={4} lg={3} className={`${classes.Profile_section} p-0 d-flex justify-content-end`}>
           <Image
             src={
               step1Response?.photo
@@ -54,15 +54,6 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
                 <p className={classes.MiddleLeftHeading}>
                   RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
                 </p>
-                {/* <p className={classes.MiddleLeftHeading}>
-                  Package Type :
-                  <span className={classes?.Package_type}>
-                    {getKeyByValue(
-                      String(AuthSuccess?.package_id),
-                      PackageType
-                    ) || "NA"}
-                  </span>
-                </p> */}
                 <p className={classes.MiddleLeftHeading}>
                   Mobile No : <span>{step1Response?.mobile || "NA"} </span>{" "}
                 </p>
