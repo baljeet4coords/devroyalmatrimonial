@@ -142,6 +142,7 @@ const CasteMultiple: React.FC<CastMultiple> = ({
                 value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
                 ref={inputRef}
+                autoFocus
               />
               {stateSize && <div onClick={HandleCloseDropdown}>
                 <IoClose />close
