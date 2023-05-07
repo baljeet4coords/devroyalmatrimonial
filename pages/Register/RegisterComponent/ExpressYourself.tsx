@@ -219,7 +219,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   <p>Note :</p>
                   <ul>
                     <li>Each text area is limited to a maximum of 1000 characters. </li>
-                    <li>Special characters are not allowed. Please use only alphabets, numbers, spaces, commas, and periods</li>
+                    <li>Special characters are not allowed. Please use only alphabets, numbers, spaces, commas, and periods.</li>
                   </ul>
                 </div>
               </div>
