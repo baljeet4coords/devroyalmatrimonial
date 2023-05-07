@@ -104,21 +104,13 @@ const LandingPage: React.FC = () => {
       <HomeImage addBackground={headimage} />
       <Container className={`${classes.Home_Page_Wrapper} px-0`}>
         <Row className={`${classes.firstTopBox} pb-4`}>
-          <Col sm={12} md={6} className="d-flex align-items-center">
+          <Col className="d-flex align-items-center">
             <div className={classes.Home_heading}>
               <h1>Your search over here !</h1>
               <span>Finding your perfect match just became easier</span>
+
+              <button>Register Free</button>
             </div>
-          </Col>
-          <Col sm={12} md={6}>
-            <HomeForm
-              onSubmitForm={onSubmitForm}
-              errorForOTP={errorForOTP}
-              setIsLoadingHandler={setIsLoading}
-              isLoading={isLoading}
-              setIsOpenHandler={setIsOTPOpen}
-              isOpen={isOTPOpen}
-            />
           </Col>
         </Row>
         <Row className={classes.Home_white_body}>

@@ -140,6 +140,7 @@ const CountryMultiple: React.FC<CountryProps> = ({
                 value={searchInput}
                 onChange={(e) => searchDataFunc(e.target.value)}
                 ref={inputRef}
+                autoFocus
               />
               {stateSize && <div onClick={HandleCloseDropdown}>
                 <IoClose />close

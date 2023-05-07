@@ -140,10 +140,12 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     formik.values.aboutEducation = aboutEducation;
     formik.values.basicIntro = basicIntro;
 
-    if (aboutCareer && aboutFamily && aboutEducation && basicIntro && selectedBirthCountry >= 0 && selectedBirthState >= 0 && selectedBirthCity >= 0) {
-      setNextDisable(false)
-    }else{
-      setNextDisable(true)
+    if (!formik.errors.aboutCareer && !formik.errors.aboutEducation && !formik.errors.basicIntro &&
+      !formik.errors.aboutFamily && aboutCareer && aboutFamily && aboutEducation && basicIntro &&
+      selectedBirthCountry >= 0 && selectedBirthState >= 0 && selectedBirthCity >= 0) {
+      setNextDisable(false);
+    } else {
+      setNextDisable(true);
     }
 
 
@@ -156,6 +158,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     aboutEducation,
     aboutFamily,
     basicIntro,
+    formik.errors.aboutCareer,
+    formik.errors.basicIntro,
+    formik.errors.aboutEducation,
+    formik.errors.aboutFamily
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -208,6 +214,15 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                 skip to Partner Profile
               </Button>
               <h1>Hi! You are joining the Best Matchmaking Experience.</h1>
+              <div className={classes.infoSection}>
+                <div className={classes.infoMain}>
+                  <p>Note :</p>
+                  <ul>
+                    <li>Each text area is limited to a maximum of 1000 characters. </li>
+                    <li>Special characters are not allowed. Please use only alphabets, numbers, spaces, commas, and periods</li>
+                  </ul>
+                </div>
+              </div>
               <Col sm={12} md={5}>
                 <Form
                   className={classes.formEdit}
@@ -326,7 +341,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
                     disabled={nextDisable}
                   >
-                    {loadingSpiner && (
+                    {isLoading && (
                       <Spinner
                         className={classes.loginSpiner}
                         animation="border"

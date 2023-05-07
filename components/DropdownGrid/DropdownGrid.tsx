@@ -109,6 +109,7 @@ const DropdownGridSingleSelect: React.FC<DropdownGridProps> = ({
             }
             onChange={(e) => searchDataFunc(e.target.value)}
             onClick={() => setActiveList(true)}
+            className={classes.Single_select_Input}
             autoComplete="off"
             autoCorrect="off"
           />
