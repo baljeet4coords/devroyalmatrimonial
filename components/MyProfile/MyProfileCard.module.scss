@@ -7,6 +7,7 @@
   img {
     width: 100%;
     object-fit: cover;
+    background-color: #cfcfcf;
   }
 
   SVG {
@@ -95,6 +96,11 @@
       // margin-right: 20px;
       font-size: 1.5rem;
     }
+  }
+
+  .mobileRow {
+    z-index: 12;
+    position: relative;
   }
 }
 
@@ -190,6 +196,7 @@
     }
 
     .cardInfo {
+
       // .UserName_Section {
       //     min-height: 50px;
       // }
@@ -229,13 +236,29 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .mobileRow {
-    margin-top: -150px;
-    .mobileAvatar {
-      width: 200px;
-      margin: 0 auto 1rem;
-      border-radius: 100%;
-      border: 8px solid #fff;
+  .cardWrapper {
+    .mobileRow {
+      margin-top: -125px;
+      position: initial;
+
+      .Profile_section {
+        background-color: #f0f2f7;
+
+        .mobileAvatar {
+          width: 200px;
+          margin: 0 auto 1rem;
+          border-radius: 100%;
+          border: 8px solid #fff;
+          position: relative;
+          z-index: 12;
+        }
+      }
+
+      .cardInfo {
+        .MyProfileMiddle {
+          padding: 1rem;
+        }
+      }
     }
   }
 }
