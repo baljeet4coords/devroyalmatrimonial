@@ -753,7 +753,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   <Button
                     variant="danger"
                     type="submit"
-                    className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                    className={`${classes.Form_btn} mt-2 w-50 align-self-md-center`}
                     disabled={nextDisable}
                   >
                     {loginSpiner && (

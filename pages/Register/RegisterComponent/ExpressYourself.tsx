@@ -40,9 +40,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     dispatch(step5({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
-  const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
-  const [loadingSpiner, setloadingSpiner] = useState(false);
-  const [nextDisable, setNextDisable] = useState<boolean>(true);
+  const [skiploadingSpiner, setSkiploadingSpiner] = useState<boolean>(false);
+  const [loadingSpiner, setloadingSpiner] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -139,29 +140,42 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     formik.values.aboutFamily = aboutFamily;
     formik.values.aboutEducation = aboutEducation;
     formik.values.basicIntro = basicIntro;
-
-    if (!formik.errors.aboutCareer && !formik.errors.aboutEducation && !formik.errors.basicIntro &&
-      !formik.errors.aboutFamily && aboutCareer && aboutFamily && aboutEducation && basicIntro &&
-      selectedBirthCountry >= 0 && selectedBirthState >= 0 && selectedBirthCity >= 0) {
-      setNextDisable(false);
-    } else {
-      setNextDisable(true);
-    }
-
-
   }, [
     formik.values,
-    selectedBirthCity,
-    selectedBirthCountry,
-    selectedBirthState,
-    aboutCareer,
-    aboutEducation,
-    aboutFamily,
-    basicIntro,
     formik.errors.aboutCareer,
     formik.errors.basicIntro,
     formik.errors.aboutEducation,
-    formik.errors.aboutFamily
+    formik.errors.aboutFamily,
+    selectedBirthCountry,
+    selectedBirthState,
+    selectedBirthCity,
+    aboutCareer,
+    aboutFamily,
+    aboutEducation,
+    basicIntro,
+  ]);
+
+  useEffect(() => {
+    if (mounted) {
+      if (
+        formik.errors.aboutCareer ||
+        formik.errors.aboutEducation ||
+        formik.errors.basicIntro ||
+        formik.errors.aboutFamily
+      ) {
+        setError(true);
+      } else {
+        setError(false);
+      }
+    } else {
+      setMounted(true);
+    }
+  }, [
+    formik.errors.aboutCareer,
+    formik.errors.aboutEducation,
+    formik.errors.aboutFamily,
+    formik.errors.basicIntro,
+    mounted,
   ]);
 
   const getSelectedCountry = (id: number) => {
@@ -191,6 +205,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     setSkiploadingSpiner(true);
     router.push("/DesiredProfile");
   }
+
+  const charCounter = (char: string) => 1000 - char.length;
   return (
     <>
       <div className={classes.profile_Container}>
@@ -218,8 +234,13 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                 <div className={classes.infoMain}>
                   <p>Note :</p>
                   <ul>
-                    <li>Each text area is limited to a maximum of 1000 characters. </li>
-                    <li>Special characters are not allowed. Please use only alphabets, numbers, spaces, commas, and periods.</li>
+                    <li>
+                      Each text area is limited to a maximum of 1000 characters.{" "}
+                    </li>
+                    <li>
+                      Special characters are not allowed. Please use only
+                      alphabets, numbers, spaces, commas, and periods.
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -230,6 +251,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                 >
                   <div className={classes.singleBoxBlock}>
                     <Form.Label>About Career</Form.Label>
+                    <div className="text-muted">
+                      <small>
+                        {charCounter(aboutCareer)}/1000 characters left
+                      </small>
+                    </div>
                     <Form.Control
                       as="textarea"
                       name="aboutCareer"
@@ -237,6 +263,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       placeholder="About your career"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setAboutCareer(e.target.value)}
+                      maxLength={1000}
                       defaultValue={
                         jsonData?.about_career != null
                           ? String(jsonData?.about_career)
@@ -251,6 +278,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   </div>
                   <div className={classes.singleBoxBlock}>
                     <Form.Label>About Family</Form.Label>
+                    <div className="text-muted">
+                      <small>
+                        {charCounter(aboutFamily)}/1000 characters left
+                      </small>
+                    </div>
                     <Form.Control
                       as="textarea"
                       name="aboutFamily"
@@ -258,6 +290,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       placeholder="About your family"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setAboutFamily(e.target.value)}
+                      maxLength={1000}
                       defaultValue={
                         jsonData?.about_family != null
                           ? String(jsonData?.about_family)
@@ -272,6 +305,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   </div>
                   <div className={classes.singleBoxBlock}>
                     <Form.Label>About Education</Form.Label>
+                    <div className="text-muted">
+                      <small>
+                        {charCounter(aboutEducation)}/1000 characters left
+                      </small>
+                    </div>
                     <Form.Control
                       as="textarea"
                       name="aboutEducation"
@@ -279,6 +317,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       placeholder="About your education"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setAboutEducation(e.target.value)}
+                      maxLength={1000}
                       defaultValue={
                         jsonData?.about_education != null
                           ? String(jsonData?.about_education)
@@ -286,7 +325,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                      formik.errors.aboutEducation ? (
+                    formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -294,6 +333,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   </div>
                   <div className={classes.singleBoxBlock}>
                     <Form.Label>Basic Intro</Form.Label>
+                    <div className="text-muted">
+                      <small>
+                        {charCounter(basicIntro)}/1000 characters left
+                      </small>
+                    </div>
                     <Form.Control
                       as="textarea"
                       name="basicIntro"
@@ -301,6 +345,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       placeholder="Intro yourself"
                       onBlur={formik.handleBlur}
                       onChange={(e) => setBasicIntro(e.target.value)}
+                      maxLength={1000}
                       defaultValue={
                         jsonData?.basic_intro != null
                           ? String(jsonData?.basic_intro)
@@ -338,8 +383,8 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                   <Button
                     variant="danger"
                     type="submit"
-                    className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
-                    disabled={nextDisable}
+                    className={`${classes.Form_btn} mt-2 w-50 align-self-md-center`}
+                    // disabled={nextDisable}
                   >
                     {loadingSpiner && (
                       <Spinner
@@ -348,8 +393,13 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                         variant="light"
                       />
                     )}
-                    Submit
+                    Next
                   </Button>
+                  {error && (
+                    <p className="text-muted">
+                      <Errors error="Please solve above raised issues first before proceeding" />
+                    </p>
+                  )}
                 </Form>
               </Col>
               <RightSection profileComplete={profileComplete} />

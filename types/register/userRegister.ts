@@ -84,8 +84,8 @@ export interface IRegisterStep3Response {
   blood_group: number;
   Thalassemia: number;
   religious_belief: number;
-  home_type: string[];
-  car_details: string[];
+  home_type: string;
+  car_details: string;
 }
 export interface IRegisterStep4 {
   actionType?: "v" | "c" | "u";

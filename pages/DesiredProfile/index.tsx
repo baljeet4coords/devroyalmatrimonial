@@ -198,8 +198,8 @@ const DesiredProfilePage: React.FC = () => {
   const handleSwitchToggle = (switchValue: string) => {
     const newSelectedSwitches = selectedSwitches.includes(switchValue)
       ? selectedSwitches.filter(
-        (selectedSwitch) => selectedSwitch !== switchValue
-      )
+          (selectedSwitch) => selectedSwitch !== switchValue
+        )
       : [...selectedSwitches, switchValue];
     setSelectedSwitches(newSelectedSwitches);
   };
@@ -221,10 +221,10 @@ const DesiredProfilePage: React.FC = () => {
             {isLoading ? (
               <Loader />
             ) : (
-              <Col
-                sm={12}
-                className={`${classes.form_wrapper} d-flex justify-content-center`}
-              >
+              <Col sm={12} className={`${classes.form_wrapper}`}>
+                <Button variant="link" className="px-0" onClick={() => router.back()}>
+                  Go back to registerations
+                </Button>
                 <form className={classes.formEdit}>
                   <DoubleInput
                     data={AgeFromYearList}
@@ -513,7 +513,12 @@ const DesiredProfilePage: React.FC = () => {
                   </div>
                   <div className={classes.singleBox}>
                     <Form.Label>HIV</Form.Label>
-                    <Form.Control type="text" className={classes.single_Input} value={hiv.id} disabled />
+                    <Form.Control
+                      type="text"
+                      className={classes.single_Input}
+                      value={hiv.id}
+                      disabled
+                    />
                   </div>
                   <div className={classes.buttonWrapper}>
                     <Button

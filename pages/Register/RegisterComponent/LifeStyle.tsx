@@ -69,7 +69,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
 
-
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
     val: "",
@@ -116,12 +115,11 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   //     : ""
   // );
   const [housetype, setHousetype] = useState<string[]>(
-    jsonData?.home_type || []
+    jsonData ? JSON.parse(jsonData?.home_type) : []
   );
   const [cartype, setCartype] = useState<string[]>(
-    jsonData?.car_details || []
+    jsonData ? JSON.parse(jsonData?.car_details) : []
   );
-
 
   useEffect(() => {
     if (ownsCar.id == "2") {
@@ -206,14 +204,24 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     formik.values.bloodGroup = bloodGroup.id || "";
     formik.values.thalassemia = thalassemia.id || "";
     // formik.values.religiousBelief = ReligiousBelief;
-    if (diet.id != "undefined" && smoking.id != "undefined" && drinking.id != "undefined" &&
-      lovePets.id != "undefined" && ownsHouse.id !== "undefined" && ownsCar.id !== "undefined" && bloodGroup.id !== "undefined"
-      && thalassemia.id !== "undefined" && formik.values.religiousBelief) {
-
-      if (ownsHouse.id == "1" && !housetype.length || ownsCar.id == "1" && !cartype.length) {
+    if (
+      diet.id != "undefined" &&
+      smoking.id != "undefined" &&
+      drinking.id != "undefined" &&
+      lovePets.id != "undefined" &&
+      ownsHouse.id !== "undefined" &&
+      ownsCar.id !== "undefined" &&
+      bloodGroup.id !== "undefined" &&
+      thalassemia.id !== "undefined" &&
+      formik.values.religiousBelief
+    ) {
+      if (
+        (ownsHouse.id == "1" && !housetype.length) ||
+        (ownsCar.id == "1" && !cartype.length)
+      ) {
         setNextDisable(true);
       } else {
-        setNextDisable(false)
+        setNextDisable(false);
       }
     } else {
       setNextDisable(true);
@@ -320,7 +328,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={HouseType}
                       inputName={"Type of House"}
                       onChange={setHousetype}
-                      defaultValues={jsonData?.home_type || []
+                      defaultValues={
+                        jsonData ? JSON.parse(jsonData?.home_type) : []
                       }
                       isFromRegistered={true}
                     />
@@ -341,7 +350,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={CarType}
                       inputName={"Type of car"}
                       onChange={setCartype}
-                      defaultValues={jsonData?.car_details || []
+                      defaultValues={
+                        jsonData ? JSON.parse(jsonData?.car_details) : []
                       }
                       isFromRegistered={true}
                     />
@@ -382,7 +392,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       </div>
                     </div>
                     {formik.touched.religiousBelief &&
-                      formik.errors.religiousBelief ? (
+                    formik.errors.religiousBelief ? (
                       <div>
                         <span className={classes.errorMessage}>
                           {formik.errors.religiousBelief}
@@ -396,7 +406,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                 <Button
                   variant="danger"
                   type="submit"
-                  className={`${classes.Form_btn} mt-2 w-50 align-self-md-end`}
+                  className={`${classes.Form_btn} mt-2 w-50 align-self-md-center`}
                   disabled={nextDisable}
                 >
                   {loadingSpiner && (
