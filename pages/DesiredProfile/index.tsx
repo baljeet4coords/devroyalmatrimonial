@@ -222,13 +222,6 @@ const DesiredProfilePage: React.FC = () => {
               <Loader />
             ) : (
               <Col sm={12} className={`${classes.form_wrapper}`}>
-                <Button
-                  variant="link"
-                  className="px-0"
-                  onClick={() => router.push("/Register")}
-                >
-                  Go back to registerations
-                </Button>
                 <form className={classes.formEdit}>
                   <DoubleInput
                     data={AgeFromYearList}
