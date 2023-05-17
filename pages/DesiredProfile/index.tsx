@@ -161,17 +161,17 @@ const DesiredProfilePage: React.FC = () => {
       city: JSON.stringify(city),
       education: JSON.stringify(education),
       occupation: JSON.stringify(occupation),
-      annualIncomeGreaterThan: annualIncome.id,
+      annualIncomeGreaterThan: annualIncome.id != "undefined" ? annualIncome.id : "0",
       maritalStatus: JSON.stringify(maritalStatus),
       religion: JSON.stringify(religion),
       motherTongue: JSON.stringify(motherTongue),
       cast: JSON.stringify(caste),
       residentialStatus: JSON.stringify(residentialStatus),
       manglik: JSON.stringify(manglik),
-      diet: diet.id,
-      smoking: smoke.id,
-      drinking: drink.id,
-      readyToSettleAbroad: readyToSettleAbroad.id,
+      diet: diet.id != "undefined" ? diet.id : "0",
+      smoking: smoke.id != "undefined" ? smoke.id : "0",
+      drinking: drink.id != "undefined" ? drink.id : '0',
+      readyToSettleAbroad: readyToSettleAbroad.id != "undefined" ? readyToSettleAbroad.id : "0",
       challenged: JSON.stringify(challenged),
       childrenStatus: JSON.stringify(childrenStatus),
       hiv: String(jsonData?.HIV || 0),
@@ -198,8 +198,8 @@ const DesiredProfilePage: React.FC = () => {
   const handleSwitchToggle = (switchValue: string) => {
     const newSelectedSwitches = selectedSwitches.includes(switchValue)
       ? selectedSwitches.filter(
-          (selectedSwitch) => selectedSwitch !== switchValue
-        )
+        (selectedSwitch) => selectedSwitch !== switchValue
+      )
       : [...selectedSwitches, switchValue];
     setSelectedSwitches(newSelectedSwitches);
   };

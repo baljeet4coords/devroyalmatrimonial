@@ -193,9 +193,9 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.gothra = gothraVal;
 
 
-    if (selectedMothersOccupation.id !== "undefined" && selectedFathersOccupation.id !== "undefined" && selectedSister.id !== "undefined"
-      && selectedBrother.id !== "undefined" && selectedFamilyStatus.id !== "undefined" && selectedFamilyIncome.id !== "undefined" &&
-      selectedFamilyType.id !== "undefined" && selectedNativeCountry >= 0 && selectedNativeState >= 0 && selectedNativeCity >= 0 && selectedLivingWithParents.id !== "undefined" && formik.values.gothra) {
+    if (selectedMothersOccupation.id !== "null" && selectedFathersOccupation.id !== "null" && selectedSister.id !== "null"
+      && selectedBrother.id !== "null" && selectedFamilyStatus.id !== "null" && selectedFamilyIncome.id !== "null" &&
+      selectedFamilyType.id !== "null" && selectedNativeCountry >= 0 && selectedNativeState >= 0 && selectedNativeCity >= 0 && selectedLivingWithParents.id !== "null" && formik.values.gothra) {
       setNextDisable(false)
     } else {
       setNextDisable(true)
