@@ -40,7 +40,6 @@ const Application = dynamic(
   () => import("react-rainbow-components/components/Application"),
   { ssr: false } as any
 );
-// import { formikErrorSchema } from '../../../schemas/profileDetailsSchema'
 
 type FormValues = {
   profileHandlerName: string | undefined;
@@ -48,35 +47,13 @@ type FormValues = {
   profilepic: string;
 };
 
-// const validate = (values: FormValues) => {
-//   const errors: Partial<FormValues> = {};
-
-//   if (!values.profileHandlerName) {
-//     errors.profileHandlerName = "Required";
-//   } else if (values.profileHandlerName.length < 3) {
-//     errors.profileHandlerName = "Must be 3 characters or more";
-//   }
-
-//   if (!values.fullname) {
-//     errors.fullname = "Required";
-//   } else if (values.fullname.length < 3) {
-//     errors.fullname = "Must be 3 characters or more";
-//   }
-
-//   if (!values.profilepic) {
-//     errors.profilepic = "Required";
-//   } else {
-//     errors.profilepic = "";
-//   }
-
-//   return errors;
-// };
 
 import {
   convertDateStringTimeStamp,
   convertServerTimestamp,
   convertTimeStamp,
 } from "../../../utils/dayjs";
+import { useRegisterUser } from "../../../hooks/useRegister/useStep1";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -97,11 +74,14 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
+  console.log(stepOneDefaultValues,'///');
+  
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
+
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
@@ -182,25 +162,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-
-  // useEffect(() => {
-  //   if (selectedProfileFor.id && selectedCast.id && selectedChallenged.id && selectedIsHiv.id && selectedMotherTongue.id && selectedReligion.id && selectedManglik.id && selectedMaritalStatus.id !== "undefined" && heightTouched || (selectedMaritalStatus.id || "") >= "2" && selectedChildrenStatus.id !== "undefined") {
-  //     setNextDisable(false)
-  //   } else {
-  //     setNextDisable(true)
-  //   }
-  // }, [selectedProfileFor,
-  //   selectedCast,
-  //   selectedChallenged,
-  //   selectedIsHiv,
-  //   selectedMotherTongue,
-  //   selectedReligion,
-  //   selectedManglik,
-  //   selectedMaritalStatus,
-  //   selectedChildrenStatus,
-  //   selectedMaritalStatus.id,
-  //   heightTouched
-  // ])
+  const { mutateAsync: registerUser , data } = useRegisterUser(isReduxEmpty);
+  
 
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
@@ -238,6 +201,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     onSubmit: async (values) => {
       setloginSpiner(true);
       const formData = new FormData();
+
       formData.append("userId", String(values.userId));
       formData.append("profilefor", String(values.profilefor));
       formData.append("profileHandlerName", String(values.profileHandlerName));
@@ -258,41 +222,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formData.append("height", String(values.height));
       formData.append("profilepic", String(values.profilepic));
       formData.append("image", image);
-      let response;
-      if (isReduxEmpty === undefined) {
-        formData.append("actionType", "c");
-        (response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          formData
-        )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
-        if (response.data.output === 4) {
-          nextPage(1);
-          setloginSpiner(false);
-        }
-      } else {
-        formData.append("actionType", "u");
-        (response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-          formData
-        )),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
-        if (response.data.output >= 0) {
-          // DisabledHeadingMessage(1);
-          nextPage(1);
-          setloginSpiner(false);
-        }
-      }
+
+      await registerUser(formData);
+
+      console.log(data);
+      
+
+      setloginSpiner(false);
+
     },
   });
+
 
   const onChangeGender = (gender: string) => {
     setGender(gender);
@@ -450,7 +390,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setprofileforTouched}
                     />
                     {profileforTouched &&
-                    selectedProfileFor.id == "undefined" ? (
+                      selectedProfileFor.id == "undefined" ? (
                       <div className={classes.errorMessage}>
                         <span>Please select valid input</span>
                       </div>
@@ -476,7 +416,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         </div>
                       </div>
                       {formik.touched.profileHandlerName &&
-                      formik.errors.profileHandlerName ? (
+                        formik.errors.profileHandlerName ? (
                         <div>
                           <span className={classes.errorMessage}>
                             {formik.errors.profileHandlerName}
@@ -490,11 +430,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                   {(selectedProfileFor?.id == "1" ||
                     selectedProfileFor?.id == "6" ||
                     selectedProfileFor?.id == "7") && (
-                    <GenderRadioButtons
-                      selectedGender={gender}
-                      onChangeGender={onChangeGender}
-                    />
-                  )}
+                      <GenderRadioButtons
+                        selectedGender={gender}
+                        onChangeGender={onChangeGender}
+                      />
+                    )}
                   <div className={classes.singleBox}>
                     <Form.Label>Date/Time of Birth</Form.Label>
                     <div>
@@ -524,8 +464,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     <div>
                       <Form.Label>
                         {selectedProfileFor?.id == "2" ||
-                        selectedProfileFor?.id == "5" ||
-                        gender === "1"
+                          selectedProfileFor?.id == "5" ||
+                          gender === "1"
                           ? "Groom"
                           : "Bride"}{" "}
                         Name
@@ -535,13 +475,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                           <Form.Control
                             name="fullname"
                             type="text"
-                            placeholder={`${
-                              selectedProfileFor?.id == "2" ||
+                            placeholder={`${selectedProfileFor?.id == "2" ||
                               selectedProfileFor?.id == "5" ||
                               gender === "1"
-                                ? "Write Groom Name"
-                                : "Write Bride Name"
-                            }`}
+                              ? "Write Groom Name"
+                              : "Write Bride Name"
+                              }`}
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             defaultValue={jsonData?.fullname}
@@ -621,7 +560,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setChallengedTouched}
                     />
                     {challengedTouched &&
-                    selectedChallenged.id == "undefined" ? (
+                      selectedChallenged.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -660,7 +599,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setMotherToungeTouched}
                     />
                     {motherToungeTouched &&
-                    selectedMotherTongue.id == "undefined" ? (
+                      selectedMotherTongue.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -718,7 +657,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       setErrorState={setMaritalStatusTouched}
                     />
                     {maritalStatusTouched &&
-                    selectedMaritalStatus.id == "undefined" ? (
+                      selectedMaritalStatus.id == "undefined" ? (
                       <div>
                         <span className={classes.errorMessage}>
                           Please select value from dropdown
@@ -739,7 +678,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                         setErrorState={setChildrenStatusTouched}
                       />
                       {childrenStatusTouched &&
-                      selectedChildrenStatus.id == "undefined" ? (
+                        selectedChildrenStatus.id == "undefined" ? (
                         <div>
                           <span className={classes.errorMessage}>
                             Please select value from dropdown

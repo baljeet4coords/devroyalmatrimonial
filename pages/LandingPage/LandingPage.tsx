@@ -99,6 +99,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
+    
     <>
       <Header />
       <HomeImage addBackground={headimage} />
