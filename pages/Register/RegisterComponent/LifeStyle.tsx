@@ -30,6 +30,7 @@ import router from "next/router";
 import { isNull } from "lodash";
 import * as Yup from "yup";
 import SingleInput from "../../../components/InputField/SingleInputField";
+import { useStep3Register } from "../../../hooks/useRegister/useStep3";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -39,6 +40,12 @@ interface ProfileDetailsProps {
 interface Data {
   id?: string | null;
   val: string;
+}
+interface ResponData {
+  output: number;
+  message: string;
+  jsonResponse: null;
+  status: number
 }
 const LifeStyle: React.FC<ProfileDetailsProps> = ({
   nextPage,
@@ -68,6 +75,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
+  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep3Register();
+
 
 
   const [diet, setDiet] = useState<Data>({
@@ -154,47 +163,23 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloadingSpiner(true);
-      let response;
 
-      if (isReduxEmpty === undefined) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
-          {
-            actionType: "c",
-            ...values,
-            housetype: JSON.stringify(housetype),
-            cartype: JSON.stringify(cartype),
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
-          {
-            actionType: "u",
-            ...values,
-            housetype: JSON.stringify(housetype),
-            cartype: JSON.stringify(cartype),
-          }
-        );
-      }
-      if (response.data.output > 0) {
-        // DisabledHeadingMessage(3);
+      registerUser({
+        ...values,
+        actionType: isReduxEmpty ? "c" : "u",
+        housetype: JSON.stringify(housetype),
+        cartype: JSON.stringify(cartype),
+      });
+      const resolvedData = await data;
+
+      if (resolvedData?.output > 0) {
         nextPage(3);
         setloadingSpiner(false);
       } else {
         setloadingSpiner(false);
       }
-    },
+    }
   });
-
-  // to update json data when first time relode
-  // useEffect(() => {
-  //   setReligiousBelief(
-  //     jsonData?.religious_belief !== (null && undefined)
-  //       ? String(jsonData?.religious_belief)
-  //       : ""
-  //   );
-  // }, [jsonData, jsonData?.religious_belief]);
 
   useEffect(() => {
     formik.values.diet = diet.id || "";

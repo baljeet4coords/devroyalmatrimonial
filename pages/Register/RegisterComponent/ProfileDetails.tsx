@@ -53,7 +53,7 @@ import {
   convertServerTimestamp,
   convertTimeStamp,
 } from "../../../utils/dayjs";
-import { useRegisterUser } from "../../../hooks/useRegister/useStep1";
+import { useRegisterUser, useStep1Register } from "../../../hooks/useRegister/useStep1";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -74,8 +74,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
-  console.log(stepOneDefaultValues,'///');
-  
+
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
 
@@ -162,8 +161,8 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-  const { mutateAsync: registerUser , data } = useRegisterUser(isReduxEmpty);
-  
+  const { mutate: registerUser, data, isLoading: step4loadingReq } = useStep1Register();
+
 
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
@@ -223,13 +222,21 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formData.append("profilepic", String(values.profilepic));
       formData.append("image", image);
 
+      if (isReduxEmpty === undefined) {
+        formData.append("actionType", "c");
+      } else {
+        formData.append("actionType", "u");
+      }
+
       await registerUser(formData);
+      const resolvedData = await data;
 
-      console.log(data);
-      
-
-      setloginSpiner(false);
-
+      if (resolvedData?.output > 0) {
+        nextPage(1);
+        setloginSpiner(false);
+      } else {
+        setloginSpiner(false);
+      }
     },
   });
 

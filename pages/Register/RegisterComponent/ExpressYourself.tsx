@@ -18,6 +18,7 @@ import Loader from "../../../components/Loader/Loader";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
+import { useStep5Register } from "../../../hooks/useRegister/useStep5";
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
@@ -45,6 +46,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
+  const { mutate: registerUser, data, isLoading: step5loadingReq } = useStep5Register();
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -69,25 +71,11 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
       setloadingSpiner(true);
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
-          {
-            actionType: "c",
-            ...values,
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
-          {
-            actionType: "u",
-            ...values,
-          }
-        );
-      }
-      response.data.output > 0 && router.push("/DesiredProfile");
+
+      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      const resolvedData = await data;
+
+      resolvedData.output > 0 && router.push("/DesiredProfile");
     },
   });
 
@@ -328,7 +316,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
