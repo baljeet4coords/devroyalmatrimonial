@@ -19,109 +19,223 @@ import EditCustomButton from "../Button/EditCustomButton";
 import { MdVerified } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import { RiLockLine } from "react-icons/ri";
-import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
+// import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
 import { useSelector } from "react-redux";
 import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
 import CastListDropDown from "../CastListDropDown/CastListDropDown";
 import { CastListArray } from "../../constants/CastListArray";
+import { convertDateStringTimeStamp, convertServerTimestamp, convertTimeStamp } from "../../utils/dayjs";
+import { getUserId } from "../../ducks/auth/selectors";
+import { DateTimePicker } from "react-rainbow-components";
+import HeightInput from "../InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
+import { useStep1Register } from "../../hooks/useRegister/useStep1";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
   step1Response: any;
+  FatchAgain: () => void;
 }
 interface Data {
   id?: string;
   val: string;
 }
-const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response }) => {
-  const stepOneDefaultValues = useSelector(selectStep1Success);
-  const jsonData = stepOneDefaultValues?.jsonResponse;
-
-
-  const formik = useFormik({
-    initialValues: {
-      profileVerification: false,
-      fullname: "Himanshu singh",
-      gender: step1Response?.gender == "M" ? "Male" : "Female",
-      cast: "",
-      height: "",
-      challenged: "",
-      isHiv: "",
-      mothertongue: "",
-      religion: "",
-      isManglik: "",
-      profilefor: "",
-    },
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 1));
-      setBasicDetails(false);
-    },
-  });
-
-  const [selectedManglik, setSelectedManglik] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: String(jsonData?.manglik), val: "" });
-  const [selectedIsHiv, setSelectedIsHiv] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: String(jsonData?.hiv), val: "" });
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-  const [selectedchallenged, setSelectedchallenged] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response, FatchAgain }) => {
+  // const stepOneDefaultValues = useSelector(selectStep1Success);
+  // const step1Response = stepOneDefaultValues?.jsonResponse;
+  const userId = useSelector(getUserId);
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(step1Response?.profile_for),
     val: "",
   });
-  // const selectedCast = (string: string) => {
-  //   // const id = string.split("-")[0];
-  //   const val = string.split("-")[1];
-  //   formik.values.cast = val;
-  // };
+  const [selectedChallenged, setSelectedChallenged] = useState<Data>({
+    id: String(step1Response?.challenged),
+    val: "",
+  });
+  const [selectedIsHiv, setSelectedIsHiv] = useState<Data>({
+    id: String(step1Response?.hiv),
+    val: "",
+  });
+  const [selectedMotherTongue, setSelectedMotherTongue] = useState<Data>({
+    id: String(step1Response?.mother_tongue),
+    val: "",
+  });
+  const [selectedReligion, setSelectedReligion] = useState<Data>({
+    id: String(step1Response?.religion),
+    val: "",
+  });
+  const [selectedManglik, setSelectedManglik] = useState<Data>({
+    id: String(step1Response?.manglik),
+    val: "",
+  });
+  const [selectedMaritalStatus, setSelectedMaritalStatus] = useState<Data>({
+    id: String(step1Response?.marital_status),
+    val: "",
+  });
+  const [selectedChildrenStatus, setSelectedChildrenStatus] = useState<Data>({
+    id: String(step1Response?.children_status),
+    val: "",
+  });
   const [selectedCast, setSelectedCast] = useState<Data>({
     val: "",
-    id: String(jsonData?.caste),
+    id: String(step1Response?.caste),
+  });
+  const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
+  const [image, setImage] = useState<Blob | string>("");
+  const [dob, setDob] = useState<Date>(convertTimeStamp(step1Response?.dob) || '');
+  const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
+  const { mutate: registerUser, data, isLoading: step1loadingReq } = useStep1Register();
+
+  const formik = useFormik({
+    initialValues: {
+      userId: userId,
+      profilefor: String(step1Response?.profile_for),
+      profileHandlerName: step1Response?.profile_handlername,
+      dob: dob,
+      selectgender: step1Response?.gender || "F",
+      fullname: step1Response?.fullname,
+      cast: String(step1Response?.caste),
+      challenged: String(step1Response?.challenged),
+      isHiv: String(step1Response?.hiv),
+      mothertongue: String(step1Response?.mother_tongue),
+      religion: String(step1Response?.religion),
+      isManglik: String(step1Response?.manglik),
+      maritalstatus: String(step1Response?.marital_status),
+      childrenstatus: String(step1Response?.children_status),
+      height: String(step1Response?.height_cm),
+      profilepic: selectedPhotoName,
+    },
+    onSubmit: async (values) => {
+      const formData = new FormData();
+
+      formData.append("userId", String(values.userId));
+      formData.append("profilefor", String(values.profilefor));
+      formData.append("profileHandlerName", String(values.profileHandlerName));
+      formData.append(
+        "dob",
+        String(values.dob && convertTimeStamp(values.dob))
+      );
+      formData.append("selectgender", String(values.selectgender));
+      formData.append("fullname", String(values.fullname));
+      formData.append("cast", String(values.cast));
+      formData.append("challenged", String(values.challenged));
+      formData.append("isHiv", String(values.isHiv));
+      formData.append("mothertongue", String(values.mothertongue));
+      formData.append("religion", String(values.religion));
+      formData.append("isManglik", String(values.isManglik));
+      formData.append("maritalstatus", String(values.maritalstatus));
+      formData.append("childrenstatus", String(values.childrenstatus));
+      formData.append("height", String(values.height));
+      formData.append("profilepic", String(values.profilepic));
+      formData.append("image", image);
+      formData.append("actionType", "u");
+
+      await registerUser(formData);
+      const resolvedData = await data;
+      if (resolvedData?.output && resolvedData?.output > 0) {
+        FatchAgain();
+        setBasicDetails(false);
+      }
+    },
   });
 
-  const findKeyByValue = (obj: any, value?: string): string => {
-    for (let key in obj) {
-      if (obj[key] === String(value)) {
-        return key;
-      }
-    }
-    return "";
-  };
-
-  const [religion, setReligion] = useState(
-    findKeyByValue(Religion, step1Response?.religion) || ""
-  );
-  const { feet, cm, handleFeetChange, handleCmChange } = useHeightConverter();
 
   useEffect(() => {
-    (formik.values.height = cm),
-      (formik.values.challenged = selectedchallenged.val),
-      (formik.values.isHiv = selectedIsHiv.val),
-      (formik.values.mothertongue = selectedMotherTongue.val),
-      (formik.values.religion = selectedMotherTongue.val),
-      (formik.values.isManglik = selectedManglik.val),
-      (formik.values.cast = selectedCast?.id || '');
+    formik.values.profilefor = selectedProfileFor.id || "";
+    formik.values.challenged = selectedChallenged.id || "";
+    formik.values.isHiv = selectedIsHiv.id || "";
+    formik.values.mothertongue = selectedMotherTongue.id || "";
+    formik.values.religion = selectedReligion.id || "";
+    formik.values.isManglik = selectedManglik.id || "";
+    formik.values.maritalstatus = selectedMaritalStatus.id || "";
+    formik.values.cast = selectedCast.id || "";
   }, [
-    cm,
-    selectedchallenged,
-    selectedIsHiv,
-    selectedMotherTongue,
-    selectedManglik,
     formik.values,
-    selectedCast,
+    selectedProfileFor.id,
+    selectedChallenged.id,
+    selectedIsHiv.id,
+    selectedMotherTongue.id,
+    selectedReligion.id,
+    selectedManglik.id,
+    selectedMaritalStatus.id,
+    selectedCast.id,
   ]);
+
+  useEffect(() => {
+    if (selectedMaritalStatus.id) {
+      if (selectedMaritalStatus?.id <= "2") {
+        formik.values.childrenstatus = "1";
+      } else {
+        formik.values.childrenstatus = selectedChildrenStatus.id || "";
+      }
+    }
+  }, [formik.values, selectedChildrenStatus.id, selectedMaritalStatus.id]);
+
+
+  function getKeyByValue(value: string, enumObject: any) {
+    for (const [key, val] of Object.entries(enumObject)) {
+      if (val === value) {
+        return key.replaceAll("_", " ");
+      }
+    }
+  }
+
+  const profilePicture = (imageName: string, file: null | Blob) => {
+    setSelectedPhotoName(imageName);
+    file && setImage(file);
+  };
+
+  useEffect(() => {
+    if (selectedProfileFor?.id == "2" || selectedProfileFor?.id == "5") {
+      formik.values.selectgender = "M";
+    }
+    if (selectedProfileFor?.id == "3" || selectedProfileFor?.id == "4") {
+      formik.values.selectgender = "F";
+    }
+  }, [formik.values, selectedProfileFor]);
+
+  useEffect(() => {
+    if (step1Response) setDob(convertTimeStamp(step1Response?.dob));
+  }, [step1Response, step1Response?.dob]);
+
+
+  useEffect(() => {
+    if (step1Response && step1Response.fullname) {
+      formik.values.fullname = step1Response.fullname;
+    }
+    if (step1Response && step1Response.profile_handlername) {
+      formik.values.profileHandlerName = step1Response.profile_handlername;
+    }
+    if (step1Response && step1Response.gender) {
+      formik.values.selectgender = step1Response.gender;
+    }
+    if (step1Response && step1Response.photo) {
+      const fileName = step1Response.photo.split("/").pop();
+      if (fileName) {
+        setSelectedPhotoName(fileName);
+        formik.values.profilepic = fileName;
+      } else {
+        setSelectedPhotoName("");
+      }
+    }
+    if (step1Response && step1Response.height_cm) {
+      formik.values.height = String(step1Response.height_cm);
+    }
+  }, [step1Response]);
+
+  const handleDateTimeChange = (value: Date) => {
+    if (value.getFullYear() <= 2005) {
+      setDob(value);
+      formik.values.dob = convertDateStringTimeStamp(value);
+    }
+  };
+
+  const onHeightChange = (height: number | null) => {
+    formik.values.height = String(height);
+    setheightSelectedVal(height);
+  };
 
   return (
     <>
@@ -134,31 +248,31 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.singleBox}>
-            <Form.Label>Profile Verification</Form.Label>
-            <div className={classes.UserVerified}>
+            <Form.Label>Profile For</Form.Label>
+            <div className={classes.EditInputSecDisable}>
+              <input
+                type="text"
+                value={getKeyByValue(String(step1Response?.profile_for), ProfileFor)}
+                disabled
+                name="profilefor"
+                placeholder="Enter Gender"
+              />
               <span>
-                <MdVerified />
-                your profile verification is pending
+                {" "}
+                <RiLockLine />{" "}
               </span>
-              {formik.initialValues.profileVerification ? (
-                <p>Verified</p>
-              ) : (
-                <p>Get verified NOW</p>
-              )}
             </div>
           </div>
           <div className={classes.singleBox}>
-            <Form.Label>Full Name</Form.Label>
+            <Form.Label>Groom Name</Form.Label>
             <div className={classes.EditInputSec}>
               <li className={classes.blankInput}>
                 <Form.Control
-                  name="profileHandlerName"
+                  name="fullname"
                   type="text"
-                  placeholder="Enter your name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   defaultValue={step1Response?.fullname}
-                  autoComplete="off"
                 />
               </li>
               <p>
@@ -171,7 +285,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={formik.initialValues.gender}
+                value={step1Response?.gender == 'M' ? 'Male' : 'Female'}
                 disabled
                 name="gender"
                 placeholder="Enter Gender"
@@ -184,6 +298,18 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
               </span>
             </div>
           </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <Form.Label>Date of Birth</Form.Label>
+              <DateTimePicker
+                name="dob"
+                onChange={handleDateTimeChange}
+                placeholder="DD-MM-YYYY HH:MM"
+                value={formik.values.dob}
+              />
+            </div>
+          </div>
+
           <div className={classes.singleBox}>
             <CastListDropDown
               data={CastListArray}
@@ -193,25 +319,12 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
               defaultValue={String(step1Response?.caste)}
             />
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Height</Form.Label>
-            <div className={classes.inputBox}>
-              <Form.Control
-                name="height"
-                type="number"
-                placeholder={`${cm} in cms`}
-                onBlur={formik.handleBlur}
-                onChange={handleCmChange}
-                defaultValue={step1Response?.height_cm}
-              />
-              <Form.Control
-                name="height"
-                type="text"
-                placeholder={`${feet} in ft.`}
-                onBlur={formik.handleBlur}
-                onChange={handleFeetChange}
-              />
-            </div>
+          <div className={classes.heightwrapper}>
+            <HeightInput
+              label="Height"
+              onHeightChange={onHeightChange}
+              defaultValue={step1Response && +step1Response?.height_cm}
+            />
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
@@ -219,7 +332,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
                 title="Challenged"
                 data={Challenged}
                 nameid="challenged"
-                selectedDataFn={setSelectedchallenged}
+                selectedDataFn={setSelectedChallenged}
                 defaultValue={String(step1Response?.challenged)}
               />
             </div>
@@ -246,21 +359,15 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
               />
             </div>
           </div>
-          <div className={classes.singleBox}>
-            <Form.Label>Religion</Form.Label>
-            <div className={classes.EditInputSecDisable}>
-              <input
-                type="text"
-                value={religion}
-                disabled
-                placeholder="Enter Gender"
-                onBlur={formik.handleBlur}
-                onChange={handleCmChange}
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
+              <DropdownGridSingleSelect
+                title="Religion"
+                data={Religion}
+                nameid="mothertongue"
+                selectedDataFn={setSelectedReligion}
+                defaultValue={String(step1Response?.mother_tongue)}
               />
-              <span>
-                {" "}
-                <RiLockLine />{" "}
-              </span>
             </div>
           </div>
 
@@ -277,16 +384,16 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
-              <Form.Label>Profile Managed For</Form.Label>
               <DropdownGridSingleSelect
-                title=""
-                data={ProfileFor}
-                nameid="profilefor"
-                selectedDataFn={setSelectedProfileFor}
-                defaultValue={String(step1Response?.profile_for)}
+                title="Marital Status"
+                data={MaritalStatus}
+                nameid="maritalstatus"
+                selectedDataFn={setSelectedMaritalStatus}
+                defaultValue={String(step1Response?.marital_status)}
               />
             </div>
           </div>
+
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

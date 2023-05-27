@@ -5,6 +5,7 @@ import classes from "./GlobalDetails.module.scss";
 import {
   Challenged,
   Manglik,
+  MaritalStatus,
   MotherTongue,
   ProfileFor,
   Religion,
@@ -26,6 +27,20 @@ const BasicDetails: FC<MyComponentProps> = ({
       }
     }
   }
+
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+
+  const dateNow = new Date();
+  const nowYear = dateNow.getFullYear();
+  const dob = step1Response && step1Response?.dob.split("-");
+  const dobYear = dob && dob[0];
+  let dobmonth = dob && dob[1];
+  const dobDay = dob && dob[2].split(" ")[0];
+  if (dobmonth < 10) {
+    dobmonth = dobmonth?.split("0")[1];
+  }
+
 
   function HeightConvertr(cmHeight: number) {
     const totalInches = cmHeight / 2.54;
@@ -94,9 +109,9 @@ const BasicDetails: FC<MyComponentProps> = ({
             <FiUser />
             Basic Details
           </div>
-          {/* <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
+          <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
             Edit
-          </span> */}
+          </span>
         </div>
         <div className={classes.Username}>
           <p>
@@ -110,6 +125,24 @@ const BasicDetails: FC<MyComponentProps> = ({
           your profile verification is pending...
           <span>Get verified NOW</span>
         </div> */}
+        <div className={classes.Userdetails}>
+          <div className={classes.UserdetailsSec}>
+            <p className={classes.input_Name}>Age</p>
+            <p className={classes.input_Value}>
+              {`${nowYear - dobYear || "NA"} ( ${dobDay}th ${months[dobmonth - 1]
+                } ${dobYear}  ) `}
+            </p>
+          </div>
+          <div className={classes.UserdetailsSec}>
+            <p className={classes.input_Name}>Marital Status</p>
+            <p className={classes.input_Value}>
+              {getKeyByValue(
+                String(step1Response?.marital_status),
+                MaritalStatus
+              ) || "NA"}
+            </p>
+          </div>
+        </div>
         <div className={classes.Userdetails}>
           {BasicDetails.map((item, index) => {
             return (
