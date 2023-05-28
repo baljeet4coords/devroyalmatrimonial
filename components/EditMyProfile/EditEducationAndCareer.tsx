@@ -19,8 +19,8 @@ import { EducationTypeAndVal } from "../../types/enums";
 import { getUserId } from "../../ducks/auth/selectors";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import { useStep2Register } from "../../hooks/useRegister/useStep2";
 import { selectStep2Success } from "../../ducks/regiserUser/step2/selectors";
+import { useStep2Register } from "../../hooks/useRegister/useStep2";
 
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
@@ -44,7 +44,7 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
 
-  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep2Register();
+  const { registerUserMutation, Step2Query } = useStep2Register();
 
 
   const [selectedCountry, setSelectedCountry] = useState<number>(
@@ -98,9 +98,8 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData = await data;
-      if (resolvedData?.output && resolvedData?.output > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setEudcationAndCareer(false);
       }

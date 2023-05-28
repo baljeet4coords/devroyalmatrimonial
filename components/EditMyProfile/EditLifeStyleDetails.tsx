@@ -42,8 +42,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
   const jsonData = stepThreeDefaultValues?.jsonResponse;
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
-  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep3Register();
-
+  const { registerUserMutation, Step3Query } = useStep3Register();
 
 
   const [diet, setDiet] = useState<Data>({
@@ -116,14 +115,13 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      registerUser({
+      const mutationResult = await registerUserMutation.mutateAsync({
         ...values,
         actionType: isReduxEmpty ? "c" : "u",
         housetype: JSON.stringify(housetype),
         cartype: JSON.stringify(cartype),
       });
-      const resolvedData = await data;
-      if (resolvedData?.output && resolvedData?.output > 0) {
+      if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setEditDetails(false);
       }

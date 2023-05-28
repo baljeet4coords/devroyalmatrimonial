@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "react-query";
 import axios from "axios";
 
-const Step3Formfill = async (values: any) => {
+const registerUser = async (values: any) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
@@ -9,29 +9,21 @@ const Step3Formfill = async (values: any) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error("Failed to submit step 4 form");
+    throw new Error("Failed to submit step 3 form");
   }
 };
 
 export const useStep3Register = () => {
-  const registerUserMutation = useMutation((value: any) =>
-    Step3Formfill(value)
-  );
+  const registerUserMutation = useMutation(registerUser);
 
   const Step3Query = () => {
-    const { data, isLoading, error } = useQuery("step4", () => Step3Formfill);
+    const { data, isLoading, error } = useQuery("step3", () => registerUser);
 
     return { data, isLoading, error };
   };
 
   return {
-    ...registerUserMutation,
-    ...Step3Query(),
-    Step3Formfill: (values: any) =>
-      new Promise((resolve, reject) => {
-        Step3Formfill(values)
-          .then((data) => resolve(data))
-          .catch((error) => reject(error));
-      }),
+    registerUserMutation,
+    Step3Query,
   };
 };

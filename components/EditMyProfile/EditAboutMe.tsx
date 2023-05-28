@@ -14,8 +14,8 @@ import Errors from "../Errors/Errors";
 import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../InputField/CountryStateSingle/CitySingle";
-import { useStep5Register } from "../../hooks/useRegister/useStep5";
 import { selectStep5Success } from "../../ducks/regiserUser/step5/selectors";
+import { useStep5Register } from "../../hooks/useRegister/useStep5";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
@@ -39,7 +39,8 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);
-  const { mutate: registerUser, data, isLoading: step5loadingReq } = useStep5Register();
+  const { registerUserMutation, Step5Query } = useStep5Register();
+
 
 
   const [aboutCareer, setAboutCareer] = useState<string>(
@@ -78,9 +79,8 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData  = await data;
-      if (resolvedData?.output && resolvedData?.output > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setAboutMeDetails(false);
       }

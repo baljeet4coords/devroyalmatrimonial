@@ -36,6 +36,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const { registerUserMutation, Step5Query } = useStep5Register();
+
+
 
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
@@ -46,7 +49,6 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-  const { mutate: registerUser, data, isLoading: step5loadingReq } = useStep5Register();
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -71,11 +73,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
       setloadingSpiner(true);
-
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData = await data;
-
-      resolvedData.output > 0 && router.push("/DesiredProfile");
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
+        router.push("/DesiredProfile");
+      }
     },
   });
 

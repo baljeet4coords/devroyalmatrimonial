@@ -53,7 +53,7 @@ import {
   convertServerTimestamp,
   convertTimeStamp,
 } from "../../../utils/dayjs";
-import { useRegisterUser, useStep1Register } from "../../../hooks/useRegister/useStep1";
+import { useStep1Register } from "../../../hooks/useRegister/useStep1";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -161,7 +161,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-  const { mutate: registerUser, data, isLoading: step1loadingReq } = useStep1Register();
+  const { registerUserMutation, Step1Query } = useStep1Register();
 
 
   if (selectedPhotoName?.includes("uploads")) {
@@ -221,17 +221,10 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       formData.append("height", String(values.height));
       formData.append("profilepic", String(values.profilepic));
       formData.append("image", image);
+      formData.append("actionType", isReduxEmpty ? 'c' : 'u');
 
-      if (isReduxEmpty === undefined) {
-        formData.append("actionType", "c");
-      } else {
-        formData.append("actionType", "u");
-      }
-
-      await registerUser(formData);
-      const resolvedData = await data;
-
-      if (resolvedData?.output > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync(formData);
+      if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(1);
         setloginSpiner(false);
       } else {

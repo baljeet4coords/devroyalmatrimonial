@@ -43,7 +43,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails, step4Respon
   const isReduxEmpty =
     step4Response && Object.values(step4Response).every((value) => !value);
   const userId = useSelector(getUserId);
-  const { mutate: registerUser, data, isLoading: step4loadingReq } = useStep4Register();
+  const { registerUserMutation, Step4Query } = useStep4Register();
 
   const [selectedFathersOccupation, setSelectedFathersOccupation] =
     useState<Data>({ id: String(step4Response?.Father), val: "" });
@@ -110,10 +110,8 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails, step4Respon
       livingWithParents: String(step4Response?.living_with_parents),
     },
     onSubmit: async (values) => {
-
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData = await data;
-      if (resolvedData?.output && resolvedData?.output > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setFamilyDetails(false);
       }

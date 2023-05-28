@@ -45,6 +45,10 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
   // const stepOneDefaultValues = useSelector(selectStep1Success);
   // const step1Response = stepOneDefaultValues?.jsonResponse;
   const userId = useSelector(getUserId);
+  const isReduxEmpty =
+    step1Response && Object.values(step1Response).every((value) => !value);
+  const { registerUserMutation, Step1Query } = useStep1Register();
+
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(step1Response?.profile_for),
@@ -86,7 +90,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
   const [image, setImage] = useState<Blob | string>("");
   const [dob, setDob] = useState<Date>(convertTimeStamp(step1Response?.dob) || '');
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-  const { mutate: registerUser, data, isLoading: step1loadingReq } = useStep1Register();
+
 
   const formik = useFormik({
     initialValues: {
@@ -130,11 +134,11 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
       formData.append("height", String(values.height));
       formData.append("profilepic", String(values.profilepic));
       formData.append("image", image);
-      formData.append("actionType", "u");
+      formData.append("actionType", isReduxEmpty ? "c" : "u")
 
-      await registerUser(formData);
-      const resolvedData = await data;
-      if (resolvedData?.output && resolvedData?.output > 0) {
+      
+      const mutationResult = await registerUserMutation.mutateAsync(formData);
+      if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setBasicDetails(false);
       }
