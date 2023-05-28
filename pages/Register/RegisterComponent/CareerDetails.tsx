@@ -27,6 +27,8 @@ import Loader from "../../../components/Loader/Loader";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 import * as Yup from "yup";
+// import Step2Formfill from "../../../hooks/useRegister/useStep2";
+import useApiPostRequest, { useSignupMutation } from "../../../hooks/useRegister/useStep2";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -101,6 +103,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
 
   const [loginSpiner, setloginSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
+  const { mutate } = useSignupMutation();
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -122,29 +127,20 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloginSpiner(true);
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
-          { ...values, actionType: "c" }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
-          { ...values, actionType: "u" }
-        );
-      }
-      if (response.data.output > 0) {
-        // DisabledHeadingMessage(2);
-        nextPage(2);
-        setloginSpiner(false);
-      } else {
-        setloginSpiner(false);
-      }
+      mutate(values, {
+        onSuccess: () => {
+          alert("Form submitted successfully");
+          setloginSpiner(false);
+        },
+        onError: (response) => {
+          alert("An error occured while submiting the form");
+          console.log(response);
+          setloginSpiner(false);
+        }
+      });
     },
   });
 
-  // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -290,7 +286,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     setErrorState={setResidentialStatusTouched}
                   />
                   {residentialStatusTouched &&
-                  residentialStatus.id == "null" ? (
+                    residentialStatus.id == "null" ? (
                     <div>
                       <span className={classes.errorMessage}>
                         Please select value from dropdown
