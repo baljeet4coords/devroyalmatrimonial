@@ -32,7 +32,7 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { ImageGallery } from "../../components";
 import axios from "axios";
-import { isNull } from "lodash";
+
 
 interface ImageResponse {
   coverImage?: string[];
@@ -61,15 +61,31 @@ const MyProfile: React.FC = () => {
 
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
-  const step1Response = myProfileObject?.step1.jsonResponse;
-  const step2Response = myProfileObject?.step2.jsonResponse;
-  const step3Response = myProfileObject?.step3.jsonResponse;
-  const step4Response = myProfileObject?.step4.jsonResponse;
-  const step5Response = myProfileObject?.step5.jsonResponse;
+  console.log(isMyprofileLoading, 'loading');
+
+  const [myProfileObjectVal, setmyProfileObjectVal] = useState(myProfileObject);
+
+
+  useEffect(() => {
+    setmyProfileObjectVal(myProfileObject)
+  }, [myProfileObject])
+
+  const step1Response = myProfileObjectVal?.step1.jsonResponse;
+  const step2Response = myProfileObjectVal?.step2.jsonResponse;
+  const step3Response = myProfileObjectVal?.step3.jsonResponse;
+  const step4Response = myProfileObjectVal?.step4.jsonResponse;
+  const step5Response = myProfileObjectVal?.step5.jsonResponse;
 
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
+
+  const FatchAgain = () => {
+    setTimeout(() =>
+      dispatch(myProfileReq({ actionType: "v", userId: userId })), 50
+    )
+  }
+
 
   useEffect(() => {
     async function uploadFiles() {
@@ -123,10 +139,6 @@ const MyProfile: React.FC = () => {
     };
     getImages();
   }, [userId]);
-
-  useEffect(() => {
-    console.log(window.scrollY, "window.innerHeight");
-  }, [window.scrollY])
 
 
   const onPreviewAlbum = (visible: boolean) => {
@@ -187,7 +199,9 @@ const MyProfile: React.FC = () => {
           )}
         </Container>
         {isMyprofileLoading ? (
-          <Loader />
+          <Container className={classes.detailsWrapper}>
+            <Loader />
+          </Container>
         ) : (
           <>
             <MyProfilePageCard
@@ -202,7 +216,7 @@ const MyProfile: React.FC = () => {
                 ) : (
                   <>
                     <Col sm={9} md={8} className="p-0">
-                      {criticalDetails ? (
+                      {/* {criticalDetails ? (
                         <EditCriticalDetials
                           step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
@@ -212,12 +226,13 @@ const MyProfile: React.FC = () => {
                           step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
                         />
-                      )}
+                      )} */}
                       <hr />
                       {basicDetails ? (
                         <EditBasicDetials
                           step1Response={step1Response}
                           setBasicDetails={setBasicDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <BasicDetails

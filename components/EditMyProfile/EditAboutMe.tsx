@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
@@ -7,33 +7,120 @@ import { DiscribeYourself } from "../../types/enums";
 import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
+import { textAreaSchema } from "../../schemas/textAreaSchema";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
+import Errors from "../Errors/Errors";
+import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
+import StateSingle from "../InputField/CountryStateSingle/StateSingle";
+import CitySingle from "../InputField/CountryStateSingle/CitySingle";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
   step5Response: any;
 }
 const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response }) => {
+  const userId = useSelector(getUserId);
+  const [error, setError] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);
+  const [aboutCareer, setAboutCareer] = useState<string>(
+    step5Response && step5Response.about_career ? step5Response.about_career : ""
+  );
+  const [aboutFamily, setAboutFamily] = useState<string>(
+    step5Response && step5Response.about_family ? step5Response.about_family : ""
+  );
+  const [aboutEducation, setAboutEducation] = useState<string>(
+    step5Response && step5Response.about_education ? step5Response.about_education : ""
+  );
+  const [basicIntro, setBasicIntro] = useState<string>(
+    step5Response && step5Response.basic_intro ? step5Response.basic_intro : ""
+  );
+  const [selectedBirthCountry, setSelectedBirthCountry] = useState<number>(
+    step5Response?.pobCountry || 100
+  );
+  const [selectedBirthState, setSelectedBirthState] = useState<number>(
+    step5Response?.pobState || -1
+  );
+  const [selectedBirthCity, setSelectedBirthCity] = useState<number>(
+    step5Response?.pobCity || -1
+  );
+
 
   const formik = useFormik({
     initialValues: {
-      intro: "",
-      DiscribeYourself: "",
-      Aboutmyfamily: "",
-      aboutmyeducation: "",
-      aboutmycareer: "",
+      userId: userId,
+      aboutCareer: step5Response?.about_career,
+      aboutFamily: step5Response?.about_family,
+      aboutEducation: step5Response?.about_education,
+      basicIntro: step5Response?.basic_intro,
+      birthCountry: step5Response?.pobCountry,
+      birthState: step5Response?.pobState,
+      birthCity: step5Response?.pobCity,
     },
-    onSubmit: (values) => {
+    validationSchema: textAreaSchema,
+    onSubmit: async (values) => {
+      // registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      // const resolvedData = await data;
+
+      // resolvedData.output > 0 && router.push("/DesiredProfile");
       console.log(JSON.stringify(values, null, 1));
       setAboutMeDetails(false);
     },
   });
 
-  
-  const [selectedMotherTongue, setSelectedMotherTongue] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+
+  useEffect(() => {
+    if (mounted) {
+      if (
+        formik.errors.aboutCareer ||
+        formik.errors.aboutEducation ||
+        formik.errors.basicIntro ||
+        formik.errors.aboutFamily
+      ) {
+        setError(true);
+      } else {
+        setError(false);
+      }
+    } else {
+      setMounted(true);
+    }
+  }, [
+    formik.errors.aboutCareer,
+    formik.errors.aboutEducation,
+    formik.errors.aboutFamily,
+    formik.errors.basicIntro,
+    mounted,
+  ]);
+
+
+  const getSelectedCountry = (id: number) => {
+    setSelectedBirthCountry(id);
+  };
+  const getSelectedState = (id: number) => {
+    setSelectedBirthState(id);
+  };
+  const getSelectedCity = (id: number) => {
+    setSelectedBirthCity(id);
+  };
+
+  useEffect(() => {
+    setSelectedBirthCountry(
+      step5Response?.pobCountry != undefined
+        ? step5Response?.pobCountry
+        : selectedBirthCountry
+    );
+    setSelectedBirthState(
+      step5Response?.pobState != undefined ? step5Response?.pobState : selectedBirthState
+    );
+    setSelectedBirthCity(
+      step5Response?.pobCity != undefined ? step5Response?.pobCity : selectedBirthCity
+    );
+  }, [step5Response?.pobCity, step5Response?.pobCountry, step5Response?.pobState]);
+
+
+  const charCounter = (char: string) => 1000 - char.length;
+
 
   return (
     <>
@@ -61,71 +148,144 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response })
         </div>
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.EditsingleBox}>
-            <Form.Control
-              as="textarea"
-              name="intro"
-              rows={6}
-              placeholder="I come from a middle-class family. The most important thing in my life is religious beliefs, moral values & respect for elders. I'm an easy-going, sincere,  caring person with a strong work ethic. I'm a modern thinker and follow good values given by our ancestors. I like Painting, love traveling with friends, writing, listening to classical music & watching the latest movies!"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              defaultValue={step5Response?.basic_intro}
-            />
-            <p>Character Count : 122</p>
-            <div className={classes.TextareaDiscrip}>
-              <span>
-                Introduse Yourself. Write about your values , beliefs/goals and
-                aspirations.
-              </span>
-              <span>
-                How do you describe yourself ? Your Interests and hobbies.
-              </span>
+            <Form.Label>About Career</Form.Label>
+            <div className="text-muted">
+              <small>
+                {charCounter(aboutCareer)}/1000 characters left
+              </small>
             </div>
-          </div>
-          {/* <div className={classes.EditsingleBox}>
-            <DropdownGridSingleSelect
-              title="Discribe Yourself in 5 words"
-              data={DiscribeYourself}
-              nameid="DiscribeYourself"
-              selectedDataFn={setSelectedMotherTongue}
-            />
-          </div> */}
-          <div className={classes.EditsingleBox}>
-            <Form.Label>About My Family</Form.Label>
             <Form.Control
               as="textarea"
-              name="Aboutmyfamily"
+              name="aboutCareer"
               rows={5}
-              placeholder="Write about your parents and brothers or sisters. Where do they live? What are they doing?"
+              placeholder="About your career"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              defaultValue={step5Response?.about_family}
+              onChange={(e) => setAboutCareer(e.target.value)}
+              maxLength={1000}
+              defaultValue={
+                step5Response?.about_career != null
+                  ? String(step5Response?.about_career)
+                  : ""
+              }
             />
+            {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
+              <div className="pt-1">
+                <Errors error={formik.errors.aboutCareer} />
+              </div>
+            ) : null}
           </div>
-          <div className={classes.EditsingleBox}>
-            <Form.Label>About My Educations</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="aboutmyeducation"
-              rows={5}
-              placeholder="Which institutions have you attended? What course/specializations have you studied?"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              defaultValue={step5Response?.about_education}
 
-            />
-          </div>
           <div className={classes.EditsingleBox}>
-            <Form.Label>About My Career</Form.Label>
+            <Form.Label>About Family</Form.Label>
+            <div className="text-muted">
+              <small>
+                {charCounter(aboutFamily)}/1000 characters left
+              </small>
+            </div>
             <Form.Control
               as="textarea"
-              name="aboutmycareer"
+              name="aboutFamily"
               rows={5}
-              placeholder="Where are you working currently? You may mention your current job and future career aspirations."
+              placeholder="About your family"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              defaultValue={step5Response?.about_career}
+              onChange={(e) => setAboutFamily(e.target.value)}
+              maxLength={1000}
+              defaultValue={
+                step5Response?.about_family != null
+                  ? String(step5Response?.about_family)
+                  : ""
+              }
             />
+            {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
+              <div className="pt-1">
+                <Errors error={formik.errors.aboutFamily} />
+              </div>
+            ) : null}
           </div>
+          <div className={classes.EditsingleBox}>
+            <Form.Label>About Education</Form.Label>
+            <div className="text-muted">
+              <small>
+                {charCounter(aboutEducation)}/1000 characters left
+              </small>
+            </div>
+            <Form.Control
+              as="textarea"
+              name="aboutEducation"
+              rows={5}
+              placeholder="About your education"
+              onBlur={formik.handleBlur}
+              onChange={(e) => setAboutEducation(e.target.value)}
+              maxLength={1000}
+              defaultValue={
+                step5Response?.about_education != null
+                  ? String(step5Response?.about_education)
+                  : ""
+              }
+            />
+            {formik.touched.aboutEducation &&
+              formik.errors.aboutEducation ? (
+              <div className="pt-1">
+                <Errors error={formik.errors.aboutEducation} />
+              </div>
+            ) : null}
+          </div>
+          <div className={classes.EditsingleBox}>
+            <Form.Label>Basic Intro</Form.Label>
+            <div className="text-muted">
+              <small>
+                {charCounter(basicIntro)}/1000 characters left
+              </small>
+            </div>
+            <Form.Control
+              as="textarea"
+              name="basicIntro"
+              rows={5}
+              placeholder="Intro yourself"
+              onBlur={formik.handleBlur}
+              onChange={(e) => setBasicIntro(e.target.value)}
+              maxLength={1000}
+              defaultValue={
+                step5Response?.basic_intro != null
+                  ? String(step5Response?.basic_intro)
+                  : ""
+              }
+            />
+            {formik.touched.basicIntro && formik.errors.basicIntro ? (
+              <div className="pt-1">
+                <Errors error={formik.errors.basicIntro} />
+              </div>
+            ) : null}
+          </div>
+
+          <span>
+            <hr />
+            <h5 className="text-center p-3">Select your birth place</h5>
+          </span>
+          <CountrySingle
+            title="Birth Country"
+            setSelectedCountry={getSelectedCountry}
+            defaultValueCountry={step5Response?.pobCountry}
+          />
+          <StateSingle
+            title="Birth State"
+            setSelectedState={getSelectedState}
+            defaultValueCountry={selectedBirthCountry}
+            defaultValueState={step5Response?.pobState}
+          />
+          <CitySingle
+            title="Birth City"
+            defaultValueCountry={selectedBirthCountry}
+            defaultValueState={selectedBirthState}
+            defaultValueCity={step5Response?.pobCity}
+            setSelectedCity={getSelectedCity}
+          />
+
+          {error && (
+            <p className="text-muted">
+              <Errors error="Please solve above raised issues first before proceeding" />
+            </p>
+          )}
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

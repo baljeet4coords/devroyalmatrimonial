@@ -197,7 +197,6 @@
     }
 
     label {
-        // padding: 0.6rem;
         min-width: 140px;
         text-align: right;
     }
@@ -397,7 +396,7 @@
         }
     }
 
-    .singleHeightWrapper{
+    .singleHeightWrapper {
         width: 100%;
     }
 
@@ -470,6 +469,15 @@
     }
 
 
+    .heightwrapper {
+        text-align: start;
+        display: flex;
+        flex-direction: row;
+        gap: 0rem;
+        margin-left: 13%;
+        width: 32%;
+        justify-content: flex-start;
+    }
 
 
     // ---------------------Edit About ME ------------------
@@ -570,6 +578,9 @@
         .EditbuttonGroup {
             width: 100%;
             justify-content: center;
+        }
+        label {
+            text-align: left;
         }
     }
 

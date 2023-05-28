@@ -161,7 +161,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [avtarTouched, setAvtarTouched] = useState<boolean>(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-  const { mutate: registerUser, data, isLoading: step4loadingReq } = useStep1Register();
+  const { mutate: registerUser, data, isLoading: step1loadingReq } = useStep1Register();
 
 
   if (selectedPhotoName?.includes("uploads")) {
