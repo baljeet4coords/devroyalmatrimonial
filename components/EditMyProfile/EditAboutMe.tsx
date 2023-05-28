@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
-import { DiscribeYourself } from "../../types/enums";
-import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
 import { textAreaSchema } from "../../schemas/textAreaSchema";
@@ -23,19 +21,11 @@ interface MyComponentProps {
   FatchAgain: () => void;
 }
 
-interface ResponseDataType{
-  output :number;
-  status :number;
-  message:string;
-  jsonResponse:null
-}
 
 const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, FatchAgain }) => {
   const userId = useSelector(getUserId);
-  const stepFiveDefaultValues = useSelector(selectStep5Success);
-  const jsonData = stepFiveDefaultValues?.jsonResponse;
   const isReduxEmpty =
-    jsonData && Object.values(jsonData).every((value) => !value);
+    step5Response && Object.values(step5Response).every((value) => !value);
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);

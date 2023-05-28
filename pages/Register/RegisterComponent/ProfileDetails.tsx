@@ -199,31 +199,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloginSpiner(true);
-      const formData = new FormData();
-
-      formData.append("userId", String(values.userId));
-      formData.append("profilefor", String(values.profilefor));
-      formData.append("profileHandlerName", String(values.profileHandlerName));
-      formData.append(
-        "dob",
-        String(values.dob && convertTimeStamp(values.dob))
-      );
-      formData.append("selectgender", String(values.selectgender));
-      formData.append("fullname", String(values.fullname));
-      formData.append("cast", String(values.cast));
-      formData.append("challenged", String(values.challenged));
-      formData.append("isHiv", String(values.isHiv));
-      formData.append("mothertongue", String(values.mothertongue));
-      formData.append("religion", String(values.religion));
-      formData.append("isManglik", String(values.isManglik));
-      formData.append("maritalstatus", String(values.maritalstatus));
-      formData.append("childrenstatus", String(values.childrenstatus));
-      formData.append("height", String(values.height));
-      formData.append("profilepic", String(values.profilepic));
-      formData.append("image", image);
-      formData.append("actionType", isReduxEmpty ? 'c' : 'u');
-
-      const mutationResult = await registerUserMutation.mutateAsync(formData);
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, image, isReduxEmpty });
       if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(1);
         setloginSpiner(false);
