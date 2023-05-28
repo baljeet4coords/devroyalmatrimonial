@@ -1,11 +1,11 @@
 import { useQuery, useMutation } from "react-query";
 import axios from "axios";
 
-const Step1Formfill = async (formData: FormData): Promise<any> => {
+const Step1Formfill = async (values: any) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/registerUser/step1`,
-      formData,
+      values,
       {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -18,24 +18,25 @@ const Step1Formfill = async (formData: FormData): Promise<any> => {
   }
 };
 
-export const useRegisterUser = (isReduxEmpty: any) => {
-  const registerUserMutation = useMutation((formData: FormData) =>
-    Step1Formfill(formData)
+export const useStep1Register = () => {
+  const registerUserMutation = useMutation((value: any) =>
+    Step1Formfill(value)
   );
 
-  const registerUser = async (formData: FormData) => {
-    if (formData !== undefined) {
-      formData.append("actionType", isReduxEmpty === undefined ? "c" : "u");
-    }
-
-    return registerUserMutation.mutateAsync(formData);
-  };
-
   const Step1Query = () => {
-    const { data, isLoading, error } = useQuery("step1", () => registerUser);
+    const { data, isLoading, error } = useQuery("step1", () => Step1Formfill);
 
     return { data, isLoading, error };
   };
 
-  return { registerUser, ...registerUserMutation, ...Step1Query() };
+  return {
+    ...registerUserMutation,
+    ...Step1Query(),
+    Step1Formfill: (values: any) =>
+      new Promise((resolve, reject) => {
+        Step1Formfill(values)
+          .then((data) => resolve(data))
+          .catch((error) => reject(error));
+      }),
+  };
 };

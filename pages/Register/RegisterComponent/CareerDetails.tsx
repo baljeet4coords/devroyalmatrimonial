@@ -28,7 +28,7 @@ import { selectProfileCompletion } from "../../../ducks/profileCompletion/select
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 import * as Yup from "yup";
 // import Step2Formfill from "../../../hooks/useRegister/useStep2";
-import useApiPostRequest, { useSignupMutation } from "../../../hooks/useRegister/useStep2";
+import { useStep2Register } from "../../../hooks/useRegister/useStep2";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -103,7 +103,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
 
   const [loginSpiner, setloginSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-  const { mutate } = useSignupMutation();
+  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep2Register();
 
 
 
@@ -127,17 +127,17 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloginSpiner(true);
-      mutate(values, {
-        onSuccess: () => {
-          alert("Form submitted successfully");
-          setloginSpiner(false);
-        },
-        onError: (response) => {
-          alert("An error occured while submiting the form");
-          console.log(response);
-          setloginSpiner(false);
-        }
-      });
+
+      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      const resolvedData = await data;
+
+      if (resolvedData?.output  > 0) {
+        nextPage(2);
+        setloginSpiner(false);
+      } else {
+        setloginSpiner(false);
+      }
+
     },
   });
 

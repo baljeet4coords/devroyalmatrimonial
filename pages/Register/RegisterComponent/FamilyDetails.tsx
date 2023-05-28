@@ -31,6 +31,7 @@ import CitySingle from "../../../components/InputField/CountryStateSingle/CitySi
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import Loader from "../../../components/Loader/Loader";
 import router from "next/router";
+import { useStep4Register } from "../../../hooks/useRegister/useStep4";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -107,6 +108,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
+  const { mutate: registerUser, data, isLoading: step4loadingReq } = useStep4Register();
+
 
   const formik = useFormik({
     initialValues: {
@@ -125,32 +128,18 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
       livingWithParents: String(jsonData?.living_with_parents),
     },
     onSubmit: async (values: IRegisterStep4) => {
-      setloadingSpiner(true)
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-          {
-            actionType: "c",
-            ...values,
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-          {
-            actionType: "u",
-            ...values,
-          }
-        );
-      }
-      if (response.data.output > 0) {
-        // DisabledHeadingMessage(4);
+      setloadingSpiner(true);
+
+      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      const resolvedData = await data;
+
+      if (resolvedData?.output > 0) {
         nextPage(4);
         setloadingSpiner(false);
       } else {
         setloadingSpiner(false);
       }
+
     },
   });
 
