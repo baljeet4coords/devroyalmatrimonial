@@ -44,6 +44,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [loadingSpiner, setloadingSpiner] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -164,8 +165,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
         formik.errors.aboutFamily
       ) {
         setError(true);
+        setNextDisable(true)
       } else {
         setError(false);
+        setNextDisable(false)
       }
     } else {
       setMounted(true);
@@ -385,6 +388,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-center`}
                     // disabled={nextDisable}
+                    disabled={nextDisable}
                   >
                     {loadingSpiner && (
                       <Spinner
