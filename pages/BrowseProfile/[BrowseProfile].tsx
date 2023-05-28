@@ -16,7 +16,7 @@ const BrowseProfile: NextPage = () => {
   const router = useRouter();
   const [key, setKey] = useState("Brides");
 
-  const headimage = "browseProfile.jpg";
+  const headimage = "cover-image-register.jpg";
 
   const { BrowseProfile } = router.query;
 
@@ -52,7 +52,10 @@ const BrowseProfile: NextPage = () => {
       <div style={{ background: "#e7e6e6" }}>
         <Header />
         <HomeImage addBackground={headimage} />
-        <Container className={`${classes.Home_Page_Wrapper} px-0`}>
+        <h1 className="text-center text-danger py-5 my-5">
+          This Feature Is Coming Soon!
+        </h1>
+        {/* <Container className={`${classes.Home_Page_Wrapper} px-0`}>
           <Row className={`${classes.firstTopBox} pb-4`}>
             <Col sm={12} md={5} lg={6} className="d-flex align-items-end">
               <div className={classes.Home_heading}>
@@ -182,7 +185,7 @@ const BrowseProfile: NextPage = () => {
             </h1>
             <BrowserLink />
           </Row>
-        </Container>
+        </Container> */}
         <Footer />
       </div>
     </React.Fragment>
