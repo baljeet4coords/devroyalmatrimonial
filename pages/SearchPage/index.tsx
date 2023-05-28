@@ -1,6 +1,6 @@
 import classes from "./Search.module.scss";
 import { Container, Row, Col, Form, Accordion } from "react-bootstrap";
-import { Footer, Header } from "../../components/";
+import { Footer, LoginHeader } from "../../components/";
 import SearchByData from "./SearchByData";
 import SearchById from "./SearchByProfile";
 import React, { useState } from "react";
@@ -14,9 +14,12 @@ const Search: React.FC = () => {
   return (
     <>
       <div className={classes.background_banner}>
-        <Header />
+        <LoginHeader />
       </div>
-      <div className={`${classes.bg_gray} w-100 pb-5`}>
+      <h1 className="text-center text-danger py-5 my-5">
+        This Feature Is Coming Soon!
+      </h1>
+      {/* <div className={`${classes.bg_gray} w-100 pb-5`}>
         <Container className={`${classes.search_main} w-75`}>
           <Row>
             <Col sm={6} className="px-0">
@@ -47,7 +50,7 @@ const Search: React.FC = () => {
         </Container>
 
         {searchData == "searchByData" ? <SearchByData /> : <SearchById />}
-      </div>
+      </div> */}
       <Footer />
     </>
   );
