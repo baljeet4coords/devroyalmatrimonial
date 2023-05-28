@@ -7,101 +7,152 @@ import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
 import {
   BloodGroup,
+  CarType,
   Diet,
+  HouseType,
   OwnHouseCar,
   Pets,
   SmokeDrink,
   Thalassemia,
 } from "../../types/enums";
 import { CiPillsBottle1 } from "react-icons/ci";
+import * as Yup from "yup";
+import { selectStep3Success } from "../../ducks/regiserUser/step3/selectors";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
+import SingleInput from "../InputField/SingleInputField";
+import { useStep3Register } from "../../hooks/useRegister/useStep3";
+
+
 
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
   step3Response: any;
+  FatchAgain: () => void;
 }
-const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response }) => {
-  const [selectedDiet, setSelectedDiet] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-  const [selectedSmoking, setSelectedSmoking] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-  const [selectedDrinking, setSelectedDrinking] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-  const [selectedLovePets, setSelectedLovePets] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-  const [selectedOwnsHouse, setSelectedOwnsHouse] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
 
-  const [selectedOwnsCar, setSelectedOwnsCar] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+interface Data {
+  id?: string | null;
+  val: string;
+}
 
-  const [selectedBloodGroup, setSelectedBloodGroup] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, FatchAgain }) => {
+  const userId = useSelector(getUserId);
+  const stepThreeDefaultValues = useSelector(selectStep3Success);
+  const jsonData = stepThreeDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
+  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep3Register();
 
-  const [selectedThalassemia, setSelectedThalassemia] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+
+
+  const [diet, setDiet] = useState<Data>({
+    id: String(step3Response?.diet),
+    val: "",
+  });
+
+  const [smoking, setSmoking] = useState<Data>({
+    id: String(step3Response?.smoking),
+    val: "",
+  });
+
+  const [drinking, setDrinking] = useState<Data>({
+    id: String(step3Response?.drinking),
+    val: "",
+  });
+
+  const [lovePets, setLovePets] = useState<Data>({
+    id: String(step3Response?.love_pets),
+    val: "",
+  });
+
+  const [ownsHouse, setOwnsHouse] = useState<Data>({
+    id: String(step3Response?.Owns_house),
+    val: "",
+  });
+
+  const [ownsCar, setOwnsCar] = useState<Data>({
+    id: String(step3Response?.Owns_car),
+    val: "",
+  });
+
+  const [bloodGroup, setBloodGroup] = useState<Data>({
+    id: String(step3Response?.blood_group),
+    val: "",
+  });
+
+  const [thalassemia, setThalassemia] = useState<Data>({
+    id: String(step3Response?.Thalassemia),
+    val: "",
+  });
+
+  const [housetype, setHousetype] = useState<string[]>(
+    step3Response?.home_type || []
+  );
+  const [cartype, setCartype] = useState<string[]>(
+    step3Response?.car_details || []
+  );
 
   //form state
 
   const formik = useFormik({
     initialValues: {
-      diet: selectedDiet?.val,
-      smoking: selectedSmoking?.val,
-      drinking: selectedDrinking?.val,
-      love_pets: selectedLovePets?.val,
-      own_house: selectedOwnsHouse?.val,
-      own_car: selectedOwnsCar?.val,
-      blood_group: selectedBloodGroup?.val,
-      thalassemia: selectedThalassemia?.val,
+      userId: userId,
+      diet: String(step3Response?.diet),
+      smoking: String(step3Response?.smoking),
+      drinking: String(step3Response?.drinking),
+      lovePets: String(step3Response?.love_pets),
+      ownsHouse: String(step3Response?.Owns_house),
+      ownsCar: String(step3Response?.Owns_car),
+      bloodGroup: String(step3Response?.blood_group),
+      thalassemia: String(step3Response?.Thalassemia),
+      religiousBelief: step3Response?.religious_belief,
+      cartype: step3Response?.car_details || null,
+      housetype: step3Response?.home_type || null,
     },
-    // validationSchema: SignupSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 1));
-      setEditDetails(false);
+    validationSchema: Yup.object({
+      religiousBelief: Yup.string()
+        .min(3, "Must be 3 characters or more")
+        .required("Required"),
+    }),
+    onSubmit: async (values) => {
+      registerUser({
+        ...values,
+        actionType: isReduxEmpty ? "c" : "u",
+        housetype: JSON.stringify(housetype),
+        cartype: JSON.stringify(cartype),
+      });
+      const resolvedData = await data;
+      if (resolvedData?.output && resolvedData?.output > 0) {
+        FatchAgain();
+        setEditDetails(false);
+      }
     },
   });
 
   useEffect(() => {
-    formik.values.diet = selectedDiet.val;
-    formik.values.smoking = selectedSmoking.val;
-    formik.values.drinking = selectedDrinking.val;
-    formik.values.love_pets = selectedLovePets.val;
-    formik.values.own_house = selectedOwnsCar.val;
-    formik.values.own_car = selectedOwnsCar.val;
-    formik.values.blood_group = selectedBloodGroup.val;
-    formik.values.thalassemia = selectedThalassemia.val;
+    formik.values.diet = diet.id || "";
+    formik.values.smoking = smoking.id || "";
+    formik.values.drinking = drinking.id || "";
+    formik.values.lovePets = lovePets.id || "";
+    formik.values.ownsHouse = ownsHouse.id || "";
+    formik.values.ownsCar = ownsCar.id || "";
+    formik.values.bloodGroup = bloodGroup.id || "";
+    formik.values.thalassemia = thalassemia.id || "";
   }, [
-    selectedDiet.id,
-    selectedSmoking.id,
-    selectedDrinking.id,
-    selectedLovePets.id,
-    selectedOwnsCar.id,
-    selectedBloodGroup.id,
-    selectedThalassemia.id,
+    bloodGroup.id,
+    diet.id,
+    drinking.id,
     formik.values,
-    selectedDiet.val,
-    selectedSmoking.val,
-    selectedDrinking.val,
-    selectedLovePets.val,
-    selectedOwnsCar.val,
-    selectedBloodGroup.val,
-    selectedThalassemia.val,
+    lovePets.id,
+    ownsCar.id,
+    ownsHouse.id,
+    smoking.id,
+    thalassemia.id,
+    cartype,
+    housetype,
   ]);
+
 
   return (
     <>
@@ -117,89 +168,135 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response }) 
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedDiet}
+                selectedDataFn={setDiet}
                 title="Diet"
                 data={Diet}
                 nameid="diet"
-                defaultValue={step3Response?.diet}
+                defaultValue={String(step3Response?.diet)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedSmoking}
+                selectedDataFn={setSmoking}
                 title="Smoking"
                 data={SmokeDrink}
                 nameid="smoking"
-                defaultValue={step3Response?.smoking}
+                defaultValue={String(step3Response?.smoking)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedDrinking}
+                selectedDataFn={setDrinking}
                 title="Drinking"
                 data={SmokeDrink}
                 nameid="drinking"
-                defaultValue={step3Response?.drinking}
+                defaultValue={String(step3Response?.drinking)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedLovePets}
+                selectedDataFn={setLovePets}
                 title="Love Pets"
                 data={Pets}
-                nameid="love_pets"
-                defaultValue={step3Response?.love_pets}
+                nameid="lovePets"
+                defaultValue={String(step3Response?.love_pets)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedOwnsHouse}
+                selectedDataFn={setOwnsHouse}
                 title="Owns House"
                 data={OwnHouseCar}
-                nameid="own_house"
-                defaultValue={step3Response?.Owns_house}
+                nameid="ownsHouse"
+                defaultValue={String(step3Response?.Owns_house)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
+              {ownsHouse && ownsHouse?.id == "1" && (
+                <SingleInput
+                  data={HouseType}
+                  inputName={"Type of House"}
+                  onChange={setHousetype}
+                  defaultValues={step3Response?.home_type || []
+                  }
+                  isFromRegistered={true}
+                />
+              )}
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedOwnsCar}
+                selectedDataFn={setOwnsCar}
                 title="Owns Car"
                 data={OwnHouseCar}
-                nameid="own_car"
-                defaultValue={step3Response?.Owns_car}
+                nameid="ownsCar"
+                defaultValue={String(step3Response?.Owns_car)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
+              {ownsCar && ownsCar?.id == "1" && (
+                <SingleInput
+                  data={CarType}
+                  inputName={"Type of car"}
+                  onChange={setCartype}
+                  defaultValues={step3Response?.car_details || []
+                  }
+                  isFromRegistered={true}
+                />
+              )}
+            </div>
+          </div>
+          <div className={classes.singleBoxWrapper}>
+            <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedBloodGroup}
+                selectedDataFn={setBloodGroup}
                 title="Blood Group"
                 data={BloodGroup}
-                nameid="blood_group"
-                defaultValue={step3Response?.blood_group}
+                nameid="bloodGroup"
+                defaultValue={String(step3Response?.blood_group)}
               />
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedThalassemia}
+                selectedDataFn={setThalassemia}
                 title="Thalassemia "
                 data={Thalassemia}
                 nameid="thalassemia"
-                defaultValue={step3Response?.Thalassemia}
+                defaultValue={String(step3Response?.Thalassemia)}
               />
+            </div>
+          </div>
+
+          <div className={classes.singleBox}>
+            <Form.Label>Religious Belief</Form.Label>
+            <div className={classes.inputBox}>
+              <li className={classes.blankInput}>
+                <Form.Control
+                  type="text"
+                  name="religiousBelief"
+                  className={classes.inputplacholder}
+                  placeholder={"About Religious Belief"}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  defaultValue={step3Response?.religious_belief}
+                />
+              </li>
+
             </div>
           </div>
           <div className={classes.EditbuttonGroup}>

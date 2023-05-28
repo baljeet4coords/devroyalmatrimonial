@@ -14,16 +14,34 @@ import Errors from "../Errors/Errors";
 import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../InputField/CountryStateSingle/CitySingle";
+import { useStep5Register } from "../../hooks/useRegister/useStep5";
+import { selectStep5Success } from "../../ducks/regiserUser/step5/selectors";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
   step5Response: any;
+  FatchAgain: () => void;
 }
-const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response }) => {
+
+interface ResponseDataType{
+  output :number;
+  status :number;
+  message:string;
+  jsonResponse:null
+}
+
+const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, FatchAgain }) => {
   const userId = useSelector(getUserId);
+  const stepFiveDefaultValues = useSelector(selectStep5Success);
+  const jsonData = stepFiveDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);
+  const { mutate: registerUser, data, isLoading: step5loadingReq } = useStep5Register();
+
+
   const [aboutCareer, setAboutCareer] = useState<string>(
     step5Response && step5Response.about_career ? step5Response.about_career : ""
   );
@@ -60,14 +78,37 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response })
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
-      // registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      // const resolvedData = await data;
-
-      // resolvedData.output > 0 && router.push("/DesiredProfile");
-      console.log(JSON.stringify(values, null, 1));
-      setAboutMeDetails(false);
+      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      const resolvedData  = await data;
+      if (resolvedData?.output && resolvedData?.output > 0) {
+        FatchAgain();
+        setAboutMeDetails(false);
+      }
     },
   });
+
+  useEffect(() => {
+    formik.values.birthCountry = selectedBirthCountry;
+    formik.values.birthState = selectedBirthState;
+    formik.values.birthCity = selectedBirthCity;
+    formik.values.aboutCareer = aboutCareer;
+    formik.values.aboutFamily = aboutFamily;
+    formik.values.aboutEducation = aboutEducation;
+    formik.values.basicIntro = basicIntro;
+  }, [
+    formik.values,
+    formik.errors.aboutCareer,
+    formik.errors.basicIntro,
+    formik.errors.aboutEducation,
+    formik.errors.aboutFamily,
+    selectedBirthCountry,
+    selectedBirthState,
+    selectedBirthCity,
+    aboutCareer,
+    aboutFamily,
+    aboutEducation,
+    basicIntro,
+  ]);
 
 
   useEffect(() => {
@@ -225,6 +266,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response })
             />
             {formik.touched.aboutEducation &&
               formik.errors.aboutEducation ? (
+              console.log(formik.errors.aboutEducation),
               <div className="pt-1">
                 <Errors error={formik.errors.aboutEducation} />
               </div>

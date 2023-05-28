@@ -61,20 +61,11 @@ const MyProfile: React.FC = () => {
 
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
-  console.log(isMyprofileLoading, 'loading');
-
-  const [myProfileObjectVal, setmyProfileObjectVal] = useState(myProfileObject);
-
-
-  useEffect(() => {
-    setmyProfileObjectVal(myProfileObject)
-  }, [myProfileObject])
-
-  const step1Response = myProfileObjectVal?.step1.jsonResponse;
-  const step2Response = myProfileObjectVal?.step2.jsonResponse;
-  const step3Response = myProfileObjectVal?.step3.jsonResponse;
-  const step4Response = myProfileObjectVal?.step4.jsonResponse;
-  const step5Response = myProfileObjectVal?.step5.jsonResponse;
+  const step1Response = myProfileObject?.step1.jsonResponse;
+  const step2Response = myProfileObject?.step2.jsonResponse;
+  const step3Response = myProfileObject?.step3.jsonResponse;
+  const step4Response = myProfileObject?.step4.jsonResponse;
+  const step5Response = myProfileObject?.step5.jsonResponse;
 
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
@@ -82,7 +73,7 @@ const MyProfile: React.FC = () => {
 
   const FatchAgain = () => {
     setTimeout(() =>
-      dispatch(myProfileReq({ actionType: "v", userId: userId })), 50
+      dispatch(myProfileReq({ actionType: "v", userId: userId })), 100
     )
   }
 
@@ -245,6 +236,7 @@ const MyProfile: React.FC = () => {
                         <EditAboutMe
                           step5Response={step5Response}
                           setAboutMeDetails={setAboutMeDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <AboutMeDetails
@@ -257,6 +249,7 @@ const MyProfile: React.FC = () => {
                         <EditEducationAmdCareer
                           step2Response={step2Response}
                           setEudcationAndCareer={setEudcationAndCareer}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <EducationAndCareer
@@ -269,6 +262,7 @@ const MyProfile: React.FC = () => {
                         <EditFamilyDetails
                           step4Response={step4Response}
                           setFamilyDetails={setFamilyDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <FamilydetailsInfo
@@ -281,6 +275,7 @@ const MyProfile: React.FC = () => {
                         <EditLifeStyle
                           step3Response={step3Response}
                           setEditDetails={setLifeStyleDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <LifeStyleDetails
@@ -289,11 +284,6 @@ const MyProfile: React.FC = () => {
                         />
                       )}
                       <hr />
-                      {/* {yourLikesDetails ? (
-  <EditYourLikes setEditDetails={setYourLikesDetails} />
-) : (
-  <LikeDetails setEditDetails={setYourLikesDetails} />
-)} */}
                       <div className={classes.datecont}>
                         {/* <p>Last updated on 15th Feb, 2023</p> */}
                       </div>
