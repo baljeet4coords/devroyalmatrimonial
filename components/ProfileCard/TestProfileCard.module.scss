@@ -1,0 +1,200 @@
+@import "../../styles/constants.scss";
+
+.CardMain {
+    height: 20rem;
+    width: 55rem;
+    background-color: rgb(187, 187, 187);
+    margin: auto;
+    margin-bottom: 3rem;
+    border-radius: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    gap: 3px;
+
+    .profileSection {
+        flex-basis: 25%;
+        background-color: rgb(255, 255, 255);
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+
+        .profile_Photo {
+            height: 160px;
+            width: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            margin: 0 auto;
+        }
+
+        .name_Heading {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 26px;
+            position: relative;
+            width: fit-content;
+            margin-bottom: 0;
+        }
+
+        .name_Heading::after {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-image: url("https://img.uxwing.com/wp-content/themes/uxwing/download/arts-graphic-shapes/verified-symbol-icon.svg");
+        }
+
+        .active_Status {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 22px;
+            color: gainsboro;
+            margin-bottom: 0;
+
+            span {
+                color: black;
+                text-align: right;
+                display: block;
+            }
+        }
+    }
+
+    .infoSection {
+        flex-basis: 75%;
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        height: 100%;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        .info_Header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name_Heading {
+                font-size: 20px;
+                font-weight: 500;
+                line-height: 26px;
+                width: fit-content;
+                margin-bottom: 0;
+            }
+
+            .id_Heading {
+                font-size: 14px;
+                color: gray;
+                font-weight: 600;
+
+                span {
+                    color: black;
+
+                }
+            }
+        }
+
+        .info_Details {
+            height: 80%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .info_Tag_Section {
+                display: grid;
+                grid-template-columns: repeat(3, auto);
+                grid-gap: 15px 10px;
+
+                .info_Tag {
+                    display: flex;
+
+                    svg {
+                        height: 21px;
+                        width: 21px;
+                        color: #dc3545;
+                        font-weight: 600;
+                        margin-right: 10px;
+                        flex-basis: 11%;
+                    }
+
+                    p {
+                        font-weight: 500;
+                        color: rgb(31, 30, 30);
+                    }
+                }
+            }
+
+            .mySelf {
+
+
+                p {
+                    color: gray;
+                    font-size: 12px;
+                    line-height: 22px;
+                    font-weight: 400;
+
+                    span {
+                        font-weight: 600;
+                        color: black;
+                    }
+                }
+            }
+
+            .card_Button_Wrapper {
+                width: 100%;
+                height: 20%;
+                display: flex;
+                gap: 20px;
+                margin-top: 10px;
+
+
+                Button {
+                    display: flex;
+                    background-color: transparent;
+                    gap: 5px;
+                    align-items: center;
+                    color: black;
+                    font-weight: 600;
+                    border: none;
+                    border-radius: 0%;
+                    width: fit-content;
+                    outline: none;
+                    border-bottom: 1px solid #dc3545;
+                    font-size: 14px;
+                    padding: 8px;
+                    border-top-right-radius: 15px;
+                    border-top-left-radius: 15px;
+
+                    svg {
+                        height: 22px;
+                        width: 22px;
+                        color: #dc3545;
+                    }
+
+                }
+
+                Button:hover {
+                    color: #dc3545;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+                }
+
+            }
+        }
+    }
+
+    // .ActionSection {
+    //     flex-basis: 10%;
+    //     background-color: rgb(255, 255, 255);
+    //     border-top-right-radius: 20px;
+    //     border-bottom-right-radius: 20px;
+    // }
+
+    p {
+        margin-bottom: 0;
+    }
+}
