@@ -13,10 +13,13 @@ const TestProfileCard = () => {
         <div className={classes.CardMain}>
             <div className={classes.profileSection}>
                 <img className={classes.profile_Photo} src='http://localhost:3000/Images/profile_image.webp' alt='userphoto' />
-                <h5 className={classes.name_Heading}>Sweta Singh</h5>
                 <div>
-                    <h5 className={classes.active_Status}>Active on :</h5>
-                    <h5 className={classes.active_Status}> <span> 19-Feb-23 at 04:15pm</span></h5>
+
+                    <h5 className={classes.name_Heading}>Sweta Singh</h5>
+                    <div>
+                        <h5 className={classes.active_Status}>Active on :</h5>
+                        <h5 className={classes.active_Status}> <span> 19-Feb-23 at 04:15pm</span></h5>
+                    </div>
                 </div>
             </div>
             <div className={classes.infoSection}>
@@ -26,40 +29,55 @@ const TestProfileCard = () => {
                         #<span>WSYY4227</span>
                     </p>
                 </div>
-                <hr />
-
+                <hr className="dotted" />
                 <div className={classes.info_Details}>
                     <div className={classes.info_Tag_Section}>
                         <div className={classes.info_Tag}>
-                            <GiBodyHeight />
-                            <p>5ft 2in -157cms</p>
+                            <div>
+                                <GiBodyHeight />
+                            </div>
+                            <p>5ft 11in -157cms</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <BiCalendar />
+                            <div>
+                                <BiCalendar />
+                            </div>
                             <p>35 Yrs</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <MdLocationOn />
+                            <div>
+                                <MdLocationOn />
+                            </div>
                             <p>New Delhi</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <GiSpellBook />
-                            <p>Hindu</p>
+                            <div>
+                                <GiSpellBook />
+                            </div>
+                            <p>Buddhist</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <GiCottonFlower />
-                            <p>Hindu: Arora</p>
+                            <div>
+                                <GiCottonFlower />
+                            </div>
+                            <p>Hindu: Brahmin Chittpavan Kokanastha</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <GiGraduateCap />
-                            <p>B.Sc</p>
+                            <div>
+                                <GiGraduateCap />
+                            </div>
+                            <p>MS Engineering</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <GiBriefcase />
+                            <div>
+                                <GiBriefcase />
+                            </div>
                             <p>Civil Services</p>
                         </div>
                         <div className={classes.info_Tag}>
-                            <GiLovers />
+                            <div>
+                                <GiLovers />
+                            </div>
                             <p>Never Married</p>
                         </div>
                     </div>
@@ -69,7 +87,7 @@ const TestProfileCard = () => {
                             <span>
                                 MySelf : {' '}
                             </span>
-                            I You Can Copy And Paste The Essay Or Provide The Specific Details, And Ll Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help You With Your Friends Essay. However, Please Note That As An AI Language Model.
+                            I You Can Copy And Paste The Essay Or Provide The Specific Details, And Ll Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help You With Your Friends Essay. However, Please Note That As An AI Language Model....
                         </p>
                     </div>
 
