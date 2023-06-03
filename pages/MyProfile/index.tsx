@@ -33,6 +33,7 @@ import Loader from "../../components/Loader/Loader";
 import { ImageGallery } from "../../components";
 import axios from "axios";
 import { isNull } from "lodash";
+import ProtectedRouting from "../../HOCs/ProtectedRouting";
 
 interface ImageResponse {
   coverImage?: string[];
@@ -124,14 +125,13 @@ const MyProfile: React.FC = () => {
     getImages();
   }, [userId]);
 
-
-
   const onPreviewAlbum = (visible: boolean) => {
     setShowGallery(visible);
     if (galleryRef.current === null) {
-      window.innerWidth <= 667 ? window.scrollTo(0, 1000) : window.scrollTo(0, 700);
+      window.innerWidth <= 667
+        ? window.scrollTo(0, 1000)
+        : window.scrollTo(0, 700);
     }
-
   };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -156,11 +156,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
-              }
+                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
+                }
               : {
-                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-              }
+                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+                }
           }
         >
           {!imageResponse?.coverImage && (
@@ -294,4 +294,4 @@ const MyProfile: React.FC = () => {
   );
 };
 
-export default MyProfile;
+export default ProtectedRouting(MyProfile);

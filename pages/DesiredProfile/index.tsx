@@ -44,6 +44,7 @@ import {
 import Loader from "../../components/Loader/Loader";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import router from "next/router";
+import ProtectedRouting from "../../HOCs/ProtectedRouting";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -548,4 +549,4 @@ const DesiredProfilePage: React.FC = () => {
   );
 };
 
-export default DesiredProfilePage;
+export default ProtectedRouting(DesiredProfilePage);
