@@ -2,31 +2,35 @@ import React, { FunctionComponent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthSuccess } from "../ducks/auth/selectors";
 import { useRouter } from "next/router";
+// import LandingSkeleton from "../pages/LandingPage/LandingSkeleton";
+import LandingPage from "../pages/LandingPage/LandingPage";
 
-type SetterDrawerHOCProps = {
+type ProtectedRoutingHOCProps = {
   // Props for the component being wrapped
 };
 
-const ProtectedRouting = <P extends SetterDrawerHOCProps>(
+const ProtectedRouting = <P extends ProtectedRoutingHOCProps>(
   WrappedComponent: FunctionComponent<P>
 ): FunctionComponent<P> => {
-  const HeaderDrawerHOC: FunctionComponent<P> = (props) => {
+  const RouterHOC: FunctionComponent<P> = (props) => {
     const router = useRouter();
     const authSuccess = useSelector(selectAuthSuccess);
     const authToken = authSuccess?.token;
 
     useEffect(() => {
-      !authToken && router.push("/");
-    }, [authToken]);
+      if (!authToken) {
+        router.push("/");
+      }
+    }, [authToken, router]);
 
-    return (
-      <>
-        <WrappedComponent {...props} />
-      </>
-    );
+    if (!authToken) {
+      return <LandingPage />;
+    }
+
+    return <WrappedComponent {...props} />;
   };
 
-  return HeaderDrawerHOC;
+  return RouterHOC;
 };
 
 export default ProtectedRouting;

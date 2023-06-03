@@ -152,7 +152,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                         })
                       }
                       className={
-                        HostedArray.includes(id) ? classes.tabActive : ""
+                        HostedArray.includes(+id) ? classes.tabActive : ""
                       }
                     >
                       <span>{name.replaceAll("_", " ")}</span>
