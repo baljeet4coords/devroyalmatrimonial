@@ -1,3 +1,4 @@
+import _ from "lodash";
 import classes from "./SingleInput.module.scss";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
@@ -142,6 +143,8 @@ const SingleInput: React.FC<MyComponentProps> = ({
               {searchHostedArray.length > 0 ? (
                 searchHostedArray.map((item) => {
                   const [name, id] = item.split("-");
+                  console.log(HostedArray,name,id,"name id");
+                  
                   return (
                     <li
                       key={item}
@@ -152,7 +155,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
                         })
                       }
                       className={
-                        HostedArray.includes(+id) ? classes.tabActive : ""
+                        _.map(HostedArray, String).includes(id) ? classes.tabActive : ""
                       }
                     >
                       <span>{name.replaceAll("_", " ")}</span>
