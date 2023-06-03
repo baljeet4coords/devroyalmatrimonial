@@ -54,8 +54,6 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
       setStateCode(stateOfCountry[step2Response?.state].isoCode);
-    console.log(countryCode, stateCode, cityOfState[step2Response?.city]?.name, getCity(), "....");
-
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {

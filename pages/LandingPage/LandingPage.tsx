@@ -313,7 +313,7 @@ const LandingPage: React.FC = () => {
               assist in finding a perfect life partner.
             </p>
           </Col>
-
+            
           <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/express-yourself.gif" alt="pic" />
             <h3>Express your preferences</h3>
