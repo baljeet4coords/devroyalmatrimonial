@@ -125,10 +125,6 @@ const MyProfile: React.FC = () => {
     getImages();
   }, [userId]);
 
-  useEffect(() => {
-    console.log(window.scrollY, "window.innerHeight");
-  }, [window.scrollY]);
-
   const onPreviewAlbum = (visible: boolean) => {
     setShowGallery(visible);
     if (galleryRef.current === null) {

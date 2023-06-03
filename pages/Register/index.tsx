@@ -57,7 +57,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   //     setDisabledHeading(4)
   //   }
   // }, [pageNo])
-
+  
 
 
   const chooseMessage = (message: number) => {
@@ -127,8 +127,9 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "}  ${classes.topButtons
-                  }`}
+                className={`${active === index ? classes.active : " "}  ${
+                  classes.topButtons
+                }`}
                 onClick={() => chooseMessage(index)}
               >
                 {heading}
