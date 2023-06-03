@@ -17,6 +17,7 @@ import storage from "redux-persist/es/storage";
 import { TbPlayerTrackPrev } from "react-icons/tb";
 // import { selectProfileCompletion } from "../../ducks/profileCompletion/selector";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import ProtectedRouting from "../../HOCs/ProtectedRouting";
 // import { updateProfileCompleteness } from "../../ducks/profileCompletion/actions";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
@@ -149,4 +150,4 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   );
 };
 
-export default RegisterDetails;
+export default ProtectedRouting(RegisterDetails);
