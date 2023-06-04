@@ -14,7 +14,7 @@ const ProfileCard: React.FC = () => {
       details: {
         img: "./Images/profile_image.webp",
         name: "Sweta Singh",
-        id: "(WSYY4227)",
+        id: "(WSYY1227)",
         lastSeen: "Last seen on 19-Feb-23",
       },
       subDetail: {

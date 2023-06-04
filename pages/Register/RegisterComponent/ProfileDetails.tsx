@@ -48,29 +48,6 @@ type FormValues = {
   profilepic: string;
 };
 
-// const validate = (values: FormValues) => {
-//   const errors: Partial<FormValues> = {};
-
-//   if (!values.profileHandlerName) {
-//     errors.profileHandlerName = "Required";
-//   } else if (values.profileHandlerName.length < 3) {
-//     errors.profileHandlerName = "Must be 3 characters or more";
-//   }
-
-//   if (!values.fullname) {
-//     errors.fullname = "Required";
-//   } else if (values.fullname.length < 3) {
-//     errors.fullname = "Must be 3 characters or more";
-//   }
-
-//   if (!values.profilepic) {
-//     errors.profilepic = "Required";
-//   } else {
-//     errors.profilepic = "";
-//   }
-
-//   return errors;
-// };
 
 import {
   convertDateStringTimeStamp,
@@ -99,6 +76,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const userId = useSelector(getUserId);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
+  
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);

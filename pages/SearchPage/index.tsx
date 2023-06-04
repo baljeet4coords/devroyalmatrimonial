@@ -1,25 +1,24 @@
 import classes from "./Search.module.scss";
-import { Container, Row, Col, Form, Accordion } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Footer, LoginHeader } from "../../components/";
-import SearchByData from "./SearchByData";
-import SearchById from "./SearchByProfile";
 import React, { useState } from "react";
 
 const Search: React.FC = () => {
   const [searchData, setSearchData] = useState<string>("searchByData");
 
-  const DataOnclick = (searchtype: string) => {
-    setSearchData(searchtype);
-  };
+  // const DataOnclick = (searchtype: string) => {
+  //   setSearchData(searchtype);
+  // };
   return (
     <>
-      <div className={classes.background_banner}>
-        <LoginHeader />
-      </div>
-      <h1 className="text-center text-danger py-5 my-5">
-        This Feature Is Coming Soon!
-      </h1>
-      {/* <div className={`${classes.bg_gray} w-100 pb-5`}>
+      <div className={classes.bg}>
+        <Container fluid className={classes.background_banner}>
+          <LoginHeader />
+        </Container>
+        <h1 className="text-center text-danger py-5 my-5">
+          This Feature Is Coming Soon!
+        </h1>
+        {/* <div className={`${classes.bg_gray} w-100 pb-5`}>
         <Container className={`${classes.search_main} w-75`}>
           <Row>
             <Col sm={6} className="px-0">
@@ -51,6 +50,7 @@ const Search: React.FC = () => {
 
         {searchData == "searchByData" ? <SearchByData /> : <SearchById />}
       </div> */}
+      </div>
       <Footer />
     </>
   );

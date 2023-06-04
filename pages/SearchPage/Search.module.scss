@@ -1,11 +1,9 @@
 // Search
 .background_banner {
-  background: url("../../public/Images/cover_img_free_chat.jpg");
-  // background-position: center;
-  // background-repeat: no-repeat;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
+  padding: 3rem 0 15rem 0;
   background-size: cover;
-  height: 60vh;
-  background-position-y: top;
 
   @media only screen and (max-width: 990px) and (min-width: 768px) {
     height: 30vh;
@@ -145,9 +143,6 @@
   }
 }
 
-
-
-
 @media only screen and (max-width: 676px) {
   .background_banner {
     height: 36vh;
@@ -196,9 +191,7 @@
       }
     }
   }
-
 }
-
 
 @media only screen and (max-width: 415px) {
   .bg_gray {
@@ -225,15 +218,10 @@
   }
 }
 
-
-
-
 @media only screen and (max-width: 300px) {
   .bg_gray {
     .Search_body {
-
       .search_group {
-
         .Button_Group {
           width: 100%;
 
@@ -266,5 +254,4 @@
       }
     }
   }
-
 }
