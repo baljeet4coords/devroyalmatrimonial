@@ -249,7 +249,8 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.religious_belief) {
       formik.values.religiousBelief = jsonData.religious_belief;
     }
-  }, [jsonData, formik.values]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jsonData, jsonData?.religious_belief]);
 
   return (
     <div className={classes.profile_Container}>

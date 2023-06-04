@@ -76,7 +76,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const userId = useSelector(getUserId);
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
-  
 
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
@@ -396,6 +395,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.dob) {
       formik.values.dob = jsonData.dob;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData]);
 
   const handleDateTimeChange = (value: Date) => {
