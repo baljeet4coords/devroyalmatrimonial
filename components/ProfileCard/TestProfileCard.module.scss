@@ -1,25 +1,26 @@
 @import "../../styles/constants.scss";
 
 .CardMain {
-    height: 20rem;
-    width: 55rem;
-    background-color: rgb(187, 187, 187);
+    background-color: #fff;
     margin: auto;
     margin-bottom: 3rem;
     border-radius: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     display: flex;
-    gap: 3px;
+    gap: 1px;
+    cursor: pointer;
+    margin: 3rem 10.5rem;
 
     .profileSection {
         flex-basis: 25%;
-        background-color: rgb(255, 255, 255);
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
         padding: 20px;
         display: flex;
         gap: 10px;
         flex-direction: column;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        border-radius: inherit;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
 
         .profile_Photo {
             height: 160px;
@@ -56,22 +57,21 @@
             line-height: 22px;
             color: gainsboro;
             margin-bottom: 0;
+            display: inline-block;
 
             span {
                 color: black;
                 text-align: right;
                 display: block;
+                margin-left: 3px;
             }
         }
     }
 
     .infoSection {
         flex-basis: 75%;
-        background-color: rgb(255, 255, 255);
         padding: 20px;
         height: 100%;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
 
         .info_Header {
             display: flex;
@@ -147,28 +147,24 @@
 
             .card_Button_Wrapper {
                 width: 100%;
-                height: 20%;
                 display: flex;
                 gap: 20px;
                 margin-top: 10px;
+                flex-wrap: wrap;
 
 
                 Button {
                     display: flex;
-                    background-color: transparent;
                     gap: 5px;
                     align-items: center;
                     color: black;
                     font-weight: 600;
                     border: none;
-                    border-radius: 0%;
-                    width: fit-content;
                     outline: none;
-                    border-bottom: 1px solid #dc3545;
                     font-size: 14px;
-                    padding: 8px;
-                    border-top-right-radius: 15px;
-                    border-top-left-radius: 15px;
+                    background: #dc354517;
+                    border-radius: 30px;
+                    height: 36px;
 
                     svg {
                         height: 22px;
@@ -187,14 +183,203 @@
         }
     }
 
-    // .ActionSection {
-    //     flex-basis: 10%;
-    //     background-color: rgb(255, 255, 255);
-    //     border-top-right-radius: 20px;
-    //     border-bottom-right-radius: 20px;
-    // }
 
     p {
         margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 1020px) and (min-width: 601px) {
+    .CardMain {
+
+        margin: 3rem 5rem;
+
+
+        .infoSection {
+            .info_Details {
+                height: 80%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .info_Tag_Section {
+                    grid-template-columns: repeat(2, auto);
+
+                    .info_Tag {
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                        }
+                    }
+
+                    .card_Button_Wrapper {
+                        width: 100%;
+                        display: flex;
+                        gap: 20px;
+                        margin-top: 10px;
+                        flex-wrap: wrap;
+
+
+                        Button {
+                            font-size: 11px;
+
+                            svg {
+                                height: 15px;
+                                width: 15px;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+@media only screen and (max-width: 600px) and (min-width: 350px) {
+    .CardMain {
+        flex-direction: column;
+        margin: 3rem 1rem;
+
+        .profileSection {
+            flex-direction: row;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px;
+            border-radius: 0;
+            border-top-right-radius: initial;
+            border-top-left-radius: initial;
+            gap: 30px;
+
+            .profile_Photo {
+                height: 100px;
+                width: 100px;
+                margin: 0;
+            }
+
+            .name_Heading+div {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+        }
+
+        .infoSection {
+            .info_Details {
+                height: 80%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .info_Tag_Section {
+                    grid-template-columns: repeat(2, auto);
+
+                    .info_Tag {
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                        }
+                    }
+
+                    .card_Button_Wrapper {
+                        width: 100%;
+                        display: flex;
+                        gap: 20px;
+                        margin-top: 10px;
+                        flex-wrap: wrap;
+
+
+                        Button {
+                            font-size: 11px;
+
+                            svg {
+                                height: 15px;
+                                width: 15px;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+@media only screen and (max-width: 348px) {
+    .CardMain {
+        flex-direction: column;
+        margin: 3rem 1rem;
+
+        .profileSection {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 0px, rgba(0, 0, 0, 0.06) 0px 1px 1px 0px;
+            border-radius: 0;
+            border-top-right-radius: initial;
+            border-top-left-radius: initial;
+            gap: 10px;
+
+            .profile_Photo {
+                height: 100px;
+                width: 100px;
+                margin: 0;
+            }
+
+            .name_Heading {
+                margin: auto;
+            }
+
+            .name_Heading+div {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+        }
+
+        .infoSection {
+            .info_Details {
+                height: 80%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .info_Tag_Section {
+                    grid-template-columns: repeat(1, auto);
+
+                    .info_Tag {
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                        }
+                    }
+
+                }
+
+                .card_Button_Wrapper {
+
+                    Button {
+                        font-size: 12px;
+
+                        svg {
+                            height: 15px;
+                            width: 15px;
+                        }
+
+                    }
+                }
+
+                .mySelf {
+                    display: none;
+                }
+            }
+
+        }
     }
 }
