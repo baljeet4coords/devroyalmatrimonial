@@ -27,8 +27,8 @@ import Loader from "../../../components/Loader/Loader";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 import * as Yup from "yup";
-// import Step2Formfill from "../../../hooks/useRegister/useStep2";
 import { useStep2Register } from "../../../hooks/useRegister/useStep2";
+
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -52,6 +52,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
   // const [profileComplete, setProfileComplete] = useState<number>(0);
+
+  const { registerUserMutation, Step2Query } = useStep2Register();
 
   const isLoading = useSelector(selectStep2Loading);
 
@@ -103,7 +105,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
 
   const [loginSpiner, setloginSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-  const { mutate: registerUser, data, isLoading: step2loadingReq } = useStep2Register();
+
 
 
 
@@ -128,10 +130,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     onSubmit: async (values) => {
       setloginSpiner(true);
 
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData = await data;
-
-      if (resolvedData?.output  > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(2);
         setloginSpiner(false);
       } else {
@@ -205,11 +205,16 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     setSelectedCity(id);
   };
 
-  useEffect(() => {
-    if (jsonData && jsonData.College) {
-      formik.values.college = jsonData.College;
-    }
-  }, [jsonData, formik.values]);
+
+
+  // this is commented bcz when update college it not update there formik value
+  //  as formik value change then again update the jsonData?.College in formik value 
+  
+  // useEffect(() => {
+  //   if (jsonData && jsonData.College) {
+  //     formik.values.college = jsonData.College;
+  //   }
+  // }, [jsonData, formik.values]);
 
   return (
     <div className={classes.profile_Container}>

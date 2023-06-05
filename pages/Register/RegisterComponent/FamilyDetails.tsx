@@ -54,6 +54,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const { registerUserMutation, Step4Query } = useStep4Register();
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
@@ -108,7 +109,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const [skiploadingSpiner, setSkiploadingSpiner] = useState(false);
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
-  const { mutate: registerUser, data, isLoading: step4loadingReq } = useStep4Register();
 
 
   const formik = useFormik({
@@ -130,10 +130,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     onSubmit: async (values: IRegisterStep4) => {
       setloadingSpiner(true);
 
-      registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      const resolvedData = await data;
-
-      if (resolvedData?.output > 0) {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(4);
         setloadingSpiner(false);
       } else {

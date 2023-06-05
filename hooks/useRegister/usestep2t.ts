@@ -4,26 +4,26 @@ import axios from "axios";
 const registerUser = async (values: any) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/registerUser/step3`,
+      `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
       values
     );
     return response.data;
   } catch (error) {
-    throw new Error("Failed to submit step 3 form");
+    throw new Error("Failed to submit step 2 form");
   }
 };
 
-export const useStep3Register = () => {
+export const useStep2RegisterT = () => {
   const registerUserMutation = useMutation(registerUser);
 
-  const Step3Query = () => {
-    const { data, isLoading, error } = useQuery("step3", () => registerUser);
+  const Step2Query = () => {
+    const { data, isLoading, error } = useQuery("step2", () => registerUser);
 
     return { data, isLoading, error };
   };
 
   return {
     registerUserMutation,
-    Step3Query,
+    Step2Query,
   };
 };

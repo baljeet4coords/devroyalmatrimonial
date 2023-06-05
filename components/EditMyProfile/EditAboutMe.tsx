@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { FiUser } from "react-icons/fi";
-import { DiscribeYourself } from "../../types/enums";
-import DropdownGridSingleSelect from "../DropdownGrid/DropdownGrid";
 import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
 import { textAreaSchema } from "../../schemas/textAreaSchema";
@@ -14,16 +12,27 @@ import Errors from "../Errors/Errors";
 import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../InputField/CountryStateSingle/CitySingle";
+import { selectStep5Success } from "../../ducks/regiserUser/step5/selectors";
+import { useStep5Register } from "../../hooks/useRegister/useStep5";
 
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
   step5Response: any;
+  FatchAgain: () => void;
 }
-const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response }) => {
+
+
+const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, FatchAgain }) => {
   const userId = useSelector(getUserId);
+  const isReduxEmpty =
+    step5Response && Object.values(step5Response).every((value) => !value);
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [typeInHindi, setTypeInHindi] = useState<boolean>(false);
+  const { registerUserMutation, Step5Query } = useStep5Register();
+
+
+
   const [aboutCareer, setAboutCareer] = useState<string>(
     step5Response && step5Response.about_career ? step5Response.about_career : ""
   );
@@ -60,14 +69,36 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response })
     },
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
-      // registerUser({ ...values, actionType: isReduxEmpty ? "c" : "u" });
-      // const resolvedData = await data;
-
-      // resolvedData.output > 0 && router.push("/DesiredProfile");
-      console.log(JSON.stringify(values, null, 1));
-      setAboutMeDetails(false);
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
+        FatchAgain();
+        setAboutMeDetails(false);
+      }
     },
   });
+
+  useEffect(() => {
+    formik.values.birthCountry = selectedBirthCountry;
+    formik.values.birthState = selectedBirthState;
+    formik.values.birthCity = selectedBirthCity;
+    formik.values.aboutCareer = aboutCareer;
+    formik.values.aboutFamily = aboutFamily;
+    formik.values.aboutEducation = aboutEducation;
+    formik.values.basicIntro = basicIntro;
+  }, [
+    formik.values,
+    formik.errors.aboutCareer,
+    formik.errors.basicIntro,
+    formik.errors.aboutEducation,
+    formik.errors.aboutFamily,
+    selectedBirthCountry,
+    selectedBirthState,
+    selectedBirthCity,
+    aboutCareer,
+    aboutFamily,
+    aboutEducation,
+    basicIntro,
+  ]);
 
 
   useEffect(() => {
@@ -225,6 +256,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response })
             />
             {formik.touched.aboutEducation &&
               formik.errors.aboutEducation ? (
+              console.log(formik.errors.aboutEducation),
               <div className="pt-1">
                 <Errors error={formik.errors.aboutEducation} />
               </div>
