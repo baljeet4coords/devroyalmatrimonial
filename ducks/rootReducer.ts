@@ -8,6 +8,7 @@ import { step5Reducer } from "./regiserUser/step5";
 import { step4Reducer } from "./regiserUser/step4";
 import authReducer from "./auth/reducer";
 import { partnerPrefReducer } from "./partnerPreferrence/";
+import { privacySettingsReducer } from "./PrivacySetting/";
 import { myprofileReducer } from "./myProfile/";
 import profileCompletenessReducer from "./profileCompletion/reducer";
 import GalleryReducer from "./Gallery/reducer";
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   myProfile: myprofileReducer,
   profileComplete: profileCompletenessReducer,
   myProfileGallery: GalleryReducer,
+  privacySettings: privacySettingsReducer,
 });
 
 export default rootReducer;

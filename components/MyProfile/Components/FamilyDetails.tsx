@@ -160,9 +160,9 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
             <FiUsers />
             Family Details
           </div>
-          {/* <span className={classes.Edit} onClick={() => setFamilyDetails(true)}>
+          <span className={classes.Edit} onClick={() => setFamilyDetails(true)}>
             Edit
-          </span> */}
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
