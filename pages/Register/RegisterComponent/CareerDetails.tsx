@@ -216,7 +216,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.College) {
       formik.values.college = jsonData.College;
     }
-  }, [jsonData, formik.values]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jsonData, jsonData?.College]);
 
   return (
     <div className={classes.profile_Container}>

@@ -48,29 +48,6 @@ type FormValues = {
   profilepic: string;
 };
 
-// const validate = (values: FormValues) => {
-//   const errors: Partial<FormValues> = {};
-
-//   if (!values.profileHandlerName) {
-//     errors.profileHandlerName = "Required";
-//   } else if (values.profileHandlerName.length < 3) {
-//     errors.profileHandlerName = "Must be 3 characters or more";
-//   }
-
-//   if (!values.fullname) {
-//     errors.fullname = "Required";
-//   } else if (values.fullname.length < 3) {
-//     errors.fullname = "Must be 3 characters or more";
-//   }
-
-//   if (!values.profilepic) {
-//     errors.profilepic = "Required";
-//   } else {
-//     errors.profilepic = "";
-//   }
-
-//   return errors;
-// };
 
 import {
   convertDateStringTimeStamp,
@@ -418,6 +395,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.dob) {
       formik.values.dob = jsonData.dob;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData]);
 
   const handleDateTimeChange = (value: Date) => {

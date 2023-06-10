@@ -51,6 +51,7 @@ const DesiredProfilePage: React.FC = () => {
   const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
   const isLoading = useSelector(selectPartnerPrefLoading);
   const userId = useSelector(getUserId);
+  
 
   const jsonData = partnerPreferrenceResponse?.jsonResponse;
 
@@ -222,7 +223,7 @@ const DesiredProfilePage: React.FC = () => {
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
-        <LoginHeader profilePicture={jsonData?.photo} />
+        <LoginHeader />
       </Container>
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>

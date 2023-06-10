@@ -149,7 +149,7 @@ const MyProfile: React.FC = () => {
   return (
     <React.Fragment>
       <div className={classes.bg}>
-        <LoginHeader profilePicture={step1Response?.photo} />
+        <LoginHeader />
         <Container
           fluid
           className={classes.background_header}
