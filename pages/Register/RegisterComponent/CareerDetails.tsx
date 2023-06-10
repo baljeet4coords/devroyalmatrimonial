@@ -115,12 +115,12 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
       country: jsonData?.country,
       state: jsonData?.state,
       city: jsonData?.city,
-      residentialStatus: String(jsonData?.residentialstatus),
-      readyToSettleAbroad: String(jsonData?.readytosettleabroad),
-      education: String(jsonData?.education),
+      residentialStatus: jsonData?.residentialstatus,
+      readyToSettleAbroad: jsonData?.readytosettleabroad,
+      education: jsonData?.education,
       college: jsonData?.College,
-      occupation: String(jsonData?.occupation),
-      annualIncome: String(jsonData?.annual_income),
+      occupation: jsonData?.occupation,
+      annualIncome: jsonData?.annual_income,
     },
     validationSchema: Yup.object({
       college: Yup.string()
@@ -165,11 +165,14 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.country = selectedCountry;
     formik.values.state = selectedState;
     formik.values.city = selectedCity;
-    formik.values.residentialStatus = residentialStatus.id || "";
-    formik.values.readyToSettleAbroad = settleAboard.id || "";
-    formik.values.education = education.id || "";
-    formik.values.occupation = occupation.id || "";
-    formik.values.annualIncome = annualIncome.id || "";
+    formik.values.residentialStatus =
+      (residentialStatus.id && +residentialStatus.id) || undefined;
+    formik.values.readyToSettleAbroad =
+      (settleAboard.id && +settleAboard.id) || undefined;
+    formik.values.education = (education.id && +education.id) || undefined;
+    formik.values.occupation = (occupation.id && +occupation.id) || undefined;
+    formik.values.annualIncome =
+      (annualIncome.id && +annualIncome.id) || undefined;
 
     if (
       selectedCountry != null &&
@@ -205,6 +208,12 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     setSelectedCity(id);
   };
 
+  useEffect(() => {
+    if (jsonData && jsonData.College) {
+      formik.values.college = jsonData.College;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jsonData, jsonData?.College]);
 
 
   // this is commented bcz when update college it not update there formik value

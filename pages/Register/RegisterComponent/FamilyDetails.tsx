@@ -44,7 +44,8 @@ interface Data {
 }
 const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   nextPage,
-  profileComplete, DisabledHeadingMessage
+  profileComplete,
+  DisabledHeadingMessage,
 }) => {
   const dispatch = useDispatch();
   const stepFourDefaultValues = useSelector(selectStep4Success);
@@ -110,7 +111,6 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
 
-
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -130,14 +130,16 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     onSubmit: async (values: IRegisterStep4) => {
       setloadingSpiner(true);
 
-      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      const mutationResult = await registerUserMutation.mutateAsync({
+        ...values,
+        actionType: isReduxEmpty ? "c" : "u",
+      });
       if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(4);
         setloadingSpiner(false);
       } else {
         setloadingSpiner(false);
       }
-
     },
   });
 
@@ -179,15 +181,24 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.livingWithParents = String(selectedLivingWithParents.id);
     formik.values.gothra = gothraVal;
 
-
-    if (selectedMothersOccupation.id !== "null" && selectedFathersOccupation.id !== "null" && selectedSister.id !== "null"
-      && selectedBrother.id !== "null" && selectedFamilyStatus.id !== "null" && selectedFamilyIncome.id !== "null" &&
-      selectedFamilyType.id !== "null" && selectedNativeCountry >= 0 && selectedNativeState >= 0 && selectedNativeCity >= 0 && selectedLivingWithParents.id !== "null" && formik.values.gothra) {
-      setNextDisable(false)
+    if (
+      selectedMothersOccupation.id !== "null" &&
+      selectedFathersOccupation.id !== "null" &&
+      selectedSister.id !== "null" &&
+      selectedBrother.id !== "null" &&
+      selectedFamilyStatus.id !== "null" &&
+      selectedFamilyIncome.id !== "null" &&
+      selectedFamilyType.id !== "null" &&
+      selectedNativeCountry >= 0 &&
+      selectedNativeState >= 0 &&
+      selectedNativeCity >= 0 &&
+      selectedLivingWithParents.id !== "null" &&
+      formik.values.gothra
+    ) {
+      setNextDisable(false);
     } else {
-      setNextDisable(true)
+      setNextDisable(true);
     }
-
   }, [
     formik.values,
     jsonData,
@@ -216,8 +227,8 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   };
 
   function handleSkip() {
-    setSkiploadingSpiner(true)
-    router.push("/DesiredProfile")
+    setSkiploadingSpiner(true);
+    router.push("/DesiredProfile");
   }
   return (
     <div className={classes.profile_Container}>
@@ -226,7 +237,11 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
           <Loader />
         ) : (
           <Row className="justify-content-center">
-            <Button variant="link" className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`} onClick={handleSkip} >
+            <Button
+              variant="link"
+              className={`${classes.Form_btn} ${classes.Skip_Btn} mt-2 mb-4 align-self-md-end`}
+              onClick={handleSkip}
+            >
               {skiploadingSpiner && (
                 <Spinner
                   className={classes.loginSpiner}

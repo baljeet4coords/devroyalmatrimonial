@@ -44,12 +44,14 @@ import {
 import Loader from "../../components/Loader/Loader";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
 import router from "next/router";
+import ProtectedRouting from "../../HOCs/ProtectedRouting";
 
 const DesiredProfilePage: React.FC = () => {
   const dispatch = useDispatch();
   const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
   const isLoading = useSelector(selectPartnerPrefLoading);
   const userId = useSelector(getUserId);
+  
 
   const jsonData = partnerPreferrenceResponse?.jsonResponse;
 
@@ -150,6 +152,7 @@ const DesiredProfilePage: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<boolean>(false);
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
+
     const partnerPrefPostReq: PartnerPreferrence = {
       userId: userId,
       ageGreaterThan: +selectedAgeFrom,
@@ -212,7 +215,7 @@ const DesiredProfilePage: React.FC = () => {
   return (
     <React.Fragment>
       <Container fluid className={classes.background_header}>
-        <LoginHeader profilePicture={jsonData?.photo} />
+        <LoginHeader />
       </Container>
       <div className={classes.DesiredWrapper}>
         <Container className={classes.innerWrapper}>
@@ -539,4 +542,4 @@ const DesiredProfilePage: React.FC = () => {
   );
 };
 
-export default DesiredProfilePage;
+export default ProtectedRouting(DesiredProfilePage);

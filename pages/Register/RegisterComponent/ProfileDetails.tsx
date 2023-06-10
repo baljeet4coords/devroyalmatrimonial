@@ -334,6 +334,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.dob) {
       formik.values.dob = jsonData.dob;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData]);
 
   const handleDateTimeChange = (value: Date) => {

@@ -17,6 +17,7 @@ import storage from "redux-persist/es/storage";
 import { TbPlayerTrackPrev } from "react-icons/tb";
 // import { selectProfileCompletion } from "../../ducks/profileCompletion/selector";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import ProtectedRouting from "../../HOCs/ProtectedRouting";
 // import { updateProfileCompleteness } from "../../ducks/profileCompletion/actions";
 interface ProfileDetailsProps {
   chooseMessage: (a: number) => void;
@@ -56,7 +57,7 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   //     setDisabledHeading(4)
   //   }
   // }, [pageNo])
-
+  
 
 
   const chooseMessage = (message: number) => {
@@ -126,8 +127,9 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
             return (
               <Col
                 key={index}
-                className={`${active === index ? classes.active : " "}  ${classes.topButtons
-                  }`}
+                className={`${active === index ? classes.active : " "}  ${
+                  classes.topButtons
+                }`}
                 onClick={() => chooseMessage(index)}
               >
                 {heading}
@@ -149,4 +151,4 @@ const RegisterDetails: React.FC<ProfileDetailsProps> = () => {
   );
 };
 
-export default RegisterDetails;
+export default ProtectedRouting(RegisterDetails);

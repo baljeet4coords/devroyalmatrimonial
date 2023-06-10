@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from "./TestProfileCard.module.scss";
-import { CiCalendarDate } from 'react-icons/ci';
-import { GoLocation } from 'react-icons/go';
 import { MdBlock, MdLocationOn, MdStars } from 'react-icons/md';
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
-import { BsBagPlusFill } from 'react-icons/bs';
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
 import { Button } from 'react-bootstrap';
 
 const TestProfileCard = () => {
+    const [Shortlisted, setShortlisted] = useState(false);
+    const [block, setBlock] = useState(false);
+    const [sendInterest, setSendInterest] = useState(false);
+
+
     return (
         <div className={classes.CardMain}>
             <div className={classes.profileSection}>
                 <img className={classes.profile_Photo} src='http://localhost:3000/Images/profile_image.webp' alt='userphoto' />
-                <div>
+                <div className={classes.profiler_Name}>
 
-                    <h5 className={classes.name_Heading}>Sweta Singh</h5>
+                    <h5 className={classes.name_Heading}>Mohnish Rai Handa</h5>
                     <div>
                         <h5 className={classes.active_Status}>Active on :</h5>
                         <h5 className={classes.active_Status}> <span> 19-Feb-23 at 04:15pm</span></h5>
@@ -93,17 +95,17 @@ const TestProfileCard = () => {
 
                     <div className={classes.card_Button_Wrapper}>
 
-                        <Button >
-                            <BiHeartCircle />
-                            Send Intrest
+                        <Button onClick={() => setSendInterest(!sendInterest)} className={sendInterest ? classes.activebtn : ''}>
+                            <BiHeartCircle className={sendInterest ? classes.activesvg : ''} />
+                            {sendInterest ? 'Intrest Send' : 'Send Intrest'}
                         </Button>
-                        <Button >
-                            <MdStars />
-                            Shortlist
+                        <Button className={Shortlisted ? classes.activebtn : ''} onClick={() => setShortlisted(!Shortlisted)}>
+                            <MdStars className={Shortlisted ? classes.activesvg : ''} />
+                            {Shortlisted ? 'Shortlisted' : 'Shortlist'}
                         </Button>
-                        <Button >
-                            <MdBlock />
-                            Block
+                        <Button className={block ? classes.activebtn : ''} onClick={() => setBlock(!block)}>
+                            <MdBlock className={block ? classes.activesvg : ''} />
+                            {block ? 'Blocked' : 'Block'}
                         </Button>
                     </div>
                 </div>

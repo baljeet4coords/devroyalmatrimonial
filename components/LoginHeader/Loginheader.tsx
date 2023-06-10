@@ -1,55 +1,56 @@
 import { useState, useEffect } from "react";
 import { FiBell } from "react-icons/fi";
-import {
-  Navbar,
-  Container,
-  Nav,
-  Image,
-  NavDropdown,
-
-} from "react-bootstrap";
+import { Navbar, Container, Nav, Image, NavDropdown } from "react-bootstrap";
 
 import classes from "./LoginHeader.module.scss";
 import Link from "next/link";
-// import CustomButton from "../Button/CustomButton";
 import router from "next/router";
 import { logoutRequest } from "../../ducks/auth/actions";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
+import { step1 } from "../../ducks/regiserUser/step1/actions";
+import { getProfilePicture } from "../../ducks/regiserUser/step1/selectors";
+// import CustomButton from "../Button/CustomButton";
 import PrivacyModal from "../PrivacyModal/PrivacyModal";
 import { PrivacySettings } from "../../ducks/PrivacySetting/types";
 
-interface LoginHeaderProps {
-  profilePicture?: string;
-}
-const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
+interface LoginHeaderProps {}
+const LoginHeader: React.FC<LoginHeaderProps> = ({}) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
+  const userId = useSelector(getUserId);
+  const profilePicture = useSelector(getProfilePicture);
+
+  useEffect(() => {
+    dispatch(step1({ actionType: "v", userId: userId }));
+  }, [dispatch, userId]);
+
   const [privacyModal, setPrivacyModal] = useState(false);
   const [selectedSwitches, setSelectedSwitches] = useState<string[]>([]);
 
   const handleSwitchToggle = (switchValue: string) => {
     const newSelectedSwitches = selectedSwitches.includes(switchValue)
       ? selectedSwitches.filter(
-        (selectedSwitch) => selectedSwitch !== switchValue
-      )
+          (selectedSwitch) => selectedSwitch !== switchValue
+        )
       : [...selectedSwitches, switchValue];
     setSelectedSwitches(newSelectedSwitches);
   };
 
-
   const handleClose = () => {
-    setPrivacyModal(false)
-    setSelectedSwitches([])
+    setPrivacyModal(false);
+    setSelectedSwitches([]);
   };
   const handleShow = () => setPrivacyModal(true);
   const handlePrivacySave = (val: string[]) => {
     setPrivacyModal(false);
     const privPostReq: PrivacySettings = {
       privacy: val,
-    }
-    alert(JSON.stringify(privPostReq ,null ,2))
-  }
+    };
+    alert(JSON.stringify(privPostReq, null, 2));
+  };
   const showDropdown = (indx: number) => {
     setShow(indx);
   };
@@ -96,7 +97,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
                 className=" ps-3"
               >
                 <NavDropdown.Item as="li">
-                  <Link href="/ProfileMatch">All Matches</Link>
+                  <Link href="/ProfileMatch">Preferred Matches</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
                   <Link href="/ShortListedProfile">Shortlisted Profiles</Link>
@@ -122,11 +123,11 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
-            <Nav className="ms-auto">
+            {/* <Nav className="ms-auto">
               <Link href="#">
                 <FiBell />
               </Link>
-            </Nav>
+            </Nav> */}
           </Navbar.Collapse>
           <NavDropdown
             title={
@@ -154,7 +155,9 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
               <Link href="/Register">Edit Profile </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
-              <Link href="" onClick={handleShow}>privacy settings </Link>
+              <Link href="" onClick={handleShow}>
+                privacy settings{" "}
+              </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               {/* <CustomButton onClick={onLogout}>Logout</CustomButton> */}
@@ -166,8 +169,13 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ profilePicture }) => {
         </Container>
       </Navbar>
 
-      <PrivacyModal privacy={privacyModal} selectedSwitches={selectedSwitches} handleSwitchChange={handleSwitchToggle} handlePrivacySave={handlePrivacySave} handleClose={handleClose} />
-
+      <PrivacyModal
+        privacy={privacyModal}
+        selectedSwitches={selectedSwitches}
+        handleSwitchChange={handleSwitchToggle}
+        handlePrivacySave={handlePrivacySave}
+        handleClose={handleClose}
+      />
     </>
   );
 };

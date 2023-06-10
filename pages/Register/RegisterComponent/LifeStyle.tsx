@@ -80,9 +80,6 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const [loadingSpiner, setloadingSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
 
-
-
-
   const [diet, setDiet] = useState<Data>({
     id: String(jsonData?.diet),
     val: "",
@@ -131,10 +128,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const [housetype, setHousetype] = useState<string[]>(
     jsonData?.home_type || []
   );
-  const [cartype, setCartype] = useState<string[]>(
-    jsonData?.car_details || []
-  );
-
+  const [cartype, setCartype] = useState<string[]>(jsonData?.car_details || []);
 
   useEffect(() => {
     if (ownsCar.id == "2") {
@@ -148,14 +142,14 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const formik = useFormik({
     initialValues: {
       userId: userId,
-      diet: String(jsonData?.diet),
-      smoking: String(jsonData?.smoking),
-      drinking: String(jsonData?.drinking),
-      lovePets: String(jsonData?.love_pets),
-      ownsHouse: String(jsonData?.Owns_house),
-      ownsCar: String(jsonData?.Owns_car),
-      bloodGroup: String(jsonData?.blood_group),
-      thalassemia: String(jsonData?.Thalassemia),
+      diet: jsonData?.diet,
+      smoking: jsonData?.smoking,
+      drinking: jsonData?.drinking,
+      lovePets: jsonData?.love_pets,
+      ownsHouse: jsonData?.Owns_house,
+      ownsCar: jsonData?.Owns_car,
+      bloodGroup: jsonData?.blood_group,
+      thalassemia: jsonData?.Thalassemia,
       religiousBelief: jsonData?.religious_belief,
       cartype: jsonData?.car_details || null,
       housetype: jsonData?.home_type || null,
@@ -183,23 +177,34 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   });
 
   useEffect(() => {
-    formik.values.diet = diet.id || "";
-    formik.values.smoking = smoking.id || "";
-    formik.values.drinking = drinking.id || "";
-    formik.values.lovePets = lovePets.id || "";
-    formik.values.ownsHouse = ownsHouse.id || "";
-    formik.values.ownsCar = ownsCar.id || "";
-    formik.values.bloodGroup = bloodGroup.id || "";
-    formik.values.thalassemia = thalassemia.id || "";
+    formik.values.diet = (diet.id && +diet.id) || undefined;
+    formik.values.smoking = (smoking.id && +smoking.id) || undefined;
+    formik.values.drinking = (drinking.id && +drinking.id) || undefined;
+    formik.values.lovePets = (lovePets.id && +lovePets.id) || undefined;
+    formik.values.ownsHouse = (ownsHouse.id && +ownsHouse.id) || undefined;
+    formik.values.ownsCar = (ownsCar.id && +ownsCar.id) || undefined;
+    formik.values.bloodGroup = (bloodGroup.id && +bloodGroup.id) || undefined;
+    formik.values.thalassemia =
+      (thalassemia.id && +thalassemia.id) || undefined;
     // formik.values.religiousBelief = ReligiousBelief;
-    if (diet.id != "undefined" && smoking.id != "undefined" && drinking.id != "undefined" &&
-      lovePets.id != "undefined" && ownsHouse.id !== "undefined" && ownsCar.id !== "undefined" && bloodGroup.id !== "undefined"
-      && thalassemia.id !== "undefined" && formik.values.religiousBelief) {
-
-      if (ownsHouse.id == "1" && !housetype.length || ownsCar.id == "1" && !cartype.length) {
+    if (
+      diet.id != "undefined" &&
+      smoking.id != "undefined" &&
+      drinking.id != "undefined" &&
+      lovePets.id != "undefined" &&
+      ownsHouse.id !== "undefined" &&
+      ownsCar.id !== "undefined" &&
+      bloodGroup.id !== "undefined" &&
+      thalassemia.id !== "undefined" &&
+      formik.values.religiousBelief
+    ) {
+      if (
+        (ownsHouse.id == "1" && !housetype.length) ||
+        (ownsCar.id == "1" && !cartype.length)
+      ) {
         setNextDisable(true);
       } else {
-        setNextDisable(false)
+        setNextDisable(false);
       }
     } else {
       setNextDisable(true);
@@ -224,6 +229,12 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     router.push("/DesiredProfile");
   }
 
+  useEffect(() => {
+    if (jsonData && jsonData.religious_belief) {
+      formik.values.religiousBelief = jsonData.religious_belief;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jsonData, jsonData?.religious_belief]);
 
   // this is commented bcz when update religious_belief it not update there formik value
   //  as formik value change then again update the jsonData?.religious_belief in formik value 
@@ -309,8 +320,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={HouseType}
                       inputName={"Type of House"}
                       onChange={setHousetype}
-                      defaultValues={jsonData?.home_type || []
-                      }
+                      defaultValues={jsonData?.home_type || []}
                       isFromRegistered={true}
                     />
                   )}
@@ -330,8 +340,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       data={CarType}
                       inputName={"Type of car"}
                       onChange={setCartype}
-                      defaultValues={jsonData?.car_details || []
-                      }
+                      defaultValues={jsonData?.car_details || []}
                       isFromRegistered={true}
                     />
                   )}
@@ -371,7 +380,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       </div>
                     </div>
                     {formik.touched.religiousBelief &&
-                      formik.errors.religiousBelief ? (
+                    formik.errors.religiousBelief ? (
                       <div>
                         <span className={classes.errorMessage}>
                           {formik.errors.religiousBelief}
