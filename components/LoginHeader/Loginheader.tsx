@@ -14,43 +14,72 @@ import { getProfilePicture } from "../../ducks/regiserUser/step1/selectors";
 // import CustomButton from "../Button/CustomButton";
 import PrivacyModal from "../PrivacyModal/PrivacyModal";
 import { PrivacySettings } from "../../ducks/PrivacySetting/types";
+import axios from "axios";
 
-interface LoginHeaderProps {}
-const LoginHeader: React.FC<LoginHeaderProps> = ({}) => {
+interface LoginHeaderProps { }
+interface PrivacyState {
+  showPhoto: string;
+  showContact: string;
+  showName: string;
+}
+const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
   const userId = useSelector(getUserId);
   const profilePicture = useSelector(getProfilePicture);
 
+
+  // to get privacyState bydefault 
+  const persistAuth = localStorage.getItem('persist:auth');
+  const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
+  const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
+  const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
+
+
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
   const [privacyModal, setPrivacyModal] = useState(false);
-  const [selectedSwitches, setSelectedSwitches] = useState<string[]>([]);
+  const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
 
-  const handleSwitchToggle = (switchValue: string) => {
-    const newSelectedSwitches = selectedSwitches.includes(switchValue)
-      ? selectedSwitches.filter(
-          (selectedSwitch) => selectedSwitch !== switchValue
-        )
-      : [...selectedSwitches, switchValue];
-    setSelectedSwitches(newSelectedSwitches);
+  const [privacyState, setPrivacyState] = useState({
+    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo,
+    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact,
+    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name,
+  })
+
+
+
+  const handleSwitchToggle = (switchValue: keyof typeof privacyState) => {
+    const updatedState = { ...privacyState };
+    updatedState[switchValue] = updatedState[switchValue] === 'P' ? 'I' : 'P';
+    setPrivacyState(updatedState);
   };
 
   const handleClose = () => {
     setPrivacyModal(false);
-    setSelectedSwitches([]);
+    setPrivacyState({
+      showName: 'P',
+      showContact: 'P',
+      showPhoto: 'P',
+    })
   };
   const handleShow = () => setPrivacyModal(true);
-  const handlePrivacySave = (val: string[]) => {
-    setPrivacyModal(false);
-    const privPostReq: PrivacySettings = {
-      privacy: val,
-    };
-    alert(JSON.stringify(privPostReq, null, 2));
+
+  const handlePrivacySave = async (val: PrivacyState) => {
+    setPrivacyModalLoading(true);
+
+    const privacyUpdate = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
+      { ...privacyState, userId })
+    console.log(privacyUpdate);
+
+    privacyUpdate?.data?.output === 1 && (setPrivacyModal(false), setPrivacyModalLoading(false));
+
   };
+
+
   const showDropdown = (indx: number) => {
     setShow(indx);
   };
@@ -171,10 +200,11 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({}) => {
 
       <PrivacyModal
         privacy={privacyModal}
-        selectedSwitches={selectedSwitches}
+        selectedSwitches={privacyState}
         handleSwitchChange={handleSwitchToggle}
         handlePrivacySave={handlePrivacySave}
         handleClose={handleClose}
+        privacyModalLoading={privacyModalLoading}
       />
     </>
   );

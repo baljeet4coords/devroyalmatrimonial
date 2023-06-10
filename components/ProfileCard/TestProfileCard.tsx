@@ -3,7 +3,7 @@ import classes from "./TestProfileCard.module.scss";
 import { MdBlock, MdLocationOn, MdStars } from 'react-icons/md';
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 
 const TestProfileCard = () => {
     const [Shortlisted, setShortlisted] = useState(false);
@@ -14,10 +14,10 @@ const TestProfileCard = () => {
     return (
         <div className={classes.CardMain}>
             <div className={classes.profileSection}>
-                <img className={classes.profile_Photo} src='http://localhost:3000/Images/profile_image.webp' alt='userphoto' />
+                <Image className={classes.profile_Photo} src='http://localhost:3000/Images/profile_image.webp' alt='userName' />
                 <div className={classes.profiler_Name}>
 
-                    <h5 className={classes.name_Heading}>Mohnish Rai Handa</h5>
+                    <h5 className={classes.name_Heading}>Manisha Rai Handa</h5>
                     <div>
                         <h5 className={classes.active_Status}>Active on :</h5>
                         <h5 className={classes.active_Status}> <span> 19-Feb-23 at 04:15pm</span></h5>

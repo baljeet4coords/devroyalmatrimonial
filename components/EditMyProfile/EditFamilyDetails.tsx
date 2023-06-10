@@ -7,6 +7,7 @@ import classes from "./EditDetails.module.scss";
 import EditCustomButton from "../Button/EditCustomButton";
 import { FiUsers } from "react-icons/fi";
 import {
+  BortherSisterCount,
   BrotherSister,
   FamilStatus,
   FamilyIncome,
@@ -222,7 +223,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails, step4Respon
               <DropdownGridSingleSelect
                 selectedDataFn={setSelectedSister}
                 title="Sister"
-                data={BrotherSister}
+                data={BortherSisterCount}
                 nameid="sister"
                 defaultValue={String(step4Response?.Sister)}
               />
@@ -233,7 +234,7 @@ const EditFamilyDetails: FC<MyComponentProps> = ({ setFamilyDetails, step4Respon
               <DropdownGridSingleSelect
                 selectedDataFn={setSelectedBrother}
                 title="Brother"
-                data={BrotherSister}
+                data={BortherSisterCount}
                 nameid="brother"
                 defaultValue={String(step4Response?.Brother)}
               />
