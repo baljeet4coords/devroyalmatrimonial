@@ -124,7 +124,7 @@ const SingleInput: React.FC<MyComponentProps> = ({
           <ul className={activeList ? classes.ul_maxh_64 : ""}>
             {HostedArray.length > 0
               ? HostedArray.map((uid: string) => {
-                const [name, id] = combinedData[+uid] ? combinedData[+uid].split("-") : ['Not found',''];
+                const [name, id] = combinedData[+uid].split("-");
                 return (
                   <li key={id}>
                     <span>{name.replaceAll("_", " ")}</span>

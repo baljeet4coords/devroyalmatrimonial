@@ -24,49 +24,21 @@ const ProtectedRouting = <P extends ProtectedRoutingHOCProps>(
     const router = useRouter();
     const authSuccess = useSelector(selectAuthSuccess);
     const authToken = authSuccess?.token;
-    const userId = useSelector(getUserId);
 
     // to get privacyState bydefault 
-    const persistAuth = localStorage.getItem('persist:auth');
-    const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
-    const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
-    const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
+    const persist = useSelector(selectAuthSuccess)
+
+    // console.log(,'>>>');
+    
+    // const persistAuth = localStorage.getItem('persist:auth');
+    // const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
+    // const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
+    // const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
+
     const [privacyModal, setPrivacyModal] = useState(true);
-    const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
-
-    const [privacyState, setPrivacyState] = useState({
-      showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
-      showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
-      showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
-    })
-
-    const [privacyStateTemp, setPrivacyStateTemp] = useState({
-      showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
-      showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
-      showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
-    })
-
-    const handleSwitchToggle = (switchValue: keyof typeof privacyState) => {
-      const updatedState = { ...privacyState };
-      updatedState[switchValue] = updatedState[switchValue] === 'P' ? 'I' : 'P';
-      setPrivacyState(updatedState);
-    };
 
     const handleClose = () => {
       setPrivacyModal(false);
-      setPrivacyState(privacyStateTemp);
-    };
-
-
-    const handlePrivacySave = async (val: PrivacyState) => {
-      setPrivacyModalLoading(true);
-
-      const privacyUpdate = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
-        { ...privacyState, userId })
-      console.log(privacyUpdate);
-
-      privacyUpdate?.data?.output === 1 && (setPrivacyModal(false), setPrivacyModalLoading(false));
-
     };
 
     useEffect(() => {
@@ -81,14 +53,12 @@ const ProtectedRouting = <P extends ProtectedRoutingHOCProps>(
 
     return (
       <>
-        {parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null &&
+        {persist?.jsonResponse?.privacy_show_photo === null && privacyModal &&
           <PrivacyModal
             privacy={privacyModal}
-            selectedSwitches={privacyState}
-            handleSwitchChange={handleSwitchToggle}
-            handlePrivacySave={handlePrivacySave}
             handleClose={handleClose}
-            privacyModalLoading={privacyModalLoading}
+            privacyset={setPrivacyModal}
+            nullesVal={true}
           />
         }
         <WrappedComponent {...props} />

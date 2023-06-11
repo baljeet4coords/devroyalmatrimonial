@@ -29,59 +29,20 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
   const userId = useSelector(getUserId);
   const profilePicture = useSelector(getProfilePicture);
 
-
-  // to get privacyState bydefault 
-  const persistAuth = localStorage.getItem('persist:auth');
-  const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
-  const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
-  const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
-
-
+  const [privacyModal, setPrivacyModal] = useState(false);
 
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
-  const [privacyModal, setPrivacyModal] = useState(false);
-  const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
-
-  const [privacyState, setPrivacyState] = useState({
-    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
-    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
-    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
-  })
-
-  const [privacyStateTemp, setPrivacyStateTemp] = useState({
-    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
-    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
-    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
-  })
-
-
-
-  const handleSwitchToggle = (switchValue: keyof typeof privacyState) => {
-    const updatedState = { ...privacyState };
-    updatedState[switchValue] = updatedState[switchValue] === 'P' ? 'I' : 'P';
-    setPrivacyState(updatedState);
-  };
 
   const handleClose = () => {
     setPrivacyModal(false);
-    setPrivacyState(privacyStateTemp);
   };
+
   const handleShow = () => setPrivacyModal(true);
 
-  const handlePrivacySave = async (val: PrivacyState) => {
-    setPrivacyModalLoading(true);
-
-    const privacyUpdate = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
-      { ...privacyState, userId })
-    console.log(privacyUpdate);
-
-    privacyUpdate?.data?.output === 1 && (setPrivacyModal(false), setPrivacyModalLoading(false));
-
-  };
-
+ 
 
   const showDropdown = (indx: number) => {
     setShow(indx);
@@ -203,11 +164,8 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
 
       <PrivacyModal
         privacy={privacyModal}
-        selectedSwitches={privacyState}
-        handleSwitchChange={handleSwitchToggle}
-        handlePrivacySave={handlePrivacySave}
         handleClose={handleClose}
-        privacyModalLoading={privacyModalLoading}
+        privacyset={setPrivacyModal}
       />
     </>
   );
