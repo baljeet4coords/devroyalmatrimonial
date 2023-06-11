@@ -25,8 +25,8 @@ const PrivacyModal: React.FC<ComponentProps> = ({ handleSwitchChange, privacyMod
 
 
     return (
-        <Modal show={privacy} onHide={handleClose}>
-            <Modal.Header closeButton>
+        <Modal show={privacy} >
+            <Modal.Header closeButton onHide={handleClose}>
                 <Modal.Title>Privacy Settings</Modal.Title>
             </Modal.Header>
             <Modal.Body>

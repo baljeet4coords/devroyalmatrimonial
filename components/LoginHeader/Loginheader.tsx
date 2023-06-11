@@ -37,6 +37,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
   const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
 
 
+
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
@@ -45,9 +46,15 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
   const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
 
   const [privacyState, setPrivacyState] = useState({
-    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo,
-    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact,
-    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name,
+    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
+    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
+    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
+  })
+
+  const [privacyStateTemp, setPrivacyStateTemp] = useState({
+    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo === null || "P" ? "P" : "I",
+    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact === null || "P" ? "P" : "I",
+    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name === null || "P" ? "P" : "I",
   })
 
 
@@ -60,11 +67,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
 
   const handleClose = () => {
     setPrivacyModal(false);
-    setPrivacyState({
-      showName: 'P',
-      showContact: 'P',
-      showPhoto: 'P',
-    })
+    setPrivacyState(privacyStateTemp);
   };
   const handleShow = () => setPrivacyModal(true);
 
