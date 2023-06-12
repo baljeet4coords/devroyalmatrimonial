@@ -162,29 +162,21 @@ const DesiredProfilePage: React.FC = () => {
       country: JSON.stringify(country),
       state: JSON.stringify(state),
       city: JSON.stringify(city),
-      education: JSON.stringify(education && education.map((str) => +str)),
-      occupation: JSON.stringify(occupation && occupation.map((str) => +str)),
-      annualIncomeGreaterThan: annualIncome.id && +annualIncome.id,
-      maritalStatus: JSON.stringify(
-        maritalStatus && maritalStatus.map((str) => +str)
-      ),
-      religion: JSON.stringify(religion && religion.map((str) => +str)),
-      motherTongue: JSON.stringify(
-        motherTongue && motherTongue.map((str) => +str)
-      ),
+      education: JSON.stringify(education),
+      occupation: JSON.stringify(occupation),
+      annualIncomeGreaterThan: annualIncome.id != "undefined" ? annualIncome.id : "0",
+      maritalStatus: JSON.stringify(maritalStatus),
+      religion: JSON.stringify(religion),
+      motherTongue: JSON.stringify(motherTongue),
       cast: JSON.stringify(caste),
-      residentialStatus: JSON.stringify(
-        residentialStatus && residentialStatus.map((str) => +str)
-      ),
-      manglik: JSON.stringify(manglik && manglik.map((str) => +str)),
-      diet: diet.id && +diet.id,
-      smoking: smoke.id && +smoke.id,
-      drinking: drink.id && +drink.id,
-      readyToSettleAbroad: readyToSettleAbroad.id && +readyToSettleAbroad.id,
-      challenged: JSON.stringify(challenged && challenged.map((str) => +str)),
-      childrenStatus: JSON.stringify(
-        childrenStatus && childrenStatus.map((str) => +str)
-      ),
+      residentialStatus: JSON.stringify(residentialStatus),
+      manglik: JSON.stringify(manglik),
+      diet: diet.id != "undefined" ? diet.id : "0",
+      smoking: smoke.id != "undefined" ? smoke.id : "0",
+      drinking: drink.id != "undefined" ? drink.id : '0',
+      readyToSettleAbroad: readyToSettleAbroad.id != "undefined" ? readyToSettleAbroad.id : "0",
+      challenged: JSON.stringify(challenged),
+      childrenStatus: JSON.stringify(childrenStatus),
       hiv: String(jsonData?.HIV || 0),
       horoscopeMatch: "0",
       mandatoryFields: JSON.stringify(selectedSwitches),
@@ -209,8 +201,8 @@ const DesiredProfilePage: React.FC = () => {
   const handleSwitchToggle = (switchValue: string) => {
     const newSelectedSwitches = selectedSwitches.includes(switchValue)
       ? selectedSwitches.filter(
-          (selectedSwitch) => selectedSwitch !== switchValue
-        )
+        (selectedSwitch) => selectedSwitch !== switchValue
+      )
       : [...selectedSwitches, switchValue];
     setSelectedSwitches(newSelectedSwitches);
   };

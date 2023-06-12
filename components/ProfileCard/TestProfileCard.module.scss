@@ -1,0 +1,488 @@
+@import "../../styles/constants.scss";
+
+.CardMain {
+  background-color: #fff;
+  margin: auto;
+  margin-bottom: 3rem;
+  border-radius: 20px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  gap: 1px;
+  cursor: pointer;
+  margin: 3rem auto;
+  max-width: 1000px;
+
+  .profileSection {
+    flex-basis: 25%;
+    padding: 20px;
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    // box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 0px,
+    //   rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: inherit;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #edf2f452;
+
+    .profile_Photo {
+      height: 160px;
+      width: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      margin: 0 auto;
+    }
+    .profiler_Name {
+      .name_Heading {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 26px;
+        position: relative;
+        width: fit-content;
+        margin: 0% auto;
+        margin-bottom: 0.7rem;
+      }
+
+      .name_Heading::after {
+        content: "";
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        // top: 50%;
+        // transform: translateY(-50%);
+        background-image: url("https://img.uxwing.com/wp-content/themes/uxwing/download/arts-graphic-shapes/verified-symbol-icon.svg");
+        background-repeat: no-repeat;
+        margin-left: 3px;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .active_Status {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 22px;
+          color: #3e3b3b;
+          margin-bottom: 0;
+          display: inline-block;
+
+          span {
+            color: black;
+            text-align: right;
+            display: block;
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+  }
+
+  .infoSection {
+    flex-basis: 75%;
+    padding: 20px;
+    height: 100%;
+
+    .info_Header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .name_Heading {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 26px;
+        width: fit-content;
+        margin-bottom: 0;
+      }
+
+      .id_Heading {
+        font-size: 14px;
+        color: gray;
+        font-weight: 600;
+
+        span {
+          color: black;
+        }
+      }
+    }
+
+    .info_Details {
+      height: 80%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .info_Tag_Section {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        grid-gap: 15px 10px;
+
+        .info_Tag {
+          display: flex;
+
+          svg {
+            height: 21px;
+            width: 21px;
+            color: #dc3545;
+            font-weight: 600;
+            margin-right: 10px;
+            flex-basis: 11%;
+          }
+
+          p {
+            font-weight: 500;
+            color: rgb(31, 30, 30);
+          }
+        }
+      }
+
+      .mySelf {
+        p {
+          color: gray;
+          font-size: 12px;
+          line-height: 22px;
+          font-weight: 400;
+
+          span {
+            font-weight: 600;
+            color: black;
+          }
+        }
+      }
+
+      .card_Button_Wrapper {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+
+        Button {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          color: black;
+          font-weight: 600;
+          border: none;
+          outline: none;
+          font-size: 14px;
+          background: #dc354517;
+          border-radius: 30px;
+          height: 36px;
+
+          svg {
+            height: 22px;
+            width: 22px;
+            color: #dc3545;
+          }
+        }
+        Button:hover {
+          color: #dc3545;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+            rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        }
+
+        .activebtn {
+          background-color: #dc3545;
+          color: #fff;
+
+          .activesvg {
+            color: #fff;
+          }
+        }
+        .activebtn:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 1020px) and (min-width: 768px) {
+  .CardMain {
+    margin: 3rem 5rem;
+
+    .profileSection {
+      .profiler_Name {
+        .name_Heading {
+          margin: auto;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    }
+
+    .infoSection {
+      .info_Details {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .info_Tag_Section {
+          grid-template-columns: repeat(2, auto);
+
+          .info_Tag {
+            svg {
+              height: 16px;
+              width: 16px;
+            }
+          }
+
+          .card_Button_Wrapper {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+
+            Button {
+              font-size: 11px;
+
+              svg {
+                height: 15px;
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 601px) {
+  .CardMain {
+    margin: 3rem 5rem;
+
+    .profileSection {
+      flex-basis: 30%;
+      .profile_Photo {
+        height: 100px;
+        width: 100px;
+      }
+      .profiler_Name {
+        .name_Heading {
+          margin: 0%;
+          font-size: 1.1rem;
+          margin-bottom: 0.7rem;
+        }
+        .name_Heading::after {
+          width: 15px;
+          height: 15px;
+        }
+
+        .profiler_Name div {
+          display: flex;
+          gap: 0px;
+          margin-top: 10px;
+          flex-direction: column;
+          .active_Status {
+            span {
+              color: rgb(205, 10, 10);
+              display: block;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+
+    .infoSection {
+      .info_Details {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .info_Tag_Section {
+          grid-template-columns: repeat(2, auto);
+
+          .info_Tag {
+            svg {
+              height: 16px;
+              width: 16px;
+            }
+          }
+
+          .card_Button_Wrapper {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+
+            Button {
+              font-size: 11px;
+
+              svg {
+                height: 15px;
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 350px) {
+  .CardMain {
+    flex-direction: column;
+    margin: 3rem 1rem;
+
+    .profileSection {
+      flex-direction: row;
+      border-top-right-radius: initial;
+      border-top-left-radius: initial;
+      gap: 10px;
+
+      .profile_Photo {
+        height: 100px;
+        width: 100px;
+        margin: 0;
+      }
+      .profiler_Name {
+        .name_Heading {
+          margin: 0%;
+          margin-bottom: 0.7rem;
+          font-size: 18px;
+        }
+        .name_Heading::after {
+          width: 17px;
+          height: 17px;
+        }
+
+        div {
+          display: flex;
+          gap: 0px;
+          margin-top: 10px;
+          align-items: flex-start;
+        }
+      }
+    }
+
+    .infoSection {
+      .info_Details {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .info_Tag_Section {
+          grid-template-columns: repeat(2, auto);
+
+          .info_Tag {
+            svg {
+              height: 16px;
+              width: 16px;
+            }
+          }
+
+          .card_Button_Wrapper {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+
+            Button {
+              font-size: 11px;
+
+              svg {
+                height: 15px;
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 348px) {
+  .CardMain {
+    flex-direction: column;
+    margin: 3rem 1rem;
+
+    .profileSection {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 1px 0px;
+      border-radius: 0;
+      border-top-right-radius: initial;
+      border-top-left-radius: initial;
+      gap: 10px;
+
+      .profile_Photo {
+        height: 100px;
+        width: 100px;
+        margin: 0;
+      }
+      .profiler_Name {
+        .name_Heading {
+          margin: auto;
+        }
+
+        .name_Heading + div {
+          display: flex;
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .infoSection {
+      .info_Details {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .info_Tag_Section {
+          grid-template-columns: repeat(1, auto);
+
+          .info_Tag {
+            svg {
+              height: 16px;
+              width: 16px;
+            }
+          }
+        }
+
+        .card_Button_Wrapper {
+          justify-content: center;
+          Button {
+            font-size: 10px;
+
+            svg {
+              height: 14px;
+              width: 14px;
+            }
+          }
+        }
+
+        .mySelf {
+          display: none;
+        }
+      }
+    }
+  }
+}

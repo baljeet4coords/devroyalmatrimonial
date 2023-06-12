@@ -104,9 +104,9 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
             <CiPillsBottle1 />
             LifeStyle
           </div>
-          {/* <span className={classes.Edit} onClick={() => setEditDetails(true)}>
+          <span className={classes.Edit} onClick={() => setEditDetails(true)}>
             Edit
-          </span> */}
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

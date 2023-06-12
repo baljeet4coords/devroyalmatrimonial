@@ -4,6 +4,7 @@ import LoginHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileMatch.module.scss";
 import { Footer } from "../../components";
+import TestProfileCard from "../../components/ProfileCard/TestProfileCard";
 
 const ProfileMatch: React.FC = () => {
  
@@ -13,10 +14,11 @@ const ProfileMatch: React.FC = () => {
         <Container fluid className={classes.background_header}>
           <LoginHeader/>
         </Container>
-        <h1 className="text-center text-danger py-5 my-5">
+        {/* <h1 className="text-center text-danger py-5 my-5">
           This Feature Is Coming Soon!
-        </h1>
-        {/* <ProfileCard /> */}
+        </h1> */}
+        <ProfileCard />
+        <TestProfileCard />
         <Footer />
       </div>
     </React.Fragment>

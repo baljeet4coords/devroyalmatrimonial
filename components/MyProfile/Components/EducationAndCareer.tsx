@@ -54,6 +54,7 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
       setStateCode(stateOfCountry[step2Response?.state].isoCode);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
@@ -138,12 +139,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
             <BiBook />
             Education & Career
           </div>
-          {/* <span
+          <span
             className={classes.Edit}
             onClick={() => setEudcationAndCareer(true)}
           >
             Edit
-          </span> */}
+          </span>
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
