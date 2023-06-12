@@ -4,7 +4,7 @@ export interface RMUser {
   user_RM_ID: string;
   user_status: "R" | "1" | "2" | "3" | "4" | "5" | "P" | "B" | "S" | "M"; //R < 1 < 2 < 3 < 4 < 5 < P and P is everything
   package_enddate: string | null;
-  privacy_show_name: "P" | "R";
-  privacy_show_photo: "P" | "R";
-  privacy_show_contact: "P" | "R";
+  privacy_show_name: "P" | "I";
+  privacy_show_photo: "P" | "I";
+  privacy_show_contact: "P" | "I";
 }
