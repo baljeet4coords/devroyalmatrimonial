@@ -48,6 +48,7 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
     if (countries[0].name === "Does Not Matter") {
       countries.shift();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

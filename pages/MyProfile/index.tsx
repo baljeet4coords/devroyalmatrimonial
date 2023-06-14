@@ -60,6 +60,8 @@ const MyProfile: React.FC = () => {
   const myProfileObject = useSelector(selectmyProfileSuccess);
   const AuthSuccess = useSelector(selectAuthSuccess);
 
+
+
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
   const step1Response = myProfileObject?.step1.jsonResponse;
@@ -74,7 +76,7 @@ const MyProfile: React.FC = () => {
 
   const FatchAgain = () => {
     setTimeout(() =>
-      dispatch(myProfileReq({ actionType: "v", userId: userId })), 100
+      dispatch(myProfileReq({ actionType: "v", userId: userId })), 200
     )
   }
 
@@ -163,11 +165,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
-                }
+                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
+              }
               : {
-                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-                }
+                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+              }
           }
         >
           {!imageResponse?.coverImage && (

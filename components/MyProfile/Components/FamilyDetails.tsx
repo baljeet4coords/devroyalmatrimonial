@@ -46,6 +46,7 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
     if (countries[0].name === "Does Not Matter") {
       countries.shift();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
@@ -67,6 +68,7 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
       setStateCode(stateOfCountry[step4Response?.family_native_state]?.isoCode);
     // console.log(countryCode , State.getStatesOfCountry("AW"),stateCode,stateOfCountry);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     countryCode,
     stateCode,
