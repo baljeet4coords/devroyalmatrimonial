@@ -42,7 +42,7 @@ const AboutMeDetails: FC<MyComponentProps> = ({
         <div className={classes.userDiscription}>
           <p>{step5Response?.basic_intro || "NA"}</p>
         </div>
-        <div className={classes.Userdetails}>
+        <div className={`${classes.Userdetails} ${classes.aboutUSerDetails} `}>
           {BasicDetails.map((item) => {
             return (
               <div className={classes.UserdetailsSec} key={item.name}>

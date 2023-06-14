@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal, Spinner } from 'react-bootstrap'
 import classes from './Privacy.module.scss'
 import PrivacyCheck from '../StrictRadioCheck/PrivacyRadioCheck';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import { getUserId, selectAuthSuccess } from '../../ducks/auth/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../../ducks/auth/actions';
+import { LoginJsonResponse } from '../../ducks/auth/types';
 
 
 interface PrivacyState {
@@ -24,14 +25,12 @@ interface ComponentProps {
 }
 const PrivacyModal: React.FC<ComponentProps> = ({ handleClose, privacy, privacyset, nullesVal }) => {
     const userId = useSelector(getUserId);
-
+    const dispatch = useDispatch();
     const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
 
 
     const persist = useSelector(selectAuthSuccess)
     const persistJsonResponse = persist?.jsonResponse;
-    console.log(persist);
-
 
     const [privacyState, setPrivacyState] = useState({
         showPhoto: persistJsonResponse?.privacy_show_photo === "I" ? "I" : "P",
@@ -44,6 +43,20 @@ const PrivacyModal: React.FC<ComponentProps> = ({ handleClose, privacy, privacys
         showContact: persistJsonResponse?.privacy_show_contact === "I" ? "I" : "P",
         showName: persistJsonResponse?.privacy_show_name === "I" ? "I" : "P",
     })
+
+
+    useEffect(() => {
+        setPrivacyStateTemp({
+            showPhoto: persistJsonResponse?.privacy_show_photo === "I" ? "I" : "P",
+            showContact: persistJsonResponse?.privacy_show_contact === "I" ? "I" : "P",
+            showName: persistJsonResponse?.privacy_show_name === "I" ? "I" : "P",
+        })
+        setPrivacyState({
+            showPhoto: persistJsonResponse?.privacy_show_photo === "I" ? "I" : "P",
+            showContact: persistJsonResponse?.privacy_show_contact === "I" ? "I" : "P",
+            showName: persistJsonResponse?.privacy_show_name === "I" ? "I" : "P",
+        })
+    }, [persistJsonResponse])
 
 
     const modalClose = () => {
@@ -61,11 +74,19 @@ const PrivacyModal: React.FC<ComponentProps> = ({ handleClose, privacy, privacys
         setPrivacyModalLoading(true);
         const privacyUpdateRes = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
             { ...privacyState, userId })
-        console.log(privacyUpdateRes.data.jsonResponse);
-        // loginSuccess(...persist, persist?.jsonResponse{
-        //     ...persist?.jsonResponse,
-        //     privacy_show_contact: privacyUpdateRes.data.jsonResponse.privacy_show_contact
-        // })
+
+        const updatedPersist = {
+            ...persist,
+            jsonResponse: {
+                ...persist?.jsonResponse,
+                privacy_show_contact: privacyUpdateRes.data.jsonResponse.privacy_show_contact,
+                privacy_show_name: privacyUpdateRes.data.jsonResponse.privacy_show_name,
+                privacy_show_photo: privacyUpdateRes.data.jsonResponse.privacy_show_photo
+            }
+        };
+
+        dispatch(loginSuccess(updatedPersist as LoginJsonResponse));
+
         privacyUpdateRes?.data?.output === 1 && (privacyset(false), setPrivacyModalLoading(false));
 
     };

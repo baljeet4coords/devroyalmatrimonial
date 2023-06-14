@@ -2,624 +2,625 @@
 // @import "../../pages/Register/RegisterComponent/Component.module.scss";
 
 .content {
-    padding: 2rem;
-    background-color: $milkWhite_bg;
-    margin-right: 10px;
-    font-size: 0.938rem;
-    border-bottom: 1px solid #c2c8ce;
+  padding: 2rem;
+  background-color: $milkWhite_bg;
+  margin-right: 10px;
+  font-size: 0.938rem;
+  border-bottom: 1px solid #c2c8ce;
 
-    .DetailsTypeSec {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #d82020;
+  .DetailsTypeSec {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #d82020;
 
-        .DetailsTypeLeft {
-            display: flex;
-            gap: 0.3rem;
-            align-items: baseline;
-            font-size: 20px;
+    .DetailsTypeLeft {
+      display: flex;
+      gap: 0.3rem;
+      align-items: baseline;
+      font-size: 20px;
 
-            svg {
-                font-size: 21px;
-            }
+      svg {
+        font-size: 21px;
+      }
 
-            .DetailsTypeLeft_subHeading {
-                color: #999;
-                font-size: 14px;
-            }
-        }
+      .DetailsTypeLeft_subHeading {
+        color: #999;
+        font-size: 14px;
+      }
+    }
+  }
+
+  //------------------ about me sec ----------------------
+
+  .typeInHindiSec {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-left: 1.5rem;
+
+    p {
+      color: #ff3b3b;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 0%;
     }
 
+    .Form_Login_check {
+      input {
+        padding: 0;
+        cursor: pointer;
+      }
 
-    //------------------ about me sec ----------------------
-
-    .typeInHindiSec {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-        padding-left: 1.5rem;
-
-
-        p {
-            color: #ff3b3b;
-            font-size: 14px;
-            cursor: pointer;
-            margin: 0%;
-        }
-
-        .Form_Login_check {
-            input {
-                padding: 0;
-                cursor: pointer;
-            }
-
-            label {
-                font-size: 1.1rem;
-                margin-left: 0.3rem;
-            }
-        }
-
-        .Form_Login_checkDis {
-            input {
-                padding: 0;
-                cursor: pointer;
-            }
-
-            label {
-                font-size: 1.1rem;
-                color: #91918c;
-                margin-left: 0.3rem;
-            }
-        }
+      label {
+        font-size: 1.1rem;
+        margin-left: 0.3rem;
+      }
     }
 
+    .Form_Login_checkDis {
+      input {
+        padding: 0;
+        cursor: pointer;
+      }
 
+      label {
+        font-size: 1.1rem;
+        color: #91918c;
+        margin-left: 0.3rem;
+      }
+    }
+  }
 }
 
-
 .formEdit {
-    text-align: start;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem 0;
-    width: 100%;
-    margin: auto;
-    margin-right: 0;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0;
+  width: 100%;
+  margin: auto;
+  margin-right: 0;
 
-    .singleDropdownContainer {
-
-        .singleBox {
-            div {
-                width: 100%;
-
-                svg {
-                    position: absolute;
-                    right: 15px;
-                    top: 40%;
-                }
-            }
-
-            .inputBox {
-                border: 1px solid #d9d9d9;
-                border-radius: 2px;
-                padding: 0.875rem 7.5rem;
-                text-align: center;
-                cursor: pointer;
-                position: relative;
-                min-width: 275px;
-                float: right;
-                width: 100%;
-                color: $browser_text;
-                background-color: $milkWhite_bg;
-
-                .inputBoxVal {
-                    visibility: hidden;
-                    border: 1px solid #d9d9d9;
-                    border-radius: 2px;
-                    padding: 0.875rem 1rem;
-                    text-align: center;
-                    margin: 0.6em;
-                    color: $browser_text;
-                    cursor: pointer;
-                    width: 100%;
-                    position: absolute;
-                    left: -9px;
-                    border: 1px solid $red_bg;
-                    background: $milkWhite_bg;
-                    box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-                    z-index: 9;
-
-                    ul {
-                        list-style: none;
-                        margin: 0;
-                        padding: 0 5px;
-                        width: 100%;
-                        max-height: 300px;
-                        overflow-x: hidden;
-                        overflow-y: scroll;
-                        cursor: text;
-                        display: grid;
-                        grid-template-columns: auto auto auto;
-
-                        li {
-                            position: relative;
-                            margin: 3px 5px 3px 0;
-                            padding: 10px 20px 10px 5px;
-                            border: 1px solid #d9d9d9;
-                            max-width: 100%;
-                            border-radius: 3px;
-                            background-color: #f5f5f5;
-                            cursor: default;
-                            line-height: 16px;
-                            font-size: 14px;
-
-                            &:hover {
-                                background-color: #d9475c;
-                                color: #fff;
-                            }
-                        }
-
-                        .tabActive {
-                            background-color: #d9475c;
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-
-            .blankInput {
-                border: none !important;
-                background: transparent !important;
-                list-style: none;
-
-                input {
-                    padding: 0;
-                    height: 25px;
-                    outline: 0;
-                    border: 0 !important;
-                    background: transparent !important;
-                    box-shadow: none;
-                    color: #999;
-                    font-size: 100%;
-                    font-family: sans-serif;
-                    line-height: normal;
-                    border-radius: 0;
-                    text-align: start;
-                }
-            }
-
-            .active {
-                visibility: visible !important;
-            }
-        }
-    }
-
-    label {
-        min-width: 140px;
-        text-align: right;
-    }
-
-
+  .singleDropdownContainer {
     .singleBox {
-        display: flex;
-        justify-content: flex-end;
-        position: relative;
-
-        div {
-            min-width: 75%;
-            text-align: center;
-
-            svg {
-                position: absolute;
-                right: 15px;
-                top: 40%;
-            }
-
-            .inputBox {
-                width: 75%;
-                float: right;
-                background: #d9475c;
-            }
-        }
-
-        .inputBox {
-            border: 1px solid #d9d9d9;
-            border-radius: 2px;
-            padding: 0.875rem 1rem;
-            text-align: center;
-            margin-right: 0%;
-            color: $browser_text;
-            cursor: pointer;
-            position: relative;
-            min-width: 275px;
-            background-color: $milkWhite_bg;
-            width: 75%;
-            margin: 0;
-
-
-            .inputBoxVal {
-                visibility: hidden;
-                border: 1px solid #d9d9d9;
-                border-radius: 2px;
-                padding: 0.875rem 1rem;
-                text-align: center;
-                margin: 0.6em;
-                color: $browser_text;
-                cursor: pointer;
-                width: 100%;
-                position: absolute;
-                left: -9px;
-                border: 1px solid $red_bg;
-                background: $milkWhite_bg;
-                box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
-                z-index: 9;
-
-                ul {
-                    list-style: none;
-                    margin: 0;
-                    padding: 0 5px;
-                    width: 100%;
-                    max-height: 300px;
-                    overflow-x: hidden;
-                    overflow-y: scroll;
-                    cursor: text;
-                    display: grid;
-                    grid-template-columns: auto auto auto;
-
-                    li {
-                        position: relative;
-                        margin: 3px 5px 3px 0;
-                        padding: 10px 20px 10px 5px;
-                        border: 1px solid #d9d9d9;
-                        max-width: 100%;
-                        border-radius: 3px;
-                        background-color: #f5f5f5;
-                        line-height: 13px;
-                        cursor: default;
-
-                        &:hover {
-                            background-color: #d9475c;
-                            color: #fff;
-                        }
-                    }
-
-                    .tabActive {
-                        background-color: #d9475c;
-                        color: #fff;
-                    }
-                }
-            }
-        }
-
-        .blankInput {
-            border: none !important;
-            background: transparent !important;
-            list-style: none;
-
-            input {
-                padding: 0;
-                outline: 0;
-                border: 0 !important;
-                background: transparent !important;
-                box-shadow: none;
-                color: #999;
-                font-size: 100%;
-                font-family: sans-serif;
-                line-height: normal;
-                border-radius: 0;
-            }
-        }
-
-        .EditInputSec {
-            border: 1px solid #d9d9d9;
-            position: relative;
-            padding: 0.875rem 1rem;
-
-            input {
-                padding: 0%;
-                border: none;
-                width: 100%;
-                float: left;
-                height: 100%;
-                text-align: left;
-            }
-
-            p {
-                display: flex;
-                margin: 0%;
-                position: absolute;
-                right: 10px;
-                transform: translateY(-50%);
-                top: 50%;
-                align-items: center;
-
-                svg {
-                    position: initial !important;
-                    margin-left: 5px;
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .EditInputSecDisable {
-            border: 1px solid #d9d9d9;
-            position: relative;
-
-            input {
-                padding: 0%;
-                border: none;
-                width: 100%;
-                float: left;
-                height: 100%;
-                text-align: left;
-                padding: 0.875rem 1rem;
-            }
-
-            span {
-                position: absolute;
-                right: 10px;
-                transform: translateY(-50%);
-                top: 50%;
-                align-items: center;
-                background-color: $darkGrey_bg;
-                height: 30px;
-                width: 30px;
-                border-radius: 50%;
-                display: grid;
-                place-items: center;
-
-                svg {
-                    position: initial !important;
-                    color: #fff;
-                }
-            }
-        }
-
-        label {
-            display: flex;
-            align-items: flex-end;
-            justify-content: flex-end;
-            position: absolute;
-            width: 145px;
-            left: -1.4rem;
-        }
-    }
-
-    .singleBoxWrapper {
-        width: 75%;
-        margin-left: 25%;
-
-        label {
-            left: -10.4rem;
-        }
-    }
-
-    .singleHeightWrapper {
+      div {
         width: 100%;
+
+        svg {
+          position: absolute;
+          right: 15px;
+          top: 40%;
+        }
+      }
+
+      .inputBox {
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        padding: 0.875rem 7.5rem;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        min-width: 275px;
+        float: right;
+        width: 100%;
+        color: $browser_text;
+        background-color: $milkWhite_bg;
+
+        .inputBoxVal {
+          visibility: hidden;
+          border: 1px solid #d9d9d9;
+          border-radius: 2px;
+          padding: 0.875rem 1rem;
+          text-align: center;
+          margin: 0.6em;
+          color: $browser_text;
+          cursor: pointer;
+          width: 100%;
+          position: absolute;
+          left: -9px;
+          border: 1px solid $red_bg;
+          background: $milkWhite_bg;
+          box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+          z-index: 9;
+
+          ul {
+            list-style: none;
+            margin: 0;
+            padding: 0 5px;
+            width: 100%;
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            cursor: text;
+            display: grid;
+            grid-template-columns: auto auto auto;
+
+            li {
+              position: relative;
+              margin: 3px 5px 3px 0;
+              padding: 10px 20px 10px 5px;
+              border: 1px solid #d9d9d9;
+              max-width: 100%;
+              border-radius: 3px;
+              background-color: #f5f5f5;
+              cursor: default;
+              line-height: 16px;
+              font-size: 14px;
+
+              &:hover {
+                background-color: #d9475c;
+                color: #fff;
+              }
+            }
+
+            .tabActive {
+              background-color: #d9475c;
+              color: #fff;
+            }
+          }
+        }
+      }
+
+      .blankInput {
+        border: none !important;
+        background: transparent !important;
+        list-style: none;
+
+        input {
+          padding: 0;
+          height: 25px;
+          outline: 0;
+          border: 0 !important;
+          background: transparent !important;
+          box-shadow: none;
+          color: #999;
+          font-size: 100%;
+          font-family: sans-serif;
+          line-height: normal;
+          border-radius: 0;
+          text-align: start;
+        }
+      }
+
+      .active {
+        visibility: visible !important;
+      }
+    }
+  }
+
+  label {
+    min-width: 140px;
+    text-align: right;
+  }
+
+  .singleBox {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+
+    div {
+      min-width: 75%;
+      text-align: center;
+
+      //   svg {
+      //     position: absolute;
+      //     right: 15px;
+      //     top: 40%;
+      //   }
+
+      .inputBox {
+        width: 75%;
+        float: right;
+        background: #d9475c;
+
+        ul {
+          li {
+            svg {
+              position: absolute;
+              right: 0px;
+              top: 0%;
+              color: #d82020;
+            }
+          }
+        }
+      }
     }
 
+    .inputBox {
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      padding: 0.875rem 1rem;
+      text-align: center;
+      margin-right: 0%;
+      color: $browser_text;
+      cursor: pointer;
+      position: relative;
+      min-width: 275px;
+      background-color: $milkWhite_bg;
+      width: 75%;
+      margin: 0;
 
-    .input_max {
-        width: -webkit-fill-available;
-    }
-
-    input {
+      .inputBoxVal {
+        visibility: hidden;
         border: 1px solid #d9d9d9;
         border-radius: 2px;
         padding: 0.875rem 1rem;
-        text-align: left;
-        min-width: 24%;
-        // width: auto;
+        text-align: center;
+        margin: 0.6em;
+        color: $browser_text;
+        cursor: pointer;
+        width: 100%;
+        position: absolute;
+        left: -9px;
+        border: 1px solid $red_bg;
+        background: $milkWhite_bg;
+        box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+        z-index: 9;
 
-        &:focus {
-            outline: none;
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0 5px;
+          width: 100%;
+          max-height: 300px;
+          overflow-x: hidden;
+          overflow-y: scroll;
+          cursor: text;
+          display: grid;
+          grid-template-columns: auto auto auto;
+
+          li {
+            position: relative;
+            margin: 3px 5px 3px 0;
+            padding: 10px 20px 10px 5px;
+            border: 1px solid #d9d9d9;
+            max-width: 100%;
+            border-radius: 3px;
+            background-color: #f5f5f5;
+            line-height: 13px;
+            cursor: default;
+
+            &:hover {
+              background-color: #d9475c;
+              color: #fff;
+            }
+          }
+
+          .tabActive {
+            background-color: #d9475c;
+            color: #fff;
+          }
         }
+      }
     }
 
+    .blankInput {
+      border: none !important;
+      background: transparent !important;
+      list-style: none;
 
-    input[type=radio] {
-        padding: 0.5rem;
+      input {
+        padding: 0;
+        outline: 0;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none;
+        color: #999;
+        font-size: 100%;
+        font-family: sans-serif;
+        line-height: normal;
+        border-radius: 0;
+      }
+    }
+
+    .EditInputSec {
+      border: 1px solid #d9d9d9;
+      position: relative;
+      padding: 0.875rem 1rem;
+
+      input {
+        padding: 0%;
+        border: none;
+        width: 100%;
+        float: left;
+        height: 100%;
+        text-align: left;
+      }
+
+      p {
+        display: flex;
+        margin: 0%;
+        position: absolute;
+        right: 10px;
+        transform: translateY(-50%);
+        top: 50%;
+        align-items: center;
+
+        svg {
+          position: initial !important;
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .EditInputSecDisable {
+      border: 1px solid #d9d9d9;
+      position: relative;
+
+      input {
+        padding: 0%;
+        border: none;
+        width: 100%;
+        float: left;
+        height: 100%;
+        text-align: left;
+        padding: 0.875rem 1rem;
+      }
+
+      span {
+        position: absolute;
+        right: 10px;
+        transform: translateY(-50%);
+        top: 50%;
+        align-items: center;
+        background-color: $darkGrey_bg;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+
+        svg {
+          position: initial !important;
+          color: #fff;
+        }
+      }
+    }
+
+    label {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      position: absolute;
+      width: 145px;
+      left: -1.4rem;
+    }
+  }
+
+  .singleBoxWrapper {
+    width: 75%;
+    margin-left: 25%;
+
+    label {
+      left: -10.4rem;
+    }
+  }
+
+  .singleHeightWrapper {
+    width: 100%;
+  }
+
+  .input_max {
+    width: -webkit-fill-available;
+  }
+
+  input {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1rem;
+    text-align: left;
+    min-width: 24%;
+    // width: auto;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  input[type="radio"] {
+    padding: 0.5rem;
+  }
+
+  .editDiscriptions {
+    width: 75%;
+    margin: auto;
+    margin-right: 0;
+
+    p {
+      font-size: 14px;
+      color: $browser_text;
+      line-height: 16px;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .EditbuttonGroup {
+    display: flex;
+    width: 75%;
+    margin-right: 0;
+    margin: auto;
+    margin-right: 0;
+    gap: 2rem;
+  }
+
+  .UserVerified {
+    border: 1px solid #d9d9d9;
+    display: flex;
+    flex-direction: row;
+    padding: 0.8rem 1rem;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+      color: rgb(111, 111, 250);
+      position: initial !important;
+      margin-right: 5px;
+    }
+
+    p {
+      color: #ff3b3b;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 0%;
+    }
+  }
+
+  .heightwrapper {
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    gap: 0rem;
+    margin-left: 25%;
+    width: 75%;
+    justify-content: flex-start;
+  }
+
+  // ---------------------Edit About ME ------------------
+
+  .EditsingleBox {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 96%;
+    margin: 0 auto;
+    margin-right: 0;
+    flex-direction: column;
+
+    textarea {
+      border-radius: 0;
+    }
+
+    label {
+      text-align: left;
+      color: #808080;
+      padding: 0%;
+    }
+
+    p {
+      position: absolute;
+      right: 1rem;
+      bottom: 3rem;
+      margin: 0;
+      color: #212529;
+    }
+
+    .TextareaDiscrip {
+      background-color: #d8dde2;
+      padding: 0.375rem 0.75rem;
+
+      span {
+        display: block;
+        color: #7e7e73;
+        font-size: 0.7rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  .content {
+    .typeInHindiSec {
+      padding: 0%;
+    }
+  }
+
+  .formEdit {
+    gap: 1rem;
+
+    .singleBox {
+      flex-direction: column;
+
+      label {
+        position: initial;
+        justify-content: flex-start;
+        width: auto;
+        margin-bottom: 0%;
+      }
+
+      .EditInputSec {
+        margin: 0.6rem 0;
+      }
+
+      .inputBox {
+        width: auto;
+      }
     }
 
     .editDiscriptions {
-        width: 75%;
-        margin: auto;
-        margin-right: 0;
+      width: 100%;
+    }
 
-        p {
-            font-size: 14px;
-            color: $browser_text;
-            line-height: 16px;
-            margin-bottom: 0.5rem;
-        }
+    .EditsingleBox {
+      width: 100%;
+      margin: 0%;
+
+      textarea {
+        font-size: 0.8rem;
+      }
+
+      p {
+        bottom: 0%;
+      }
+    }
+    .singleBoxWrapper{
+        width: 100%;
+        margin-left: 0%;
     }
 
     .EditbuttonGroup {
-        display: flex;
-        width: 75%;
-        margin-right: 0;
-        margin: auto;
-        margin-right: 0;
-        gap: 2rem;
+      width: 100%;
+      justify-content: center;
     }
-
-    .UserVerified {
-        border: 1px solid #d9d9d9;
-        display: flex;
-        flex-direction: row;
-        padding: 0.8rem 1rem;
-        position: relative;
-        align-items: center;
-        justify-content: space-between;
-
-        svg {
-            color: rgb(111, 111, 250);
-            position: initial !important;
-            margin-right: 5px
-        }
-
-        p {
-            color: #ff3b3b;
-            font-size: 14px;
-            cursor: pointer;
-            margin: 0%;
-        }
+    label {
+      text-align: left;
     }
-
 
     .heightwrapper {
-        text-align: start;
-        display: flex;
-        flex-direction: row;
-        gap: 0rem;
-        margin-left: 25%;
-        width: 75%;
-        justify-content: flex-start;
-    }
-
-
-    // ---------------------Edit About ME ------------------
-
-    .EditsingleBox {
-        display: flex;
-        justify-content: flex-end;
-        position: relative;
-        width: 96%;
-        margin: 0 auto;
-        margin-right: 0;
-        flex-direction: column;
-
-        textarea {
-            border-radius: 0;
-        }
-
-        label {
-            text-align: left;
-            color: #808080;
-            padding: 0%;
-        }
-
-        p {
-            position: absolute;
-            right: 1rem;
-            bottom: 3rem;
-            margin: 0;
-            color: #212529;
-        }
-
-        .TextareaDiscrip {
-            background-color: #d8dde2;
-            padding: 0.375rem 0.75rem;
-
-            span {
-                display: block;
-                color: #7e7e73;
-                font-size: 0.7rem;
-            }
-        }
-    }
-
-
+        margin-left: 0%;
+        width: 100%;
+      }
+  }
 }
-
-
-
-
-@media only screen and (max-width: 990px) {
-
-    .content {
-        .typeInHindiSec {
-            padding: 0%;
-        }
-    }
-
-    .formEdit {
-        gap: 1rem;
-
-        .singleBox {
-            flex-direction: column;
-
-            label {
-                position: initial;
-                justify-content: flex-start;
-                width: auto;
-                margin-bottom: 0%;
-            }
-
-            .EditInputSec {
-                margin: 0.6rem 0;
-            }
-
-            .inputBox {
-                width: auto;
-            }
-        }
-
-        .editDiscriptions {
-            width: 100%;
-        }
-
-        .EditsingleBox {
-            width: 100%;
-            margin: 0%;
-
-            textarea {
-                font-size: 0.8rem;
-            }
-
-            p {
-                bottom: 0%;
-            }
-
-        }
-
-        .EditbuttonGroup {
-            width: 100%;
-            justify-content: center;
-        }
-        label {
-            text-align: left;
-        }
-    }
-
-}
-
 
 @media only screen and (max-width: 667px) {
+  .content {
+    margin: 0%;
 
-    .content {
-        margin: 0%;
-
-        .typeInHindiSec {
-            padding: 0%;
-        }
-
-        .DetailsTypeSec {
-
-            .DetailsTypeLeft {
-                flex-wrap: wrap;
-                row-gap: normal;
-            }
-        }
+    .typeInHindiSec {
+      padding: 0%;
     }
 
-    .formEdit {
-        gap: 1rem;
+    .DetailsTypeSec {
+      .DetailsTypeLeft {
+        flex-wrap: wrap;
+        row-gap: normal;
+      }
+    }
+  }
 
-        .singleBox {
-            flex-direction: column;
-        }
+  .formEdit {
+    gap: 1rem;
 
-        .singleBoxWrapper {
-            width: 100%;
-            margin-left: 0%;
-
-            label {
-                left: -10.4rem;
-            }
-        }
+    .singleBox {
+      flex-direction: column;
     }
 
+    .singleBoxWrapper {
+      width: 100%;
+      margin-left: 0%;
+
+      label {
+        left: -10.4rem;
+      }
+    }
+
+    .heightwrapper {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
 }

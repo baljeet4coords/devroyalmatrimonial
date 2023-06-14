@@ -253,6 +253,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   defaultValue={step1Response?.fullname}
+                  className="text-capitalize"
                 />
               </li>
               <p>

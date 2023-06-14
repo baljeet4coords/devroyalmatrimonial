@@ -59,7 +59,7 @@
             color: #979090;
             margin: 1rem auto;
             font-weight: 400;
-            padding: 0 1.5rem;
+            padding: 0 1rem;
         }
     }
 
@@ -91,7 +91,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        padding: 0 1.5rem;
+        padding: 0 1rem;
 
         .UserdetailsSec {
             .input_Name {
@@ -155,7 +155,7 @@
 
 
     .content {
-        padding: 2rem;
+        padding: 2rem 1rem;
         margin: 0%;
 
         .DetailsTypeSec {
@@ -173,6 +173,9 @@
                 }
                 
             }
+        }
+        .aboutUSerDetails{
+            grid-template-columns: repeat(1, 1fr);
         }
     }
 }
