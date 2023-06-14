@@ -4,6 +4,10 @@ import classes from './Privacy.module.scss'
 import PrivacyCheck from '../StrictRadioCheck/PrivacyRadioCheck';
 import ActionCustomButton from '../Button/ActionCustomButton';
 import { BsInfoCircleFill } from 'react-icons/bs';
+import axios from 'axios';
+import { getUserId, selectAuthSuccess } from '../../ducks/auth/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from '../../ducks/auth/actions';
 
 
 interface PrivacyState {
@@ -14,21 +18,72 @@ interface PrivacyState {
 
 interface ComponentProps {
     privacy: boolean;
-    privacyModalLoading: boolean;
-    selectedSwitches: PrivacyState;
     handleClose: () => void;
-    handleSwitchChange: (val: keyof PrivacyState) => void;
-    handlePrivacySave: (selectedSwitches: PrivacyState) => void;
+    privacyset: (val: boolean) => void;
+    nullesVal?: boolean;
 }
-const PrivacyModal: React.FC<ComponentProps> = ({ handleSwitchChange, privacyModalLoading, selectedSwitches, handleClose, privacy, handlePrivacySave }) => {
+const PrivacyModal: React.FC<ComponentProps> = ({ handleClose, privacy, privacyset, nullesVal }) => {
+    const userId = useSelector(getUserId);
+
+    const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
+
+
+    const persist = useSelector(selectAuthSuccess)
+    const persistJsonResponse = persist?.jsonResponse;
+    console.log(persist);
+
+
+    const [privacyState, setPrivacyState] = useState({
+        showPhoto: persistJsonResponse?.privacy_show_photo === "I" ? "I" : "P",
+        showContact: persistJsonResponse?.privacy_show_contact === "I" ? "I" : "P",
+        showName: persistJsonResponse?.privacy_show_name === "I" ? "I" : "P",
+    })
+
+    const [privacyStateTemp, setPrivacyStateTemp] = useState({
+        showPhoto: persistJsonResponse?.privacy_show_photo === "I" ? "I" : "P",
+        showContact: persistJsonResponse?.privacy_show_contact === "I" ? "I" : "P",
+        showName: persistJsonResponse?.privacy_show_name === "I" ? "I" : "P",
+    })
+
+
+    const modalClose = () => {
+        handleClose();
+        setPrivacyState(privacyStateTemp);
+    }
+
+    const handleSwitchToggle = (switchValue: keyof typeof privacyState) => {
+        const updatedState = { ...privacyState };
+        updatedState[switchValue] = updatedState[switchValue] === 'P' ? 'I' : 'P';
+        setPrivacyState(updatedState);
+    };
+
+    const handlePrivacySave = async () => {
+        setPrivacyModalLoading(true);
+        const privacyUpdateRes = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
+            { ...privacyState, userId })
+        console.log(privacyUpdateRes.data.jsonResponse);
+        // loginSuccess(...persist, persist?.jsonResponse{
+        //     ...persist?.jsonResponse,
+        //     privacy_show_contact: privacyUpdateRes.data.jsonResponse.privacy_show_contact
+        // })
+        privacyUpdateRes?.data?.output === 1 && (privacyset(false), setPrivacyModalLoading(false));
+
+    };
+
 
 
 
     return (
-        <Modal show={privacy} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Privacy Settings</Modal.Title>
-            </Modal.Header>
+        <Modal show={privacy} >
+            {nullesVal ?
+                <Modal.Header>
+                    <Modal.Title>Privacy Settings</Modal.Title>
+                </Modal.Header>
+                : <Modal.Header closeButton onHide={modalClose}>
+                    <Modal.Title>Privacy Settings</Modal.Title>
+                </Modal.Header>
+            }
+
             <Modal.Body>
                 {privacyModalLoading ?
                     <div className={classes.loadingWrapper}>
@@ -48,25 +103,25 @@ const PrivacyModal: React.FC<ComponentProps> = ({ handleSwitchChange, privacyMod
                         <div className={classes.privacy_row}>
                             <h5>Name</h5>
                             <PrivacyCheck
-                                handleSwitchToggle={handleSwitchChange}
+                                handleSwitchToggle={handleSwitchToggle}
                                 switchNameVal="showName"
-                                selectedSwitches={selectedSwitches}
+                                selectedSwitches={privacyState}
                             />
                         </div>
                         <div className={classes.privacy_row}>
                             <h5>Contact</h5>
                             <PrivacyCheck
-                                handleSwitchToggle={handleSwitchChange}
+                                handleSwitchToggle={handleSwitchToggle}
                                 switchNameVal="showContact"
-                                selectedSwitches={selectedSwitches}
+                                selectedSwitches={privacyState}
                             />
                         </div>
                         <div className={classes.privacy_row}>
                             <h5>Photo</h5>
                             <PrivacyCheck
-                                handleSwitchToggle={handleSwitchChange}
+                                handleSwitchToggle={handleSwitchToggle}
                                 switchNameVal="showPhoto"
-                                selectedSwitches={selectedSwitches}
+                                selectedSwitches={privacyState}
                             />
                         </div>
                         <div className={classes.BasedInfo}>
@@ -81,10 +136,13 @@ const PrivacyModal: React.FC<ComponentProps> = ({ handleSwitchChange, privacyMod
                 }
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={modalClose}>
                     Close
                 </Button>
-                <ActionCustomButton onClick={() => handlePrivacySave(selectedSwitches)}>
+                {/* {!nullesVal && <Button variant="secondary" onClick={modalClose}>
+                    Close
+                </Button>} */}
+                <ActionCustomButton onClick={handlePrivacySave}>
                     Save Changes
                 </ActionCustomButton>
             </Modal.Footer>

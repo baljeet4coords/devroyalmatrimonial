@@ -23,6 +23,7 @@ function* loginSaga(action: AuthActions): any {
           action.payload
         );
         const responseData = response.data;
+        console.log(responseData,"response Data success");
         yield put(loginSuccess(responseData));
       } else {
         const response = yield call(
