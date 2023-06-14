@@ -18,6 +18,7 @@ import Loader from "../../../components/Loader/Loader";
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../../../components/InputField/CountryStateSingle/CitySingle";
 import CountrySingle from "../../../components/InputField/CountryStateSingle/CountrySingle";
+import { useStep5Register } from "../../../hooks/useRegister/useStep5";
 
 interface ExpressYourselfProps {
   nextPage: (a: number) => void;
@@ -35,6 +36,9 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const { registerUserMutation, Step5Query } = useStep5Register();
+
+
 
   useEffect(() => {
     dispatch(step5({ actionType: "v", userId: userId }));
@@ -44,6 +48,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
   const [loadingSpiner, setloadingSpiner] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
+  const [nextDisable, setNextDisable] = useState<boolean>(true);
 
   // when Render page go on the top of the page
   useEffect(() => {
@@ -68,25 +73,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
     validationSchema: textAreaSchema,
     onSubmit: async (values) => {
       setloadingSpiner(true);
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
-          {
-            actionType: "c",
-            ...values,
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step5`,
-          {
-            actionType: "u",
-            ...values,
-          }
-        );
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
+        router.push("/DesiredProfile");
       }
-      response.data.output > 0 && router.push("/DesiredProfile");
     },
   });
 
@@ -164,8 +154,10 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
         formik.errors.aboutFamily
       ) {
         setError(true);
+        setNextDisable(true)
       } else {
         setError(false);
+        setNextDisable(false)
       }
     } else {
       setMounted(true);
@@ -325,7 +317,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                       }
                     />
                     {formik.touched.aboutEducation &&
-                    formik.errors.aboutEducation ? (
+                      formik.errors.aboutEducation ? (
                       <div className="pt-1">
                         <Errors error={formik.errors.aboutEducation} />
                       </div>
@@ -385,6 +377,7 @@ const ExpressYourself: React.FC<ExpressYourselfProps> = ({
                     type="submit"
                     className={`${classes.Form_btn} mt-2 w-50 align-self-md-center`}
                     // disabled={nextDisable}
+                    disabled={nextDisable}
                   >
                     {loadingSpiner && (
                       <Spinner

@@ -31,6 +31,7 @@ import CitySingle from "../../../components/InputField/CountryStateSingle/CitySi
 import StateSingle from "../../../components/InputField/CountryStateSingle/StateSingle";
 import Loader from "../../../components/Loader/Loader";
 import router from "next/router";
+import { useStep4Register } from "../../../hooks/useRegister/useStep4";
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -54,6 +55,7 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
   const isReduxEmpty =
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
+  const { registerUserMutation, Step4Query } = useStep4Register();
 
   useEffect(() => {
     dispatch(step4({ actionType: "v", userId: userId }));
@@ -127,26 +129,12 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     },
     onSubmit: async (values: IRegisterStep4) => {
       setloadingSpiner(true);
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-          {
-            actionType: "c",
-            ...values,
-          }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step4`,
-          {
-            actionType: "u",
-            ...values,
-          }
-        );
-      }
-      if (response.data.output > 0) {
-        // DisabledHeadingMessage(4);
+
+      const mutationResult = await registerUserMutation.mutateAsync({
+        ...values,
+        actionType: isReduxEmpty ? "c" : "u",
+      });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(4);
         setloadingSpiner(false);
       } else {
@@ -194,17 +182,17 @@ const FamilyDetails: React.FC<ProfileDetailsProps> = ({
     formik.values.gothra = gothraVal;
 
     if (
-      selectedMothersOccupation.id !== "undefined" &&
-      selectedFathersOccupation.id !== "undefined" &&
-      selectedSister.id !== "undefined" &&
-      selectedBrother.id !== "undefined" &&
-      selectedFamilyStatus.id !== "undefined" &&
-      selectedFamilyIncome.id !== "undefined" &&
-      selectedFamilyType.id !== "undefined" &&
+      selectedMothersOccupation.id !== "null" &&
+      selectedFathersOccupation.id !== "null" &&
+      selectedSister.id !== "null" &&
+      selectedBrother.id !== "null" &&
+      selectedFamilyStatus.id !== "null" &&
+      selectedFamilyIncome.id !== "null" &&
+      selectedFamilyType.id !== "null" &&
       selectedNativeCountry >= 0 &&
       selectedNativeState >= 0 &&
       selectedNativeCity >= 0 &&
-      selectedLivingWithParents.id !== "undefined" &&
+      selectedLivingWithParents.id !== "null" &&
       formik.values.gothra
     ) {
       setNextDisable(false);

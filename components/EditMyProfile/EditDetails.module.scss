@@ -197,7 +197,6 @@
     }
 
     label {
-        // padding: 0.6rem;
         min-width: 140px;
         text-align: right;
     }
@@ -228,7 +227,7 @@
         .inputBox {
             border: 1px solid #d9d9d9;
             border-radius: 2px;
-            padding: 0.875rem 5.5rem;
+            padding: 0.875rem 1rem;
             text-align: center;
             margin-right: 0%;
             color: $browser_text;
@@ -383,8 +382,8 @@
             align-items: flex-end;
             justify-content: flex-end;
             position: absolute;
-            left: 0;
             width: 145px;
+            left: -1.4rem;
         }
     }
 
@@ -397,7 +396,7 @@
         }
     }
 
-    .singleHeightWrapper{
+    .singleHeightWrapper {
         width: 100%;
     }
 
@@ -411,7 +410,7 @@
         border-radius: 2px;
         padding: 0.875rem 1rem;
         text-align: left;
-        min-width: 75%;
+        min-width: 24%;
         // width: auto;
 
         &:focus {
@@ -470,6 +469,15 @@
     }
 
 
+    .heightwrapper {
+        text-align: start;
+        display: flex;
+        flex-direction: row;
+        gap: 0rem;
+        margin-left: 25%;
+        width: 75%;
+        justify-content: flex-start;
+    }
 
 
     // ---------------------Edit About ME ------------------
@@ -570,6 +578,9 @@
         .EditbuttonGroup {
             width: 100%;
             justify-content: center;
+        }
+        label {
+            text-align: left;
         }
     }
 

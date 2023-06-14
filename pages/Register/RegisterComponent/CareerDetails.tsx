@@ -27,6 +27,8 @@ import Loader from "../../../components/Loader/Loader";
 import { selectProfileCompletion } from "../../../ducks/profileCompletion/selector";
 import { updateProfileCompleteness } from "../../../ducks/profileCompletion/actions";
 import * as Yup from "yup";
+import { useStep2Register } from "../../../hooks/useRegister/useStep2";
+
 
 interface ProfileDetailsProps {
   nextPage: (a: number) => void;
@@ -50,6 +52,8 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     jsonData && Object.values(jsonData).every((value) => !value);
   const userId = useSelector(getUserId);
   // const [profileComplete, setProfileComplete] = useState<number>(0);
+
+  const { registerUserMutation, Step2Query } = useStep2Register();
 
   const isLoading = useSelector(selectStep2Loading);
 
@@ -102,6 +106,9 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
   const [loginSpiner, setloginSpiner] = useState(false);
   const [nextDisable, setNextDisable] = useState<boolean>(true);
 
+
+
+
   const formik = useFormik({
     initialValues: {
       userId: userId,
@@ -122,29 +129,18 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloginSpiner(true);
-      let response;
-      if (isReduxEmpty) {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
-          { ...values, actionType: "c" }
-        );
-      } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/registerUser/step2`,
-          { ...values, actionType: "u" }
-        );
-      }
-      if (response.data.output > 0) {
-        // DisabledHeadingMessage(2);
+
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(2);
         setloginSpiner(false);
       } else {
         setloginSpiner(false);
       }
+
     },
   });
 
-  // when Render page go on the top of the page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -218,6 +214,16 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData, jsonData?.College]);
+
+
+  // this is commented bcz when update college it not update there formik value
+  //  as formik value change then again update the jsonData?.College in formik value 
+  
+  // useEffect(() => {
+  //   if (jsonData && jsonData.College) {
+  //     formik.values.college = jsonData.College;
+  //   }
+  // }, [jsonData, formik.values]);
 
   return (
     <div className={classes.profile_Container}>
@@ -294,7 +300,7 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
                     setErrorState={setResidentialStatusTouched}
                   />
                   {residentialStatusTouched &&
-                  residentialStatus.id == "null" ? (
+                    residentialStatus.id == "null" ? (
                     <div>
                       <span className={classes.errorMessage}>
                         Please select value from dropdown

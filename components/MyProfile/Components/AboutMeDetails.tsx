@@ -32,12 +32,12 @@ const AboutMeDetails: FC<MyComponentProps> = ({
             <FiUser />
             About Me
           </div>
-          {/* <span
+          <span
             className={classes.Edit}
             onClick={() => setAboutMeDetails(true)}
           >
             Edit
-          </span> */}
+          </span>
         </div>
         <div className={classes.userDiscription}>
           <p>{step5Response?.basic_intro || "NA"}</p>

@@ -16,56 +16,37 @@ import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../InputField/CountryStateSingle/CitySingle";
 import { EducationTypeAndVal } from "../../types/enums";
+import { getUserId } from "../../ducks/auth/selectors";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
+import { selectStep2Success } from "../../ducks/regiserUser/step2/selectors";
+import { useStep2Register } from "../../hooks/useRegister/useStep2";
 
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
   step2Response: any;
+  FatchAgain: () => void;
 }
+
+interface Data {
+  id?: string;
+  val: string;
+}
+
 const EditEducationAmdCareer: FC<MyComponentProps> = ({
   setEudcationAndCareer,
-  step2Response
+  step2Response,
+  FatchAgain
 }) => {
-  const formik = useFormik({
-    initialValues: {
-      country: "",
-      state: "",
-      city: "",
-      residential_status: "",
-      setting_aboard: "",
-      highest_education: "",
-      annual_income: "",
-      employed_in: "",
-    },
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 1));
-      setEudcationAndCareer(false);
-    },
-  });
+  const stepTwoDefaultValues = useSelector(selectStep2Success);
+  const jsonData = stepTwoDefaultValues?.jsonResponse;
+  const isReduxEmpty =
+    jsonData && Object.values(jsonData).every((value) => !value);
+  const userId = useSelector(getUserId);
 
-  const [selectedResidentialStatus, setSelectedResidentialStatus] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
+  const { registerUserMutation, Step2Query } = useStep2Register();
 
-  const [selectedSettingAboard, setSelectedSettingAboard] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
 
-  const [selectedHigestEducations, setSelectedHigestEducations] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-
-  const [selectedAnnualIncome, setSelectedAnnualIncome] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
-
-  const [SelectedEmployedIn, setSelectedEmployedIn] = useState<{
-    id?: string;
-    val: string;
-  }>({ id: "", val: "" });
   const [selectedCountry, setSelectedCountry] = useState<number>(
     step2Response?.country || 100
   );
@@ -75,23 +56,56 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
   const [selectedCity, setSelectedCity] = useState<number>(
     step2Response?.city || -1
   );
+  const [residentialStatus, setResidentialStatus] = useState<Data>({
+    id: String(step2Response?.residentialstatus),
+    val: "",
+  });
+  const [settleAboard, setSettleAbroad] = useState<Data>({
+    id: String(step2Response?.readytosettleabroad),
+    val: "",
+  });
+  const [education, setEducation] = useState<Data>({
+    id: String(step2Response?.education),
+    val: "",
+  });
+  const [occupation, setOccupation] = useState<Data>({
+    id: String(step2Response?.occupation),
+    val: "",
+  });
+  const [annualIncome, setannualIncome] = useState<Data>({
+    id: String(step2Response?.annual_income),
+    val: "",
+  });
 
-  useEffect(() => {
-    (formik.values.residential_status = selectedResidentialStatus.val || ""),
-      (formik.values.setting_aboard = selectedSettingAboard.val || ""),
-      (formik.values.highest_education = selectedHigestEducations.id || ""),
-      (formik.values.annual_income = selectedAnnualIncome.val || ""),
-      (formik.values.employed_in = SelectedEmployedIn.id || "");
-  }, [
-    selectedResidentialStatus.val,
-    selectedSettingAboard.val,
-    selectedHigestEducations.val,
-    selectedAnnualIncome.val,
-    SelectedEmployedIn.val,
-    formik.values,
-    selectedHigestEducations.id,
-    SelectedEmployedIn.id,
-  ]);
+
+
+  const formik = useFormik({
+    initialValues: {
+      userId: userId,
+      country: step2Response?.country,
+      state: step2Response?.state,
+      city: step2Response?.city,
+      residentialStatus: String(step2Response?.residentialstatus),
+      readyToSettleAbroad: String(step2Response?.readytosettleabroad),
+      education: String(step2Response?.education),
+      college: step2Response?.College,
+      occupation: String(step2Response?.occupation),
+      annualIncome: String(step2Response?.annual_income),
+    },
+    validationSchema: Yup.object({
+      college: Yup.string()
+        .min(3, "Must be 3 characters or more")
+        .required("Required"),
+    }),
+    onSubmit: async (values) => {
+      const mutationResult = await registerUserMutation.mutateAsync({ ...values, actionType: isReduxEmpty ? "c" : "u" });
+      if (mutationResult?.output && mutationResult?.output > 0) {
+        FatchAgain();
+        setEudcationAndCareer(false);
+      }
+    },
+  });
+
 
   useEffect(() => {
     setSelectedCountry(
@@ -105,6 +119,26 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
     );
   }, [step2Response?.country, step2Response?.state, step2Response?.city]);
 
+  useEffect(() => {
+    formik.values.country = selectedCountry;
+    formik.values.state = selectedState;
+    formik.values.city = selectedCity;
+    formik.values.residentialStatus = residentialStatus.id || "";
+    formik.values.readyToSettleAbroad = settleAboard.id || "";
+    formik.values.education = education.id || "";
+    formik.values.occupation = occupation.id || "";
+    formik.values.annualIncome = annualIncome.id || "";
+  }, [
+    annualIncome.id,
+    education.id,
+    formik.values,
+    occupation.id,
+    residentialStatus.id,
+    selectedCity,
+    selectedCountry,
+    selectedState,
+    settleAboard.id,
+  ]);
 
   const getSelectedCountry = (id: number) => {
     setSelectedCountry(id);
@@ -115,6 +149,12 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
   const getSelectedCity = (id: number) => {
     setSelectedCity(id);
   };
+
+  // useEffect(() => {
+  //   if (step2Response && step2Response.College) {
+  //     formik.values.college = step2Response.College;
+  //   }
+  // }, [step2Response, formik.values]);
 
 
   return (
@@ -160,7 +200,7 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedResidentialStatus}
+                selectedDataFn={setResidentialStatus}
                 title="Residential Status"
                 data={ResidentialStatus}
                 nameid="residential_status"
@@ -171,8 +211,8 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedSettingAboard}
-                title="Intersting in Setting Aboard"
+                selectedDataFn={setSettleAbroad}
+                title="Ready to settle abroad"
                 data={ReadyToSettleAbroad}
                 nameid="setting_aboard"
                 defaultValue={String(step2Response?.readytosettleabroad)}
@@ -185,9 +225,25 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
                 title="Higest Educations"
                 data={EducationTypeAndVal}
                 nameid="highest_education"
-                selectedDataFn={setSelectedHigestEducations}
+                selectedDataFn={setEducation}
                 defaultValue={String(step2Response?.education)}
               />
+            </div>
+          </div>
+          <div className={classes.singleBox}>
+            <Form.Label>College Name</Form.Label>
+            <div className={classes.inputBox}>
+              <li className={classes.blankInput}>
+                <Form.Control
+                  type="text"
+                  name="college"
+                  className={classes.inputplacholder}
+                  placeholder={"Enter College Name"}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  defaultValue={step2Response?.College}
+                />
+              </li>
             </div>
           </div>
           <div className={classes.singleBoxWrapper}>
@@ -196,7 +252,7 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
                 title="Annual Income"
                 data={AnnualIncomeProfile}
                 nameid="annual_income"
-                selectedDataFn={setSelectedAnnualIncome}
+                selectedDataFn={setannualIncome}
                 defaultValue={String(step2Response?.annual_income)}
               />
             </div>
@@ -204,7 +260,7 @@ const EditEducationAmdCareer: FC<MyComponentProps> = ({
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
-                selectedDataFn={setSelectedEmployedIn}
+                selectedDataFn={setOccupation}
                 title="Employed In"
                 data={Occupation}
                 nameid="employed_in"

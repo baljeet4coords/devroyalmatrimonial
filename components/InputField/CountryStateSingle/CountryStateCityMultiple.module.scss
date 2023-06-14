@@ -5,7 +5,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  flex-direction: column;
+  gap: 2rem;
 
   div {
     width: 100%;
@@ -136,6 +136,7 @@
   .singleBox {
     flex-direction: column;
     width: 100%;
+    gap: 0;
 
     .inputBox {
       margin: 0.6rem 0;
@@ -170,6 +171,7 @@
   .singleBox {
     flex-direction: column;
     width: 100%;
+    gap: 0;
 
     .inputBox {
       margin: 0.6rem 0;

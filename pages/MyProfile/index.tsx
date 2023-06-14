@@ -72,6 +72,13 @@ const MyProfile: React.FC = () => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
 
+  const FatchAgain = () => {
+    setTimeout(() =>
+      dispatch(myProfileReq({ actionType: "v", userId: userId })), 100
+    )
+  }
+
+
   useEffect(() => {
     async function uploadFiles() {
       const formData = new FormData();
@@ -184,7 +191,9 @@ const MyProfile: React.FC = () => {
           )}
         </Container>
         {isMyprofileLoading ? (
-          <Loader />
+          <Container className={classes.detailsWrapper}>
+            <Loader />
+          </Container>
         ) : (
           <>
             <MyProfilePageCard
@@ -199,7 +208,7 @@ const MyProfile: React.FC = () => {
                 ) : (
                   <>
                     <Col sm={9} md={8} className="p-0">
-                      {criticalDetails ? (
+                      {/* {criticalDetails ? (
                         <EditCriticalDetials
                           step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
@@ -209,12 +218,13 @@ const MyProfile: React.FC = () => {
                           step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
                         />
-                      )}
+                      )} */}
                       <hr />
                       {basicDetails ? (
                         <EditBasicDetials
                           step1Response={step1Response}
                           setBasicDetails={setBasicDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <BasicDetails
@@ -227,6 +237,7 @@ const MyProfile: React.FC = () => {
                         <EditAboutMe
                           step5Response={step5Response}
                           setAboutMeDetails={setAboutMeDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <AboutMeDetails
@@ -239,6 +250,7 @@ const MyProfile: React.FC = () => {
                         <EditEducationAmdCareer
                           step2Response={step2Response}
                           setEudcationAndCareer={setEudcationAndCareer}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <EducationAndCareer
@@ -251,6 +263,7 @@ const MyProfile: React.FC = () => {
                         <EditFamilyDetails
                           step4Response={step4Response}
                           setFamilyDetails={setFamilyDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <FamilydetailsInfo
@@ -263,6 +276,7 @@ const MyProfile: React.FC = () => {
                         <EditLifeStyle
                           step3Response={step3Response}
                           setEditDetails={setLifeStyleDetails}
+                          FatchAgain={FatchAgain}
                         />
                       ) : (
                         <LifeStyleDetails
@@ -271,11 +285,6 @@ const MyProfile: React.FC = () => {
                         />
                       )}
                       <hr />
-                      {/* {yourLikesDetails ? (
-  <EditYourLikes setEditDetails={setYourLikesDetails} />
-) : (
-  <LikeDetails setEditDetails={setYourLikesDetails} />
-)} */}
                       <div className={classes.datecont}>
                         {/* <p>Last updated on 15th Feb, 2023</p> */}
                       </div>

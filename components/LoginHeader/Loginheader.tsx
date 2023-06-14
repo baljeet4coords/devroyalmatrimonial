@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiBell } from "react-icons/fi";
-import {
-  Navbar,
-  Container,
-  Nav,
-  Image,
-  Button,
-  NavDropdown,
-} from "react-bootstrap";
+import { Navbar, Container, Nav, Image, NavDropdown } from "react-bootstrap";
 
 import classes from "./LoginHeader.module.scss";
 import Link from "next/link";
@@ -18,20 +11,73 @@ import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import { step1 } from "../../ducks/regiserUser/step1/actions";
 import { getProfilePicture } from "../../ducks/regiserUser/step1/selectors";
+// import CustomButton from "../Button/CustomButton";
+import PrivacyModal from "../PrivacyModal/PrivacyModal";
+import { PrivacySettings } from "../../ducks/PrivacySetting/types";
+import axios from "axios";
 
-interface LoginHeaderProps {
-  
+interface LoginHeaderProps { }
+interface PrivacyState {
+  showPhoto: string;
+  showContact: string;
+  showName: string;
 }
-const LoginHeader: React.FC<LoginHeaderProps> = ({  }) => {
+const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState<any>(-1);
   const [stateSize, setSize] = useState(false);
   const userId = useSelector(getUserId);
-  const profilePicture = useSelector(getProfilePicture)
+  const profilePicture = useSelector(getProfilePicture);
+
+
+  // to get privacyState bydefault 
+  const persistAuth = localStorage.getItem('persist:auth');
+  const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
+  const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
+  const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
+
 
   useEffect(() => {
     dispatch(step1({ actionType: "v", userId: userId }));
   }, [dispatch, userId]);
+
+  const [privacyModal, setPrivacyModal] = useState(false);
+  const [privacyModalLoading, setPrivacyModalLoading] = useState(false);
+
+  const [privacyState, setPrivacyState] = useState({
+    showPhoto: parsedPersistAuthResponseJsonResponse?.privacy_show_photo,
+    showContact: parsedPersistAuthResponseJsonResponse?.privacy_show_contact,
+    showName: parsedPersistAuthResponseJsonResponse?.privacy_show_name,
+  })
+
+
+
+  const handleSwitchToggle = (switchValue: keyof typeof privacyState) => {
+    const updatedState = { ...privacyState };
+    updatedState[switchValue] = updatedState[switchValue] === 'P' ? 'I' : 'P';
+    setPrivacyState(updatedState);
+  };
+
+  const handleClose = () => {
+    setPrivacyModal(false);
+    setPrivacyState({
+      showName: 'P',
+      showContact: 'P',
+      showPhoto: 'P',
+    })
+  };
+  const handleShow = () => setPrivacyModal(true);
+
+  const handlePrivacySave = async (val: PrivacyState) => {
+    setPrivacyModalLoading(true);
+
+    const privacyUpdate = await axios.post(`${process.env.NEXT_PUBLIC_URL}/privacy/updatePrivacy`,
+      { ...privacyState, userId })
+    console.log(privacyUpdate);
+
+    privacyUpdate?.data?.output === 1 && (setPrivacyModal(false), setPrivacyModalLoading(false));
+
+  };
 
 
   const showDropdown = (indx: number) => {
@@ -138,6 +184,11 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({  }) => {
               <Link href="/Register">Edit Profile </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
+              <Link href="" onClick={handleShow}>
+                privacy settings{" "}
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item as="li">
               {/* <CustomButton onClick={onLogout}>Logout</CustomButton> */}
               <Link href="/" onClick={onLogout}>
                 Logout
@@ -146,6 +197,15 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({  }) => {
           </NavDropdown>
         </Container>
       </Navbar>
+
+      <PrivacyModal
+        privacy={privacyModal}
+        selectedSwitches={privacyState}
+        handleSwitchChange={handleSwitchToggle}
+        handlePrivacySave={handlePrivacySave}
+        handleClose={handleClose}
+        privacyModalLoading={privacyModalLoading}
+      />
     </>
   );
 };

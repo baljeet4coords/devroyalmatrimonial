@@ -57,8 +57,8 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
                 <p className={classes.MiddleLeftHeading}>
                   Mobile No : <span>{step1Response?.mobile || "NA"} </span>{" "}
                 </p>
-                <p className={classes.MiddleLeftHeading}>
-                  Email Id : <span>{step1Response?.emailid || "NA"} </span>{" "}
+                <p className={`${classes.MiddleLeftHeading}`}>
+                  Email Id : <span className="text-lowercase">{step1Response?.emailid || "NA"} </span>{" "}
                 </p>
               </div>
 
