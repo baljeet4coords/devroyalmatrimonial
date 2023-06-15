@@ -1,7 +1,7 @@
 import { Image } from "react-bootstrap";
 
 interface Errors {
-  error: string;
+  error: string | any;
 }
 const Errors: React.FC<Errors> = ({ error }) => {
   return (
