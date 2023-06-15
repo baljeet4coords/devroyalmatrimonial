@@ -138,3 +138,11 @@ export interface IRegisterStep5Response {
   pobCountry: number;
   pobState: number;
 }
+
+export interface IProfileCompletionScore {
+  output: number;
+  message: string;
+  jsonResponse: null;
+  status: number;
+  overallScore:number;
+}

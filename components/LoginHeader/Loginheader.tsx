@@ -42,7 +42,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
 
   const handleShow = () => setPrivacyModal(true);
 
- 
+
 
   const showDropdown = (indx: number) => {
     setShow(indx);

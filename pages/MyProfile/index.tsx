@@ -60,8 +60,6 @@ const MyProfile: React.FC = () => {
   const myProfileObject = useSelector(selectmyProfileSuccess);
   const AuthSuccess = useSelector(selectAuthSuccess);
 
-
-
   const isMyprofileLoading = useSelector(selectmyProfileLoading);
 
   const step1Response = myProfileObject?.step1.jsonResponse;
@@ -69,6 +67,10 @@ const MyProfile: React.FC = () => {
   const step3Response = myProfileObject?.step3.jsonResponse;
   const step4Response = myProfileObject?.step4.jsonResponse;
   const step5Response = myProfileObject?.step5.jsonResponse;
+  const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
+  // console.log(profileCompliteScore,"profileCompliteScore");
+  
+
 
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
@@ -202,6 +204,7 @@ const MyProfile: React.FC = () => {
               step1Response={step1Response}
               onPreviewAlbum={onPreviewAlbum}
               AuthSuccess={AuthSuccess?.jsonResponse}
+              profileCompliteScore={profileCompliteScore}
             />
             <Container className={classes.detailsWrapper}>
               <Row>

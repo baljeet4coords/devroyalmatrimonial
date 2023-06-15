@@ -93,7 +93,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgb(0, 0, 0, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -102,9 +102,21 @@
   Form {
     width: 35%;
     margin: 0 auto;
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 7px;
-    background: #e7e7e6;
+    background: #ffffff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    h4{
+      text-align: center;
+      margin-bottom: 2rem;
+      background-color: #fff;
+
+      span{
+        color: #dc3545;
+        font-weight: 500;
+      }
+    }
 
     .Form_btn {
       box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
@@ -118,6 +130,24 @@
       color: #065ad8d3;
     }
 
+    .FromBtnlogin {
+      background-color: #4361ee;
+    }
+
+    .loginRegister_section {
+      margin-top: 2rem;
+      text-align: center;
+
+      .RegisterButton {
+        background-color: transparent;
+        color: #dc3545;
+        border: none;
+        outline: none;
+        margin: 0% 5px;
+        display: inline-block;
+        cursor: pointer;
+      }
+    }
     .modal_input {
       margin-bottom: 1.5rem;
       border: 1px solid gray;
@@ -127,9 +157,15 @@
 
       Input {
         padding: 0.8rem 1.5rem;
-        background-color: transparent !important;
+        background-color: #e8f0fe;
         border: none;
         cursor: pointer;
+        border-radius: inherit;
+      }
+
+      .mobileInput {
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
       }
 
       svg {
@@ -172,12 +208,14 @@
 
     .MobileCode {
       padding: 0.8rem 1.5rem;
-      background-color: transparent !important;
+      background-color: #e8f0fe;
       border: none;
       cursor: pointer;
       outline: none;
       border-right: 1px solid gray;
       border-radius: 0%;
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
     }
   }
 
@@ -190,6 +228,7 @@
     border-radius: 50%;
     font-size: 2rem;
     background-color: transparent;
+    color: #dc3545;
   }
 }
 
