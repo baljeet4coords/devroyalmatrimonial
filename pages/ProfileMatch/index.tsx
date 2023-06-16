@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard";
@@ -7,12 +7,12 @@ import { Footer } from "../../components";
 import TestProfileCard from "../../components/ProfileCard/TestProfileCard";
 
 const ProfileMatch: React.FC = () => {
- 
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
-          <LoginHeader/>
+          <LoginHeader />
         </Container>
         {/* <h1 className="text-center text-danger py-5 my-5">
           This Feature Is Coming Soon!

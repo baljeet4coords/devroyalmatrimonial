@@ -67,6 +67,10 @@ const MyProfile: React.FC = () => {
   const step3Response = myProfileObject?.step3.jsonResponse;
   const step4Response = myProfileObject?.step4.jsonResponse;
   const step5Response = myProfileObject?.step5.jsonResponse;
+  const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
+  // console.log(profileCompliteScore,"profileCompliteScore");
+  
+
 
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
@@ -74,7 +78,7 @@ const MyProfile: React.FC = () => {
 
   const FatchAgain = () => {
     setTimeout(() =>
-      dispatch(myProfileReq({ actionType: "v", userId: userId })), 100
+      dispatch(myProfileReq({ actionType: "v", userId: userId })), 200
     )
   }
 
@@ -163,11 +167,11 @@ const MyProfile: React.FC = () => {
           style={
             imageResponse?.coverImage
               ? {
-                  background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
-                }
+                background: `url(${process.env.NEXT_PUBLIC_URL}/${imageResponse?.coverImage}) no-repeat center`,
+              }
               : {
-                  background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
-                }
+                background: `url(./Images/cover-image-register.jpg) no-repeat center center`,
+              }
           }
         >
           {!imageResponse?.coverImage && (
@@ -200,6 +204,7 @@ const MyProfile: React.FC = () => {
               step1Response={step1Response}
               onPreviewAlbum={onPreviewAlbum}
               AuthSuccess={AuthSuccess?.jsonResponse}
+              profileCompliteScore={profileCompliteScore}
             />
             <Container className={classes.detailsWrapper}>
               <Row>

@@ -1,7 +1,7 @@
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./MyProfileCard.module.scss";
 import HalfCircleProgressBar from "./HalfCircleProgressBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PackageType } from "../../types/enums";
 import CustomButton from "../Button/CustomButton";
 
@@ -9,18 +9,25 @@ interface Step1DataResponse {
   step1Response: any;
   AuthSuccess: any;
   onPreviewAlbum: (visible: boolean) => void;
+  profileCompliteScore: number | undefined;
 }
 
 const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   step1Response,
   onPreviewAlbum,
   AuthSuccess,
+  profileCompliteScore
 }) => {
   const [showGallery, setShowGallery] = useState<boolean>(false);
+  const [profileCompliteScorePersent, setProfileCompliteScorePersent] = useState<number>(profileCompliteScore && profileCompliteScore * 100 || -1)
   const showGalleryClickHandler = () => {
     setShowGallery(!showGallery);
     onPreviewAlbum(!showGallery);
   };
+
+  useEffect(() => {
+    profileCompliteScore && setProfileCompliteScorePersent(profileCompliteScore * 100)
+  }, [profileCompliteScore])
 
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -72,7 +79,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           {/* <div className={classes.RightPrograss}>
             25%
         </div> */}
-          <HalfCircleProgressBar profileComplete={100} />
+          <HalfCircleProgressBar profileComplete={profileCompliteScorePersent} />
           <p className={classes.CompleteProfileHEd}>
             Profile Completion Status
           </p>

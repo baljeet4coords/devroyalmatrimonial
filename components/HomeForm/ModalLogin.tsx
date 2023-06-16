@@ -60,7 +60,9 @@ const ModalForm: React.FC<ModalLoginProps> = ({
     <>
       (
       <div className={classes.modal_form}>
+
         <Form onSubmit={formik.handleSubmit}>
+          <h4>Welcome to <span>Royal Matrimonial</span></h4>
           <Form.Check
             type="switch"
             id="login_with"
@@ -115,7 +117,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
                       type="tel"
                       name="mobile"
                       placeholder="Enter Number"
-                      className={classes.Form_input}
+                      className={`${classes.Form_input} ${classes.mobileInput}`}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                     />
@@ -152,9 +154,8 @@ const ModalForm: React.FC<ModalLoginProps> = ({
             Forgot Password
           </Link>
           <Button
-            variant="primary"
             type="submit"
-            className={`${classes.Form_btn} p-3 mb-3 w-100`}
+            className={`${classes.Form_btn} ${classes.FromBtnlogin} p-3 mb-3 w-100`}
             onClick={() => setloginSpiner(true)}
           // disabled={loginSpiner}
           >
@@ -167,26 +168,22 @@ const ModalForm: React.FC<ModalLoginProps> = ({
             )}
             Login
           </Button>
-          <Link
-            className={`${classes.modal_links} d-flex justify-content-center`}
-            href="/"
-          >
+          <div className={classes.loginRegister_section}>
             New On Royal Matrimonial?
-          </Link>
-          <Button
-            variant="danger"
-            className={`${classes.Form_btn} p-3 mt-2 w-100`}
-            onClick={() => {
-              onCloseModal(false);
-              window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: "smooth",
-              });
-            }}
-          >
-            Register Free
-          </Button>
+            <h6
+              className={`${classes.RegisterButton}`}
+              onClick={() => {
+                onCloseModal(false);
+                window.scrollTo({
+                  top: 0,
+                  left: 0,
+                  behavior: "smooth",
+                });
+              }}
+            >
+              Register Free
+            </h6>
+          </div>
         </Form>
 
         <Button className={classes.modal_closeBtn} onClick={() => onCloseModal(false)}>
