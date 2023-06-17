@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import classes from "./ResetPassword.module.scss";
+import classes from "./ForgetPassword.module.scss";
 import { Button, Form, Image, Spinner } from 'react-bootstrap';
 import { TbArrowNarrowLeft } from 'react-icons/tb';
 import { useFormik } from 'formik';
@@ -38,7 +38,7 @@ const ResetPasswordModal: React.FC<ComponentProps> = ({ setState }) => {
         setEmailReSend(true)
         setTimeout(() => {
             setEmailReSend(false);
-            setButtonContent('Email ReSent')
+            setButtonContent('Email Resent')
         }, 2000);
     }
 
@@ -84,7 +84,7 @@ const ResetPasswordModal: React.FC<ComponentProps> = ({ setState }) => {
                                         animation="border"
                                         variant="light"
                                     />
-                                    Email sending
+                                    Email Sending
                                 </>
                                 :
                                 <>Send Email</>

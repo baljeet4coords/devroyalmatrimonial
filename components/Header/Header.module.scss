@@ -64,6 +64,9 @@
   font-weight: 500;
   margin-right: 1.5rem;
 }
+.show button:active {
+  background-color: #d91616 !important;
+}
 
 .hide {
   display: none;

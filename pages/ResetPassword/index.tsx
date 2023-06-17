@@ -30,13 +30,13 @@ const ResetPassword = () => {
         <div className={classes.mainSec}>
             <div className={classes.childComp}>
                 <div className={classes.childLeft}>
-                    <Image src='Images/app.jpg' alt='logomain' />
+                    <Image src='Images/Royal-Logo.svg' alt='logomain' />
 
                 </div>
                 <div className={classes.childRight}>
                     <Form className={classes.ResetForm} onSubmit={formik.handleSubmit}>
                         <div className={classes.ResetHeader}>
-                            <h4>ResetPassword</h4>
+                            <h4>Reset Password</h4>
                         </div>
                         <div className={classes.ImageSection}>
                             {/* <Image src='Images/update-password.svg' alt='reset password' /> */}

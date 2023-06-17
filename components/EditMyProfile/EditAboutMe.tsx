@@ -146,6 +146,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
     setSelectedBirthCity(
       step5Response?.pobCity != undefined ? step5Response?.pobCity : selectedBirthCity
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step5Response?.pobCity, step5Response?.pobCountry, step5Response?.pobState]);
 
 
@@ -161,7 +162,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             About Me
           </div>
         </div>
-        <div className={classes.typeInHindiSec}>
+        {/* <div className={classes.typeInHindiSec}>
           <Form.Check
             type="switch"
             id="login_with"
@@ -175,7 +176,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             onChange={() => setTypeInHindi(!typeInHindi)}
           />
           <p>Need help writing?</p>
-        </div>
+        </div> */}
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.EditsingleBox}>
             <Form.Label>About Career</Form.Label>
