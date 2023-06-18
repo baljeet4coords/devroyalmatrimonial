@@ -1,6 +1,5 @@
 import classes from "./Form.module.scss";
 import { Form, Button, Row, Col, Image, Spinner } from "react-bootstrap";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { LoginType } from "../../ducks/auth/types";
@@ -10,8 +9,10 @@ import { SignUpType } from "../../types/authentication";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxCross1, RxCrossCircled } from "react-icons/rx";
 import { callingCodes } from "../../utils/countryCodesList";
-import ResetPasswordModal from "./ResetPasswordModal";
-
+import ResetPasswordModal from "./ForgetPasswordModal";
+import Radio from '@mui/material/Radio';
+import { pink } from '@mui/material/colors';
+import { FormControl, FormControlLabel, FormLabel, RadioGroup } from "@mui/material";
 
 type ModalLoginProps = {
   onCloseModal: (val: boolean) => void;
@@ -34,6 +35,15 @@ const ModalForm: React.FC<ModalLoginProps> = ({
   const [passwordShow, setPasswordShow] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
 
+  const [selectedValue, setSelectedValue] = useState('phone');
+
+  const handleChange = (val: string) => {
+    setSelectedValue(val);
+  };
+
+  useEffect(() => {
+    selectedValue != 'phone' ? setLoginWithEmail(true) : setLoginWithEmail(false)
+  }, [selectedValue])
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,32 +64,47 @@ const ModalForm: React.FC<ModalLoginProps> = ({
     },
   });
 
-  // const handleRegisterLoginModal = () => {
+  const sxStyle = {
+    color: pink[800],
+    '&.Mui-checked': {
+      color: pink[500],
+      fontSize: '12px'
+    }
+  }
 
-  // }
 
   return (
-    <>
-      (
-      <div className={classes.modal_form}>
+    <div className={classes.modal_form}>
 
-        {
-          !resetPassword ?
-            <>
-              <Form onSubmit={formik.handleSubmit}>
-                <h4>Welcome to <span>Royal Matrimonial</span></h4>
-                <Form.Check
-                  type="switch"
-                  id="login_with"
-                  label="Login with Email"
-                  className={
-                    loginWithEmail
-                      ? classes.Form_Login_check
-                      : classes.Form_Login_checkDis
-                  }
-                  checked={loginWithEmail}
-                  onChange={() => setLoginWithEmail(!loginWithEmail)}
-                />
+      {
+        !resetPassword ?
+          <>
+            <Form onSubmit={formik.handleSubmit}>
+              <h4>Welcome to <span>Royal Matrimonial</span></h4>
+              <div className={classes.ImageSection}>
+                {/* <Image src='Images/update-password.svg' alt='reset password' /> */}
+                <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/man-doing-secure-login-8629127-6888102.mp4?h=198" typeof='video/mp4' autoPlay loop={true}></video>
+              </div>
+
+              <FormControl className="px-4 w-100">
+                <div className={classes.loginWithSec}>
+                  <h6>Login With</h6>
+                  <RadioGroup row className='mb-2' >
+                    <FormControlLabel
+                      value="phone"
+                      checked={selectedValue === 'phone'}
+                      control={<Radio sx={sxStyle} onChange={(e) => handleChange(e.target.value)} />}
+                      label="Phone"
+                      sx={sxStyle} />
+                    <FormControlLabel
+                      value="email"
+                      checked={selectedValue === 'email'}
+                      control={<Radio sx={sxStyle} onChange={(e) => handleChange(e.target.value)} />}
+                      label="Email"
+                      sx={sxStyle} />
+
+                  </RadioGroup>
+                </div>
                 <Form.Group
                   className={`${classes.modal_input}`}
                   controlId="formBasicEmail"
@@ -132,7 +157,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
                   )}
                 </Form.Group>
                 <Form.Group
-                  className={`${classes.modal_input} mb-2`}
+                  className={`${classes.modal_input}`}
                   controlId="formBasicEmail"
                 >
                   <Form.Control
@@ -153,55 +178,54 @@ const ModalForm: React.FC<ModalLoginProps> = ({
                 </Form.Group>
                 {formik.values.mobile && errors && <Errors error={errors} />}
                 <h5
-                  className={`${classes.modal_links} d-flex mb-3`}
+                  className={`${classes.modal_links} d-flex`}
                   onClick={() => setResetPassword(true)}
                 >
                   Forgot Password
                 </h5>
-                <Button
-                  type="submit"
-                  className={`${classes.Form_btn} ${classes.FromBtnlogin} p-3 mb-3 w-100`}
-                  onClick={() => setloginSpiner(true)}
-                // disabled={loginSpiner}
+              </FormControl>
+              <Button
+                type="submit"
+                className={`${classes.Form_btn} ${classes.FromBtnlogin}`}
+                onClick={() => setloginSpiner(true)}
+              // disabled={loginSpiner}
+              >
+                {loginSpiner && (
+                  <Spinner
+                    className={classes.loginSpiner}
+                    animation="border"
+                    variant="light"
+                  />
+                )}
+                Login
+              </Button>
+              <div className={classes.loginRegister_section}>
+                New On Royal Matrimonial?
+                <h6
+                  className={`${classes.RegisterButton}`}
+                  onClick={() => {
+                    onCloseModal(false);
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: "smooth",
+                    });
+                  }}
                 >
-                  {loginSpiner && (
-                    <Spinner
-                      className={classes.loginSpiner}
-                      animation="border"
-                      variant="light"
-                    />
-                  )}
-                  Login
-                </Button>
-                <div className={classes.loginRegister_section}>
-                  New On Royal Matrimonial?
-                  <h6
-                    className={`${classes.RegisterButton}`}
-                    onClick={() => {
-                      onCloseModal(false);
-                      window.scrollTo({
-                        top: 0,
-                        left: 0,
-                        behavior: "smooth",
-                      });
-                    }}
-                  >
-                    Register Free
-                  </h6>
-                </div>
-              </Form>
-            </>
-            :
-            <>
-              <ResetPasswordModal setState={setResetPassword} />
-            </>
-        }
-        <Button className={classes.modal_closeBtn} onClick={(e) => {onCloseModal(false) }}>
-          <RxCross1 />
-        </Button>
-      </div>
-      )
-    </>
+                  Register Free
+                </h6>
+              </div>
+            </Form>
+          </>
+          :
+          <>
+            <ResetPasswordModal setState={setResetPassword} />
+          </>
+      }
+      <Button className={classes.modal_closeBtn} onClick={(e) => { onCloseModal(false) }}>
+        <RxCross1 />
+      </Button>
+    </div >
   );
 };
 

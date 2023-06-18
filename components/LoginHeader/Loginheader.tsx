@@ -116,11 +116,6 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
-            {/* <Nav className="ms-auto">
-              <Link href="#">
-                <FiBell />
-              </Link>
-            </Nav> */}
           </Navbar.Collapse>
           <NavDropdown
             title={
@@ -143,9 +138,6 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               <Link href="/DesiredProfile">Desired Partner preference</Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item as="li">
-              <Link href="/Register">Edit Profile </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               <Link href="" onClick={handleShow}>

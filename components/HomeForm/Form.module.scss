@@ -93,7 +93,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: hsl(0deg 0% 0% / 70%);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -109,7 +109,7 @@
 
     h4 {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       background-color: #fff;
 
       span {
@@ -117,60 +117,67 @@
         font-weight: 500;
       }
     }
-
-    .Form_btn {
-      box-shadow: 1px 1px 1.5px 0.2px rgb(59, 54, 54);
-      border-radius: 50px;
+    .loginWithSec {
       display: flex;
       align-items: center;
-      justify-content: center;
-    }
+      gap: 1rem;
 
-    .modal_links {
-      color: #065ad8d3;
-      justify-content: right;
-      padding-right: 0.5rem;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .FromBtnlogin {
-      background-color: #4361ee;
-    }
-
-    .loginRegister_section {
-      margin-top: 2rem;
-      text-align: center;
-
-      .RegisterButton {
-        background-color: transparent;
-        color: #dc3545;
-        border: none;
-        outline: none;
-        margin: 0% 5px;
-        display: inline-block;
-        cursor: pointer;
+      h6 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #e91e63;
+        margin: 0%;
+        margin-top: -0.5rem;
       }
+    }
+
+    .ImageSection {
+      text-align: center;
+      img {
+        height: 150px;
+        width: 150px;
+      }
+      video {
+        height: 150px;
+        width: 150px;
+      }
+    }
+
+    .MobileCode {
+      height: 100%;
+      width: 100%;
+      background-color: #fff;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      border-right: 1px solid gray;
+      border-radius: 0%;
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
     }
 
     .modal_input {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       border: 1px solid gray;
-      border-radius: 25px;
-      background-color: #e7e7e6;
+      border-radius: 10px;
+      background-color: transparent;
       position: relative;
 
       Input {
-        padding: 0.8rem 1.5rem;
-        background-color: #e8f0fe;
+        padding: 0.6rem;
+        height: 100%;
+        background-color: #fff !important;
         border: none;
         cursor: pointer;
         border-radius: inherit;
+        :focus-within {
+          background-color: #dc3545;
+        }
       }
 
       .mobileInput {
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
       }
 
       svg {
@@ -183,44 +190,52 @@
         cursor: pointer;
       }
     }
-
-    .Form_Login_check {
-      margin-bottom: 2rem;
-
-      input {
-        padding: 0;
-        cursor: pointer;
-      }
-
-      label {
-        font-size: 0.9rem;
-      }
-    }
-
-    .Form_Login_checkDis {
-      margin-bottom: 2rem;
-
-      input {
-        padding: 0;
-        cursor: pointer;
-      }
-
-      label {
-        font-size: 0.9rem;
-        color: #91918c;
-      }
-    }
-
-    .MobileCode {
-      padding: 0.8rem 1.5rem;
-      background-color: #e8f0fe;
-      border: none;
+    .modal_links {
+      color: #4361ee;
+      justify-content: right;
+      padding-right: 0.5rem;
+      font-size: 14px;
       cursor: pointer;
-      outline: none;
-      border-right: 1px solid gray;
-      border-radius: 0%;
-      border-top-left-radius: 25px;
-      border-bottom-left-radius: 25px;
+      margin-top: -0.5rem;
+    }
+    .Form_btn {
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 2rem;
+      margin: 1rem auto;
+      border: 1.5px solid #dc3545;
+      color: #dc3545;
+      background-color: transparent;
+
+      .loginSpiner {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+        color: #dc3545 !important;
+      }
+    }
+    .Form_btn:active {
+      background-color: #dc3545;
+      color: white;
+      .loginSpiner {
+        color: #fff !important;
+      }
+    }
+    .loginRegister_section {
+      margin-top: 1rem;
+      text-align: center;
+
+      .RegisterButton {
+        background-color: transparent;
+        color: #dc3545;
+        border: none;
+        outline: none;
+        margin: 0% 5px;
+        display: inline-block;
+        cursor: pointer;
+      }
     }
   }
 
@@ -235,19 +250,13 @@
     padding: 0;
     width: 2rem;
     font-weight: 700;
-    background-color: transparent;
+    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     color: #dc3545;
   }
   .modal_closeBtn:active {
     background-color: transparent;
   }
-}
-
-.loginSpiner {
-  height: 20px;
-  width: 20px;
-  margin-right: 10px;
 }
 
 //--------------------- otp modal -------------------------
@@ -321,11 +330,7 @@
   }
 }
 
-// footer {
-//   border: none;
-// }
-
-@media screen and (max-width: 991px) and (min-width: 500px) {
+@media screen and (max-width: 991px) and (min-width: 515px) {
   .modal_form {
     Form {
       width: 80%;
@@ -355,6 +360,12 @@
         label {
           display: block;
         }
+
+        .loginWithSec {
+          flex-direction: column;
+          align-items: baseline;
+          gap: 0;
+        }
       }
 
       .modal_closeBtn {
@@ -364,15 +375,28 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 515px) {
   .modal_form {
     Form {
-      width: 80%;
-      padding: 20px;
+      width: 85%;
+      padding: 15px;
+
+      h4 {
+        margin-bottom: 1rem;
+
+        span {
+          font-size: 18px !important;
+        }
+      }
 
       .MobileCode {
-        padding: 0.8rem 0.4rem;
+        padding: 0.4rem;
         background-position: right 0.5rem center;
+      }
+      .loginWithSec {
+        flex-direction: column;
+        align-items: baseline;
+        gap: 0;
       }
     }
   }
@@ -389,8 +413,8 @@
 
   .modal_form {
     Form {
-      width: 80%;
-      padding: 20px;
+      width: 90%;
+      padding: 10px;
 
       .MobileCode {
         padding: 0.8rem 0.4rem;

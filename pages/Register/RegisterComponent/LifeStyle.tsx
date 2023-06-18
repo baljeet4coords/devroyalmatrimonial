@@ -62,6 +62,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
   const userId = useSelector(getUserId);
   const { registerUserMutation, Step3Query } = useStep3Register();
 
+  console.log(isReduxEmpty, jsonData, "isReduxEmpty");
 
 
   useEffect(() => {
@@ -163,7 +164,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
       setloadingSpiner(true);
       const mutationResult = await registerUserMutation.mutateAsync({
         ...values,
-        actionType: isReduxEmpty ? "c" : "u",
+        actionType: isReduxEmpty === undefined ? "c" : "u",
         housetype: JSON.stringify(housetype),
         cartype: JSON.stringify(cartype),
       });
@@ -233,7 +234,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.religious_belief) {
       formik.values.religiousBelief = jsonData.religious_belief;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData, jsonData?.religious_belief]);
 
   // this is commented bcz when update religious_belief it not update there formik value
@@ -380,7 +381,7 @@ const LifeStyle: React.FC<ProfileDetailsProps> = ({
                       </div>
                     </div>
                     {formik.touched.religiousBelief &&
-                    formik.errors.religiousBelief ? (
+                      formik.errors.religiousBelief ? (
                       <div>
                         <span className={classes.errorMessage}>
                           {formik.errors.religiousBelief}
