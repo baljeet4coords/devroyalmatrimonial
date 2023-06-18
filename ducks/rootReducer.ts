@@ -10,6 +10,7 @@ import authReducer from "./auth/reducer";
 import { partnerPrefReducer } from "./partnerPreferrence/";
 import { privacySettingsReducer } from "./PrivacySetting/";
 import { myprofileReducer } from "./myProfile/";
+import { matchMakingReducer } from "./matchMaking"; 
 import profileCompletenessReducer from "./profileCompletion/reducer";
 import GalleryReducer from "./Gallery/reducer";
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   registerStep5: step5Reducer,
   partnerPrefference: partnerPrefReducer,
   myProfile: myprofileReducer,
+  matchMaking: matchMakingReducer,
   profileComplete: profileCompletenessReducer,
   myProfileGallery: GalleryReducer,
   privacySettings: privacySettingsReducer,

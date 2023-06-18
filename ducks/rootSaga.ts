@@ -8,6 +8,7 @@ import { watchLogin, watchLogout, watchSignup } from "./auth/saga";
 import { partnerPrefferenceSaga } from "./partnerPreferrence";
 import { privacySettingsSaga } from "./PrivacySetting";
 import { myprofileSaga } from "./myProfile";
+import { matchMakingSaga } from "./matchMaking";
 import { gallerySaga, gallerySagaPost } from "./Gallery";
 
 function* rootSaga() {
@@ -23,6 +24,7 @@ function* rootSaga() {
     partnerPrefferenceSaga(),
     privacySettingsSaga(),
     myprofileSaga(),
+    matchMakingSaga(),
     gallerySaga(),
     gallerySagaPost(),
   ]);
