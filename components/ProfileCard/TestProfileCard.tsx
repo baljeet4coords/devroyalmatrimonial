@@ -5,29 +5,34 @@ import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiS
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
 import { Button, Image } from 'react-bootstrap';
 import { IMatchMakingResponse } from '../../types/matchmaking/matchmaking';
-
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface MyComponentProps {
-    userMatchData: IMatchMakingResponse[] | null;
+    userMatchData: IMatchMakingResponse[] | null |undefined;
 }
 
 const TestProfileCard: FC<MyComponentProps> = ({ userMatchData }) => {
-    // const [MatchUserData, setMatchUserData] = useState(!Array.isArray(userMatchData) ? JSON.stringify(userMatchData) : userMatchData)
+    const [MatchUserData, setMatchUserData] = useState<IMatchMakingResponse[] | null | undefined>(userMatchData)
     const [Shortlisted, setShortlisted] = useState(false);
     const [block, setBlock] = useState(false);
     const [sendInterest, setSendInterest] = useState(false);
 
-    useEffect(() => {
-        if (!Array.isArray(userMatchData)) { JSON.stringify(userMatchData) }
-    }, [userMatchData])
 
-    console.log(userMatchData);
+    function isArrayString(string: string): boolean {
+        try {
+            const parsedArray = JSON.parse(string);
+            return Array.isArray(parsedArray);
+        } catch (error) {
+            return false;
+        }
+    }
 
     return (
         <>
             {userMatchData && userMatchData.map((user) => {
                 return <>
-                    <div className={classes.CardMain} key={user.userid}>
+                    <div className={classes.CardMain} key={user.userid + user.userRMID}>
                         <div className={classes.profileSection}>
                             <Image className={classes.profile_Photo} src={`https://beta.royalmatrimonial.com/api/${user.photo}`} alt='userName' />
                             <div className={classes.profiler_Name}>
@@ -42,6 +47,9 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData }) => {
                         <div className={classes.infoSection}>
                             <div className={classes.info_Header}>
                                 <h5 className={classes.name_Heading}>Basic Details</h5>
+                                {/* <Box sx={{ width: '50%' }}>
+                                    <LinearProgress color="success" variant="determinate" value={100} />
+                                </Box> */}
                                 <p className={classes.id_Heading}>
                                     #<span>{user.userRMID}</span>
                                 </p>
@@ -104,7 +112,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData }) => {
                                         <span>
                                             MySelf : {' '}
                                         </span>
-                                        I You Can Copy And Paste The Essay Or Provide The Specific Details, And Ll Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help You With Your Friends Essay. However, Please Note That As An AI Language Model....
+                                        I You Can Copy And Paste The Essay Or Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help  An AI Language Model....
                                     </p>
                                 </div>
 
