@@ -159,42 +159,75 @@
         gap: 20px;
         margin-top: 10px;
         flex-wrap: wrap;
+        justify-content: space-between;
 
-        Button {
+        .button_section {
           display: flex;
-          gap: 5px;
-          align-items: center;
-          color: black;
-          font-weight: 600;
-          border: none;
-          outline: none;
-          font-size: 14px;
-          background: #dc354517;
-          border-radius: 30px;
-          height: 36px;
+          gap: 20px;
+          margin-top: 10px;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          Button {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            color: black;
+            font-weight: 600;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: #dc354517;
+            border-radius: 30px;
+            height: 36px;
 
-          svg {
-            height: 22px;
-            width: 22px;
-            color: #dc3545;
+            svg {
+              height: 22px;
+              width: 22px;
+              color: #dc3545;
+            }
+            .loginSpiner {
+              height: 20px;
+              width: 20px;
+              margin-right: 10px;
+              color: #dc3545 !important;
+            }
           }
-        }
-        Button:hover {
-          color: #dc3545;
-          box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-            rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-        }
+          Button:hover {
+            color: #dc3545;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+              rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+          }
 
-        .activebtn {
-          background-color: #dc3545;
-          color: #fff;
+          .activebtn {
+            background-color: #dc3545;
+            color: #fff;
 
-          .activesvg {
+            .activesvg {
+              color: #fff;
+            }
+          }
+          .activebtn:hover {
             color: #fff;
           }
         }
-        .activebtn:hover {
-          color: #fff;
+
+        .profileMatchSection {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+
+          .profileMatch {
+            height: 40px;
+            width: 40px;
+            fill: #dc3545;
+            filter: invert(0.5) sepia(2) saturate(20) hue-rotate(355deg);
+          }
+          span {
+            font-weight: 600;
+            font-size: 18px;
+            color: #dc3545;
+          }
         }
       }
     }

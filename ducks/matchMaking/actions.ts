@@ -12,7 +12,7 @@ interface MatchMakingAction {
     maxUserId: number;
     limit: number;
     viceVersa: number;
-    excludedUsers: string[];
+    excludedUsers: string;
   };
 }
 

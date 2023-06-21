@@ -12,9 +12,12 @@ function* myprofileSaga(action: MatchMakingActions): any {
   const previousMatchMakingSuccess = yield select(
     (state) => state.matchMaking?.response?.jsonResponse
   );
+  const output = yield select(
+    (state) => state.matchmaking?.response
+  );
   try {
     if (action.type === MATCHMAKING) {
-      // const response = yield call(
+      // let response = yield call(
       //   axios.post,
       //   `http://dev.royalmatrimonial.com/api/matchmaking/getAllMatchMaking`,
       //   action.payload
@@ -25,6 +28,13 @@ function* myprofileSaga(action: MatchMakingActions): any {
         action.payload
       );
       const responseData = response.data;
+      // if (responseData.jsonResponse != null) {
+      //   response = yield call(
+      //     axios.post,
+      //     `http://dev.royalmatrimonial.com/api/matchmaking/getStrictMatchMaking`,
+      //     action.payload
+      //   );
+      // }
       const updatedData = previousMatchMakingSuccess && {
         ...responseData,
         jsonResponse: [
