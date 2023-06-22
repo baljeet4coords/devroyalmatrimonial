@@ -148,14 +148,14 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
     return (
         <>
             {userMatchData && userMatchData.map((user) => {
-                const dob = user && user?.dob.split("-");
-                const getUserLastTime = dob[2].split(' ')[1].split(':');
-                const dobYear = dob && dob[0];
-                let dobmonth = dob && dob[1];
-                const dobDay = dob && dob[2].split(" ")[0];
-                if (Number(dobmonth) < 10) {
-                    dobmonth = dobmonth?.split("0")[1];
-                }
+                const ull = user.user_last_login && user?.user_last_login.split("-");
+                const getUserLastTimeLogin = ull && ull[2].split(' ')[1].split(':');
+                const ullYear = ull && ull[0];
+                let ullMonth = ull && ull[1];
+                const ullDay = ull && ull[2].split(" ")[0];
+                // if (Number(dobmonth) < 10) {
+                //     dobmonth = dobmonth?.split("0")[1];
+                // }
                 return (<div className={classes.CardMain} key={user.userid + user.user_RM_ID}>
                     <div className={classes.profileSection}>
                         <Image className={classes.profile_Photo} src={`https://beta.royalmatrimonial.com/api/${user.photo}`} alt='userName' />
@@ -164,7 +164,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
                             <h5 className={classes.name_Heading}>{user.fullname.length > 16 ? (user.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : user.fullname.toLocaleLowerCase()} </h5>
                             <div>
                                 <h5 className={classes.active_Status}>Active on :</h5>
-                                <h5 className={classes.active_Status}> <span>{`${dobDay}-${months[Number(dobmonth) - 1]}-${dobYear} `} at {convertFrom24To12Format(`${getUserLastTime[0]}:${getUserLastTime[1]}`)}</span></h5>
+                                <h5 className={classes.active_Status}>{ullYear ? <span>{`${ullDay}-${months[Number(ullMonth) - 1]}-${ullYear} `} at {getUserLastTimeLogin ? convertFrom24To12Format(`${getUserLastTimeLogin[0]}:${getUserLastTimeLogin[1]}`) : 'Na'}</span> : <span>Na :Na at Na</span> } </h5>
                             </div>
                         </div>
                     </div>
