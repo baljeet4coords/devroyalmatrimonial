@@ -62,7 +62,7 @@
 
   .Home_white_body {
     background-color: $milkWhite_bg;
-    padding: 28px 74px 48px 74px;
+    padding: 40px 30px;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
 
@@ -89,7 +89,7 @@
 
   .Home_dark_body {
     background-color: $darkWhite_bg;
-    padding: 28px 74px 48px 74px;
+    padding: 40px 30px;
     box-shadow: 0 2px 6px 0 rgb(142 142 142 / 20%);
     border-radius: 0.25rem;
 
@@ -308,4 +308,15 @@
     width: 100%;
     margin: 0%;
   }
+}
+@media only screen and (max-width: 540px) and (min-width: 423px) {
+  .Home_white_body,
+  .Home_dark_body,
+  .Home_colord_body,
+  .card_bottom_Row {
+    width: 100%;
+    margin: 0%;
+    padding: 40px 30px;
+  }
+
 }
