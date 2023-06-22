@@ -12,6 +12,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { useSendInterest } from '../../hooks/useSendInterest/useSendInterest';
 import { useBlockUser } from '../../hooks/useBlockUser/useBlockUser';
 import { useShortlist } from '../../hooks/useSortlisted/useShortlist';
+import { MaritalStatus, Occupation, Religion } from '../../types/enums';
+import { CastListArray } from '../../constants/CastListArray';
 
 interface MyComponentProps {
     userMatchData: IMatchMakingResponse[] | null | undefined;
@@ -26,7 +28,52 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
     // const userId = useSelector(getUserId);
+    const dateNow = new Date();
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+    const nowYear = dateNow.getFullYear();
 
+
+    // to get height inn feet cm 
+    function HeightConvertr(cmHeight: number) {
+        const totalInches = cmHeight / 2.54;
+        const feet = Math.floor(totalInches / 12).toString();
+        const remainingInches = (totalInches % 12).toFixed(0);
+        return `${feet} ' ${remainingInches} ft`;
+    }
+
+
+    //to get value by key 
+    function getKeyByValue(value: string, enumObject: any) {
+        for (const [key, val] of Object.entries(enumObject)) {
+            if (val === value) {
+                return key.replaceAll("_", " ");
+            }
+        }
+    }
+
+    //to get cast
+    function castGet(idd: number) {
+        const castname = CastListArray.map((cast) => {
+            if (cast.id === String(idd)) {
+                return cast.caste;
+            }
+        });
+
+        return castname;
+    }
 
 
 
@@ -90,30 +137,42 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
         }
     }
 
+    const convertFrom24To12Format = (time24: any) => {
+        const [sHours, minutes] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
+        const period = +sHours < 12 ? 'am' : 'pm';
+        const hours = +sHours % 12 || 12;
+
+        return `${hours}:${minutes} ${period}`;
+    }
 
     return (
         <>
             {userMatchData && userMatchData.map((user) => {
-                return (<div className={classes.CardMain} key={user.userid + user.userRMID}>
+                const dob = user && user?.dob.split("-");
+                const getUserLastTime = dob[2].split(' ')[1].split(':');
+                const dobYear = dob && dob[0];
+                let dobmonth = dob && dob[1];
+                const dobDay = dob && dob[2].split(" ")[0];
+                if (Number(dobmonth) < 10) {
+                    dobmonth = dobmonth?.split("0")[1];
+                }
+                return (<div className={classes.CardMain} key={user.userid + user.user_RM_ID}>
                     <div className={classes.profileSection}>
                         <Image className={classes.profile_Photo} src={`https://beta.royalmatrimonial.com/api/${user.photo}`} alt='userName' />
                         <div className={classes.profiler_Name}>
 
-                            <h5 className={classes.name_Heading}>{user.fullname.length > 16 ? (user.fullname).substring(0, 15).concat('...') : user.fullname} </h5>
+                            <h5 className={classes.name_Heading}>{user.fullname.length > 16 ? (user.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : user.fullname.toLocaleLowerCase()} </h5>
                             <div>
                                 <h5 className={classes.active_Status}>Active on :</h5>
-                                <h5 className={classes.active_Status}> <span> 19-Feb-23 at 04:15pm</span></h5>
+                                <h5 className={classes.active_Status}> <span>{`${dobDay}-${months[Number(dobmonth) - 1]}-${dobYear} `} at {convertFrom24To12Format(`${getUserLastTime[0]}:${getUserLastTime[1]}`)}</span></h5>
                             </div>
                         </div>
                     </div>
                     <div className={classes.infoSection}>
                         <div className={classes.info_Header}>
                             <h5 className={classes.name_Heading}>Basic Details</h5>
-                            {/* <Box sx={{ width: '50%' }}>
-                                    <LinearProgress color="success" variant="determinate" value={100} />
-                                </Box> */}
                             <p className={classes.id_Heading}>
-                                #<span>{user.userRMID}</span>
+                                #<span>{user.user_RM_ID}</span>
                             </p>
                         </div>
                         <hr className="dotted" />
@@ -123,13 +182,15 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
                                     <div>
                                         <GiBodyHeight />
                                     </div>
-                                    <p>5ft 11in -157cms</p>
+                                    {/* <p>5ft 11in -157cms</p> */}
+                                    <p>{HeightConvertr(user.height_cm) || "NA"} - {user.height_cm}cms</p>
                                 </div>
                                 <div className={classes.info_Tag}>
                                     <div>
                                         <BiCalendar />
                                     </div>
-                                    <p>35 Yrs</p>
+                                    {/* <p>23 Yrs</p> */}
+                                    <p>{user.dob ? nowYear - Number(user.dob.split("-")[0]) : 'Na'} Yrs</p>
                                 </div>
                                 <div className={classes.info_Tag}>
                                     <div>
@@ -141,13 +202,14 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
                                     <div>
                                         <GiSpellBook />
                                     </div>
-                                    <p>Buddhist</p>
+                                    <p>{getKeyByValue(String(user?.religion), Religion) ||
+                                        "NA"}</p>
                                 </div>
                                 <div className={classes.info_Tag}>
                                     <div>
                                         <GiCottonFlower />
                                     </div>
-                                    <p>Hindu: Brahmin Chittpavan Kokanastha</p>
+                                    <p>{castGet(user?.caste) || "NA"}</p>
                                 </div>
                                 <div className={classes.info_Tag}>
                                     <div>
@@ -159,13 +221,15 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
                                     <div>
                                         <GiBriefcase />
                                     </div>
-                                    <p>Civil Services</p>
+                                    <p>{getKeyByValue(String(user?.occupation), Occupation) ||
+                                        "NA"}</p>
                                 </div>
                                 <div className={classes.info_Tag}>
                                     <div>
                                         <GiLovers />
                                     </div>
-                                    <p>Never Married</p>
+                                    <p>{getKeyByValue(String(user?.marital_status), MaritalStatus) ||
+                                        "NA"}</p>
                                 </div>
                             </div>
 
@@ -196,7 +260,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userMatchData, userID }) => {
                                 </div>
                                 <div className={classes.profileMatchSection}>
                                     <Image className={classes.profileMatch} src='Images/matchProfile2.svg' alt='profile Match' />
-                                    <span>84%</span>
+                                    <span>87 %</span>
                                 </div>
                             </div>
                         </div>
