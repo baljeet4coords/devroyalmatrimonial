@@ -330,14 +330,27 @@
   }
 }
 
+@media only screen and (max-width: 1091px) and (min-width: 992px) {
+  .modal_form {
+    Form {
+      width: 43%;
+      padding: 40px;
+    }
+  }
+}
+
 @media screen and (max-width: 991px) and (min-width: 515px) {
+  .Form_Wrapper {
+    width: 100%;
+    margin-top: 1rem;
+  }
   .modal_form {
     Form {
       width: 80%;
       padding: 40px;
 
       .MobileCode {
-        padding: 0.8rem 0.4rem;
+        padding: 0.4rem;
         background-position: right 0.5rem center;
       }
     }
@@ -417,7 +430,7 @@
       padding: 10px;
 
       .MobileCode {
-        padding: 0.8rem 0.4rem;
+        padding: 0.4rem;
         background-position: right 0.1rem center;
       }
     }
