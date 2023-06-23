@@ -15,10 +15,12 @@ import { CastListArray } from "../../../constants/CastListArray";
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
   step1Response: any;
+  EditHide?: boolean;
 }
 const BasicDetails: FC<MyComponentProps> = ({
   step1Response,
   setBasicDetails,
+  EditHide
 }) => {
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -109,9 +111,12 @@ const BasicDetails: FC<MyComponentProps> = ({
             <FiUser />
             Basic Details
           </div>
-          <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Username}>
           <p>
@@ -119,12 +124,6 @@ const BasicDetails: FC<MyComponentProps> = ({
             <span> - {step1Response?.fullname || "NA"}</span>{" "}
           </p>
         </div>
-
-        {/* <div className={classes.UserVerified}>
-          <MdVerified />
-          your profile verification is pending...
-          <span>Get verified NOW</span>
-        </div> */}
         <div className={classes.Userdetails}>
           <div className={classes.UserdetailsSec}>
             <p className={classes.input_Name}>Age</p>

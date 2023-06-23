@@ -24,11 +24,12 @@ interface ImageGalleryProps {
     alt: string;
   }[];
   galleryRef: React.RefObject<HTMLDivElement>;
+  EditHide: boolean;
 }
 interface ImageResponse {
   galleryImages?: string[];
 }
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images, galleryRef }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRef }) => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const gallerySuccessResponse = useSelector(selectGallerySuccess);
@@ -132,13 +133,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, galleryRef }) => {
     <div className={classes.imageGallery} ref={galleryRef}>
       <div className="d-flex justify-content-between mb-5">
         <h5>Your Photos</h5>
-        <div>
-          <div className={classes.addMorePhoto} onClick={handleButtonClick}>
-            Add more photos
-            <ImImage />
-          </div>
-          <span className="mt-2 text-muted">{uploadStatus}</span>
-        </div>
+        {
+          EditHide ? null :
+            <div>
+              <div className={classes.addMorePhoto} onClick={handleButtonClick}>
+                Add more photos
+                <ImImage />
+              </div>
+              <span className="mt-2 text-muted">{uploadStatus}</span>
+            </div>
+        }
         <input
           type="file"
           ref={fileInputRef}

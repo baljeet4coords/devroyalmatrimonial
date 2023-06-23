@@ -11,7 +11,7 @@ import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
 
 const limit = 5;
-const userId = 397;
+const userId = 413;
 
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
@@ -19,9 +19,13 @@ const ProfileMatch: React.FC = () => {
 
 
   const [userMatchData, setMatchUserData] = useState(matchMakingResponse)
+  const [allUserData, setAllUserData] = useState(userMatchData?.jsonResponse)
   const [maxUserId, setMaxUserId] = useState(-1);
   const [userAlreadyGetId, setUserAlreadyGetId] = useState<number[]>([]);
   const [viceVersa, setViceVersa] = useState<number>(1);
+  const [Shortlisted, setShortlisted] = useState<number[]>([]);
+  const [sendInterest, setSendInterest] = useState<number[]>([]);
+  const [block, setBlock] = useState<number[]>([]);
 
   useEffect(() => {
     if (userMatchData && userMatchData.jsonResponse) {
@@ -65,6 +69,7 @@ const ProfileMatch: React.FC = () => {
 
   useEffect(() => {
     matchMakingResponse && setMatchUserData(matchMakingResponse)
+    setAllUserData(matchMakingResponse?.jsonResponse)
   }, [matchMakingResponse])
 
 
@@ -88,8 +93,13 @@ const ProfileMatch: React.FC = () => {
         <Container fluid className={classes.background_header}>
           <LoginHeader />
         </Container>
-        {/* <ProfileCard /> */}
-        <TestProfileCard userMatchData={userMatchData?.jsonResponse}  userID={userId} />
+        <div className={classes.card_container}>
+          {allUserData && allUserData.map((user) => {
+            return (
+              <TestProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
+            )
+          })}
+        </div>
         {userMatchData && userMatchData?.output != -4000 && <div className="m-5 d-flex" >
           <CustomButton onClick={loadMoreHandler} >Load More </CustomButton>
         </div>}
