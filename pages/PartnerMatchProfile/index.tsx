@@ -81,7 +81,7 @@ const PartnerMatchProfile: React.FC = () => {
                                 Details
                             </button>
                             <button onClick={() => handleSwitchTabs(2)} className={`${classes.TabButton} ${buttonType === 2 && classes.TabButtonActive} `}>
-                                Matching Details
+                                Profile Comparison
                             </button>
                         </Row>
                         {buttonType == 1 ?
@@ -134,7 +134,7 @@ const PartnerMatchProfile: React.FC = () => {
                                 margin: 'auto'
                             }}>
                                 <Col sm={9} md={8} xl={12} className="p-0">
-                                   <MatchingDetails />
+                                    <MatchingDetails />
                                 </Col>
                             </Row>
                         }

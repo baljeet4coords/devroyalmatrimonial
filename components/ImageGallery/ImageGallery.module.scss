@@ -23,7 +23,6 @@
     justify-content: flex-start;
 
     a {
-
       width: 23%;
       background-color: #eeeeee;
 
@@ -34,16 +33,36 @@
       }
 
       @media only screen and (max-width: 888px) {
-       width: 31%;
+        width: 31%;
       }
       @media only screen and (max-width: 667px) {
-       width: 100%;
+        width: 100%;
       }
-
     }
 
     @media only screen and (max-width: 667px) {
       flex-direction: column;
+    }
+  }
+  .noImageSec {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3rem;
+    video {
+      height: 180px;
+      width: 180px;
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #d9475c;
+      font-weight: 500;
+      line-height: 25px;
+      text-align: center;
+      margin-top: 1rem;
     }
   }
 }

@@ -17,6 +17,7 @@ import { getUserId } from "../../ducks/auth/selectors";
 import { useDispatch } from "react-redux";
 import { galleryPostReq, galleryReq } from "../../ducks/Gallery/actions";
 import { selectGallerySuccess } from "../../ducks/Gallery/selectors";
+import { useRouter } from "next/router";
 
 interface ImageGalleryProps {
   images: {
@@ -32,6 +33,9 @@ interface ImageResponse {
 const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRef }) => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
+  const router = useRouter();
+  const { uid } = router.query;
+  const partnerId = String(uid).split('RM')[0];
   const gallerySuccessResponse = useSelector(selectGallerySuccess);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -41,7 +45,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
 
   useEffect(() => {
-    userId && dispatch(galleryReq({ userId: userId }));
+    if (!partnerId) {
+      userId && dispatch(galleryReq({ userId: userId }));
+    } else {
+      dispatch(galleryReq({ userId: Number(partnerId) }));
+    }
   }, [dispatch, userId]);
 
   useEffect(() => {
@@ -168,7 +176,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
               </a>
             );
           })
-          : "No images"}
+          :
+          <div className={classes.noImageSec}>
+            <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
+            <h3>No Image Found !!</h3>
+          </div>
+        }
       </LightGallery>
     </div>
   );
