@@ -10,9 +10,10 @@ import authReducer from "./auth/reducer";
 import { partnerPrefReducer } from "./partnerPreferrence/";
 import { privacySettingsReducer } from "./PrivacySetting/";
 import { myprofileReducer } from "./myProfile/";
-import { matchMakingReducer } from "./matchMaking"; 
+import { matchMakingReducer } from "./matchMaking";
 import profileCompletenessReducer from "./profileCompletion/reducer";
 import GalleryReducer from "./Gallery/reducer";
+import { searchByDataReducer } from "./searchByData";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   partnerPrefference: partnerPrefReducer,
   myProfile: myprofileReducer,
   matchMaking: matchMakingReducer,
+  searchByData: searchByDataReducer,
   profileComplete: profileCompletenessReducer,
   myProfileGallery: GalleryReducer,
   privacySettings: privacySettingsReducer,

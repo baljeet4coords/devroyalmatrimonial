@@ -6,10 +6,10 @@ import SearchByData from "./SearchByData";
 import SearchById from "./SearchByProfile";
 
 const Search: React.FC = () => {
-  const [searchData, setSearchData] = useState<string>("searchByData");
+  const [searchData, setSearchData] = useState<string>("searchbydata");
 
   const DataOnclick = (searchtype: string) => {
-    setSearchData(searchtype);
+    return setSearchData(searchtype);
   };
   return (
     <>
@@ -17,40 +17,19 @@ const Search: React.FC = () => {
         <Container fluid className={classes.background_banner}>
           <LoginHeader />
         </Container>
-        {/* <h1 className="text-center text-danger py-5 my-5">
-          This Feature Is Coming Soon!
-        </h1> */}
         <div className={`${classes.bg_gray} w-100 pb-5`}>
-          <Container className={`${classes.search_main} w-75`}>
-            <Row>
-              <Col sm={6} className="px-0">
-                <div
-                  className={
-                    searchData == "searchByData"
-                      ? classes.activeSearchType
-                      : classes.search_box
-                  }
-                  onClick={() => DataOnclick("searchByData")}
-                >
-                  Search
-                </div>
-              </Col>
-              <Col sm={6} className="px-0">
-                <div
-                  className={
-                    searchData == "searchById"
-                      ? classes.activeSearchType
-                      : classes.search_box
-                  }
-                  onClick={() => DataOnclick("searchById")}
-                >
-                  Search By Id
-                </div>
-              </Col>
+          <div className={`${classes.search_main}`}>
+            <Row className={`${classes.tabSection} row`}>
+              <button onClick={() => DataOnclick('searchbydata')} className={`${classes.TabButton} ${searchData === 'searchbydata' && classes.TabButtonActive} `}>
+                Search by Data
+              </button>
+              <button onClick={() => DataOnclick('searchbyid')} className={`${classes.TabButton} ${searchData === 'searchbyid' && classes.TabButtonActive} `}>
+                Search by id
+              </button>
             </Row>
-          </Container>
+          </div>
 
-          {searchData == "searchByData" ? <SearchByData /> : <SearchById />}
+          {searchData === "searchbydata" ? <SearchByData /> : <SearchById />}
         </div>
       </div>
       <Footer />

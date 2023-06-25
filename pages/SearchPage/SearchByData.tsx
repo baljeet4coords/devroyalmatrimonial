@@ -1,9 +1,9 @@
-import { Container, Row, Col,  Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import {
   DropdownGridSingleSelect,
 } from "../../components";
-import React, {  useState } from "react";
-import classes from "../DesiredProfile/DesiredProfile.module.scss";
+import React, { useState } from "react";
+import classes from "./Search.module.scss";
 import { AgeFromYearList, HeightList } from "../../constants/DesiredData";
 import SingleInput from "../../components/InputField/SingleInputField";
 import DoubleInput from "../../components/InputField/DoubleInputField";
@@ -21,6 +21,7 @@ import {
   ReligionWith0,
   ResidentialStatusWith0,
   SmokeDrinkWith0,
+  isHiv,
 } from "../../types/enums";
 import CountryMultiple from "../../components/InputField/CountryStateMultiple/CountryMultiple";
 import StateMultiple from "../../components/InputField/CountryStateMultiple/StateMultiple";
@@ -100,6 +101,11 @@ const SearchByData: React.FC = () => {
   );
 
   const [caste, setCaste] = useState<number[]>([]);
+  const [selectedIsHiv, setSelectedIsHiv] = useState({
+    id: '',
+    val: "",
+  });
+  const [hivTouched, setHivTouched] = useState<boolean>(false);
 
 
 
@@ -139,20 +145,18 @@ const SearchByData: React.FC = () => {
         childrenStatus && childrenStatus.map((str) => +str)
       ),
       horoscopeMatch: "0",
+      hiv : Number(selectedIsHiv.id),
     };
-    let response;
-    response = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/userPartnerPreference/postPartnerPref`,
-      { ...partnerPrefPostReq, actionType: "c" }
-    );
-    router.push("/MyProfile");
+
+    console.log(partnerPrefPostReq, 'data');
+
   };
 
   return (
     <>
-      <div className={classes.DesiredWrapper}>
-        <Container className={classes.innerWrapper}>
-          <Row className="mt-5">
+      <div className={classes.SearchWrapperMain}>
+        <div className={classes.SearchinnerWrapper}>
+          <div className={classes.SearchWrapper}>
             <Col sm={12} className={`${classes.form_wrapper}`} >
               <form className={classes.formEdit}>
                 <DoubleInput
@@ -205,7 +209,7 @@ const SearchByData: React.FC = () => {
                   defaultValues={[]}
                 />
 
-                <div className={classes.DesieredSingleBox}>
+                <div className={classes.SearchSingleBox}>
                   <div className={classes.singleDropDown}>
                     <DropdownGridSingleSelect
                       title={"Annual Income"}
@@ -216,14 +220,6 @@ const SearchByData: React.FC = () => {
                     />
                   </div>
                 </div>
-
-
-                <SingleInput
-                  data={MaritalStatusWith0}
-                  inputName={"Marital Status"}
-                  onChange={setMaritalStatus}
-                  defaultValues={[]}
-                />
 
 
                 <SingleInput
@@ -262,7 +258,7 @@ const SearchByData: React.FC = () => {
                   defaultValues={[]}
                 />
 
-                <div className={classes.DesieredSingleBox}>
+                <div className={classes.SearchSingleBox}>
                   <div className={classes.singleDropDown}>
                     <DropdownGridSingleSelect
                       title={"Diet"}
@@ -274,7 +270,7 @@ const SearchByData: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={classes.DesieredSingleBox}>
+                <div className={classes.SearchSingleBox}>
                   <div className={classes.singleDropDown}>
                     <DropdownGridSingleSelect
                       title={"Smoking"}
@@ -286,7 +282,7 @@ const SearchByData: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={classes.DesieredSingleBox}>
+                <div className={classes.SearchSingleBox}>
                   <div className={classes.singleDropDown}>
                     <DropdownGridSingleSelect
                       title={"Drinking"}
@@ -298,7 +294,7 @@ const SearchByData: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={classes.DesieredSingleBox}>
+                <div className={classes.SearchSingleBox}>
                   <div className={classes.singleDropDown}>
                     <DropdownGridSingleSelect
                       title={"Ready to settle abroad"}
@@ -321,6 +317,16 @@ const SearchByData: React.FC = () => {
                 />
 
 
+
+                <SingleInput
+                  data={MaritalStatusWith0}
+                  inputName={"Marital Status"}
+                  onChange={setMaritalStatus}
+                  defaultValues={[]}
+                />
+
+
+
                 <SingleInput
                   data={ChildrenStatus0}
                   inputName={"Children Status"}
@@ -328,6 +334,18 @@ const SearchByData: React.FC = () => {
                   defaultValues={[]}
                 />
 
+                <div className={classes.SearchSingleBox}>
+                  <div className={classes.singleDropDown}>
+                    <DropdownGridSingleSelect
+                      title="HIV"
+                      data={isHiv}
+                      nameid="hiv"
+                      selectedDataFn={setSelectedIsHiv}
+                      defaultValue={''}
+                      setErrorState={setHivTouched}
+                    />
+                  </div>
+                </div>
 
 
                 <div className={classes.buttonWrapper}>
@@ -340,8 +358,8 @@ const SearchByData: React.FC = () => {
                 </div>
               </form>
             </Col>
-          </Row>
-        </Container>
+          </div>
+        </div>
       </div>
     </>
   );
