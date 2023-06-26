@@ -69,7 +69,7 @@ const MyProfile: React.FC = () => {
   const step5Response = myProfileObject?.step5.jsonResponse;
   const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
   // console.log(profileCompliteScore,"profileCompliteScore");
-  
+
 
 
   useEffect(() => {
@@ -209,7 +209,7 @@ const MyProfile: React.FC = () => {
             <Container className={classes.detailsWrapper}>
               <Row>
                 {showGallery ? (
-                  <ImageGallery galleryRef={galleryRef} images={[]} />
+                  <ImageGallery galleryRef={galleryRef} images={[]} EditHide={false} />
                 ) : (
                   <>
                     <Col sm={9} md={8} className="p-0">
@@ -248,6 +248,7 @@ const MyProfile: React.FC = () => {
                         <AboutMeDetails
                           step5Response={step5Response}
                           setAboutMeDetails={setAboutMeDetails}
+                          EditHide={false}
                         />
                       )}
                       <hr />
@@ -261,6 +262,8 @@ const MyProfile: React.FC = () => {
                         <EducationAndCareer
                           step2Response={step2Response}
                           setEudcationAndCareer={setEudcationAndCareer}
+                          EditHide={false}
+
                         />
                       )}
                       <hr />
@@ -274,6 +277,8 @@ const MyProfile: React.FC = () => {
                         <FamilydetailsInfo
                           step4Response={step4Response}
                           setFamilyDetails={setFamilyDetails}
+                          EditHide={false}
+
                         />
                       )}
                       <hr />
@@ -287,6 +292,7 @@ const MyProfile: React.FC = () => {
                         <LifeStyleDetails
                           step3Response={step3Response}
                           setEditDetails={setLifeStyleDetails}
+                          EditHide={false}
                         />
                       )}
                       <hr />

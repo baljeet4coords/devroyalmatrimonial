@@ -20,10 +20,12 @@ import {
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
   step2Response: any;
+  EditHide: boolean;
 }
 const EducationAndCareer: FC<MyComponentProps> = ({
   setEudcationAndCareer,
   step2Response,
+  EditHide
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
@@ -54,7 +56,7 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
       setStateCode(stateOfCountry[step2Response?.state].isoCode);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
@@ -139,12 +141,12 @@ const EducationAndCareer: FC<MyComponentProps> = ({
             <BiBook />
             Education & Career
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setEudcationAndCareer(true)}
-          >
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setEudcationAndCareer(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

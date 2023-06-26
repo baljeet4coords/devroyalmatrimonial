@@ -8,7 +8,6 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   gap: 1px;
-  cursor: pointer;
   margin: 3rem auto;
   max-width: 1000px;
 
@@ -24,6 +23,7 @@
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     background-color: #edf2f452;
+    cursor: pointer;
 
     .profile_Photo {
       height: 160px;
@@ -76,6 +76,13 @@
           }
         }
       }
+    }
+  }
+  .profileSection:hover {
+    background-color: #8f92931b;
+
+    .profile_Photo {
+      scale: 1.05;
     }
   }
 
@@ -255,9 +262,7 @@
         div {
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          align-items: center;
-          width: max-content;
+          justify-content: center;
 
           .active_Status {
             span {
@@ -285,7 +290,6 @@
               width: 16px;
             }
           }
-
         }
         .card_Button_Wrapper {
           width: 100%;

@@ -22,10 +22,12 @@ import { BortherSisterCount } from "../../../types/enums";
 interface MyComponentProps {
   setFamilyDetails: (details: boolean) => void;
   step4Response: any;
+  EditHide :boolean;
 }
 const FamilydetailsInfo: FC<MyComponentProps> = ({
   step4Response,
   setFamilyDetails,
+  EditHide,
 }) => {
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -162,9 +164,12 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
             <FiUsers />
             Family Details
           </div>
-          <span className={classes.Edit} onClick={() => setFamilyDetails(true)}>
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setFamilyDetails(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
