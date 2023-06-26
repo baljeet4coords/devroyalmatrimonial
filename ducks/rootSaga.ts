@@ -10,6 +10,7 @@ import { privacySettingsSaga } from "./PrivacySetting";
 import { myprofileSaga } from "./myProfile";
 import { matchMakingSaga } from "./matchMaking";
 import { gallerySaga, gallerySagaPost } from "./Gallery";
+import { searchByDataSaga } from "./searchByData";
 
 function* rootSaga() {
   yield all([
@@ -25,6 +26,7 @@ function* rootSaga() {
     privacySettingsSaga(),
     myprofileSaga(),
     matchMakingSaga(),
+    searchByDataSaga(),
     gallerySaga(),
     gallerySagaPost(),
   ]);

@@ -1,3 +1,5 @@
+@import "../../styles/constants.scss";
+
 // Search
 .background_banner {
   background: url("../../public/Images/cover-image-register.jpg") no-repeat
@@ -12,6 +14,42 @@
 
 .bg_gray {
   background-color: #e7e6e6;
+
+  .search_main {
+    padding-top: 2rem;
+
+    .tabSection {
+      background-color: #fff;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      padding: 15px 20px;
+      border-radius: 5px;
+      flex-direction: row;
+      width: 75%;
+      margin: auto;
+      margin-bottom: 1rem;
+      justify-content: center;
+
+      .TabButton {
+        background-color: transparent;
+        border: 1px solid #d5d5d5;
+        border-radius: 21px;
+        padding: 5px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        outline: none;
+        width: auto;
+        text-transform: capitalize;
+        color: #1d1b1b;
+      }
+      .TabButtonActive {
+        background-color: #dc3545;
+        color: #fff;
+      }
+    }
+  }
 
   .Search_body {
     border-radius: 2px;
@@ -106,150 +144,471 @@
   }
 }
 
-.search_main {
-  background-color: #f2f1f1;
-  text-align: center;
+.SearchWrapperMain {
+  background: rgb(231, 230, 230);
+  padding-bottom: 10rem;
 
-  // padding: 1rem;
-  .accordion-item:first-of-type .accordion-button {
-    background-color: #d9475c;
-  }
+  .SearchinnerWrapper {
+    width: 75%;
+    background-color: rgb(231, 230, 230);
+    margin: auto;
+    margin-top: 3rem;
 
-  .activeSearchType {
-    background-color: #f2f1f1;
-    text-align: center;
-    padding: 1rem 2rem;
-    border-right: 1px solid #d1d1d1;
-    border-left: 1px solid #d1d1d1;
-    box-shadow: 1px 1px 1px #d1d1d1;
-    cursor: pointer;
-    border-bottom: 2px solid #1d1b1b;
-  }
+    .SearchWrapper {
+      background-color: #ffffff;
+      margin: auto;
+      border-radius: 5px;
 
-  .search_box {
-    background-color: #f2f1f1;
-    text-align: center;
-    padding: 1rem 2rem;
-    border-right: 1px solid #d1d1d1;
-    border-left: 1px solid #d1d1d1;
-    box-shadow: 1px 1px 1px #d1d1d1;
-    cursor: pointer;
+      h1 {
+        font-size: 1.375rem;
+        text-align: center;
+        padding: 2rem 0 0 0;
+      }
 
-    &:hover {
+      p {
+        padding: 1rem 0;
+        text-align: center;
+      }
+
+      .dark_box {
+        background-color: $dark_maroon_bg;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.1875rem;
+      }
+
+      .checkBox {
+        padding: 1.25rem 0;
+        text-align: center;
+        font-size: 1.125rem;
+
+        div {
+          display: inline-block;
+          margin: 0 13px;
+        }
+
+        small {
+          font-size: 0.9375rem;
+          color: #999;
+          display: block;
+        }
+      }
+    }
+
+    .editInfo {
+      text-align: center;
+
+      span {
+        margin: 0 0.5rem;
+      }
+
+      span:nth-child(2) {
+        color: $red_txt;
+        cursor: pointer;
+      }
+    }
+
+    .savePartnerBtn {
+      padding: 0.75rem 2.5rem;
+      font-weight: 500;
+      outline: none;
+      border: 0;
+      border-radius: 0.25rem;
       background-color: #d9475c;
       color: #fff;
-      border-bottom: 2px solid #222;
+      width: auto;
+      margin: 1rem auto;
     }
-  }
-}
 
-@media only screen and (max-width: 676px) {
-  .background_banner {
-    height: 36vh;
-  }
+    .form_wrapper {
+      position: relative;
 
-  .bg_gray {
-    .Search_body {
-      width: 100% !important;
-      padding: 3.5rem 20px;
+      .formEdit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
 
-      .search_group {
-        justify-content: space-between;
+        .twoBox {
+          display: flex;
 
-        .Button_Group {
-          width: 100%;
+          div {
+            width: 100%;
 
-          .Search_For_button,
-          .Search_For_button_Active {
-            width: 6rem;
+            svg {
+              position: absolute;
+              right: 15px;
+              top: 40%;
+            }
+          }
+
+          .inputBox {
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            padding: 0.875rem 5.5rem;
+            text-align: center;
+            margin: 0.6em;
+            color: $browser_text;
+            cursor: pointer;
+            position: relative;
+            min-width: 275px;
+
+            .inputBoxVal {
+              visibility: hidden;
+              border: 1px solid #d9d9d9;
+              border-radius: 2px;
+              padding: 0.875rem 1rem;
+              text-align: center;
+              margin: 0.6em;
+              color: $browser_text;
+              cursor: pointer;
+              width: 100%;
+              position: absolute;
+              left: -9px;
+              border: 1px solid $red_bg;
+              background: $milkWhite_bg;
+              box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+              z-index: 9;
+
+              ul {
+                list-style: none;
+                margin: 0;
+                padding: 0 5px;
+                width: 100%;
+                max-height: 300px;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                cursor: text;
+                display: grid;
+                grid-template-columns: auto auto auto;
+
+                li {
+                  position: relative;
+                  margin: 3px 5px 3px 0;
+                  padding: 10px 20px 10px 5px;
+                  border: 1px solid #d9d9d9;
+                  max-width: 100%;
+                  border-radius: 3px;
+                  background-color: #f5f5f5;
+                  line-height: 13px;
+                  cursor: default;
+
+                  &:hover {
+                    background-color: #d9475c;
+                    color: #fff;
+                  }
+                }
+
+                .tabActive {
+                  background-color: #d9475c;
+                  color: #fff;
+                }
+              }
+            }
           }
         }
 
-        .Input_With_text {
-          width: 100%;
-        }
-
-        .Input_With_text_Button {
-          width: auto;
+        .input_max {
+          width: -webkit-fill-available;
         }
 
         label {
-          text-align: start;
-          min-width: 135px;
-          margin: 0%;
+          position: absolute;
+          width: 130px;
+          text-align: end;
+          left: -9rem;
+          top: 50%;
+          transform: translateY(-50%);
         }
 
-        .input_select {
-          font-size: 0.7rem;
-          width: 100%;
-          padding-right: 2rem;
+        input {
+          border: 1px solid #d9d9d9;
+          border-radius: 2px;
+          padding: 0.875rem 0.9rem;
+
+          &:focus {
+            outline: none;
+          }
+
+          @media only screen and (max-width: 667px) {
+            max-width: 225px;
+            width: 70%;
+          }
         }
 
-        .input_search {
+        .single_Input {
           width: 100%;
+          max-width: none;
         }
       }
     }
   }
 }
 
-@media only screen and (max-width: 415px) {
-  .bg_gray {
-    .Search_body {
-      .search_group {
-        .Button_Group {
-          width: 100%;
+.SearchSingleBox {
+  display: flex;
+  position: relative;
+  width: 66%;
 
-          .Search_For_button,
-          .Search_For_button_Active {
-            width: 6rem;
+  .singleDropDown {
+    position: relative;
+    display: flex;
+    padding: 0.6rem;
+    width: 100%;
+  }
+  div {
+    div {
+      div {
+        max-width: 100% !important;
+      }
+    }
+  }
+}
+
+.singleBox {
+  display: flex;
+  position: relative;
+  width: 66%;
+  padding: 0 0.6rem;
+
+  div {
+    width: 100%;
+
+    svg {
+      position: absolute;
+      right: 3px;
+      top: 20%;
+      cursor: pointer;
+    }
+  }
+
+  .inputBox {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1rem;
+    text-align: center;
+    margin: 0.6em;
+    color: $browser_text;
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    min-width: 580px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+      max-height: 100px;
+      overflow-x: hidden;
+      // overflow-y: scroll;
+      cursor: text;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      li {
+        position: relative;
+        margin: 3px 5px 3px 0;
+        padding: 10px 20px 10px 5px;
+        border: 1px solid #d9d9d9;
+        max-width: 100%;
+        border-radius: 3px;
+        background-color: #f5f5f5;
+        line-height: 13px;
+        cursor: default;
+        height: fit-content;
+      }
+    }
+  }
+
+  .blankInput {
+    border: none !important;
+    background: transparent !important;
+
+    input {
+      margin: 1px 0;
+      padding: 0;
+      height: 25px;
+      outline: 0;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none;
+      color: #999;
+      font-size: 100%;
+      font-family: sans-serif;
+      line-height: normal;
+      border-radius: 0;
+    }
+  }
+
+  .inputBoxVal {
+    visibility: hidden;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 0.875rem 1rem;
+    text-align: center;
+    margin: 0.6em;
+    color: $browser_text;
+    cursor: pointer;
+    width: 100%;
+    position: absolute;
+    left: -9px;
+    border: 1px solid $red_bg;
+    background: $milkWhite_bg;
+    box-shadow: 0 4px 5px rgb(0 0 0 / 15%);
+    z-index: 9;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+      max-height: 300px;
+      cursor: default;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      li {
+        position: relative;
+        margin: 3px 5px 3px 0;
+        padding: 10px 20px 10px 5px;
+        border: 1px solid #d9d9d9;
+        max-width: 100%;
+        border-radius: 3px;
+        background-color: #f5f5f5;
+        line-height: 13px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #d9475c;
+          color: #fff;
+        }
+      }
+
+      .tabActive {
+        background-color: #d9475c;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.buttonWrapper {
+  width: 66%;
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.active {
+  visibility: visible !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .SearchWrapperMain {
+    padding-bottom: 5rem;
+
+    .SearchinnerWrapper {
+      .form_wrapper {
+        .formEdit {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          width: 70%;
+          margin: auto;
+
+          label {
+            position: initial;
+            width: -webkit-fill-available;
+            text-align: start;
+            transform: initial;
           }
         }
+      }
+    }
+  }
 
-        .Input_With_text {
+  .SearchSingleBox {
+    width: 100%;
+    .singleDropDown {
+      width: 100%;
+      margin: 0;
+      position: relative;
+      padding: 0%;
+    }
+  }
+
+  .singleBox {
+    flex-direction: column;
+    width: 100%;
+    padding: 0%;
+
+    input {
+      margin: 0% !important;
+    }
+  }
+
+  .buttonWrapper {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .SearchWrapperMain {
+    .SearchinnerWrapper {
+      width: 80%;
+      .form_wrapper {
+        .formEdit {
+          width: 90%;
+        }
+      }
+    }
+  }
+  .bg_gray {
+    .search_main {
+      .tabSection {
+        width: 80%;
+        margin: auto;
+        margin-bottom: 0%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 424px) {
+  .SearchWrapperMain {
+    .SearchinnerWrapper {
+      width: 90%;
+      .form_wrapper {
+        .formEdit {
           width: 100%;
         }
+      }
+    }
+  }
 
-        .Input_With_text_Button {
-          width: auto;
-        }
+  .bg_gray {
+    .search_main {
+      .tabSection {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 0%;
+        gap: 1rem;
       }
     }
   }
 }
 
 @media only screen and (max-width: 300px) {
-  .bg_gray {
-    .Search_body {
-      .search_group {
-        .Button_Group {
+  .SearchWrapperMain {
+    .SearchinnerWrapper {
+      .form_wrapper {
+        .formEdit {
           width: 100%;
-
-          .Search_For_button,
-          .Search_For_button_Active {
-            width: 5rem;
-            padding: 0.31rem;
-          }
-        }
-
-        .Input_With_text {
-          width: 100%;
-        }
-
-        .Input_With_text_Button {
-          width: auto;
-        }
-        label {
-          min-width: 75px;
-          font-size: 0.9rem;
-        }
-
-        .input_select {
-          width: 43%;
-        }
-
-        .input_search {
-          width: 100%;
+          gap: 0.5rem;
+          margin: 0%;
+          padding: 2rem 0.5rem;
         }
       }
     }
