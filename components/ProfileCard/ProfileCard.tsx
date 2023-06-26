@@ -1,21 +1,19 @@
 import React, { FC, useEffect, useState } from 'react'
-import classes from "./TestProfileCard.module.scss";
+import classes from "./ProfileCard.module.scss";
 import { MdBlock, MdLocationOn, MdStars } from 'react-icons/md';
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
-import { Button, Image, Spinner } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 import { IMatchMakingResponse } from '../../types/matchmaking/matchmaking';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
-// import { useSelector } from 'react-redux';
-// import { getUserId } from '../../ducks/auth/selectors';
 import { useSendInterest } from '../../hooks/useSendInterest/useSendInterest';
 import { useBlockUser } from '../../hooks/useBlockUser/useBlockUser';
 import { useShortlist } from '../../hooks/useSortlisted/useShortlist';
-import { MaritalStatus, Occupation, Religion } from '../../types/enums';
+import { EducationTypeAndVal, MaritalStatus, Occupation, Religion } from '../../types/enums';
 import { CastListArray } from '../../constants/CastListArray';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
+import { City, Country, ICity, ICountry, IState, State } from 'country-state-city';
 
 interface MyComponentProps {
     userData: IMatchMakingResponse;
@@ -31,10 +29,31 @@ interface MyComponentProps {
 
 const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedUser, SendInterestUser, BlockedUser, setShortlisted, setSendInterest, setBlock }) => {
     const router = useRouter()
-
+    const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
+
+
+
+    const countries: ICountry[] = Country.getAllCountries();
+    const [countryCode, setCountryCode] = useState<string>(
+        countries[userData?.country].isoCode
+    );
+
+    useEffect(() => {
+        if (countries[0].name === "Does Not Matter") {
+            countries.shift();
+        }
+    }, []);
+
+    const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+    const [stateCode, setStateCode] = useState<string>(
+        stateOfCountry[userData?.state]?.isoCode
+    );
+    const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+
+
     // const userId = useSelector(getUserId);
     const dateNow = new Date();
     const months = [
@@ -90,19 +109,9 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
         const mutationResult = await useShortlistMutation.mutateAsync({
             userId: userID,
             useridShortlist: id,
-            status: !ShortlistedUser.includes(id) ? 'Y' : 'N'
+            status: !userData.shortlist ? 'Y' : 'N'
         });
-        if (mutationResult?.output && mutationResult?.output > 0) {
-            if (!ShortlistedUser.includes(id)) {
-                setShortlisted((prev) => [...prev, id]);
-            } else {
-                setShortlisted(ShortlistedUser.filter((userid) => {
-                    userid != id
-                }))
-            }
-        } else {
-            alert('failed to shortlist user !!!')
-        }
+        dispatch(matchMakingSuccess(mutationResult));
     }
 
 
@@ -154,6 +163,12 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
     }
 
 
+
+    function getCity() {
+        return `${cityOfState[userData?.city]?.name} , ${stateOfCountry[userData.state]?.isoCode} , ${countries[userData.country]?.isoCode}` ;
+    }
+
+
     const ull = userData.user_last_login && userData?.user_last_login.split("-");
     const getUserLastTimeLogin = ull && ull[2].split(' ')[1].split(':');
     const ullYear = ull && ull[0];
@@ -163,7 +178,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
     return (
         <>
             <div className={classes.CardMain} key={key}  >
-                < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData.userid+userData.user_RM_ID}`) }}>
+                < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData.userid + userData.user_RM_ID}`) }}>
                     <Image className={classes.profile_Photo} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
                     <div className={classes.profiler_Name}>
 
@@ -202,7 +217,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
                                 <div>
                                     <MdLocationOn />
                                 </div>
-                                <p>New Delhi</p>
+                                <p>{getCity()}</p>
                             </div>
                             <div className={classes.info_Tag}>
                                 <div>
@@ -221,7 +236,8 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
                                 <div>
                                     <GiGraduateCap />
                                 </div>
-                                <p>MS Engineering</p>
+                                <p>{getKeyByValue(String(userData?.education), EducationTypeAndVal) ||
+                                    "NA"}</p>
                             </div>
                             <div className={classes.info_Tag}>
                                 <div>
@@ -254,9 +270,9 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
                                     <BiHeartCircle className={SendInterestUser.includes(userData.userid) ? classes.activesvg : ''} />
                                     {SendInterestUser.includes(userData.userid) ? 'Intrest Send' : 'Send Intrest'}
                                 </Button>
-                                <Button className={ShortlistedUser.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
-                                    <MdStars className={ShortlistedUser.includes(userData.userid) ? classes.activesvg : ''} />
-                                    {ShortlistedUser.includes(userData.userid) ? 'Shortlisted' : 'Shortlist'}
+                                <Button className={userData.shortlist ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
+                                    <MdStars className={userData.shortlist ? classes.activesvg : ''} />
+                                    {userData.shortlist ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
                                 <Button className={BlockedUser.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData.userid)}>
 
@@ -266,7 +282,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
                             </div>
                             <div className={classes.profileMatchSection}>
                                 <Image className={classes.profileMatch} src='Images/matchProfile2.svg' alt='profile Match' />
-                                <span>87 %</span>
+                                <span>{(userData.matching_score * 100 / 21).toFixed(1)} %</span>
                             </div>
                         </div>
                     </div>

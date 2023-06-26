@@ -7,15 +7,22 @@ const MatchingDetails = () => {
         <div className={classes.MainWrapper}>
             <h3>Profile Comparison</h3>
             <div className={classes.ComparisonMain}>
-                <div className={classes.ComparisonProfile1}>
-                    {/* <Image className={classes.ComparisonProfile} src='https://beta.royalmatrimonial.com/api/uploads/365/1682857042000.jpeg' alt='yourprofile' />
-                    <h4>Divyani Pahwa</h4> */}
-                </div>
                 <div className={classes.ComparisonProfileInfo}>
+                    <h4>Matching Field</h4>
+
+                    <p><div></div> Age</p>
+                    <p><div></div> Age</p>
+                </div>
+                <div className={classes.ComparisonProfile1}>
+                    <h4>Your Profile</h4>
+                    <p> 18-22</p>
                 </div>
                 <div className={classes.ComparisonProfile2}>
-                    {/* <Image className={classes.ComparisonProfile} src='https://beta.royalmatrimonial.com/api/uploads/404/1685780330725.jpeg' alt='yourprofile' />
-                    <h4>Munna Bhiya</h4> */}
+                    <h4>Rzayak Singh Oberoi</h4>
+
+                    <div>
+                        <Image src="./done.svg" width={23} height={23} alt="done" className="pe-1" />
+                    </div>
                 </div>
             </div>
 

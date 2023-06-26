@@ -4,17 +4,20 @@ import LoginHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileMatch.module.scss";
 import { CustomButton, Footer } from "../../components";
-import TestProfileCard from "../../components/ProfileCard/TestProfileCard";
+import TestProfileCard from "../../components/ProfileCard/ProfileCard";
 import { useDispatch } from "react-redux";
 import { matchMakingReq } from "../../ducks/matchMaking/actions";
 import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
 
 const limit = 5;
-const userId = 413;
+const userId = 397;
+
+// gir id 413
 
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
+  const isReduxEmpty = matchMakingResponse?.jsonResponse ? matchMakingResponse.jsonResponse.length < 1 : true;
   const dispatch = useDispatch();
 
 
@@ -56,7 +59,7 @@ const ProfileMatch: React.FC = () => {
   }, [userMatchData, userAlreadyGetId, userMatchData?.output]);
 
   useEffect(() => {
-    dispatch(matchMakingReq({
+    isReduxEmpty && dispatch(matchMakingReq({
       userId: userId,
       maxUserId: -1,
       limit: limit,
