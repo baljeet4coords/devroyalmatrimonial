@@ -40,7 +40,7 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     step4Response?.family_native_country != (undefined && null)
-      ? countries[step4Response?.family_native_country].isoCode
+      ? countries[step4Response?.family_native_country-1].isoCode
       : "IN"
   );
 
@@ -54,20 +54,22 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step4Response?.family_native_state != (undefined && null)
-      ? stateOfCountry[step4Response?.family_native_state]?.isoCode
+      ? stateOfCountry[step4Response?.family_native_state-1]?.isoCode
       : "AS"
   );
 
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+  const allCitiesOfCountry: ICity[] =City.getCitiesOfCountry(countryCode) || [];
+
 
   useEffect(() => {
     step4Response?.family_native_country !== undefined &&
       countries[step4Response?.family_native_country] !== undefined &&
-      setCountryCode(countries[step4Response?.family_native_country]?.isoCode);
+      setCountryCode(countries[step4Response?.family_native_country-1]?.isoCode);
     step4Response?.family_native_state != undefined &&
       stateOfCountry[step4Response?.family_native_state] !== undefined &&
       step4Response?.family_native_state >= 0 &&
-      setStateCode(stateOfCountry[step4Response?.family_native_state]?.isoCode);
+      setStateCode(stateOfCountry[step4Response?.family_native_state-1]?.isoCode);
     // console.log(countryCode , State.getStatesOfCountry("AW"),stateCode,stateOfCountry);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,16 +83,16 @@ const FamilydetailsInfo: FC<MyComponentProps> = ({
 
   function getCountry() {
     return (
-      step4Response?.family_native_country !== (undefined || null) && countries[step4Response?.family_native_country]?.name
+      step4Response?.family_native_country !== (undefined || null) && countries[step4Response?.family_native_country-1]?.name
     );
   }
   function getState() {
     return (
-      step4Response?.family_native_state !== (undefined || null) && stateOfCountry[step4Response?.family_native_state]?.name
+      step4Response?.family_native_state !== (undefined || null) && stateOfCountry[step4Response?.family_native_state-1]?.name
     );
   }
   function getCity() {
-    return step4Response?.family_native_city !== (undefined || null) && cityOfState[step4Response?.family_native_city]?.name;
+    return step4Response?.family_native_city !== (undefined || null) && allCitiesOfCountry[step4Response?.family_native_city-1]?.name;
   }
 
   const BasicDetails = {

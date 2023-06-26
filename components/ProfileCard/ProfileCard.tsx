@@ -38,7 +38,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
 
     const countries: ICountry[] = Country.getAllCountries();
     const [countryCode, setCountryCode] = useState<string>(
-        countries[userData?.country].isoCode
+        countries[userData?.country-1].isoCode
     );
 
     useEffect(() => {
@@ -49,10 +49,10 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
 
     const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
     const [stateCode, setStateCode] = useState<string>(
-        stateOfCountry[userData?.state]?.isoCode
+        stateOfCountry[userData?.state-1]?.isoCode
     );
-    const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
-
+    // const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+    const allCitiesOfCountry: ICity[] =City.getCitiesOfCountry(countryCode) || [];
 
     // const userId = useSelector(getUserId);
     const dateNow = new Date();
@@ -165,7 +165,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
 
 
     function getCity() {
-        return `${cityOfState[userData?.city]?.name} , ${stateOfCountry[userData.state]?.isoCode} , ${countries[userData.country]?.isoCode}` ;
+        return `${allCitiesOfCountry[userData?.city-1]?.name} , ${stateOfCountry[userData.state-1]?.isoCode} , ${countries[userData.country-1]?.isoCode}`;
     }
 
 

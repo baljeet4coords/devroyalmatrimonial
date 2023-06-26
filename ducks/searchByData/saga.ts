@@ -8,34 +8,36 @@ import {
   SearchbyDataActions,
 } from "./actions";
 
-function* myprofileSaga(action: SearchbyDataActions): any {
-  const previousMatchMakingSuccess = yield select(
-    (state) => state.matchMaking?.response?.jsonResponse
-  );
-  const output = yield select((state) => state.matchmaking?.response);
+function* SearchByDataSaga(action: SearchbyDataActions): any {
+  // const previousSearchByDataSuccess = yield select(
+  //   (state) => state.searchByData?.response?.jsonResponse
+  // );
+  // const output = yield select((state) => state.matchmaking?.response);
   try {
     if (action.type === SEARCHBYDATA) {
       const response = yield call(
         axios.post,
-        `http://dev.royalmatrimonial.com/api/matchmaking/getStrictMatchMaking`,
+        `http://dev.royalmatrimonial.com/api/matchmaking/getSearchMatchMaking`,
         action.payload
       );
       const responseData = response.data;
-      const updatedData = previousMatchMakingSuccess && {
-        ...responseData,
-        jsonResponse: [
-          ...previousMatchMakingSuccess,
-          ...responseData.jsonResponse,
-        ],
-      };
-      previousMatchMakingSuccess != null &&
-        console.log(updatedData, "updatedData");
+      console.log(responseData, "sagaResponseData");
 
-      if (previousMatchMakingSuccess === null) {
-        yield put(searchByDataSuccess(responseData));
-      } else {
-        yield put(searchByDataSuccess(updatedData));
-      }
+      // const updatedData = previousSearchByDataSuccess && {
+      //   ...responseData,
+      //   jsonResponse: [
+      //     ...previousSearchByDataSuccess,
+      //     ...responseData.jsonResponse,
+      //   ],
+      // };
+      // previousSearchByDataSuccess != null &&
+      //   console.log(updatedData, "updatedData");
+
+      // if (previousSearchByDataSuccess === null) {
+      //   yield put(searchByDataSuccess(responseData));
+      // } else {
+      //   yield put(searchByDataSuccess(updatedData));
+      // }
     }
   } catch (error) {
     yield put(searchByDataFailure(error));
@@ -43,5 +45,5 @@ function* myprofileSaga(action: SearchbyDataActions): any {
 }
 
 export default function* rootSaga() {
-  yield takeEvery(SEARCHBYDATA, myprofileSaga);
+  yield takeEvery(SEARCHBYDATA, SearchByDataSaga);
 }
