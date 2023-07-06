@@ -133,7 +133,7 @@ const PartnerMatchProfile: React.FC = () => {
                                 width: "100%",
                                 margin: 'auto'
                             }}>
-                                <Col sm={9} md={8} xl={12} className="p-0">
+                                <Col xl={12} className="p-0">
                                     <MatchingDetails />
                                 </Col>
                             </Row>
