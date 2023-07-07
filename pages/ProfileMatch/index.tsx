@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
-import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileMatch.module.scss";
 import { CustomButton, Footer } from "../../components";
-import TestProfileCard from "../../components/ProfileCard/ProfileCard";
 import { useDispatch } from "react-redux";
 import { matchMakingReq } from "../../ducks/matchMaking/actions";
 import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import { getUserId } from "../../ducks/auth/selectors";
+import axios from "axios";
 
-const limit = 5;
-const userId = 397;
-
-// gir id 413
 
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
@@ -29,6 +26,9 @@ const ProfileMatch: React.FC = () => {
   const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
   const [block, setBlock] = useState<number[]>([]);
+  const limit = 5;
+  const userId = useSelector(getUserId);
+  // const userId = 473;
 
   useEffect(() => {
     if (userMatchData && userMatchData.jsonResponse) {
@@ -41,7 +41,7 @@ const ProfileMatch: React.FC = () => {
         }
 
         // to set maxuserid 
-        let maxid = Math.max(...userAlreadyGetId);
+        let maxid = Math.min(...userAlreadyGetId);
         setMaxUserId(maxid);
       });
 
@@ -58,21 +58,46 @@ const ProfileMatch: React.FC = () => {
 
   }, [userMatchData, userAlreadyGetId, userMatchData?.output]);
 
+
+  // useEffect(() => {
+   
+    
+  // }, [userId])
+
   useEffect(() => {
+
+    const response = () => axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/blockUser/getUserBlockList`,
+      {
+        userId: 413,
+        bothSide: 'Y'
+      }
+    ).then((response) => {
+      setBlock(response.data.jsonResponse);
+      setUserAlreadyGetId([...block])
+    }).catch((err) => {
+      console.log(err);
+
+    })
+    response();
+
     isReduxEmpty && dispatch(matchMakingReq({
-      userId: userId,
+      userId: userId ? userId : -1,
       maxUserId: -1,
       limit: limit,
       viceVersa: viceVersa,
       excludedUsers: JSON.stringify(userAlreadyGetId),
     }));
 
+
   }, [dispatch]);
 
 
   useEffect(() => {
-    matchMakingResponse && setMatchUserData(matchMakingResponse)
-    setAllUserData(matchMakingResponse?.jsonResponse)
+    if (matchMakingResponse) {
+      setMatchUserData(matchMakingResponse)
+      setAllUserData(matchMakingResponse?.jsonResponse)
+    }
   }, [matchMakingResponse])
 
 
@@ -99,7 +124,7 @@ const ProfileMatch: React.FC = () => {
         <div className={classes.card_container}>
           {allUserData && allUserData.map((user) => {
             return (
-              <TestProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
+              <ProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
             )
           })}
         </div>

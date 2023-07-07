@@ -77,6 +77,10 @@
         }
       }
     }
+
+    .hideInfo{
+      filter: blur(2px);
+    }
   }
   .profileSection:hover {
     background-color: #8f92931b;
@@ -435,6 +439,7 @@
           }
         }
       }
+
     }
 
     .infoSection {

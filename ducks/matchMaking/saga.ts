@@ -12,9 +12,7 @@ function* myprofileSaga(action: MatchMakingActions): any {
   const previousMatchMakingSuccess = yield select(
     (state) => state.matchMaking?.response?.jsonResponse
   );
-  const output = yield select(
-    (state) => state.matchmaking?.response
-  );
+  const output = yield select((state) => state.matchmaking?.response);
   try {
     if (action.type === MATCHMAKING) {
       // let response = yield call(
@@ -22,12 +20,6 @@ function* myprofileSaga(action: MatchMakingActions): any {
       //   `http://dev.royalmatrimonial.com/api/matchmaking/getAllMatchMaking`,
       //   action.payload
       // );
-      const response = yield call(
-        axios.post,
-        `http://dev.royalmatrimonial.com/api/matchmaking/getStrictMatchMaking`,
-        action.payload
-      );
-      const responseData = response.data;
       // if (responseData.jsonResponse != null) {
       //   response = yield call(
       //     axios.post,
@@ -35,13 +27,30 @@ function* myprofileSaga(action: MatchMakingActions): any {
       //     action.payload
       //   );
       // }
-      const updatedData = previousMatchMakingSuccess && {
-        ...responseData,
-        jsonResponse: [
-          ...previousMatchMakingSuccess,
-          ...responseData.jsonResponse,
-        ],
-      };
+
+      const response = yield call(
+        axios.post,
+        `http://dev.royalmatrimonial.com/api/matchmaking/getStrictMatchMaking`,
+        action.payload
+      );
+      const responseData = response.data;
+      let updatedData;
+      if (responseData.jsonResponse === null) {
+        updatedData = previousMatchMakingSuccess && {
+          ...responseData,
+          jsonResponse: [...previousMatchMakingSuccess],
+          output: responseData.output,
+        };
+      } else {
+        updatedData = previousMatchMakingSuccess && {
+          ...responseData,
+          output: responseData.output,
+          jsonResponse: [
+            ...previousMatchMakingSuccess,
+            ...responseData.jsonResponse,
+          ],
+        };
+      }
       previousMatchMakingSuccess != null &&
         console.log(updatedData, "updatedData");
 

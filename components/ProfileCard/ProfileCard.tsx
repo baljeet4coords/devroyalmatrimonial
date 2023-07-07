@@ -27,7 +27,7 @@ interface MyComponentProps {
     setBlock: (val: number[]) => void;
 }
 
-const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedUser, SendInterestUser, BlockedUser, setShortlisted, setSendInterest, setBlock }) => {
+const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedUser, SendInterestUser, BlockedUser, setShortlisted, setSendInterest, setBlock }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
@@ -35,10 +35,9 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
 
 
-
     const countries: ICountry[] = Country.getAllCountries();
     const [countryCode, setCountryCode] = useState<string>(
-        countries[userData?.country-1].isoCode
+        userData?.country ? countries[userData?.country - 1].isoCode : ''
     );
 
     useEffect(() => {
@@ -49,10 +48,10 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
 
     const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
     const [stateCode, setStateCode] = useState<string>(
-        stateOfCountry[userData?.state-1]?.isoCode
+        stateOfCountry[userData?.state - 1]?.isoCode
     );
     // const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
-    const allCitiesOfCountry: ICity[] =City.getCitiesOfCountry(countryCode) || [];
+    const allCitiesOfCountry: ICity[] = City.getCitiesOfCountry(countryCode) || [];
 
     // const userId = useSelector(getUserId);
     const dateNow = new Date();
@@ -165,7 +164,7 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
 
 
     function getCity() {
-        return `${allCitiesOfCountry[userData?.city-1]?.name} , ${stateOfCountry[userData.state-1]?.isoCode} , ${countries[userData.country-1]?.isoCode}`;
+        return `${allCitiesOfCountry[userData?.city - 1]?.name} , ${stateOfCountry[userData.state - 1]?.isoCode} , ${countries[userData.country - 1]?.isoCode}`;
     }
 
 
@@ -179,10 +178,10 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
         <>
             <div className={classes.CardMain} key={key}  >
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData.userid + userData.user_RM_ID}`) }}>
-                    <Image className={classes.profile_Photo} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
+                    <Image className={`${classes.profile_Photo} ${userData.privacy_photo === 'I' ? classes.hideInfo : ''}`} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
                     <div className={classes.profiler_Name}>
 
-                        <h5 className={classes.name_Heading}>{userData.fullname.length > 16 ? (userData.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData.fullname.toLocaleLowerCase()} </h5>
+                        <h5 className={`${classes.name_Heading}  ${userData.privacy_name === 'I' ? classes.hideInfo : ''}`}>{userData.fullname.length > 16 ? (userData.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData.fullname.toLocaleLowerCase()} </h5>
                         <div>
                             <h5 className={classes.active_Status}>Active on :</h5>
                             <h5 className={classes.active_Status}>{ullYear ? <span>{`${ullDay}-${months[Number(ullMonth) - 1]}-${ullYear} `} at {getUserLastTimeLogin ? convertFrom24To12Format(`${getUserLastTimeLogin[0]}:${getUserLastTimeLogin[1]}`) : 'Na'}</span> : <span>Na :Na at Na</span>} </h5>
@@ -210,7 +209,6 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
                                 <div>
                                     <BiCalendar />
                                 </div>
-                                {/* <p>23 Yrs</p> */}
                                 <p>{userData.dob ? nowYear - Number(userData.dob.split("-")[0]) : 'Na'} Yrs</p>
                             </div>
                             <div className={classes.info_Tag}>
@@ -292,4 +290,4 @@ const TestProfileCard: FC<MyComponentProps> = ({ userData, userID, key, Shortlis
     )
 }
 
-export default TestProfileCard
+export default ProfileCard

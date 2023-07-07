@@ -3,6 +3,7 @@ import classes from './MatchingDetails.module.scss'
 import { Image, Table } from 'react-bootstrap';
 
 const MatchingDetails = () => {
+
     const matchingData = [
         {
             title: 'Age',
@@ -125,11 +126,12 @@ const MatchingDetails = () => {
             Status: 'Match',
         },
     ]
+
     return (
         <div className={classes.MainWrapper}>
             <h3>Profile Comparision</h3>
             <div className={classes.ComparisonMain}>
-                <Table width={'full'} responsive  >
+                <Table width={'full'} responsive="sm" hover >
                     <thead className='text-center'>
                         <tr>
                             <th>Matching Field</th>
@@ -140,7 +142,7 @@ const MatchingDetails = () => {
                     </thead>
                     <tbody>
                         {matchingData.map((data) => {
-                            return (<tr className='text-center' key={data.title} >
+                            return (<tr className='text-center ' key={data.title} >
                                 <td width={'30%'}>{data.title}</td>
                                 <td width={'30%'}>{data.Val1}</td>
                                 <td width={'30%'}>{data.val2} </td>
