@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import classes from "./ProfileCard.module.scss";
 import { MdBlock, MdLocationOn, MdStars } from 'react-icons/md';
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
@@ -35,6 +35,46 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
 
 
+    const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData.photo);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    
+
+    // useEffect(() => {
+    //     const blurImage = () => {
+    //         if (userData.privacy_photo === 'I') {
+    //             const image = imageRef.current;
+    //             if (image) {
+    //                 const canvas = document.createElement('canvas');
+    //                 const ctx = canvas.getContext('2d');
+    //                 const imageWidth = image.width;
+    //                 const imageHeight = image.height;
+
+    //                 canvas.width = imageWidth;
+    //                 canvas.height = imageHeight;
+
+    //                 ctx.filter = 'blur(2px)';
+    //                 ctx.drawImage(image, 0, 0, imageWidth, imageHeight);
+
+    //                 console.log(canvas,'/');
+                    
+    //                 canvas.toBlob((blob) => {
+    //                     if (blob) {
+    //                         const blurredDataUrl = URL.createObjectURL(blob);
+    //                         console.log(blurredDataUrl);
+                            
+    //                         setBlurredPhotoUrl(blurredDataUrl);
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     };
+
+    //     blurImage();
+    // }, [userData.privacy_photo]);
+
+
+
     const countries: ICountry[] = Country.getAllCountries();
     const [countryCode, setCountryCode] = useState<string>(
         userData?.country ? countries[userData?.country - 1].isoCode : ''
@@ -45,6 +85,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
             countries.shift();
         }
     }, []);
+
 
     const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
     const [stateCode, setStateCode] = useState<string>(
@@ -174,14 +215,23 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
     let ullMonth = ull && ull[1];
     const ullDay = ull && ull[2].split(" ")[0];
 
+
+    const reptNameHide = () => <>{userData.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+
     return (
         <>
             <div className={classes.CardMain} key={key}  >
+
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData.userid + userData.user_RM_ID}`) }}>
-                    <Image className={`${classes.profile_Photo} ${userData.privacy_photo === 'I' ? classes.hideInfo : ''}`} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
+                    {/* {userData.privacy_photo != 'I' ?
+                        <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
+                        :
+                        <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' ref={imageRef} />
+                    } */}
+                    <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${blurredPhotoUrl}`} alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
-                        <h5 className={`${classes.name_Heading}  ${userData.privacy_name === 'I' ? classes.hideInfo : ''}`}>{userData.fullname.length > 16 ? (userData.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData.fullname.toLocaleLowerCase()} </h5>
+                        <h5 className={`${classes.name_Heading} `}> {userData.privacy_name != 'I' ? userData.fullname.length > 16 ? (userData.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData.fullname.toLocaleLowerCase() : reptNameHide()}  </h5>
                         <div>
                             <h5 className={classes.active_Status}>Active on :</h5>
                             <h5 className={classes.active_Status}>{ullYear ? <span>{`${ullDay}-${months[Number(ullMonth) - 1]}-${ullYear} `} at {getUserLastTimeLogin ? convertFrom24To12Format(`${getUserLastTimeLogin[0]}:${getUserLastTimeLogin[1]}`) : 'Na'}</span> : <span>Na :Na at Na</span>} </h5>

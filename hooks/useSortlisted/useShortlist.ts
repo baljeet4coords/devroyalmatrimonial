@@ -23,7 +23,7 @@ const Shortlist = async (values: any, matchMakingResponse: any) => {
       if (user.userid === userIdShortlist) {
         return {
           ...user,
-          shortlist: status == 'Y' ? 1 : 0 ,
+          shortlist: status == "Y" ? 1 : 0,
         };
       }
       return user;

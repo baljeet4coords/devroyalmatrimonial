@@ -26,7 +26,7 @@ const ProfileMatch: React.FC = () => {
   const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
   const [block, setBlock] = useState<number[]>([]);
-  const limit = 5;
+  const limit = 50;
   const userId = useSelector(getUserId);
   // const userId = 473;
 
@@ -60,8 +60,8 @@ const ProfileMatch: React.FC = () => {
 
 
   // useEffect(() => {
-   
-    
+
+
   // }, [userId])
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const ProfileMatch: React.FC = () => {
       userId: userId ? userId : -1,
       maxUserId: -1,
       limit: limit,
-      viceVersa: viceVersa,
+      viceVersa: 0,
       excludedUsers: JSON.stringify(userAlreadyGetId),
     }));
 
@@ -105,7 +105,7 @@ const ProfileMatch: React.FC = () => {
   const loadMoreHandler = () => {
 
     dispatch(matchMakingReq({
-      userId: userId,
+      userId: userId || 0,
       maxUserId: maxUserId,
       limit: limit,
       viceVersa: viceVersa,
@@ -124,7 +124,7 @@ const ProfileMatch: React.FC = () => {
         <div className={classes.card_container}>
           {allUserData && allUserData.map((user) => {
             return (
-              <ProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
+              <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
             )
           })}
         </div>

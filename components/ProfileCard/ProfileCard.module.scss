@@ -43,6 +43,10 @@
         margin: 0% auto;
         margin-bottom: 0.7rem;
         text-transform: capitalize !important;
+
+        span{
+          font-weight: 100;
+        }
       }
 
       .name_Heading::after {

@@ -52,28 +52,28 @@ const SearchByData: React.FC = () => {
   const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>('');
   const [selectedHeightTo, setSelectedHeightTo] = useState<string>('');
 
-  const [country, setCountry] = useState<number[]>([]);
-  const [state, setState] = useState<number[]>([]);
-  const [city, setCity] = useState<number[]>([]);
+  const [country, setCountry] = useState<number[]>([101]);
+  const [state, setState] = useState<number[]>([4]);
+  const [city, setCity] = useState<number[]>([13]);
   const [education, setEducation] = useState<string[]>(
-    []
+    ['0']
   );
   const [occupation, setOccupation] = useState<string[]>(
-    []
+    ['2']
   );
   const [annualIncome, setAnnualIncome] = useState<{
     id?: string;
     val: string;
   }>({ id: '0', val: "" });
   const [maritalStatus, setMaritalStatus] = useState<string[]>(
-    []
+    ['0']
   );
-  const [religion, setReligion] = useState<string[]>([]);
+  const [religion, setReligion] = useState<string[]>(['0']);
   const [motherTongue, setMotherTongue] = useState<string[]>(
-    []
+    ['0']
   );
   const [residentialStatus, setResidentialStatus] = useState<string[]>(
-    []
+    ['0']
   );
   const [manglik, setManglik] = useState<string[]>([]);
   const [diet, setDiet] = useState<{ id?: string; val: string }>({
@@ -99,10 +99,10 @@ const SearchByData: React.FC = () => {
     []
   );
   const [childrenStatus, setChildrenStatus] = useState<string[]>(
-    []
+    ['0']
   );
 
-  const [caste, setCaste] = useState<number[]>([]);
+  const [caste, setCaste] = useState<number[]>([0]);
   const [selectedIsHiv, setSelectedIsHiv] = useState<{ id?: string; val: string }>({
     id: '1',
     val: "",
@@ -138,10 +138,10 @@ const SearchByData: React.FC = () => {
         residentialStatus && residentialStatus.map((str) => +str)
       ),
       manglik: (manglik && manglik.map((str) => +str)),
-      diet: diet.id ? +diet.id :0,
-      smoking: smoke.id ? +smoke.id :0,
+      diet: diet.id ? +diet.id : 0,
+      smoking: smoke.id ? +smoke.id : 0,
       drinking: drink.id ? +drink.id : 0,
-      readyToSettleAbroad: readyToSettleAbroad.id ? +readyToSettleAbroad.id :0,
+      readyToSettleAbroad: readyToSettleAbroad.id ? +readyToSettleAbroad.id : 0,
       challenged: (challenged && challenged.map((str) => +str)),
       childrenStatus: (
         childrenStatus && childrenStatus.map((str) => +str)
