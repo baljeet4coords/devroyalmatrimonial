@@ -4,7 +4,6 @@ import { MdBlock, MdLocationOn, MdStars } from 'react-icons/md';
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
 import { Button, Image } from 'react-bootstrap';
-import { IMatchMakingResponse } from '../../types/matchmaking/matchmaking';
 import { useSendInterest } from '../../hooks/useSendInterest/useSendInterest';
 import { useBlockUser } from '../../hooks/useBlockUser/useBlockUser';
 import { useShortlist } from '../../hooks/useSortlisted/useShortlist';
@@ -14,20 +13,21 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
 import { City, Country, ICity, ICountry, IState, State } from 'country-state-city';
+import { ICardResponse } from '../../types/cardResponse/cardResponse';
 
 interface MyComponentProps {
-    userData: IMatchMakingResponse;
+    userData: ICardResponse;
     userID: number;
     key: string;
-    ShortlistedUser: number[];
     SendInterestUser: number[];
     BlockedUser: number[];
-    setShortlisted: (val: number[]) => void;
     setSendInterest: (val: number[]) => void;
-    setBlock: (val: number[]) => void;
+    setBlock?: (val: number[]) => void;
+    updataShortListedUser?: (val: number) => void;
+    updataBlockListedUser?: (val: number) => void;
 }
 
-const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedUser, SendInterestUser, BlockedUser, setShortlisted, setSendInterest, setBlock }) => {
+const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updataBlockListedUser, updataShortListedUser }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
@@ -38,7 +38,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
     const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData.photo);
     const imageRef = useRef<HTMLImageElement>(null);
 
-    
+
 
     // useEffect(() => {
     //     const blurImage = () => {
@@ -57,12 +57,12 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
     //                 ctx.drawImage(image, 0, 0, imageWidth, imageHeight);
 
     //                 console.log(canvas,'/');
-                    
+
     //                 canvas.toBlob((blob) => {
     //                     if (blob) {
     //                         const blurredDataUrl = URL.createObjectURL(blob);
     //                         console.log(blurredDataUrl);
-                            
+
     //                         setBlurredPhotoUrl(blurredDataUrl);
     //                     }
     //                 });
@@ -152,6 +152,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
             status: !userData.shortlist ? 'Y' : 'N'
         });
         dispatch(matchMakingSuccess(mutationResult));
+        updataShortListedUser && updataShortListedUser(id);
     }
 
 
@@ -159,7 +160,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
         const mutationResult = await useSendInterestMutation.mutateAsync({
             fromUserid: userID,
             toUserid: id,
-            status: !SendInterestUser.includes(id) ? 'S' : 'C'
+            status: userData.interest.Send ==='C' ? 'S' : 'C'
         });
         if (mutationResult?.output && mutationResult?.output > 0) {
             if (!SendInterestUser.includes(id)) {
@@ -181,18 +182,12 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
             userIdToBlock: id,
             status: !BlockedUser.includes(id) ? 'Y' : 'N'
         });
-        if (mutationResult?.output && mutationResult?.output > 0) {
-            if (!BlockedUser.includes(id)) {
-                setBlock((pre) => [...pre, id])
-            } else {
-                setBlock(BlockedUser.filter((userid) => {
-                    userid != id
-                }))
-            }
-        } else {
-            alert('Failed to Block user !!!')
-        }
+        dispatch(matchMakingSuccess(mutationResult));
+        updataBlockListedUser && updataBlockListedUser(id);
     }
+
+
+
 
     const convertFrom24To12Format = (time24: any) => {
         const [sHours, minutes] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
@@ -314,9 +309,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, ShortlistedU
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
-                                <Button onClick={() => handleSendInterest(userData.userid)} className={SendInterestUser.includes(userData.userid) ? classes.activebtn : ''}>
-                                    <BiHeartCircle className={SendInterestUser.includes(userData.userid) ? classes.activesvg : ''} />
-                                    {SendInterestUser.includes(userData.userid) ? 'Intrest Send' : 'Send Intrest'}
+                                <Button onClick={() => handleSendInterest(userData.userid)} className={userData.interest.Send === 'S' ? classes.activebtn : ''}>
+                                    <BiHeartCircle className={userData.interest.Send === 'S' ? classes.activesvg : ''} />
+                                    {userData.interest.Send === 'S' ? 'Intrest Send' : 'Send Intrest'}
                                 </Button>
                                 <Button className={userData.shortlist ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
                                     <MdStars className={userData.shortlist ? classes.activesvg : ''} />

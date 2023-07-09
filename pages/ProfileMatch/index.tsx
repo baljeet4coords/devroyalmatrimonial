@@ -59,17 +59,12 @@ const ProfileMatch: React.FC = () => {
   }, [userMatchData, userAlreadyGetId, userMatchData?.output]);
 
 
-  // useEffect(() => {
-
-
-  // }, [userId])
-
   useEffect(() => {
 
     const response = () => axios.post(
       `${process.env.NEXT_PUBLIC_URL}/blockUser/getUserBlockList`,
       {
-        userId: 413,
+        userId: userId,
         bothSide: 'Y'
       }
     ).then((response) => {
@@ -94,7 +89,7 @@ const ProfileMatch: React.FC = () => {
 
 
   useEffect(() => {
-    if (matchMakingResponse) {
+    if (matchMakingResponse && matchMakingResponse.jsonResponse != null) {
       setMatchUserData(matchMakingResponse)
       setAllUserData(matchMakingResponse?.jsonResponse)
     }
@@ -115,6 +110,19 @@ const ProfileMatch: React.FC = () => {
 
   }
 
+
+
+  // to remove item from matchmaking when click on block 
+
+  const handleUpDateBlockuser = (id: number) => {
+    const updatedUserWithoutBlock = allUserData?.filter((user) => {
+      return user.userid != id;
+    })
+
+    setAllUserData(updatedUserWithoutBlock);
+
+  }
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
@@ -124,7 +132,7 @@ const ProfileMatch: React.FC = () => {
         <div className={classes.card_container}>
           {allUserData && allUserData.map((user) => {
             return (
-              <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
+              <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updataBlockListedUser={handleUpDateBlockuser} />
             )
           })}
         </div>

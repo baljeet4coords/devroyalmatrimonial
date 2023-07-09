@@ -10,14 +10,14 @@ import { useDispatch } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import { useSelector } from "react-redux";
 import { selectshortListSuccess } from "../../ducks/userShortList/selectors";
-import { ICardViewResponse } from "../../types/short-Block-Interest";
+import { IShortListResponse } from "../../types/short-Block-Interest";
 
 const ShortlistedProfile: React.FC = () => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
 
   const shortlistSuccessResponse = useSelector(selectshortListSuccess)
-  const [shortListedUser, setShortListedUser] = useState<ICardViewResponse[] | null>(shortlistSuccessResponse ? shortlistSuccessResponse?.shortlistCard.jsonResponse : []);
+  const [shortListedUser, setShortListedUser] = useState<IShortListResponse[] | null>(shortlistSuccessResponse ? shortlistSuccessResponse?.shortlistCard.jsonResponse : []);
 
   const [Shortlisted_Id, setShortlisted_Id] = useState<number[]>(shortlistSuccessResponse ? shortlistSuccessResponse?.shotlistedID?.jsonResponse : []);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
