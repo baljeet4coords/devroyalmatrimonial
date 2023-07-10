@@ -160,7 +160,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         const mutationResult = await useSendInterestMutation.mutateAsync({
             fromUserid: userID,
             toUserid: id,
-            status: userData.interest.Send ==='C' ? 'S' : 'C'
+            status: userData.interest.Send === 'C' ? 'S' : 'C'
         });
         if (mutationResult?.output && mutationResult?.output > 0) {
             if (!SendInterestUser.includes(id)) {
@@ -317,10 +317,10 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                     <MdStars className={userData.shortlist ? classes.activesvg : ''} />
                                     {userData.shortlist ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
-                                <Button className={BlockedUser.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData.userid)}>
+                                <Button className={BlockedUser?.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData.userid)}>
 
-                                    <MdBlock className={BlockedUser.includes(userData.userid) ? classes.activesvg : ''} />
-                                    {BlockedUser.includes(userData.userid) ? 'Blocked' : 'Block'}
+                                    <MdBlock className={BlockedUser?.includes(userData.userid) ? classes.activesvg : ''} />
+                                    {BlockedUser?.includes(userData.userid) ? 'Blocked' : 'Block'}
                                 </Button>
                             </div>
                             <div className={classes.profileMatchSection}>

@@ -51,8 +51,6 @@ function* myprofileSaga(action: MatchMakingActions): any {
           ],
         };
       }
-      previousMatchMakingSuccess != null &&
-        console.log(updatedData, "updatedData");
 
       if (previousMatchMakingSuccess === null) {
         yield put(matchMakingSuccess(responseData));

@@ -2,11 +2,9 @@ import { useQuery, useMutation } from "react-query";
 import axios from "axios";
 import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { matchMakingSuccess } from "../../ducks/matchMaking/actions";
 import { IMatchMakingResponse } from "../../types/matchmaking/matchmaking";
 
-const Shortlist = async (values: any, matchMakingResponse: any) => {
+const Shortlist = async (values: any, matchMakingResponse?: any) => {
   const matchMakingData: IMatchMakingResponse[] =
     matchMakingResponse.jsonResponse;
 
@@ -39,7 +37,9 @@ const Shortlist = async (values: any, matchMakingResponse: any) => {
 };
 
 export const useShortlist = () => {
+
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
+  
   const useShortlistMutation = useMutation((values: any) =>
     Shortlist(values, matchMakingResponse)
   );

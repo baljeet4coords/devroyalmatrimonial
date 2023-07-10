@@ -10,12 +10,17 @@ import { useSelector } from "react-redux";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import { getUserId } from "../../ducks/auth/selectors";
 import axios from "axios";
+import { blockListReq } from "../../ducks/userBlocklist/actions";
+import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 
 
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
-  const isReduxEmpty = matchMakingResponse?.jsonResponse ? matchMakingResponse.jsonResponse.length < 1 : true;
+  const getUserBlockList = useSelector(selectblockListSuccess);
+
+
   const dispatch = useDispatch();
+  const isReduxEmpty = matchMakingResponse?.jsonResponse ? matchMakingResponse.jsonResponse.length < 1 : true;
 
 
   const [userMatchData, setMatchUserData] = useState(matchMakingResponse)
@@ -25,23 +30,27 @@ const ProfileMatch: React.FC = () => {
   const [viceVersa, setViceVersa] = useState<number>(1);
   const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
-  const [block, setBlock] = useState<number[]>([]);
-  const limit = 50;
+  const [block, setBlock] = useState<number[]>(getUserBlockList && getUserBlockList.blocklistedID.jsonResponse != null ? getUserBlockList?.blocklistedID?.jsonResponse : []);
+  const limit = 5;
   const userId = useSelector(getUserId);
   // const userId = 473;
 
   useEffect(() => {
     if (userMatchData && userMatchData.jsonResponse) {
       userMatchData.jsonResponse.map((user) => {
-        if (!userAlreadyGetId.includes(user.userid)) {
-          setUserAlreadyGetId((prevUserAlreadyGetId) => [
-            ...prevUserAlreadyGetId,
-            user.userid,
-          ]);
+        if (userAlreadyGetId !== null && !userAlreadyGetId.includes(user.userid)) {
+          setUserAlreadyGetId((prevUserAlreadyGetId) => {
+            if (prevUserAlreadyGetId !== null) {
+              return [...prevUserAlreadyGetId, user.userid];
+            } else {
+              return [user.userid];
+            }
+          });
         }
 
+
         // to set maxuserid 
-        let maxid = Math.min(...userAlreadyGetId);
+        let maxid = userAlreadyGetId != null ? Math.min(...userAlreadyGetId) : -1;
         setMaxUserId(maxid);
       });
 
@@ -59,22 +68,16 @@ const ProfileMatch: React.FC = () => {
   }, [userMatchData, userAlreadyGetId, userMatchData?.output]);
 
 
+
   useEffect(() => {
+    dispatch(blockListReq({
+      userId: userId
+    }))
+  }, [])
 
-    const response = () => axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/blockUser/getUserBlockList`,
-      {
-        userId: userId,
-        bothSide: 'Y'
-      }
-    ).then((response) => {
-      setBlock(response.data.jsonResponse);
-      setUserAlreadyGetId([...block])
-    }).catch((err) => {
-      console.log(err);
 
-    })
-    response();
+
+  useEffect(() => {
 
     isReduxEmpty && dispatch(matchMakingReq({
       userId: userId ? userId : -1,
@@ -85,7 +88,7 @@ const ProfileMatch: React.FC = () => {
     }));
 
 
-  }, [dispatch]);
+  }, [dispatch, block]);
 
 
   useEffect(() => {
@@ -93,7 +96,13 @@ const ProfileMatch: React.FC = () => {
       setMatchUserData(matchMakingResponse)
       setAllUserData(matchMakingResponse?.jsonResponse)
     }
-  }, [matchMakingResponse])
+
+    if (getUserBlockList?.blocklistedID?.jsonResponse != null) {
+      setBlock(getUserBlockList?.blocklistedID?.jsonResponse);
+      setUserAlreadyGetId(block)
+    }
+
+  }, [matchMakingResponse, getUserBlockList])
 
 
 
@@ -130,10 +139,12 @@ const ProfileMatch: React.FC = () => {
           <LoginHeader />
         </Container>
         <div className={classes.card_container}>
-          {allUserData && allUserData.map((user) => {
-            return (
-              <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updataBlockListedUser={handleUpDateBlockuser} />
-            )
+          {allUserData != null && allUserData.map((user) => {
+            if (block != null && !block.includes(user.userid)) {
+              return (
+                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updataBlockListedUser={handleUpDateBlockuser} />
+              )
+            }
           })}
         </div>
         {userMatchData && userMatchData?.output != -4000 && <div className="m-5 d-flex" >
