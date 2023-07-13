@@ -23,16 +23,17 @@ interface MyComponentProps {
     BlockedUser: number[];
     setSendInterest: (val: number[]) => void;
     setBlock?: (val: number[]) => void;
-    updataShortListedUser?: (val: number) => void;
-    updataBlockListedUser?: (val: number) => void;
+    updateShortListedUser?: (val: number) => void;
+    updateBlockListedUser?: (val: number) => void;
 }
 
-const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updataBlockListedUser, updataShortListedUser }) => {
+const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, updateShortListedUser }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
+    const [shortlistUser, setShortlistedUser] = useState(userData.shortlist === 1 ? true : false);
 
 
     const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData.photo);
@@ -146,13 +147,14 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
 
     const handleSortlisted = async (id: number) => {
+        setShortlistedUser(!shortlistUser)
         const mutationResult = await useShortlistMutation.mutateAsync({
             userId: userID,
             useridShortlist: id,
             status: !userData.shortlist ? 'Y' : 'N'
         });
         dispatch(matchMakingSuccess(mutationResult));
-        updataShortListedUser && updataShortListedUser(id);
+        updateShortListedUser && updateShortListedUser(id);
     }
 
 
@@ -183,10 +185,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             status: !BlockedUser.includes(id) ? 'Y' : 'N'
         });
         dispatch(matchMakingSuccess(mutationResult));
-        updataBlockListedUser && updataBlockListedUser(id);
+        updateBlockListedUser && updateBlockListedUser(id);
+        updateShortListedUser && updateShortListedUser(id);
     }
-
-
 
 
     const convertFrom24To12Format = (time24: any) => {
@@ -309,13 +310,13 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
-                                <Button onClick={() => handleSendInterest(userData.userid)} className={userData.interest.Send === 'S' ? classes.activebtn : ''}>
+                                <Button disabled={BlockedUser?.includes(userData.userid)} onClick={() => handleSendInterest(userData.userid)} className={userData.interest.Send === 'S' ? classes.activebtn : ''}>
                                     <BiHeartCircle className={userData.interest.Send === 'S' ? classes.activesvg : ''} />
-                                    {userData.interest.Send === 'S' ? 'Intrest Send' : 'Send Intrest'}
+                                    {userData.interest.Send === 'S' ? 'Intrest Sent' : 'Send Intrest'}
                                 </Button>
-                                <Button className={userData.shortlist ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
-                                    <MdStars className={userData.shortlist ? classes.activesvg : ''} />
-                                    {userData.shortlist ? 'Shortlisted' : 'Shortlist'}
+                                <Button disabled={BlockedUser?.includes(userData.userid)} className={userData.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
+                                    <MdStars className={userData.shortlist && shortlistUser ? classes.activesvg : ''} />
+                                    {userData.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
                                 <Button className={BlockedUser?.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData.userid)}>
 

@@ -120,9 +120,9 @@ const SearchByData: React.FC = () => {
       ageLessThan: +selectedAgeTo,
       heightGreaterThan: (Math.trunc(+selectedHeightFrom)),
       heightLessThan: (Math.trunc(+selectedHeightTo)),
-      country: (country),
-      state: (state),
-      city: (city),
+      country: (country && country.map((str) => +str)),
+      state: (state && state.map((str) => +str)),
+      city: (city && city.map((str) => +str)),
       education: (education && education.map((str) => +str)),
       occupation: (occupation && occupation.map((str) => +str)),
       annualIncome: annualIncome.id && +annualIncome.id,
@@ -133,7 +133,7 @@ const SearchByData: React.FC = () => {
       motherTongue: (
         motherTongue && motherTongue.map((str) => +str)
       ),
-      caste: (caste),
+      caste: (caste && caste.map((str) => +str)),
       residentialStatus: (
         residentialStatus && residentialStatus.map((str) => +str)
       ),
@@ -146,7 +146,7 @@ const SearchByData: React.FC = () => {
       childrenStatus: (
         childrenStatus && childrenStatus.map((str) => +str)
       ),
-      hiv: 1,
+      hiv: 2,
       mandatoryFields: [],
       maxUserId: -1,
       limit: 40,

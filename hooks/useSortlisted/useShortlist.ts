@@ -17,7 +17,7 @@ const Shortlist = async (values: any, matchMakingResponse?: any) => {
     const userIdShortlist = response.data.jsonResponse.useridShortlist;
     const status = response.data.jsonResponse.status;
 
-    const updatedMatchMakingData = matchMakingData.map((user) => {
+    const updatedMatchMakingData =matchMakingData&& matchMakingData.map((user) => {
       if (user.userid === userIdShortlist) {
         return {
           ...user,

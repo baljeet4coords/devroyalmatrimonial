@@ -99,6 +99,9 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
                   <Link href="/BlockedProfile">Blocked Profiles</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
+                  <Link href="/ShowInterest">Show Interest</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item as="li">
                   <Link href="/ProfileVisitor">Profile Visitors</Link>
                 </NavDropdown.Item>
               </NavDropdown>

@@ -142,7 +142,7 @@ const ProfileMatch: React.FC = () => {
           {allUserData != null && allUserData.map((user) => {
             if (block != null && !block.includes(user.userid)) {
               return (
-                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updataBlockListedUser={handleUpDateBlockuser} />
+                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updateBlockListedUser={handleUpDateBlockuser} />
               )
             }
           })}
