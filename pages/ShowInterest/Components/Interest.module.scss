@@ -1,0 +1,22 @@
+@import "../../../styles/constants.scss";
+
+.background_header {
+    background: url("../../../public/Images/cover-image-register.jpg") no-repeat center center;
+    padding: 3rem 0 15rem 0;
+    background-size: cover;
+}
+
+.bg {
+    background: rgb(231, 230, 230);
+}
+
+.card_container_main{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    border-radius: 5px;
+    flex-direction: row;
+    width: 75%;
+    margin: 3rem auto;
+    max-width: 1000px;
+}

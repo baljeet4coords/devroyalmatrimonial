@@ -33,17 +33,17 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
-    const [shortlistUser, setShortlistedUser] = useState(userData.shortlist === 1 ? true : false);
+    const [shortlistUser, setShortlistedUser] = useState(userData?.shortlist === 1 ? true : false);
 
 
-    const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData.photo);
+    const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData?.photo);
     const imageRef = useRef<HTMLImageElement>(null);
 
 
 
     // useEffect(() => {
     //     const blurImage = () => {
-    //         if (userData.privacy_photo === 'I') {
+    //         if (userData?.privacy_photo === 'I') {
     //             const image = imageRef.current;
     //             if (image) {
     //                 const canvas = document.createElement('canvas');
@@ -72,7 +72,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     //     };
 
     //     blurImage();
-    // }, [userData.privacy_photo]);
+    // }, [userData?.privacy_photo]);
 
 
 
@@ -151,7 +151,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         const mutationResult = await useShortlistMutation.mutateAsync({
             userId: userID,
             useridShortlist: id,
-            status: !userData.shortlist ? 'Y' : 'N'
+            status: !userData?.shortlist ? 'Y' : 'N'
         });
         dispatch(matchMakingSuccess(mutationResult));
         updateShortListedUser && updateShortListedUser(id);
@@ -162,7 +162,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         const mutationResult = await useSendInterestMutation.mutateAsync({
             fromUserid: userID,
             toUserid: id,
-            status: userData.interest.Send === 'C' ? 'S' : 'C'
+            status: userData?.interest.Send === 'C' ? 'S' : 'C'
         });
         if (mutationResult?.output && mutationResult?.output > 0) {
             if (!SendInterestUser.includes(id)) {
@@ -201,33 +201,28 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
 
     function getCity() {
-        return `${allCitiesOfCountry[userData?.city - 1]?.name} , ${stateOfCountry[userData.state - 1]?.isoCode} , ${countries[userData.country - 1]?.isoCode}`;
+        return `${allCitiesOfCountry[userData?.city - 1]?.name} , ${stateOfCountry[userData?.state - 1]?.isoCode} , ${countries[userData?.country - 1]?.isoCode}`;
     }
 
 
-    const ull = userData.user_last_login && userData?.user_last_login.split("-");
+    const ull = userData?.user_last_login && userData?.user_last_login.split("-");
     const getUserLastTimeLogin = ull && ull[2].split(' ')[1].split(':');
     const ullYear = ull && ull[0];
     let ullMonth = ull && ull[1];
     const ullDay = ull && ull[2].split(" ")[0];
 
 
-    const reptNameHide = () => <>{userData.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+    const reptNameHide = () => <>{userData?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
 
     return (
         <>
             <div className={classes.CardMain} key={key}  >
 
-                < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData.userid + userData.user_RM_ID}`) }}>
-                    {/* {userData.privacy_photo != 'I' ?
-                        <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' />
-                        :
-                        <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${userData.photo}`} alt='userName' ref={imageRef} />
-                    } */}
+                < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData?.userid + userData?.user_RM_ID}`) }}>
                     <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${blurredPhotoUrl}`} alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
-                        <h5 className={`${classes.name_Heading} `}> {userData.privacy_name != 'I' ? userData.fullname.length > 16 ? (userData.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData.fullname.toLocaleLowerCase() : reptNameHide()}  </h5>
+                        <h5 className={`${classes.name_Heading} `}> {userData?.privacy_name != 'I' ? userData?.fullname.length > 16 ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData?.fullname.toLocaleLowerCase() : reptNameHide()}  </h5>
                         <div>
                             <h5 className={classes.active_Status}>Active on :</h5>
                             <h5 className={classes.active_Status}>{ullYear ? <span>{`${ullDay}-${months[Number(ullMonth) - 1]}-${ullYear} `} at {getUserLastTimeLogin ? convertFrom24To12Format(`${getUserLastTimeLogin[0]}:${getUserLastTimeLogin[1]}`) : 'Na'}</span> : <span>Na :Na at Na</span>} </h5>
@@ -238,7 +233,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                     <div className={classes.info_Header}>
                         <h5 className={classes.name_Heading}>Basic Details</h5>
                         <p className={classes.id_Heading}>
-                            #<span>{userData.user_RM_ID}</span>
+                            #<span>{userData?.user_RM_ID}</span>
                         </p>
                     </div>
                     <hr className="dotted" />
@@ -249,13 +244,13 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                     <GiBodyHeight />
                                 </div>
                                 {/* <p>5ft 11in -157cms</p> */}
-                                <p>{HeightConvertr(userData.height_cm) || "NA"} - {userData.height_cm}cms</p>
+                                <p>{HeightConvertr(userData?.height_cm) || "NA"} - {userData?.height_cm}cms</p>
                             </div>
                             <div className={classes.info_Tag}>
                                 <div>
                                     <BiCalendar />
                                 </div>
-                                <p>{userData.dob ? nowYear - Number(userData.dob.split("-")[0]) : 'Na'} Yrs</p>
+                                <p>{userData?.dob ? nowYear - Number(userData?.dob.split("-")[0]) : 'Na'} Yrs</p>
                             </div>
                             <div className={classes.info_Tag}>
                                 <div>
@@ -310,23 +305,23 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
-                                <Button disabled={BlockedUser?.includes(userData.userid)} onClick={() => handleSendInterest(userData.userid)} className={userData.interest.Send === 'S' ? classes.activebtn : ''}>
-                                    <BiHeartCircle className={userData.interest.Send === 'S' ? classes.activesvg : ''} />
-                                    {userData.interest.Send === 'S' ? 'Intrest Sent' : 'Send Intrest'}
+                                <Button disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleSendInterest(userData?.userid)} className={userData?.interest.Send === 'S' ? classes.activebtn : ''}>
+                                    <BiHeartCircle className={userData?.interest.Send === 'S' ? classes.activesvg : ''} />
+                                    {userData?.interest.Send === 'S' ? 'Intrest Sent' : 'Send Intrest'}
                                 </Button>
-                                <Button disabled={BlockedUser?.includes(userData.userid)} className={userData.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData.userid)}>
-                                    <MdStars className={userData.shortlist && shortlistUser ? classes.activesvg : ''} />
-                                    {userData.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
+                                <Button disabled={BlockedUser?.includes(userData?.userid)} className={userData?.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
+                                    <MdStars className={userData?.shortlist && shortlistUser ? classes.activesvg : ''} />
+                                    {userData?.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
-                                <Button className={BlockedUser?.includes(userData.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData.userid)}>
+                                <Button className={BlockedUser?.includes(userData?.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData?.userid)}>
 
-                                    <MdBlock className={BlockedUser?.includes(userData.userid) ? classes.activesvg : ''} />
-                                    {BlockedUser?.includes(userData.userid) ? 'Blocked' : 'Block'}
+                                    <MdBlock className={BlockedUser?.includes(userData?.userid) ? classes.activesvg : ''} />
+                                    {BlockedUser?.includes(userData?.userid) ? 'Blocked' : 'Block'}
                                 </Button>
                             </div>
                             <div className={classes.profileMatchSection}>
                                 <Image className={classes.profileMatch} src='Images/matchProfile2.svg' alt='profile Match' />
-                                <span>{(userData.matching_score * 100 / 21).toFixed(1)} %</span>
+                                <span>{(userData?.matching_score * 100 / 21).toFixed(1)} %</span>
                             </div>
                         </div>
                     </div>

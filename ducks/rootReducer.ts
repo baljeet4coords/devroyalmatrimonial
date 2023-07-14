@@ -16,6 +16,7 @@ import GalleryReducer from "./Gallery/reducer";
 import { searchByDataReducer } from "./searchByData";
 import { shortlistReducer } from "./userShortList";
 import blockListReducer from "./userBlocklist/reducer";
+import { showInterestReducer } from "./showInterest";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   privacySettings: privacySettingsReducer,
   shortList : shortlistReducer,
   blockList : blockListReducer,
+  showInterest : showInterestReducer,
 });
 
 export default rootReducer;

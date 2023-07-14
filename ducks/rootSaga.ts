@@ -13,6 +13,7 @@ import { gallerySaga, gallerySagaPost } from "./Gallery";
 import { searchByDataSaga } from "./searchByData";
 import { shortlistSaga } from "./userShortList";
 import { blocklistSaga } from "./userBlocklist";
+import { showInterestSaga } from "./showInterest";
 
 function* rootSaga() {
   yield all([
@@ -33,6 +34,7 @@ function* rootSaga() {
     gallerySagaPost(),
     shortlistSaga(),
     blocklistSaga(),
+    showInterestSaga(),
   ]);
 }
 

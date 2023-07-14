@@ -10,69 +10,68 @@ import { useDispatch } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import { useSelector } from "react-redux";
 import { selectshortListSuccess } from "../../ducks/userShortList/selectors";
-import { ICardViewResponse } from "../../types/short-Block-Interest";
+import { ICardViewResponse, ICardViewResponseInterest } from "../../types/short-Block-Interest";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 import { read } from "fs";
+import SendInterest from "./Components/SendInterest";
+import { showInterestReq, showInterestSuccess } from "../../ducks/showInterest/actions";
+import { selectshowInterestSuccess } from "../../ducks/showInterest/selectors";
+import CancleInterest from "./Components/CancleInterest";
+import ReciveInterest from "./Components/ReciveInterest";
+import AcceptedInterest from "./Components/AcceptedInterest";
+import DeclineInterest from "./Components/DeclineInterest";
 
-const ShortlistedProfile: React.FC = () => {
+const ShowInterest: React.FC = () => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
 
-  const shortlistSuccessResponse = useSelector(selectshortListSuccess)
-  const blocklistSuccessResponse = useSelector(selectblockListSuccess)
-  const [shortListedUser, setShortListedUser] = useState<ICardViewResponse[] | null>(shortlistSuccessResponse ? shortlistSuccessResponse?.shortlistCard.jsonResponse : []);
-
-  const [Shortlisted_Id, setShortlisted_Id] = useState<number[]>(shortlistSuccessResponse ? shortlistSuccessResponse?.shotlistedID?.jsonResponse : []);
-  const [sendInterest, setSendInterest] = useState<number[]>([]);
-  const [blockList, setBlockList] = useState(blocklistSuccessResponse?.blocklistedID.jsonResponse != null ? blocklistSuccessResponse?.blocklistedID.jsonResponse : []);
-  const [block, setBlock] = useState<number[]>([]);
-  const [interest, setInterest] = useState<number>(1);
+  const showInterestSuccessResponse = useSelector(selectshowInterestSuccess)
+  const [sentInterest, setSentInterest] = useState<ICardViewResponseInterest[] | null>(showInterestSuccessResponse?.sentInterestCard ? showInterestSuccessResponse?.sentInterestCard.jsonResponse : []);
+  const [reciveInterest, setReciveInterest] = useState<ICardViewResponseInterest[] | null>(showInterestSuccessResponse?.reciveInterestCard ? showInterestSuccessResponse?.reciveInterestCard.jsonResponse : []);
+  const [interestPage, setInterestPage] = useState<number>(1);
 
   const DataOnclick = (searchtype: number) => {
-    return setInterest(searchtype);
+    return setInterestPage(searchtype);
   };
 
 
   useEffect(() => {
-    if (shortlistSuccessResponse) {
-      setShortListedUser(shortlistSuccessResponse?.shortlistCard.jsonResponse);
-      setShortlisted_Id(shortlistSuccessResponse?.shotlistedID?.jsonResponse)
+    if (showInterestSuccessResponse?.sentInterestCard) {
+      setSentInterest(showInterestSuccessResponse?.sentInterestCard.jsonResponse);
     }
-    if (blocklistSuccessResponse) {
-      setBlockList(blocklistSuccessResponse?.blocklistedID.jsonResponse != null ? blocklistSuccessResponse?.blocklistedID.jsonResponse : [])
+    if (showInterestSuccessResponse?.reciveInterestCard) {
+      setReciveInterest(showInterestSuccessResponse?.reciveInterestCard?.jsonResponse)
     }
-  }, [shortlistSuccessResponse, blocklistSuccessResponse])
+
+  }, [showInterestSuccessResponse])
 
   useEffect(() => {
-    dispatch(shortListReq({
+    dispatch(showInterestReq({
       userId: userId ? userId : -1,
     }));
-    dispatch(blockListReq({
-      userId: userId ? userId : -1,
-    }))
   }, [userId, dispatch,])
 
 
   const Components = [
     {
-      Component: <ShortVisitorProfile title="0 Sent Interest " subtitle="People you Send Interest will appear here" />,
+      Component: <SendInterest key={1} data={sentInterest} userId={userId} />,
       key: 1,
     },
     {
-      Component: <ShortVisitorProfile title="0 Cancel Interest " subtitle="People you Cancel Interest will appear here" image="https://cdni.iconscout.com/illustration/premium/thumb/cancel-7851800-6267628.png?f=avif" />,
+      Component: <CancleInterest key={2} data={sentInterest} userId={userId} />,
       key: 2,
     },
     {
-      Component: <ShortVisitorProfile title="0 Interst Recive " subtitle="People Who Sent you Interest will appear here" />,
+      Component:<ReciveInterest key={3} data={reciveInterest} userId={userId} />, 
       key: 3,
     },
     {
-      Component: <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" />,
+      Component: <AcceptedInterest key={4} data={reciveInterest} userId={userId} />,
       key: 4,
     },
     {
-      Component: <ShortVisitorProfile title="0 Interest Decline" subtitle="People you Reject Interest will appear here" />,
+      Component: <DeclineInterest key={5} data={reciveInterest} userId={userId} />,
       key: 5,
     }
   ]
@@ -112,53 +111,22 @@ const ShortlistedProfile: React.FC = () => {
           <Row className={`${classes.tabSection} row`}>
             {buttons.map((button) => {
               return <>
-                <button onClick={() => DataOnclick(button.key)} className={`${classes.TabButton} ${interest === button.key && classes.TabButtonActive} `}>
+                <button onClick={() => DataOnclick(button.key)} className={`${classes.TabButton} ${interestPage === button.key && classes.TabButtonActive} `}>
                   {button.title}
                 </button>
               </>
             })
-
             }
-            {/* <button onClick={() => DataOnclick('cancelinterest')} className={`${classes.TabButton} ${interest === 'cancelinterest' && classes.TabButtonActive} `}>
-              Cancel Interest
-            </button>
-            <button onClick={() => DataOnclick('reciveinterest')} className={`${classes.TabButton} ${interest === 'reciveinterest' && classes.TabButtonActive} `}>
-              Receive Interest
-            </button>
-            <button onClick={() => DataOnclick('acceptedinterest')} className={`${classes.TabButton} ${interest === 'acceptedinterest' && classes.TabButtonActive} `}>
-              Accepted Interest
-            </button>
-            <button onClick={() => DataOnclick('declineinterest')} className={`${classes.TabButton} ${interest === 'declineinterest' && classes.TabButtonActive} `}>
-              Decline Interest
-            </button> */}
           </Row>
         </div>
 
-        {/* {
-          interest === 'sendinterest' ?
-            <ShortVisitorProfile
-              title={"0 Sent Interest "}
-              subtitle={"People you Send Interest will appear here"}
-            />
-            :
-            <ShortVisitorProfile
-              title={"0 Interst Recive "}
-              subtitle={"People Who Sent you Interest will appear here"}
-            />
-        } */}
-
         {
-          Components.map((component)=>{
-            if(component.key === interest){
+          Components.map((component) => {
+            if (component.key === interestPage) {
               return component.Component
             }
           })
         }
-
-
-
-        
-
 
         <Footer />
       </div>
@@ -166,4 +134,4 @@ const ShortlistedProfile: React.FC = () => {
   );
 };
 
-export default ShortlistedProfile;
+export default ShowInterest;
