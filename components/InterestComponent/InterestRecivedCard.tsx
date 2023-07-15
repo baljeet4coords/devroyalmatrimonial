@@ -4,19 +4,34 @@ import { Button, Image, Table } from "react-bootstrap";
 import { ICardViewResponseInterest } from "../../types/short-Block-Interest";
 import { MdBlock, MdCancel } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
+import { useAcceptDecline } from "../../hooks/useAcceptDeclineInterest/useAcceptDeclineInterest";
 
 interface ShowInterestProps {
     key: string;
     userId?: number;
     data: ICardViewResponseInterest;
+    handleUpdateds: (id: number) => void;
 }
 
 
-const InterestRecivedCard: React.FC<ShowInterestProps> = ({ key, userId, data }) => {
+const InterestRecivedCard: React.FC<ShowInterestProps> = ({ key, userId, data,handleUpdateds }) => {
 
     const [btn, setbtn] = useState(false);
     const dateNow = new Date();
     const nowYear = dateNow.getFullYear();
+    const { useAcceptDeclineMutation, AcceptDeclineQuery } = useAcceptDecline();
+
+    const handleInterestAcceptDecline = async (id: number) => {
+
+        const mutationResult = await useAcceptDeclineMutation.mutateAsync({
+            fromUserid: userId,
+            toUserid: data.userid,
+            status: id === 1 ? 'A' : 'D'
+        });
+        if(mutationResult.output ===1){
+            handleUpdateds(1);
+        }
+    }
 
 
     return (
@@ -35,11 +50,11 @@ const InterestRecivedCard: React.FC<ShowInterestProps> = ({ key, userId, data })
                     </div>
                 </div> */}
 
-                <Table borderless responsive="sm" style={{margin:'0px'}} >
+                <Table borderless responsive="sm" style={{ margin: '0px' }} >
                     <tbody>
                         <tr>
                             <th>Name</th>
-                            <td>{data.usercard.fullname}</td>
+                            <td>{data.usercard.fullname.toLowerCase()}</td>
                         </tr>
                         <tr>
                             <th>Age</th>
@@ -51,11 +66,11 @@ const InterestRecivedCard: React.FC<ShowInterestProps> = ({ key, userId, data })
 
 
                 <div className={classes.InterestBtnGroup}>
-                    <Button className={classes.acceptBtn} onClick={() => setbtn(true)}>
+                    <Button className={classes.acceptBtn} onClick={() => handleInterestAcceptDecline(1)}>
                         <IoMdPersonAdd />
                         {!btn ? 'Accept Interest' : 'Interest Accepted'}
                     </Button>
-                    <Button className={classes.declineBtn} onClick={() => setbtn(true)}>
+                    <Button className={classes.declineBtn} onClick={() => handleInterestAcceptDecline(2)}>
                         <MdCancel />
                         {!btn ? 'Decline Interest' : 'Interest Declined'}
                     </Button>

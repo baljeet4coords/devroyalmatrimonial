@@ -27,6 +27,11 @@ const ShortlistedProfile: React.FC = () => {
   const [blockList, setBlockList] = useState(blocklistSuccessResponse?.blocklistedID.jsonResponse != null ? blocklistSuccessResponse?.blocklistedID.jsonResponse : []);
   const [block, setBlock] = useState<number[]>([]);
 
+  
+  const handleShortList_ID = (val: number) => {
+    setShortlisted_Id([...Shortlisted_Id, val])
+  }
+
 
 
   useEffect(() => {
@@ -86,7 +91,7 @@ const ShortlistedProfile: React.FC = () => {
             {shortListedUser && shortListedUser.map((user) => {
               if (blockList && !blockList.includes(user.userid)) {
                 return (
-                  <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updateShortListedUser={updateShortListedUser} />
+                  <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
                 )
               }
             })}

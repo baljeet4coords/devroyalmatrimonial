@@ -22,12 +22,13 @@ interface MyComponentProps {
     SendInterestUser: number[];
     BlockedUser: number[];
     setSendInterest: (val: number[]) => void;
-    setBlock?: (val: number[]) => void;
+    setBlock?: (val: number) => void;
     updateShortListedUser?: (val: number) => void;
     updateBlockListedUser?: (val: number) => void;
+    handleUpdateds?: (val: number) => void;
 }
 
-const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, updateShortListedUser }) => {
+const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, updateShortListedUser, handleUpdateds }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
@@ -36,7 +37,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const [shortlistUser, setShortlistedUser] = useState(userData?.shortlist === 1 ? true : false);
 
 
-    const [blurredPhotoUrl, setBlurredPhotoUrl] = useState<string>(userData?.photo);
+    const blurredPhotoUrl = './Images/blured-img.webp';
     const imageRef = useRef<HTMLImageElement>(null);
 
 
@@ -155,6 +156,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         });
         dispatch(matchMakingSuccess(mutationResult));
         updateShortListedUser && updateShortListedUser(id);
+        if (mutationResult.output === 1) {
+            handleUpdateds && handleUpdateds(id);
+        }
     }
 
 
@@ -162,19 +166,14 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         const mutationResult = await useSendInterestMutation.mutateAsync({
             fromUserid: userID,
             toUserid: id,
-            status: userData?.interest.Send === 'C' ? 'S' : 'C'
+            status: userData?.interest.Send != 'S' ? 'S' : 'C'
         });
-        if (mutationResult?.output && mutationResult?.output > 0) {
-            if (!SendInterestUser.includes(id)) {
-                setSendInterest((pre: number[]) => [...pre, id])
-            } else {
-                setSendInterest(SendInterestUser.filter((userid) => {
-                    userid != id
-                }))
-            }
-        } else {
-            alert('interest not send')
+        if (mutationResult.apiResponse.output === 1) {
+            handleUpdateds && handleUpdateds(id);
+            dispatch(matchMakingSuccess(mutationResult.matchmaking));
         }
+
+
     }
 
 
@@ -182,11 +181,14 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         const mutationResult = await useBlockUserMutation.mutateAsync({
             userId: userID,
             userIdToBlock: id,
-            status: !BlockedUser.includes(id) ? 'Y' : 'N'
+            status: !BlockedUser?.includes(id) ? 'Y' : 'N'
         });
-        dispatch(matchMakingSuccess(mutationResult));
+        // dispatch(matchMakingSuccess(mutationResult));
         updateBlockListedUser && updateBlockListedUser(id);
         updateShortListedUser && updateShortListedUser(id);
+        if (mutationResult.output == 1) {
+            setBlock && setBlock(id);
+        }
     }
 
 
@@ -219,10 +221,17 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             <div className={classes.CardMain} key={key}  >
 
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData?.userid + userData?.user_RM_ID}`) }}>
-                    <Image className={`${classes.profile_Photo} `} src={`https://beta.royalmatrimonial.com/api/${blurredPhotoUrl}`} alt="Profile Photo" ref={imageRef} />
+                    <Image className={`${classes.profile_Photo} `} src={userData?.privacy_photo === 'I' && userData?.interest?.Send != 'A' ? blurredPhotoUrl : `https://beta.royalmatrimonial.com/api/${userData?.photo}`} alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
-                        <h5 className={`${classes.name_Heading} `}> {userData?.privacy_name != 'I' ? userData?.fullname.length > 16 ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...') : userData?.fullname.toLocaleLowerCase() : reptNameHide()}  </h5>
+                        <h5 className={`${classes.name_Heading} `}>
+                            {userData?.privacy_name === 'I' && userData?.interest?.Send != 'A'
+                                ? reptNameHide()
+                                : userData?.fullname.length > 16
+                                    ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+                                    : userData?.fullname.toLocaleLowerCase()
+                            }
+                        </h5>
                         <div>
                             <h5 className={classes.active_Status}>Active on :</h5>
                             <h5 className={classes.active_Status}>{ullYear ? <span>{`${ullDay}-${months[Number(ullMonth) - 1]}-${ullYear} `} at {getUserLastTimeLogin ? convertFrom24To12Format(`${getUserLastTimeLogin[0]}:${getUserLastTimeLogin[1]}`) : 'Na'}</span> : <span>Na :Na at Na</span>} </h5>

@@ -36,6 +36,17 @@
   }
 }
 
+@media screen and (max-width: 415px) {
+  .cardWrapper {
+  
+
+    .maincard {
+      img{
+        width: 100%;
+      }
+    }
+  }
+}
 @media screen and (max-width: 300px) {
   .cardWrapper {
     width: 95%;

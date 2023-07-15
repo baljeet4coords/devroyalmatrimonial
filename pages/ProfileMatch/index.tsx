@@ -12,6 +12,7 @@ import { getUserId } from "../../ducks/auth/selectors";
 import axios from "axios";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
+import { ICardResponse } from "../../types/cardResponse/cardResponse";
 
 
 const ProfileMatch: React.FC = () => {
@@ -24,16 +25,22 @@ const ProfileMatch: React.FC = () => {
 
 
   const [userMatchData, setMatchUserData] = useState(matchMakingResponse)
-  const [allUserData, setAllUserData] = useState(userMatchData?.jsonResponse)
+  const [allUserData, setAllUserData] = useState<ICardResponse[]>(userMatchData?.jsonResponse ? userMatchData.jsonResponse : [])
   const [maxUserId, setMaxUserId] = useState(-1);
   const [userAlreadyGetId, setUserAlreadyGetId] = useState<number[]>([]);
   const [viceVersa, setViceVersa] = useState<number>(1);
-  const [Shortlisted, setShortlisted] = useState<number[]>([]);
+  // const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
   const [block, setBlock] = useState<number[]>(getUserBlockList && getUserBlockList.blocklistedID.jsonResponse != null ? getUserBlockList?.blocklistedID?.jsonResponse : []);
   const limit = 5;
   const userId = useSelector(getUserId);
   // const userId = 473;
+
+
+  const handleBlockList_ID = (val: number) => {
+    setBlock([...block, val])
+  }
+
 
   useEffect(() => {
     if (userMatchData && userMatchData.jsonResponse) {
@@ -124,11 +131,14 @@ const ProfileMatch: React.FC = () => {
   // to remove item from matchmaking when click on block 
 
   const handleUpDateBlockuser = (id: number) => {
+    console.log(allUserData,'beforre');
+    
     const updatedUserWithoutBlock = allUserData?.filter((user) => {
       return user.userid != id;
     })
-
+    
     setAllUserData(updatedUserWithoutBlock);
+    console.log(allUserData,'after');
 
   }
 
@@ -139,10 +149,10 @@ const ProfileMatch: React.FC = () => {
           <LoginHeader />
         </Container>
         <div className={classes.card_container}>
-          {allUserData != null && allUserData.map((user) => {
+          {allUserData != null && allUserData?.map((user) => {
             if (block != null && !block.includes(user.userid)) {
               return (
-                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={setBlock} updateBlockListedUser={handleUpDateBlockuser} />
+                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
               )
             }
           })}

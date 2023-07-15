@@ -32,18 +32,14 @@ const sendInterest = async (values: any, matchMakingResponse?: any) => {
         return user;
       });
 
+    console.log(updatedMatchMakingData);
 
     const updatedMatchMakingResponse = {
       ...matchMakingResponse,
       jsonResponse: updatedMatchMakingData,
     };
 
-    const allset ={
-        matchmaking :updatedMatchMakingResponse,
-        apiResponse : response.data
-    }
-
-    return allset;
+    return updatedMatchMakingResponse;
   } catch (error) {
     throw new Error("Failed to send interest !!");
   }

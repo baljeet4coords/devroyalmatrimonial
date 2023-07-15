@@ -8,15 +8,17 @@ import ProfileCard from "../../../components/ProfileCard/ProfileCard";
 interface ShowInterestProps {
     key: number;
     userId?: number;
+    BlockedUser: number[];
+    handleBlockedUser: (val: number) => void;
     data: ICardViewResponseInterest[] | null;
 }
 
 
-const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId }) => {
+const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId,BlockedUser,handleBlockedUser }) => {
     const [AcceptedInterestUser, setAcceptedInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
-    const [block, setBlock] = useState<number[]>([]);
+
 
 
     useEffect(() => {
@@ -37,13 +39,13 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId }) =>
 
     return (
         <React.Fragment key={key}>
-            {!AcceptedInterestUser ?
+            {!AcceptedInterestUser || AcceptedInterestUser.length < 1  ?
                 <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="./Images/accept_request.svg" />
                 :
                 <div className={classes.card_container}>
                     {AcceptedInterestUser && AcceptedInterestUser.map((user) => {
                         return (
-                            <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={[]} setSendInterest={setSendInterest} setBlock={setBlock} updateBlockListedUser={updateShortListedUser} />
+                            <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest}  updateBlockListedUser={updateShortListedUser} />
                         )
                     })}
                 </div>

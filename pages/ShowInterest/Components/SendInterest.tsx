@@ -15,14 +15,16 @@ interface ShowInterestProps {
     key: number;
     userId?: number;
     data: ICardViewResponseInterest[] | null;
+    handleUpdateds: (id: number) => void;
+    handleBlockedUser: (val: number) => void;
+    BlockedUser: number[];
 }
 
 
-const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId }) => {
+const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId,handleUpdateds,BlockedUser,handleBlockedUser }) => {
     const [sentInterestUser, setSentInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
-    const [block, setBlock] = useState<number[]>([]);
 
     useEffect(() => {
         const cancleData = data && data?.filter((user) => { if (user.status === 'S') return user })
@@ -42,16 +44,18 @@ const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId }) => {
 
     return (
         <React.Fragment key={key}>
-            {!sentInterestUser || sentInterestUser.length <1 ?
+            {!sentInterestUser || sentInterestUser.length < 1 ?
                 <ShortVisitorProfile title="0 Sent Interest " subtitle="People you Send Interest will appear here" />
                 :
-                <div className={classes.card_container}>
+                // <div className={classes.card_container_main}>
+                <>
                     {sentInterestUser && sentInterestUser.map((user) => {
                         return (
-                            <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={[]} setSendInterest={setSendInterest} setBlock={setBlock} updateBlockListedUser={updateShortListedUser} />
+                            <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} handleUpdateds={handleUpdateds} />
                         )
                     })}
-                </div>
+                </>
+                // </div>
             }
         </React.Fragment>
     );

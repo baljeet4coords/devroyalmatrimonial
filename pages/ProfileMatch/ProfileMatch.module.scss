@@ -21,7 +21,7 @@
   background: rgb(231, 230, 230);
 
   .card_container {
-    width: 75%;
+    // width: 75%;
     margin: auto;
   }
 }
@@ -38,6 +38,7 @@
   .bg {
     .card_container {
       width: 90%;
+      padding: 3rem;
     }
   }
 }

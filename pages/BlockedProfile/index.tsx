@@ -23,10 +23,16 @@ const BlockedProfile: React.FC = () => {
   const [sendInterest, setSendInterest] = useState<number[]>([]);
 
 
+
+  const handleBlockList_ID = (val: number) => {
+    setBlocklisted_Id([...Blocklisted_Id, val])
+  }
+
+
   useEffect(() => {
     if (blocklistSuccessResponse) {
       setBlockListedUser(blocklistSuccessResponse?.blocklistCard.jsonResponse);
-      setBlocklisted_Id( blocklistSuccessResponse?.blocklistedID?.jsonResponse)
+      setBlocklisted_Id(blocklistSuccessResponse?.blocklistedID?.jsonResponse)
     }
   }, [blocklistSuccessResponse])
 
@@ -38,7 +44,7 @@ const BlockedProfile: React.FC = () => {
 
 
 
-  const updateBlockListedUser = (id: number) => {    
+  const updateBlockListedUser = (id: number) => {
     const updatedShotListedID = Blocklisted_Id.filter((shotListedID) => {
       return shotListedID != id;
     })
@@ -63,7 +69,7 @@ const BlockedProfile: React.FC = () => {
           <div className={classes.card_container}>
             {blockListedUser && blockListedUser.map((user) => {
               return (
-                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={Blocklisted_Id} setSendInterest={setSendInterest} setBlock={setBlocklisted_Id} updateBlockListedUser={updateBlockListedUser} />
+                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={Blocklisted_Id} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={updateBlockListedUser} />
               )
             })}
           </div>
