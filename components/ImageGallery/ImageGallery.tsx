@@ -45,12 +45,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
 
   useEffect(() => {
-    if (!partnerId) {
-      userId && dispatch(galleryReq({ userId: userId }));
-    } else {
+    if (partnerId) {
       dispatch(galleryReq({ userId: Number(partnerId) }));
+    } else {
+      userId && dispatch(galleryReq({ userId: userId }));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, partnerId]);
 
   useEffect(() => {
     async function uploadFiles() {
@@ -108,14 +108,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
     const getImages = async () => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
-        { userId: userId }
+        { userId: partnerId ? partnerId : userId }
       );
       if (response.data.jsonResponse) {
         setImageResponse(response.data.jsonResponse);
       }
     };
     getImages();
-  }, [userId]);
+  }, [userId, partnerId]);
 
   useEffect(() => {
     if (gallerySuccessResponse && gallerySuccessResponse.jsonResponse) {
@@ -139,6 +139,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
 
   return (
     <div className={classes.imageGallery} ref={galleryRef}>
+      
       <div className="d-flex justify-content-between mb-5">
         <h5>Your Photos</h5>
         {

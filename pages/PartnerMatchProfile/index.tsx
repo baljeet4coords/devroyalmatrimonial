@@ -7,10 +7,12 @@ import MyProfilePageCard from '../../components/MyProfile/MyProfilePageCard';
 import { myProfileReq } from '../../ducks/myProfile/actions';
 import { useDispatch } from 'react-redux';
 import { selectmyProfileSuccess } from '../../ducks/myProfile/selectors';
-import { selectAuthSuccess } from '../../ducks/auth/selectors';
+import { getUserId, selectAuthSuccess } from '../../ducks/auth/selectors';
 import { useSelector } from 'react-redux';
 import { AboutMeDetails, BasicDetails, EducationAndCareer, FamilydetailsInfo, LifeStyleDetails, MyProfileRightSec } from '../../components/MyProfile/Components';
 import MatchingDetails from './Components/MatchingDetails';
+import { selectPartnerPrefSuccess } from '../../ducks/partnerPreferrence/selectors';
+import { partnerPrefReq } from '../../ducks/partnerPreferrence/actions';
 
 
 const PartnerMatchProfile: React.FC = () => {
@@ -18,8 +20,10 @@ const PartnerMatchProfile: React.FC = () => {
     const router = useRouter();
     const { uid } = router.query;
     const partnerId = String(uid).split('RM')[0];
+    const userId = useSelector(getUserId);
 
     const dispatch = useDispatch();
+    const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
     const myProfileObject = useSelector(selectmyProfileSuccess);
     const AuthSuccess = useSelector(selectAuthSuccess);
     const step1Response = myProfileObject?.step1.jsonResponse;
@@ -35,6 +39,11 @@ const PartnerMatchProfile: React.FC = () => {
 
     const [buttonType, setButtonType] = useState<number>(1);
 
+    const PartnerPreferenceJson = partnerPreferrenceResponse?.jsonResponse;
+
+    useEffect(() => {
+        dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
+    }, [dispatch, userId]);
 
     useEffect(() => {
         dispatch(myProfileReq({ actionType: "v", userId: Number(partnerId) }));
@@ -134,7 +143,7 @@ const PartnerMatchProfile: React.FC = () => {
                                 margin: 'auto'
                             }}>
                                 <Col xl={12} className="p-0">
-                                    <MatchingDetails />
+                                    <MatchingDetails partnerProfileAllData={myProfileObject} PartnerPreferenceJson={PartnerPreferenceJson} />
                                 </Col>
                             </Row>
                         }
