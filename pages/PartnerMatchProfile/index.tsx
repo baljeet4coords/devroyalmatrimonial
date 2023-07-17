@@ -13,6 +13,9 @@ import { AboutMeDetails, BasicDetails, EducationAndCareer, FamilydetailsInfo, Li
 import MatchingDetails from './Components/MatchingDetails';
 import { selectPartnerPrefSuccess } from '../../ducks/partnerPreferrence/selectors';
 import { partnerPrefReq } from '../../ducks/partnerPreferrence/actions';
+import { partnerDetailsReq } from '../../ducks/PartnerDetailsss/actions';
+import { selectpartnerDetailsSuccess } from '../../ducks/PartnerDetailsss/selectors';
+import { IPartnerDetailsInterestResponse, IPartnerDetailsP1Response, IPartnerDetailsP2Response, IPartnerDetailsP3Response, IPartnerDetailsP4Response, IPartnerDetailsP5Response, IPartnerDetailsPrivacyResponse } from '../../types/PartnerDetails/partnerDetails';
 
 
 const PartnerMatchProfile: React.FC = () => {
@@ -24,13 +27,33 @@ const PartnerMatchProfile: React.FC = () => {
 
     const dispatch = useDispatch();
     const partnerPreferrenceResponse = useSelector(selectPartnerPrefSuccess);
+    const partnerDetailsResponse = useSelector(selectpartnerDetailsSuccess);
+
+
     const myProfileObject = useSelector(selectmyProfileSuccess);
     const AuthSuccess = useSelector(selectAuthSuccess);
-    const step1Response = myProfileObject?.step1.jsonResponse;
-    const step2Response = myProfileObject?.step2.jsonResponse;
-    const step3Response = myProfileObject?.step3.jsonResponse;
-    const step4Response = myProfileObject?.step4.jsonResponse;
-    const step5Response = myProfileObject?.step5.jsonResponse;
+    const [step1Response, setstep1Response] = useState<IPartnerDetailsP1Response | null>(partnerDetailsResponse?.jsonResponse.step1 != undefined ? partnerDetailsResponse?.jsonResponse.step1 : null)
+    const [step2Response, setstep2Response] = useState<IPartnerDetailsP2Response | null>(partnerDetailsResponse?.jsonResponse.step2 != undefined ? partnerDetailsResponse?.jsonResponse.step2 : null)
+    const [step3Response, setstep3Response] = useState<IPartnerDetailsP3Response | null>(partnerDetailsResponse?.jsonResponse.step3 != undefined ? partnerDetailsResponse?.jsonResponse.step3 : null)
+    const [step4Response, setstep4Response] = useState<IPartnerDetailsP4Response | null>(partnerDetailsResponse?.jsonResponse.step4 != undefined ? partnerDetailsResponse?.jsonResponse.step4 : null)
+    const [step5Response, setstep5Response] = useState<IPartnerDetailsP5Response | null>(partnerDetailsResponse?.jsonResponse.step5 != undefined ? partnerDetailsResponse?.jsonResponse.step5 : null)
+    const [interest, setInterest] = useState<IPartnerDetailsInterestResponse | null>(partnerDetailsResponse?.jsonResponse.interest != undefined ? partnerDetailsResponse?.jsonResponse.interest : null)
+    const [privacyResponse, setprivacyResponse] = useState<IPartnerDetailsPrivacyResponse | null>(partnerDetailsResponse?.jsonResponse.Privacy != undefined ? partnerDetailsResponse?.jsonResponse.Privacy : null)
+
+    useEffect(() => {
+
+        partnerDetailsResponse?.jsonResponse.step1 && setstep1Response(partnerDetailsResponse?.jsonResponse.step1)
+        partnerDetailsResponse?.jsonResponse.step2 && setstep2Response(partnerDetailsResponse?.jsonResponse.step2)
+        partnerDetailsResponse?.jsonResponse.step3 && setstep3Response(partnerDetailsResponse?.jsonResponse.step3)
+        partnerDetailsResponse?.jsonResponse.step4 && setstep4Response(partnerDetailsResponse?.jsonResponse.step4)
+        partnerDetailsResponse?.jsonResponse.step5 && setstep5Response(partnerDetailsResponse?.jsonResponse.step5)
+        partnerDetailsResponse?.jsonResponse.interest && setInterest(partnerDetailsResponse?.jsonResponse.interest)
+        partnerDetailsResponse?.jsonResponse.Privacy && setprivacyResponse(partnerDetailsResponse?.jsonResponse.Privacy)
+        partnerDetailsResponse?.jsonResponse.Privacy && console.log(partnerDetailsResponse?.jsonResponse.Privacy, partnerDetailsResponse?.jsonResponse.Privacy);
+
+    }, [partnerDetailsResponse])
+
+
     const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
     const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +67,10 @@ const PartnerMatchProfile: React.FC = () => {
     useEffect(() => {
         dispatch(partnerPrefReq({ actionType: "v", userId: userId }));
     }, [dispatch, userId]);
+
+    useEffect(() => {
+        dispatch(partnerDetailsReq({ userId: userId, partnerId: Number(partnerId) }));
+    }, [dispatch, userId, partnerId]);
 
     useEffect(() => {
         dispatch(myProfileReq({ actionType: "v", userId: Number(partnerId) }));
@@ -79,10 +106,13 @@ const PartnerMatchProfile: React.FC = () => {
                 onPreviewAlbum={onPreviewAlbum}
                 AuthSuccess={AuthSuccess?.jsonResponse}
                 profileCompliteScore={profileCompliteScore}
+                privacySetting={privacyResponse}
+                interestResponse={interest}
             />
             <Container className={classes.detailsWrapper}>
                 {showGallery ? (
-                    <ImageGallery galleryRef={galleryRef} images={[]} EditHide={true} />
+                    <ImageGallery userProfilerName={step1Response?.fullname} galleryRef={galleryRef} images={[]} EditHide={true} privacySetting={privacyResponse}
+                        interestResponse={interest} />
                 ) : (
                     <>
                         <Row className={`${classes.tabSection} row`}>
@@ -103,6 +133,8 @@ const PartnerMatchProfile: React.FC = () => {
                                         step1Response={step1Response}
                                         EditHide={true}
                                         setBasicDetails={setShowGallery}
+                                        privacySetting={privacyResponse}
+                                        interestResponse={interest}
                                     />
                                     <hr />
                                     <AboutMeDetails
@@ -134,7 +166,8 @@ const PartnerMatchProfile: React.FC = () => {
 
                                 </Col>
                                 <Col sm={3} md={4} className="p-0">
-                                    <MyProfileRightSec myProfileObject={myProfileObject} />
+                                    <MyProfileRightSec myProfileObject={myProfileObject} privacySetting={privacyResponse}
+                                        interestResponse={interest} />
                                 </Col>
                             </Row>
                             :

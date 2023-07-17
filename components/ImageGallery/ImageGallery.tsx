@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { galleryPostReq, galleryReq } from "../../ducks/Gallery/actions";
 import { selectGallerySuccess } from "../../ducks/Gallery/selectors";
 import { useRouter } from "next/router";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../types/PartnerDetails/partnerDetails";
 
 interface ImageGalleryProps {
   images: {
@@ -26,16 +27,19 @@ interface ImageGalleryProps {
   }[];
   galleryRef: React.RefObject<HTMLDivElement>;
   EditHide: boolean;
+  userProfilerName?: string;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 interface ImageResponse {
   galleryImages?: string[];
 }
-const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRef }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRef, userProfilerName, privacySetting, interestResponse }) => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const router = useRouter();
-  const { uid } = router.query;
-  const partnerId = String(uid).split('RM')[0];
+  const { uid } = router?.query;
+  const partnerId = uid && String(uid).split('RM')[0];
   const gallerySuccessResponse = useSelector(selectGallerySuccess);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -86,7 +90,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
           const getImages = async () => {
             const response = await axios.post(
               `${process.env.NEXT_PUBLIC_URL}/userImage/getUserImages`,
-              { userId: userId }
+              { userId: partnerId ? partnerId : userId }
             );
             if (response.data.jsonResponse) {
               setImageResponse(response.data.jsonResponse);
@@ -137,11 +141,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
     }
   };
 
+  const reptNameHide = () => <>{userProfilerName && userProfilerName.slice(0, 3)}<>{'.'.repeat(12)+ "'s Photo" }</></>;
+
+
   return (
     <div className={classes.imageGallery} ref={galleryRef}>
-      
       <div className="d-flex justify-content-between mb-5">
-        <h5>Your Photos</h5>
+        <h5 className="text-capitalize">{userProfilerName ? privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
+          ? reptNameHide()
+          : userProfilerName && userProfilerName.length > 16 && privacySetting
+            ? (userProfilerName).toLocaleLowerCase().substring(0, 15).concat('...')
+            : userProfilerName.toLocaleLowerCase()
+            + "'s" + ' Photo' : 'Your Photos'}</h5>
         {
           EditHide ? null :
             <div>
@@ -160,30 +171,41 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
           multiple
         />
       </div>
-      <LightGallery
-        onInit={onInit}
-        speed={500}
-        plugins={[lgThumbnail, lgZoom]}
-        elementClassNames="text-center"
-      >
-        {imageResponse && imageResponse.galleryImages?.length
-          ? imageResponse.galleryImages.map((img, index) => {
-            return (
-              <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                <Image
-                  alt={"RM"}
-                  src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                />
-              </a>
-            );
-          })
-          :
-          <div className={classes.noImageSec}>
-            <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
-            <h3>No Image Found !!</h3>
+      {privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A'
+        ?
+        <div className="d-flex justify-content-between mb-5">
+          <div className={classes.galleryProcted}>
+            <Image src="./Images/galleryProcted.png" alt="galleryProtected" className={classes.protectedGalleryImg} />
+            <h5>Please Send interest first to open gallery !! </h5>
           </div>
-        }
-      </LightGallery>
+        </div>
+        : <>
+          <LightGallery
+            onInit={onInit}
+            speed={500}
+            plugins={[lgThumbnail, lgZoom]}
+            elementClassNames="text-center"
+          >
+            {imageResponse && imageResponse.galleryImages?.length
+              ? imageResponse.galleryImages.map((img, index) => {
+                return (
+                  <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                    <Image
+                      alt={"RM"}
+                      src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                    />
+                  </a>
+                );
+              })
+              :
+              <div className={classes.noImageSec}>
+                <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
+                <h3>No Image Found !!</h3>
+              </div>
+            }
+          </LightGallery>
+        </>
+      }
     </div>
   );
 };

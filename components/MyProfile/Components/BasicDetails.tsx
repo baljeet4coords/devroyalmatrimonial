@@ -11,16 +11,21 @@ import {
   Religion,
 } from "../../../types/enums";
 import { CastListArray } from "../../../constants/CastListArray";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../../types/PartnerDetails/partnerDetails";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
   step1Response: any;
   EditHide?: boolean;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 const BasicDetails: FC<MyComponentProps> = ({
   step1Response,
   setBasicDetails,
-  EditHide
+  EditHide,
+  privacySetting,
+  interestResponse
 }) => {
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -59,6 +64,10 @@ const BasicDetails: FC<MyComponentProps> = ({
 
     return castname;
   }
+
+
+  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+
 
   const BasicDetails = [
     {
@@ -121,7 +130,12 @@ const BasicDetails: FC<MyComponentProps> = ({
         <div className={classes.Username}>
           <p>
             Full name{" "}
-            <span> - {step1Response?.fullname || "NA"}</span>{" "}
+            <span> - {privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
+              ? reptNameHide()
+              : step1Response && step1Response?.fullname.length > 16 && privacySetting
+                ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+                : step1Response?.fullname.toLocaleLowerCase()
+            } </span>{" "}
           </p>
         </div>
         <div className={classes.Userdetails}>
@@ -162,7 +176,7 @@ const BasicDetails: FC<MyComponentProps> = ({
             );
           })}
         </div>
-      </div>
+      </div >
     </>
   );
 };

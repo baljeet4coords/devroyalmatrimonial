@@ -14,6 +14,7 @@ import { searchByDataSaga } from "./searchByData";
 import { shortlistSaga } from "./userShortList";
 import { blocklistSaga } from "./userBlocklist";
 import { showInterestSaga } from "./showInterest";
+import { partnerDetailsSaga } from "./PartnerDetails";
 
 function* rootSaga() {
   yield all([
@@ -35,6 +36,7 @@ function* rootSaga() {
     shortlistSaga(),
     blocklistSaga(),
     showInterestSaga(),
+    partnerDetailsSaga(),
   ]);
 }
 

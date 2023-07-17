@@ -35,6 +35,7 @@ export interface IRegisterStep1Response {
   profile_handlername: string;
   religion: number;
 }
+
 export interface IRegisterStep2 {
   actionType: "v" | "c" | "u";
   userId?: number;
@@ -144,5 +145,5 @@ export interface IProfileCompletionScore {
   message: string;
   jsonResponse: null;
   status: number;
-  overallScore:number;
+  overallScore: number;
 }

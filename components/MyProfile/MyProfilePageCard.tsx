@@ -4,19 +4,24 @@ import HalfCircleProgressBar from "./HalfCircleProgressBar";
 import { useState, useEffect } from "react";
 import { PackageType } from "../../types/enums";
 import CustomButton from "../Button/CustomButton";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsP1Response, IPartnerDetailsPrivacyResponse } from "../../types/PartnerDetails/partnerDetails";
 
 interface Step1DataResponse {
-  step1Response: any;
+  step1Response: IPartnerDetailsP1Response | null;
   AuthSuccess: any;
   onPreviewAlbum: (visible: boolean) => void;
   profileCompliteScore: number | undefined;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 
 const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   step1Response,
   onPreviewAlbum,
   AuthSuccess,
-  profileCompliteScore
+  profileCompliteScore,
+  interestResponse,
+  privacySetting
 }) => {
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [profileCompliteScorePersent, setProfileCompliteScorePersent] = useState<number>(profileCompliteScore && profileCompliteScore * 100 || -1)
@@ -37,6 +42,49 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
     }
   }
 
+
+
+
+  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+
+
+  const reptEmailHide = () => {
+    const email = step1Response?.emailid; // Retrieve the email address from step1Response object
+
+    if (!email) {
+      return null; // Return null if the email is null or undefined
+    }
+
+    const startuserName = email.slice(0,4);
+    const atIndex = email.indexOf('@'); // Find the index of the '@' symbol in the email address
+    const username = email.slice(0, atIndex); // Get the username part of the email
+    const hiddenPlaceholder = '*'.repeat(username.length - 5); // Create a placeholder of asterisks with the same length
+
+    return (
+      <>
+        <span className="text-lowercase ">{startuserName.toLocaleLowerCase()}</span>
+        <span className="text-lowercase ">{hiddenPlaceholder}</span>
+        <span className="text-lowercase ">
+          {email.slice(atIndex,email.length).toLocaleLowerCase()} {/* Display the domain part of the email */}
+        </span>
+      </>
+    );
+  }
+
+  const reptPhoneHide = () => {
+    const mobileNumber = step1Response?.mobile.toLocaleString(); // Convert the mobile number to a string
+    const hiddenDigits = mobileNumber && mobileNumber.slice(6); // Get the portion of the number to hide
+    const hiddenPlaceholder = hiddenDigits && '*'.repeat(hiddenDigits.length); // Create a placeholder of asterisks with the same length
+
+    return (
+      <>
+        <span>{hiddenPlaceholder}</span>
+        {mobileNumber && mobileNumber.slice(-3)} {/* Display the last 4 digits of the mobile number */}
+      </>
+    );
+  };
+
+
   return (
     <Container className={classes.cardWrapper}>
       <Row className={classes.mobileRow}>
@@ -44,7 +92,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           <Image
             src={
               step1Response?.photo
-                ? `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
+                ? privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' ? './Images/blured-img.webp' : `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
                 : "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
             }
             className={classes.mobileAvatar}
@@ -56,16 +104,29 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
             <div className={classes.MiddleLeft}>
               <div>
                 <p className={classes.MiddleLeftHeading}>
-                  Name : <span>{step1Response?.fullname || "NA"} </span>{" "}
+                  Name : <span> {privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
+                    ? reptNameHide()
+                    : step1Response && step1Response?.fullname.length > 16 && privacySetting
+                      ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+                      : step1Response?.fullname.toLocaleLowerCase()
+                  } </span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
                   RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
-                  Mobile No : <span>{step1Response?.mobile || "NA"} </span>{" "}
+                  Mobile No : <span> {privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
+                    ? reptPhoneHide()
+                    : step1Response?.mobile
+                  } </span>{" "}
                 </p>
-                <p className={`${classes.MiddleLeftHeading}`}>
-                  Email Id : <span className="text-lowercase">{step1Response?.emailid || "NA"} </span>{" "}
+                <p className={`${classes.MiddleLeftHeading} `}>
+                  Email Id : <span className="text-lowercase"> {privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
+                    ? reptEmailHide()
+                    : step1Response && step1Response?.emailid.length > 16 
+                      ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
+                      : step1Response?.emailid.toLocaleLowerCase()
+                  } </span>{" "}
                 </p>
               </div>
 

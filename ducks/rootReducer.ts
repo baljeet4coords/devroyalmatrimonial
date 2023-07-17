@@ -17,6 +17,7 @@ import { searchByDataReducer } from "./searchByData";
 import { shortlistReducer } from "./userShortList";
 import blockListReducer from "./userBlocklist/reducer";
 import { showInterestReducer } from "./showInterest";
+import { partnerDetailsReducer } from "./PartnerDetails";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -39,9 +40,10 @@ const rootReducer = combineReducers({
   profileComplete: profileCompletenessReducer,
   myProfileGallery: GalleryReducer,
   privacySettings: privacySettingsReducer,
-  shortList : shortlistReducer,
-  blockList : blockListReducer,
-  showInterest : showInterestReducer,
+  shortList: shortlistReducer,
+  blockList: blockListReducer,
+  showInterest: showInterestReducer,
+  partnerDetails: partnerDetailsReducer,
 });
 
 export default rootReducer;
