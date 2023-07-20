@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { ICardViewResponse } from "../../types/short-Block-Interest";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
+import PageHeading from "../../components/PageHeading";
 
 const BlockedProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,9 @@ const BlockedProfile: React.FC = () => {
             subtitle={"People you Block will appear here"}
           />
           :
+          <>
+            <PageHeading heading="Profile that you have Blocked show here !!" />
+
           <div className={classes.card_container}>
             {blockListedUser && blockListedUser.map((user) => {
               return (
@@ -73,6 +77,7 @@ const BlockedProfile: React.FC = () => {
               )
             })}
           </div>
+          </>
         }
         <Footer />
       </div>

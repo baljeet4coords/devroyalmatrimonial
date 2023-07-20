@@ -30,7 +30,7 @@ const EducationAndCareer: FC<MyComponentProps> = ({
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     step2Response?.country != (undefined && null)
-      ? countries[step2Response?.country-1].isoCode
+      ? countries[step2Response?.country - 1].isoCode
       : "IN"
   );
 
@@ -43,31 +43,31 @@ const EducationAndCareer: FC<MyComponentProps> = ({
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step2Response?.state != (undefined && null)
-      ? stateOfCountry[step2Response?.state-1]?.isoCode
+      ? stateOfCountry[step2Response?.state - 1]?.isoCode
       : "AS"
   );
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
-  const allCitiesOfCountry: ICity[] =City.getCitiesOfCountry(countryCode) || [];
+  const allCitiesOfCountry: ICity[] = City.getCitiesOfCountry(countryCode) || [];
 
   useEffect(() => {
     step2Response?.country !== undefined &&
       countries[step2Response?.country] !== undefined &&
-      setCountryCode(countries[step2Response?.country-1].isoCode);
+      setCountryCode(countries[step2Response?.country - 1].isoCode);
     step2Response?.state != undefined &&
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
-      setStateCode(stateOfCountry[step2Response?.state-1].isoCode);
+      setStateCode(stateOfCountry[step2Response?.state - 1].isoCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
-    return step2Response?.country !== (undefined || null) && countries[step2Response?.country-1]?.name;
+    return step2Response?.country !== (undefined || null) && countries[step2Response?.country - 1]?.name;
   }
   function getState() {
-    return step2Response?.state !== (undefined || null) && stateOfCountry[step2Response?.state-1]?.name;
+    return step2Response?.state !== (undefined || null) && stateOfCountry[step2Response?.state - 1]?.name;
   }
   function getCity() {
-    return step2Response?.city !== (undefined || null) && allCitiesOfCountry[step2Response?.city-1]?.name;
+    return step2Response?.city !== (undefined || null) && allCitiesOfCountry[step2Response?.city - 1]?.name;
   }
 
   function getKeyByValue(value: string, enumObject: any) {

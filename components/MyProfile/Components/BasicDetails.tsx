@@ -66,7 +66,7 @@ const BasicDetails: FC<MyComponentProps> = ({
   }
 
 
-  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
 
 
   const BasicDetails = [
@@ -112,6 +112,11 @@ const BasicDetails: FC<MyComponentProps> = ({
   ];
 
 
+  const ShowNameONConditions = step1Response && step1Response?.fullname.length > 16
+  ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+  : step1Response?.fullname.toLocaleLowerCase();
+
+
   return (
     <>
       <div className={classes.content}>
@@ -130,12 +135,11 @@ const BasicDetails: FC<MyComponentProps> = ({
         <div className={classes.Username}>
           <p>
             Full name{" "}
-            <span> - {privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
-              ? reptNameHide()
-              : step1Response && step1Response?.fullname.length > 16 && privacySetting
-                ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
-                : step1Response?.fullname.toLocaleLowerCase()
-            } </span>{" "}
+            <span> - {privacySetting?.privacy_show_name === 'P'
+                    ? ShowNameONConditions
+                    : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+                      ShowNameONConditions
+                      : reptNameHide()}</span>{" "}
           </p>
         </div>
         <div className={classes.Userdetails}>

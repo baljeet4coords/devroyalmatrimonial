@@ -4,6 +4,7 @@ import classes from "./Interest.module.scss";
 import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/short-Block-Interest";
 import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
 import ProfileCard from "../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -41,13 +42,16 @@ const DeclineInterest: React.FC<ShowInterestProps> = ({ key, data, userId,Blocke
             {!DeclineInterestUser || DeclineInterestUser.length < 1 ?
                 <ShortVisitorProfile title="0 Interest Decline" subtitle="People you Reject Interest will appear here" image="./Images/Reject_interest.svg " />
                 :
+                <>
+                    <PageHeading heading="you have Decline interest of these profile !!" />
                 <div className={classes.card_container}>
                     {DeclineInterestUser && DeclineInterestUser.map((user) => {
                         return (
                             <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
-                        )
-                    })}
+                            )
+                        })}
                 </div>
+                        </>
             }
         </React.Fragment>
     );

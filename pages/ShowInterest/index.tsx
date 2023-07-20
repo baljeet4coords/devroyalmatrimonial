@@ -87,7 +87,7 @@ const ShowInterest: React.FC = () => {
 
       setBlocklisted_Id(updatedBlocklist)
     } else {
-      setBlocklisted_Id([...Blocklisted_Id, id])
+      Blocklisted_Id && setBlocklisted_Id([...Blocklisted_Id, id])
     }
   }
 
@@ -116,23 +116,23 @@ const ShowInterest: React.FC = () => {
 
   const buttons = [
     {
-      title: 'Send Interest',
+      title: 'Interest Sent',
       key: 1
     },
     {
-      title: ' Cancel Interest',
+      title: ' Interest Recalled',
       key: 2
     },
     {
-      title: ' Receive Interest',
+      title: '  Interest Received',
       key: 3
     },
     {
-      title: 'Accepted Interest',
+      title: ' Interest Accepted',
       key: 4
     },
     {
-      title: 'Decline Interest',
+      title: ' Interest Decline',
       key: 5
     }
   ]

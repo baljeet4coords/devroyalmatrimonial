@@ -176,7 +176,8 @@ const PartnerMatchProfile: React.FC = () => {
                                 margin: 'auto'
                             }}>
                                 <Col xl={12} className="p-0">
-                                    <MatchingDetails partnerProfileAllData={myProfileObject} PartnerPreferenceJson={PartnerPreferenceJson} />
+                                    <MatchingDetails partnerProfileAllData={myProfileObject} PartnerPreferenceJson={PartnerPreferenceJson} privacySetting={privacyResponse}
+                                        interestResponse={interest} />
                                 </Col>
                             </Row>
                         }

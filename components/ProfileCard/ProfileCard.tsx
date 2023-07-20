@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
 import { City, Country, ICity, ICountry, IState, State } from 'country-state-city';
 import { ICardResponse } from '../../types/cardResponse/cardResponse';
+import ConfirMationsPopup from '../ConfirmationsPopup';
 
 interface MyComponentProps {
     userData: ICardResponse;
@@ -35,6 +36,10 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
     const [shortlistUser, setShortlistedUser] = useState(userData?.shortlist === 1 ? true : false);
+    const [interestPopup, setInterestPopup] = useState<boolean>(false);
+    const [blockPopup, setBlockPopup] = useState<boolean>(false);
+    const [cardId, setCardId] = useState<number>(-1);
+    const [loading, setLoading] = useState(false);
 
 
     const blurredPhotoUrl = './Images/blured-img.webp';
@@ -148,6 +153,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
 
     const handleSortlisted = async (id: number) => {
+        setLoading(true);
         setShortlistedUser(!shortlistUser)
         const mutationResult = await useShortlistMutation.mutateAsync({
             userId: userID,
@@ -158,37 +164,42 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         updateShortListedUser && updateShortListedUser(id);
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(id);
+            setInterestPopup(false)
         }
+        setLoading(false);
     }
 
 
-    const handleSendInterest = async (id: number) => {
+    const handleSendInterest = async () => {
+        setLoading(true);
         const mutationResult = await useSendInterestMutation.mutateAsync({
             fromUserid: userID,
-            toUserid: id,
+            toUserid: cardId,
             status: userData?.interest.Send != 'S' ? 'S' : 'C'
         });
         if (mutationResult.apiResponse.output === 1) {
-            handleUpdateds && handleUpdateds(id);
+            handleUpdateds && handleUpdateds(cardId);
             dispatch(matchMakingSuccess(mutationResult.matchmaking));
         }
-
-
+        setInterestPopup(false);
     }
 
 
-    const handleBlock = async (id: number) => {
+    const handleBlock = async () => {
+        setLoading(true);
         const mutationResult = await useBlockUserMutation.mutateAsync({
             userId: userID,
-            userIdToBlock: id,
-            status: !BlockedUser?.includes(id) ? 'Y' : 'N'
+            userIdToBlock: cardId,
+            status: !BlockedUser?.includes(cardId) ? 'Y' : 'N'
         });
-        // dispatch(matchMakingSuccess(mutationResult));
-        updateBlockListedUser && updateBlockListedUser(id);
-        updateShortListedUser && updateShortListedUser(id);
+        dispatch(matchMakingSuccess(mutationResult));
+        updateBlockListedUser && updateBlockListedUser(cardId);
+        updateShortListedUser && updateShortListedUser(cardId);
         if (mutationResult.output == 1) {
-            setBlock && setBlock(id);
+            setBlock && setBlock(cardId);
+            setBlockPopup(false);
         }
+        setLoading(false);
     }
 
 
@@ -214,23 +225,54 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const ullDay = ull && ull[2].split(" ")[0];
 
 
-    const reptNameHide = () => <>{userData?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+    const reptNameHide = () => <>{userData?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
+
+
+    const handleInterestPopupHide = () => {
+        setInterestPopup(false);
+    }
+
+    const handleBlockPopupHide = () => {
+        setBlockPopup(false);
+    }
+
+
+
+    const handleInterestPopupShow = (id: number) => {
+        setInterestPopup(true);
+        setCardId(id);
+
+    }
+    const handleBlockPopupShow = (id: number) => {
+        setBlockPopup(true);
+        setCardId(id);
+    }
+
+    const ShowNameONConditions = userData?.fullname.length > 16
+        ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+        : userData?.fullname.toLocaleLowerCase();
+
 
     return (
         <>
             <div className={classes.CardMain} key={key}  >
 
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData?.userid + userData?.user_RM_ID}`) }}>
-                    <Image className={`${classes.profile_Photo} `} src={userData?.privacy_photo === 'I' && userData?.interest?.Send != 'A' ? blurredPhotoUrl : `https://beta.royalmatrimonial.com/api/${userData?.photo}`} alt="Profile Photo" ref={imageRef} />
+                    <Image className={`${classes.profile_Photo} `} src={userData?.privacy_photo === 'P'
+                        ? `https://beta.royalmatrimonial.com/api/${userData?.photo}`
+                        : userData?.interest?.Send === 'A' || userData?.interest?.Receive === 'A' ?
+                            `https://beta.royalmatrimonial.com/api/${userData?.photo}`
+                            : blurredPhotoUrl
+                    } alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
                         <h5 className={`${classes.name_Heading} `}>
-                            {userData?.privacy_name === 'I' && userData?.interest?.Send != 'A'
-                                ? reptNameHide()
-                                : userData?.fullname.length > 16
-                                    ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
-                                    : userData?.fullname.toLocaleLowerCase()
-                            }
+
+                            {userData?.privacy_photo === 'P'
+                                ? ShowNameONConditions
+                                : userData?.interest?.Send === 'A' || userData?.interest?.Receive === 'A' ?
+                                    ShowNameONConditions
+                                    : reptNameHide()}
                         </h5>
                         <div>
                             <h5 className={classes.active_Status}>Active on :</h5>
@@ -314,7 +356,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
-                                <Button disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleSendInterest(userData?.userid)} className={userData?.interest.Send === 'S' ? classes.activebtn : ''}>
+                                <Button disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleInterestPopupShow(userData?.userid)} className={userData?.interest.Send === 'S' ? classes.activebtn : ''}>
                                     <BiHeartCircle className={userData?.interest.Send === 'S' ? classes.activesvg : ''} />
                                     {userData?.interest.Send === 'S' ? 'Intrest Sent' : 'Send Intrest'}
                                 </Button>
@@ -322,10 +364,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                     <MdStars className={userData?.shortlist && shortlistUser ? classes.activesvg : ''} />
                                     {userData?.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
-                                <Button className={BlockedUser?.includes(userData?.userid) ? classes.activebtn : ''} onClick={() => handleBlock(userData?.userid)}>
-
+                                <Button className={BlockedUser?.includes(userData?.userid) ? classes.activebtn : ''} onClick={() => handleBlockPopupShow(userData?.userid)}>
                                     <MdBlock className={BlockedUser?.includes(userData?.userid) ? classes.activesvg : ''} />
-                                    {BlockedUser?.includes(userData?.userid) ? 'Blocked' : 'Block'}
+                                    {BlockedUser?.includes(userData?.userid) ? 'Unblock' : 'Block'}
                                 </Button>
                             </div>
                             <div className={classes.profileMatchSection}>
@@ -336,6 +377,10 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                     </div>
                 </div>
             </div >
+
+
+            {interestPopup && <ConfirMationsPopup loading={loading} popuptype={true} confirmationsFun={handleSendInterest} handleInterestPopupHide={handleInterestPopupHide} />}
+            {blockPopup && <ConfirMationsPopup loading={loading} popuptype={false} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} />}
         </>
     )
 }

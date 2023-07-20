@@ -6,6 +6,7 @@ import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/sho
 import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
 import ProfileCard from "../../../components/ProfileCard/ProfileCard";
 import InterestRecivedCard from "../../../components/InterestComponent/InterestRecivedCard";
+import PageHeading from "../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -15,7 +16,7 @@ interface ShowInterestProps {
 }
 
 
-const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId ,handleUpdateds}) => {
+const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds }) => {
     const [reciveInterestUser, setReciveInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -32,15 +33,16 @@ const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId ,handle
             {!reciveInterestUser || reciveInterestUser.length < 1 ?
                 <ShortVisitorProfile title="0 Interst Recive " subtitle="People Who Sent you Interest will appear here" image="./Images/interest_recive.svg" />
                 :
-                <div className={`${classes.card_container_main} ${classes.flexrowMar} `}>
-
-                    {reciveInterestUser && reciveInterestUser.map((user) => {
-                        return (
-                            // <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={[]} setSendInterest={setSendInterest} setBlock={setBlock} updateBlockListedUser={updateShortListedUser} />
-                            <InterestRecivedCard userId={userId} key={user?.userid + user?.usercard?.user_RM_ID} data={user} handleUpdateds={handleUpdateds} />
-                        )
-                    })}
-                </div>
+                <>
+                    <PageHeading heading="You have recived interest these profile !!" />
+                    <div className={`${classes.card_container_main} ${classes.flexrowMar} `}>
+                        {reciveInterestUser && reciveInterestUser.map((user) => {
+                            return (
+                                <InterestRecivedCard userID={userId} key={user?.userid + user?.usercard?.user_RM_ID} userData={user.usercard} handleUpdateds={handleUpdateds} />
+                            )
+                        })}
+                    </div>
+                </>
             }
         </React.Fragment>
     );

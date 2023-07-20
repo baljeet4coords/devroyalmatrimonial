@@ -5,6 +5,7 @@ import classes from "./Interest.module.scss";
 import {  ICardViewResponseInterest } from "../../../types/short-Block-Interest";
 import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
 import ProfileCard from "../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -44,6 +45,9 @@ const CancleInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handle
             {!CancleInterestUser ?
                 <ShortVisitorProfile title="0 Cancel Interest " subtitle="People you Cancel Interest will appear here" image="./Images/canel.png" />
                 :
+                <>
+                    <PageHeading heading="Profile that you have Cancel interest show here !!" />
+
                 <div className={classes.card_container}>
                     {CancleInterestUser && CancleInterestUser.map((user) => {
                         return (
@@ -51,6 +55,7 @@ const CancleInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handle
                         )
                     })}
                 </div>
+                </>
             }
         </React.Fragment>
     );

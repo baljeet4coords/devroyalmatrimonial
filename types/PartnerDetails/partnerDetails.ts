@@ -79,6 +79,6 @@ export interface IPartnerDetailsPrivacyResponse {
 }
 
 export interface IPartnerDetailsInterestResponse {
-  Recieve: string | null;
+  Receive: string | null;
   Send: string | null;
 }

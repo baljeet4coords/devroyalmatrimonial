@@ -141,17 +141,25 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
     }
   };
 
-  const reptNameHide = () => <>{userProfilerName && userProfilerName.slice(0, 3)}<>{'.'.repeat(12)+ "'s Photo" }</></>;
+  const reptNameHide = () => <>{userProfilerName && userProfilerName.slice(0, 3)}<>{'*'.repeat(8) + ("`s Photos").toLocaleLowerCase()}</></>;
+
+
+
+  const ShowNameONConditions = userProfilerName && userProfilerName?.length > 16
+    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...')
+    : userProfilerName?.toLocaleLowerCase();
+
+
 
 
   return (
     <div className={classes.imageGallery} ref={galleryRef}>
       <div className="d-flex justify-content-between mb-5">
-        <h5 className="text-capitalize">{userProfilerName ? privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
-          ? reptNameHide()
-          : userProfilerName && userProfilerName.length > 16 && privacySetting
-            ? (userProfilerName).toLocaleLowerCase().substring(0, 15).concat('...')
-            : userProfilerName.toLocaleLowerCase()
+        <h5>{userProfilerName ? privacySetting?.privacy_show_name === 'P'
+          ? ShowNameONConditions
+          : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+            ShowNameONConditions
+            : reptNameHide()
             + "'s" + ' Photo' : 'Your Photos'}</h5>
         {
           EditHide ? null :

@@ -13,6 +13,7 @@ import axios from "axios";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 import { ICardResponse } from "../../types/cardResponse/cardResponse";
+import PageHeading from "../../components/PageHeading";
 
 
 const ProfileMatch: React.FC = () => {
@@ -148,6 +149,7 @@ const ProfileMatch: React.FC = () => {
         <Container fluid className={classes.background_header}>
           <LoginHeader />
         </Container>
+        <PageHeading heading="Profile that match your desire partner Details show here !!" />
         <div className={classes.card_container}>
           {allUserData != null && allUserData?.map((user) => {
             if (block != null && !block.includes(user.userid)) {

@@ -1,143 +1,114 @@
 @import "../../styles/constants.scss";
+@import "../ProfileCard/ProfileCard.module.scss";
 
-.card_container {
-  background-color: #ffffff;
+// .card_container {
+//   background-color: #ffffff;
+//   display: flex;
+//   flex-direction: column;
+//   padding: 20px;
+//   border-radius: 5px;
+//   width: 28%;
+//   height: 100%;
+//   align-items: center;
+//   gap: 0.5rem;
+//   justify-content: flex-start;
+
+
+//   table {
+//     tbody {
+//       tr {
+//         td {
+//           text-transform: capitalize;
+//         }
+//       }
+//     }
+//   }
+
+//   .profileInfoSec {
+//     display: flex;
+//     flex-direction: column;
+//     .profile_Name {
+//       display: flex;
+//       gap: 1rem;
+//       align-items: center;
+
+//       h6 {
+//         margin: 0%;
+//         font-size: 16px;
+//       }
+//       p {
+//         margin: 0%;
+//         font-size: 16px;
+//         font-weight: 600;
+//       }
+//     }
+//   }
+
+// }
+.InterestBtnGroup {
   display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border-radius: 5px;
-  width: 28%;
-  height: 100%;
-  align-items: center;
-  gap: 0.5rem;
-  justify-content: flex-start;
-
-  .profile_Photo {
-    height: 160px;
-    width: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 0 auto;
-  }
-
-  table {
-    tbody {
-      tr {
-        td {
-          text-transform: capitalize;
-        }
-      }
-    }
-  }
-
-  .profileInfoSec {
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  Button {
     display: flex;
-    flex-direction: column;
-    .profile_Name {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    gap: 5px;
+    align-items: center;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 30px;
+    height: 36px;
+    color: rgb(5 5 5 / 73%);
 
-      h6 {
-        margin: 0%;
-        font-size: 16px;
-      }
-      p {
-        margin: 0%;
-        font-size: 16px;
-        font-weight: 600;
-      }
-    }
-  }
-
-  .InterestBtnGroup {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    Button {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      font-weight: 600;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      border-radius: 30px;
-      height: 36px;
+    svg {
+      height: 20px;
+      width: 20px;
       color: rgb(5 5 5 / 73%);
+    }
+    .loginSpiner {
+      height: 20px;
+      width: 20px;
+      margin-right: 10px;
+      color: #dc3545 !important;
+    }
+  }
 
-      svg {
-        height: 20px;
-        width: 20px;
-        color: rgb(5 5 5 / 73%);
-      }
-      .loginSpiner {
-        height: 20px;
-        width: 20px;
-        margin-right: 10px;
-        color: #dc3545 !important;
-      }
-    }
-
-    .acceptBtn {
-      background-color: rgb(205 240 212 / 81%);
-    }
-    .declineBtn {
-      background: #dc354517;
-    }
-    .acceptBtn:hover {
+  .acceptBtn {
+    background-color: rgb(205 240 212 / 81%);
+  }
+  .declineBtn {
+    background: #dc354517;
+  }
+  .acceptBtn:hover {
+    color: #19ac23;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    svg {
       color: #19ac23;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-      svg {
-        color: #19ac23;
-      }
     }
-    .declineBtn:hover {
+  }
+  .declineBtn:hover {
+    color: #dc3545;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    svg {
       color: #dc3545;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-      svg {
-        color: #dc3545;
-      }
     }
+  }
 
-    .activebtn {
-      background-color: #35dc59;
-      color: #fff;
+  .activebtn {
+    background-color: #35dc59;
+    color: #fff;
 
-      .activesvg {
-        color: #fff;
-      }
-    }
-    .activebtn:hover {
+    .activesvg {
       color: #fff;
     }
   }
-}
-
-@media only screen and (max-width: 1124px) {
-  .card_container {
-    width: 47%;
+  .activebtn:hover {
+    color: #fff;
   }
 }
 
-@media only screen and (max-width: 767px) and (min-width: 601px) {
-  .card_container {
-    width: auto;
-  }
-}
-
-@media only screen and (max-width: 600px) and (min-width: 350px) {
-  .card_container {
-    width: auto;
-  }
-}
-@media only screen and (max-width: 350px) {
-  .card_container {
-    width: auto;
-  }
-}

@@ -23,6 +23,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   interestResponse,
   privacySetting
 }) => {
+  const blurredPhotoUrl = './Images/blured-img.webp';
   const [showGallery, setShowGallery] = useState<boolean>(false);
   const [profileCompliteScorePersent, setProfileCompliteScorePersent] = useState<number>(profileCompliteScore && profileCompliteScore * 100 || -1)
   const showGalleryClickHandler = () => {
@@ -45,7 +46,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
 
 
 
-  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'.'.repeat(12)}</span></>;
+  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
 
 
   const reptEmailHide = () => {
@@ -55,7 +56,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
       return null; // Return null if the email is null or undefined
     }
 
-    const startuserName = email.slice(0,4);
+    const startuserName = email.slice(0, 4);
     const atIndex = email.indexOf('@'); // Find the index of the '@' symbol in the email address
     const username = email.slice(0, atIndex); // Get the username part of the email
     const hiddenPlaceholder = '*'.repeat(username.length - 5); // Create a placeholder of asterisks with the same length
@@ -65,7 +66,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
         <span className="text-lowercase ">{startuserName.toLocaleLowerCase()}</span>
         <span className="text-lowercase ">{hiddenPlaceholder}</span>
         <span className="text-lowercase ">
-          {email.slice(atIndex,email.length).toLocaleLowerCase()} {/* Display the domain part of the email */}
+          {email.slice(atIndex, email.length).toLocaleLowerCase()} {/* Display the domain part of the email */}
         </span>
       </>
     );
@@ -85,15 +86,25 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   };
 
 
+  const ShowNameONConditions = step1Response && step1Response?.fullname.length > 16
+    ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+    : step1Response?.fullname.toLocaleLowerCase();
+
+  const ShowEmainONConditions = step1Response && step1Response?.emailid.length > 16
+    ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
+    : step1Response?.emailid.toLocaleLowerCase();
+
   return (
     <Container className={classes.cardWrapper}>
       <Row className={classes.mobileRow}>
         <Col sm={3} md={4} lg={3} className={`${classes.Profile_section} p-0 d-flex justify-content-end`}>
           <Image
-            src={
-              step1Response?.photo
-                ? privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' ? './Images/blured-img.webp' : `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
-                : "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
+            src={privacySetting ? privacySetting?.privacy_show_photo === 'P'
+              ? `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
+              : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+                `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
+                : blurredPhotoUrl
+              : "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
             }
             className={classes.mobileAvatar}
             alt="avatar"
@@ -104,28 +115,24 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
             <div className={classes.MiddleLeft}>
               <div>
                 <p className={classes.MiddleLeftHeading}>
-                  Name : <span> {privacySetting?.privacy_show_name === 'I' && interestResponse?.Send != 'A'
-                    ? reptNameHide()
-                    : step1Response && step1Response?.fullname.length > 16 && privacySetting
-                      ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
-                      : step1Response?.fullname.toLocaleLowerCase()
-                  } </span>{" "}
+                  Name : <span> {privacySetting?.privacy_show_name === 'P'
+                    ? ShowNameONConditions
+                    : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+                      ShowNameONConditions
+                      : reptNameHide()}</span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
                   RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
-                  Mobile No : <span> {privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
-                    ? reptPhoneHide()
-                    : step1Response?.mobile
+                  Mobile No : <span> {privacySetting?.privacy_show_contact === 'P' ?
+                    step1Response?.mobile : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A'
+                      ? step1Response?.mobile : reptPhoneHide()
                   } </span>{" "}
                 </p>
                 <p className={`${classes.MiddleLeftHeading} `}>
-                  Email Id : <span className="text-lowercase"> {privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
-                    ? reptEmailHide()
-                    : step1Response && step1Response?.emailid.length > 16 
-                      ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
-                      : step1Response?.emailid.toLocaleLowerCase()
+                  Email Id : <span className="text-lowercase"> {privacySetting?.privacy_show_contact === 'P' ? ShowEmainONConditions : interestResponse?.Send != 'A' || interestResponse?.Receive != 'A'
+                    ? ShowEmainONConditions : reptEmailHide()
                   } </span>{" "}
                 </p>
               </div>

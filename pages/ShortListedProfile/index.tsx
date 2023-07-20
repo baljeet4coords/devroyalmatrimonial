@@ -13,6 +13,7 @@ import { selectshortListSuccess } from "../../ducks/userShortList/selectors";
 import { ICardViewResponse } from "../../types/short-Block-Interest";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
+import PageHeading from "../../components/PageHeading";
 
 const ShortlistedProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const ShortlistedProfile: React.FC = () => {
   const [blockList, setBlockList] = useState(blocklistSuccessResponse?.blocklistedID.jsonResponse != null ? blocklistSuccessResponse?.blocklistedID.jsonResponse : []);
   const [block, setBlock] = useState<number[]>([]);
 
-  
+
   const handleShortList_ID = (val: number) => {
     setShortlisted_Id([...Shortlisted_Id, val])
   }
@@ -87,15 +88,18 @@ const ShortlistedProfile: React.FC = () => {
             subtitle={"People you shortlist will appear here"}
           />
           :
-          <div className={classes.card_container}>
-            {shortListedUser && shortListedUser.map((user) => {
-              if (blockList && !blockList.includes(user.userid)) {
-                return (
-                  <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
-                )
-              }
-            })}
-          </div>
+          <>
+            <PageHeading heading="Profile that you have shorlist show here !!" />
+            <div className={classes.card_container}>
+              {shortListedUser && shortListedUser.map((user) => {
+                if (blockList && !blockList.includes(user.userid)) {
+                  return (
+                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
+                  )
+                }
+              })}
+            </div>
+          </>
         }
         <Footer />
       </div>

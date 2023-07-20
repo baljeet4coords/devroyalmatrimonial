@@ -7,6 +7,7 @@ import { AnnualIncomeProfile, AnnualIncomeProfile0, Challenged, ChallengedWith0,
 import { CastListArray } from '../../../constants/CastListArray';
 import { step2 } from '../../../ducks/regiserUser/step2/actions';
 import { PartnerPreferrenceResponse } from '../../../ducks/partnerPreferrence/types';
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from '../../../types/PartnerDetails/partnerDetails';
 
 
 
@@ -48,9 +49,11 @@ interface MyProfileCompProps {
         };
     } | null;
     PartnerPreferenceJson: PartnerPreferrenceResponse | undefined;
+    privacySetting?: IPartnerDetailsPrivacyResponse | null;
+    interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 
-const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, PartnerPreferenceJson }) => {
+const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, PartnerPreferenceJson, privacySetting, interestResponse }) => {
 
     const [partnerPreferenceJson, setPartnerPreferenceJson] = useState(PartnerPreferenceJson);
     const Step1Data = partnerProfileAllData?.step1.jsonResponse;
@@ -104,6 +107,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
     }, []);
 
     const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
+    const stateOfCountryArr: IState[] = State.getStatesOfCountry('IN');
     const [stateCode, setStateCode] = useState<string>(
         Step4Data?.family_native_state != (undefined && null)
             ? stateOfCountry[Step4Data?.family_native_state - 1]?.isoCode
@@ -112,6 +116,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
 
     const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
     const allCitiesOfCountry: ICity[] = City.getCitiesOfCountry(countryCode) || [];
+    const allCitiesOfCountryArr: ICity[] = City.getCitiesOfCountry('IN') || [];
 
 
     useEffect(() => {
@@ -137,12 +142,23 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
         );
     }
     function getState(state: number) {
+        console.log(stateOfCountry[state - 1]?.name);
         return (
             stateOfCountry[state - 1]?.name
         );
     }
     function getCity(city: number) {
         return allCitiesOfCountry[city - 1]?.name;
+    }
+
+
+    function getCityArr(city: number) {
+        return allCitiesOfCountryArr[city - 1]?.name;
+    }
+    function getStateArr(state: number) {
+        return (
+            stateOfCountryArr[state - 1]?.name
+        );
     }
 
     const isHeightMatch = () => {
@@ -162,6 +178,10 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
     const isValMatch = (val1: number[], val2: number) => {
         return val1.includes(val2);
     }
+
+
+    const reptNameHide = () => <>{Step1Data?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
+
 
     const matchingData = [
         {
@@ -187,7 +207,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
         {
             title: 'Preferred Indian State',
             Val1: partnerPreferenceJson?.state !== (undefined || null) && partnerPreferenceJson?.state.map((state, index) => {
-                return getState(state) ? getState(state)?.concat(index < partnerPreferenceJson.state.length - 1 ? ' , ' : ' ') : 'Does Not Matter'
+                return getStateArr(state) ? getStateArr(state)?.concat(index < partnerPreferenceJson.state.length - 1 ? ' , ' : ' ') : 'Does Not Matter'
             }),
             val2: Step4Data && Step4Data?.family_native_state !== (undefined || null) && getState(Step4Data?.family_native_state) || 'not filed',
             Status: partnerPreferenceJson && Step4Data && isValMatch(partnerPreferenceJson?.state, Step4Data?.family_native_state) || partnerPreferenceJson?.state[0] === 0 ? 'Match' : 'Not Match',
@@ -195,7 +215,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
         {
             title: 'Preferred Indian City',
             Val1: partnerPreferenceJson?.city !== (undefined || null) && partnerPreferenceJson?.city.map((city, index) => {
-                return getCity(city) ? getCity(city)?.concat(index < partnerPreferenceJson.city.length - 1 ? ' , ' : ' ') : 'Does Not Matter'
+                return getCityArr(city) ? getCityArr(city)?.concat(index < partnerPreferenceJson.city.length - 1 ? ' , ' : ' ') : 'Does Not Matter'
             }),
             val2: Step4Data && Step4Data?.family_native_city !== (undefined || null) && getCity(Step4Data?.family_native_city) || 'not filed',
             Status: partnerPreferenceJson && Step4Data && isValMatch(partnerPreferenceJson?.country, Step4Data?.family_native_country) || partnerPreferenceJson?.city[0] === 0 ? 'Match' : 'Not Match',
@@ -323,6 +343,11 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
         },
     ]
 
+    const ShowNameONConditions = Step1Data && Step1Data?.fullname.length > 16
+        ? (Step1Data?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+        : Step1Data?.fullname.toLocaleLowerCase();
+
+
     return (
         <div className={classes.MainWrapper}>
             <h3>Profile Comparision</h3>
@@ -332,10 +357,11 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                         <tr>
                             <th>Matching Field</th>
                             <th>Your Profile</th>
-                            <th className='text-Capitalize'>{
-                                Step1Data && Step1Data?.fullname.length > 16
-                                    ? (Step1Data?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
-                                    : Step1Data?.fullname.toLocaleLowerCase()} </th>
+                            <th className='text-Capitalize'>{privacySetting?.privacy_show_name === 'P'
+                                ? ShowNameONConditions
+                                : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+                                    ShowNameONConditions
+                                    : reptNameHide()} </th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -351,7 +377,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                     </tbody>
                 </Table>
             </div>
-        </div>
+        </div >
     )
 }
 

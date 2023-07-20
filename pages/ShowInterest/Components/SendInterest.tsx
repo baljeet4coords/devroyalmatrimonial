@@ -10,6 +10,7 @@ import { shortListReq } from "../../../ducks/userShortList/actions";
 import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/short-Block-Interest";
 import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
 import ProfileCard from "../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -21,7 +22,7 @@ interface ShowInterestProps {
 }
 
 
-const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId,handleUpdateds,BlockedUser,handleBlockedUser }) => {
+const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds, BlockedUser, handleBlockedUser }) => {
     const [sentInterestUser, setSentInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -49,6 +50,8 @@ const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId,handleUpd
                 :
                 // <div className={classes.card_container_main}>
                 <>
+                    <PageHeading heading=" you have sent interest to these profile !!" />
+
                     {sentInterestUser && sentInterestUser.map((user) => {
                         return (
                             <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} handleUpdateds={handleUpdateds} />

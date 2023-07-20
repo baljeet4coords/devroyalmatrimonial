@@ -4,6 +4,7 @@ import classes from "./Interest.module.scss";
 import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/short-Block-Interest";
 import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
 import ProfileCard from "../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -14,7 +15,7 @@ interface ShowInterestProps {
 }
 
 
-const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId,BlockedUser,handleBlockedUser }) => {
+const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId, BlockedUser, handleBlockedUser }) => {
     const [AcceptedInterestUser, setAcceptedInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -39,16 +40,20 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId,Block
 
     return (
         <React.Fragment key={key}>
-            {!AcceptedInterestUser || AcceptedInterestUser.length < 1  ?
+            {!AcceptedInterestUser || AcceptedInterestUser.length < 1 ?
                 <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="./Images/accept_request.svg" />
                 :
-                <div className={classes.card_container}>
-                    {AcceptedInterestUser && AcceptedInterestUser.map((user) => {
-                        return (
-                            <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest}  updateBlockListedUser={updateShortListedUser} />
-                        )
-                    })}
-                </div>
+                <>
+                    <PageHeading heading="you have Accept interest of these profile  !!" />
+
+                    <div className={classes.card_container}>
+                        {AcceptedInterestUser && AcceptedInterestUser.map((user) => {
+                            return (
+                                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
+                            )
+                        })}
+                    </div>
+                </>
             }
         </React.Fragment>
     );
