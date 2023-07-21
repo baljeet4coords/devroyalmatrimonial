@@ -1,18 +1,22 @@
 export interface IMatchMakingResponse {
-  dob: string;
   row: number;
+  dob: string;
   city: number;
-  country: number;
-  state: number;
   caste: number;
   photo: string;
+  state: number;
   userid: number;
+  country: number;
   fullname: string;
+  interest: {
+    Send: null | string;
+    Receive: null | string;
+  };
   religion: number;
-  height_cm: number;
-  shortlist: null | number;
-  occupation: number;
   education: number;
+  height_cm: number;
+  shortlist: number;
+  occupation: number;
   user_RM_ID: string;
   privacy_name: null | string;
   annual_income: number;

@@ -1,47 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
-import ProfileCard from "../../components/ProfileCard";
 import classes from "./ProfileMatch.module.scss";
 import { CustomButton, Footer } from "../../components";
-import TestProfileCard from "../../components/ProfileCard/ProfileCard";
 import { useDispatch } from "react-redux";
 import { matchMakingReq } from "../../ducks/matchMaking/actions";
 import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import { getUserId } from "../../ducks/auth/selectors";
+import axios from "axios";
+import { blockListReq } from "../../ducks/userBlocklist/actions";
+import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
+import { ICardResponse } from "../../types/cardResponse/cardResponse";
+import PageHeading from "../../components/PageHeading";
 
-const limit = 5;
-const userId = 397;
-
-// gir id 413
 
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
-  const isReduxEmpty = matchMakingResponse?.jsonResponse ? matchMakingResponse.jsonResponse.length < 1 : true;
+  const getUserBlockList = useSelector(selectblockListSuccess);
+
+
   const dispatch = useDispatch();
+  const isReduxEmpty = matchMakingResponse?.jsonResponse ? matchMakingResponse.jsonResponse.length < 1 : true;
 
 
   const [userMatchData, setMatchUserData] = useState(matchMakingResponse)
-  const [allUserData, setAllUserData] = useState(userMatchData?.jsonResponse)
+  const [allUserData, setAllUserData] = useState<ICardResponse[]>(userMatchData?.jsonResponse ? userMatchData.jsonResponse : [])
   const [maxUserId, setMaxUserId] = useState(-1);
   const [userAlreadyGetId, setUserAlreadyGetId] = useState<number[]>([]);
   const [viceVersa, setViceVersa] = useState<number>(1);
-  const [Shortlisted, setShortlisted] = useState<number[]>([]);
+  // const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
-  const [block, setBlock] = useState<number[]>([]);
+  const [block, setBlock] = useState<number[]>(getUserBlockList && getUserBlockList.blocklistedID.jsonResponse != null ? getUserBlockList?.blocklistedID?.jsonResponse : []);
+  const limit = 5;
+  const userId = useSelector(getUserId);
+  // const userId = 473;
+
+
+  const handleBlockList_ID = (val: number) => {
+    setBlock([...block, val])
+  }
+
 
   useEffect(() => {
     if (userMatchData && userMatchData.jsonResponse) {
       userMatchData.jsonResponse.map((user) => {
-        if (!userAlreadyGetId.includes(user.userid)) {
-          setUserAlreadyGetId((prevUserAlreadyGetId) => [
-            ...prevUserAlreadyGetId,
-            user.userid,
-          ]);
+        if (userAlreadyGetId !== null && !userAlreadyGetId.includes(user.userid)) {
+          setUserAlreadyGetId((prevUserAlreadyGetId) => {
+            if (prevUserAlreadyGetId !== null) {
+              return [...prevUserAlreadyGetId, user.userid];
+            } else {
+              return [user.userid];
+            }
+          });
         }
 
+
         // to set maxuserid 
-        let maxid = Math.max(...userAlreadyGetId);
+        let maxid = userAlreadyGetId != null ? Math.min(...userAlreadyGetId) : -1;
         setMaxUserId(maxid);
       });
 
@@ -58,29 +75,49 @@ const ProfileMatch: React.FC = () => {
 
   }, [userMatchData, userAlreadyGetId, userMatchData?.output]);
 
+
+
   useEffect(() => {
+    dispatch(blockListReq({
+      userId: userId
+    }))
+  }, [])
+
+
+
+  useEffect(() => {
+
     isReduxEmpty && dispatch(matchMakingReq({
-      userId: userId,
+      userId: userId ? userId : -1,
       maxUserId: -1,
       limit: limit,
-      viceVersa: viceVersa,
+      viceVersa: 0,
       excludedUsers: JSON.stringify(userAlreadyGetId),
     }));
 
-  }, [dispatch]);
+
+  }, [dispatch, block]);
 
 
   useEffect(() => {
-    matchMakingResponse && setMatchUserData(matchMakingResponse)
-    setAllUserData(matchMakingResponse?.jsonResponse)
-  }, [matchMakingResponse])
+    if (matchMakingResponse && matchMakingResponse.jsonResponse != null) {
+      setMatchUserData(matchMakingResponse)
+      setAllUserData(matchMakingResponse?.jsonResponse)
+    }
+
+    if (getUserBlockList?.blocklistedID?.jsonResponse != null) {
+      setBlock(getUserBlockList?.blocklistedID?.jsonResponse);
+      setUserAlreadyGetId(block)
+    }
+
+  }, [matchMakingResponse, getUserBlockList])
 
 
 
   const loadMoreHandler = () => {
 
     dispatch(matchMakingReq({
-      userId: userId,
+      userId: userId || 0,
       maxUserId: maxUserId,
       limit: limit,
       viceVersa: viceVersa,
@@ -90,17 +127,36 @@ const ProfileMatch: React.FC = () => {
 
   }
 
+
+
+  // to remove item from matchmaking when click on block 
+
+  const handleUpDateBlockuser = (id: number) => {
+    console.log(allUserData,'beforre');
+    
+    const updatedUserWithoutBlock = allUserData?.filter((user) => {
+      return user.userid != id;
+    })
+    
+    setAllUserData(updatedUserWithoutBlock);
+    console.log(allUserData,'after');
+
+  }
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
           <LoginHeader />
         </Container>
+        <PageHeading heading="Profile that match your desire partner Details show here !!" />
         <div className={classes.card_container}>
-          {allUserData && allUserData.map((user) => {
-            return (
-              <TestProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
-            )
+          {allUserData != null && allUserData?.map((user) => {
+            if (block != null && !block.includes(user.userid)) {
+              return (
+                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
+              )
+            }
           })}
         </div>
         {userMatchData && userMatchData?.output != -4000 && <div className="m-5 d-flex" >

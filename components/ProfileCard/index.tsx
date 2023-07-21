@@ -8,7 +8,7 @@ import { BsChat, BsStarFill, BsFlag } from "react-icons/bs";
 import { TbHistory } from "react-icons/tb";
 import { ImShare, ImBlocked } from "react-icons/im";
 
-const ProfileCard: React.FC = () => {
+const ProfileCardText: React.FC = () => {
   const obj = [
     {
       details: {
@@ -108,4 +108,4 @@ const ProfileCard: React.FC = () => {
   );
 };
 
-export default ProfileCard;
+export default ProfileCardText;

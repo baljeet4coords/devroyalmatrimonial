@@ -1,4 +1,4 @@
-import { IMatchMakingResponse } from "../../types/matchmaking/matchmaking";
+import { ICardResponse } from "../../types/cardResponse/cardResponse";
 import { MatchMakingActions } from "./actions";
 import {
   MATCHMAKING,
@@ -11,7 +11,7 @@ interface matchMakingState {
   response: {
     output: number;
     message: string;
-    jsonResponse: IMatchMakingResponse[] | null;
+    jsonResponse: ICardResponse[] | null;
   } | null;
   error: string | null;
 }

@@ -2,14 +2,13 @@
 
 .CardMain {
   background-color: #fff;
-  margin: auto;
-  margin-bottom: 3rem;
-  border-radius: 20px;
+  margin: 3rem auto;
+  border-radius: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   gap: 1px;
-  margin: 3rem auto;
   max-width: 1000px;
+  width: 75%;
 
   .profileSection {
     flex-basis: 25%;
@@ -17,8 +16,6 @@
     display: flex;
     gap: 25px;
     flex-direction: column;
-    // box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 0px,
-    //   rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     border-radius: inherit;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -43,6 +40,10 @@
         margin: 0% auto;
         margin-bottom: 0.7rem;
         text-transform: capitalize !important;
+
+        span {
+          font-weight: 100;
+        }
       }
 
       .name_Heading::after {
@@ -76,6 +77,10 @@
           }
         }
       }
+    }
+
+    .hideInfo {
+      filter: blur(2px);
     }
   }
   .profileSection:hover {
@@ -246,7 +251,7 @@
 
 @media only screen and (max-width: 1020px) and (min-width: 768px) {
   .CardMain {
-    margin: 3rem 3rem;
+    // margin: 3rem 3rem;
 
     .profileSection {
       .profiler_Name {
@@ -398,7 +403,7 @@
 @media only screen and (max-width: 600px) and (min-width: 350px) {
   .CardMain {
     flex-direction: column;
-    margin: 3rem 1rem;
+    margin: 1rem 1rem;
 
     .profileSection {
       flex-direction: row;

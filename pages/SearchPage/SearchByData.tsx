@@ -31,16 +31,18 @@ import { useSelector } from "react-redux";
 import { getUserId } from "../../ducks/auth/selectors";
 import axios from "axios";
 import {
-  PartnerPreferrence,
+  PartnerPreferrence, SearchByData,
 } from "../../ducks/partnerPreferrence/types";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
-import router from "next/router";
+import router, { useRouter } from "next/router";
+import { searchByDataReq } from "../../ducks/searchByData/actions";
+import { useDispatch } from "react-redux";
 
 
 
 const SearchByData: React.FC = () => {
-  // const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  const router = useRouter();
   const userId = useSelector(getUserId);
 
 
@@ -50,59 +52,59 @@ const SearchByData: React.FC = () => {
   const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>('');
   const [selectedHeightTo, setSelectedHeightTo] = useState<string>('');
 
-  const [country, setCountry] = useState<number[]>([]);
-  const [state, setState] = useState<number[]>([]);
-  const [city, setCity] = useState<number[]>([]);
+  const [country, setCountry] = useState<number[]>([101]);
+  const [state, setState] = useState<number[]>([4]);
+  const [city, setCity] = useState<number[]>([13]);
   const [education, setEducation] = useState<string[]>(
-    []
+    ['0']
   );
   const [occupation, setOccupation] = useState<string[]>(
-    []
+    ['2']
   );
   const [annualIncome, setAnnualIncome] = useState<{
     id?: string;
     val: string;
-  }>({ id: "", val: "" });
+  }>({ id: '0', val: "" });
   const [maritalStatus, setMaritalStatus] = useState<string[]>(
-    []
+    ['0']
   );
-  const [religion, setReligion] = useState<string[]>([]);
+  const [religion, setReligion] = useState<string[]>(['0']);
   const [motherTongue, setMotherTongue] = useState<string[]>(
-    []
+    ['0']
   );
   const [residentialStatus, setResidentialStatus] = useState<string[]>(
-    []
+    ['0']
   );
   const [manglik, setManglik] = useState<string[]>([]);
   const [diet, setDiet] = useState<{ id?: string; val: string }>({
-    id: "",
+    id: '0',
     val: "",
   });
   const [smoke, setSmoke] = useState<{ id?: string; val: string }>({
-    id: "",
+    id: '0',
     val: "",
   });
   const [drink, setDrink] = useState<{ id?: string; val: string }>({
-    id: "",
+    id: '0',
     val: "",
   });
   const [readyToSettleAbroad, setReadyToSettleAbroad] = useState<{
     id?: string;
     val: string;
   }>({
-    id: "",
+    id: '0',
     val: "",
   });
   const [challenged, setChallenged] = useState<string[]>(
     []
   );
   const [childrenStatus, setChildrenStatus] = useState<string[]>(
-    []
+    ['0']
   );
 
-  const [caste, setCaste] = useState<number[]>([]);
-  const [selectedIsHiv, setSelectedIsHiv] = useState({
-    id: '',
+  const [caste, setCaste] = useState<number[]>([0]);
+  const [selectedIsHiv, setSelectedIsHiv] = useState<{ id?: string; val: string }>({
+    id: '1',
     val: "",
   });
   const [hivTouched, setHivTouched] = useState<boolean>(false);
@@ -112,43 +114,50 @@ const SearchByData: React.FC = () => {
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
 
-    const partnerPrefPostReq: PartnerPreferrence = {
-      userId: userId,
+    const partnerPrefPostReq: SearchByData = {
+      userId: 400,
       ageGreaterThan: +selectedAgeFrom,
       ageLessThan: +selectedAgeTo,
-      heightGreaterThan: String(Math.trunc(+selectedHeightFrom)),
-      heightLessThan: String(Math.trunc(+selectedHeightTo)),
-      country: JSON.stringify(country),
-      state: JSON.stringify(state),
-      city: JSON.stringify(city),
-      education: JSON.stringify(education && education.map((str) => +str)),
-      occupation: JSON.stringify(occupation && occupation.map((str) => +str)),
-      annualIncomeGreaterThan: annualIncome.id && +annualIncome.id,
-      maritalStatus: JSON.stringify(
+      heightGreaterThan: (Math.trunc(+selectedHeightFrom)),
+      heightLessThan: (Math.trunc(+selectedHeightTo)),
+      country: (country && country.map((str) => +str)),
+      state: (state && state.map((str) => +str)),
+      city: (city && city.map((str) => +str)),
+      education: (education && education.map((str) => +str)),
+      occupation: (occupation && occupation.map((str) => +str)),
+      annualIncome: annualIncome.id && +annualIncome.id,
+      maritalStatus: (
         maritalStatus && maritalStatus.map((str) => +str)
       ),
-      religion: JSON.stringify(religion && religion.map((str) => +str)),
-      motherTongue: JSON.stringify(
+      religion: (religion && religion.map((str) => +str)),
+      motherTongue: (
         motherTongue && motherTongue.map((str) => +str)
       ),
-      cast: JSON.stringify(caste),
-      residentialStatus: JSON.stringify(
+      caste: (caste && caste.map((str) => +str)),
+      residentialStatus: (
         residentialStatus && residentialStatus.map((str) => +str)
       ),
-      manglik: JSON.stringify(manglik && manglik.map((str) => +str)),
-      diet: diet.id && +diet.id,
-      smoking: smoke.id && +smoke.id,
-      drinking: drink.id && +drink.id,
-      readyToSettleAbroad: readyToSettleAbroad.id && +readyToSettleAbroad.id,
-      challenged: JSON.stringify(challenged && challenged.map((str) => +str)),
-      childrenStatus: JSON.stringify(
+      manglik: (manglik && manglik.map((str) => +str)),
+      diet: diet.id ? +diet.id : 0,
+      smoking: smoke.id ? +smoke.id : 0,
+      drinking: drink.id ? +drink.id : 0,
+      readyToSettleAbroad: readyToSettleAbroad.id ? +readyToSettleAbroad.id : 0,
+      challenged: (challenged && challenged.map((str) => +str)),
+      childrenStatus: (
         childrenStatus && childrenStatus.map((str) => +str)
       ),
-      horoscopeMatch: "0",
-      hiv : Number(selectedIsHiv.id),
+      hiv: 2,
+      mandatoryFields: [],
+      maxUserId: -1,
+      limit: 40,
+      viceVersaFlag: 0,
+      excludedUsers: [],
     };
 
     console.log(partnerPrefPostReq, 'data');
+
+    dispatch(searchByDataReq(partnerPrefPostReq));
+    // router.push(`SearchPage/search-result`)
 
   };
 

@@ -1,5 +1,9 @@
 import { PartnerPreferrence, PartnerPreferrenceResponse } from "./types";
-import { PARTNER_PREF, PARTNER_PREF_SUCCESS, PARTNER_PREF_FAILURE } from "./constants";
+import {
+  PARTNER_PREF,
+  PARTNER_PREF_SUCCESS,
+  PARTNER_PREF_FAILURE,
+} from "./constants";
 
 interface PartnerPrefAction {
   type: typeof PARTNER_PREF;
@@ -20,7 +24,9 @@ interface PartnerPrefActionFailureAction {
   error: string | any;
 }
 
-export const partnerPrefReq = (payload: PartnerPrefAction["payload"]): PartnerPrefAction => ({
+export const partnerPrefReq = (
+  payload: PartnerPrefAction["payload"]
+): PartnerPrefAction => ({
   type: PARTNER_PREF,
   payload,
 });

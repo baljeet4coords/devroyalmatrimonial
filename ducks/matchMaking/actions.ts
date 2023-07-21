@@ -1,9 +1,10 @@
+import { IMatchMakingResponse } from "../../types/matchmaking/matchmaking";
 import {
   MATCHMAKING,
   MATCHMAKING_SUCCESS,
   MATCHMAKING_FAILURE,
 } from "./constants";
-import { IMatchMakingResponse } from "../../types/matchmaking/matchmaking";
+
 
 interface MatchMakingAction {
   type: typeof MATCHMAKING;

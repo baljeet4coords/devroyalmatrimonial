@@ -31,18 +31,21 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     step5Response?.pobCountry != (undefined && null)
-      ? countries[step5Response?.pobCountry].isoCode
+      ? countries[step5Response?.pobCountry-1].isoCode
       : "IN"
   );
 
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step5Response?.pobState != (undefined && null)
-      ? stateOfCountry[step5Response?.pobState]?.isoCode
+      ? stateOfCountry[step5Response?.pobState-1]?.isoCode
       : "AS"
   );
 
   const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+  const allCitiesOfCountry: ICity[] =City.getCitiesOfCountry(countryCode) || [];
+
+
 
   useEffect(() => {
     if (countries[0].name === "Does Not Matter") {
@@ -54,11 +57,11 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
   useEffect(() => {
     step5Response?.pobCountry !== (undefined || null) &&
       countries[step5Response?.pobCountry] !== undefined &&
-      setCountryCode(countries[step5Response?.pobCountry]?.isoCode);
+      setCountryCode(countries[step5Response?.pobCountry-1]?.isoCode);
     step5Response?.pobState != undefined &&
       stateOfCountry[step5Response?.pobState] !== undefined &&
       step5Response?.pobState >= 0 &&
-      setStateCode(stateOfCountry[step5Response?.pobState]?.isoCode);
+      setStateCode(stateOfCountry[step5Response?.pobState-1]?.isoCode);
   }, [
     countryCode,
     stateCode,
@@ -71,16 +74,16 @@ export const RightSectionHoroScopeMatch: FC<MyComponentProps> = ({
 
   function getCountry() {
     return (
-      step5Response?.pobCountry !== (undefined || null) && countries[step5Response?.pobCountry]?.name
+      step5Response?.pobCountry !== (undefined || null) && countries[step5Response?.pobCountry-1]?.name
     );
   }
   function getState() {
     return (
-      step5Response?.pobState !== (undefined || null) && stateOfCountry[step5Response?.pobState]?.name
+      step5Response?.pobState !== (undefined || null) && stateOfCountry[step5Response?.pobState-1]?.name
     );
   }
   function getCity() {
-    return step5Response?.pobCity !== (undefined || null) && cityOfState[step5Response?.pobCity]?.name;
+    return step5Response?.pobCity !== (undefined || null) && allCitiesOfCountry[step5Response?.pobCity-1]?.name;
   }
 
   const months = [

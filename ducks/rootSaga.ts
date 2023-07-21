@@ -11,6 +11,10 @@ import { myprofileSaga } from "./myProfile";
 import { matchMakingSaga } from "./matchMaking";
 import { gallerySaga, gallerySagaPost } from "./Gallery";
 import { searchByDataSaga } from "./searchByData";
+import { shortlistSaga } from "./userShortList";
+import { blocklistSaga } from "./userBlocklist";
+import { showInterestSaga } from "./showInterest";
+import { partnerDetailsSaga } from "./PartnerDetails";
 
 function* rootSaga() {
   yield all([
@@ -29,6 +33,10 @@ function* rootSaga() {
     searchByDataSaga(),
     gallerySaga(),
     gallerySagaPost(),
+    shortlistSaga(),
+    blocklistSaga(),
+    showInterestSaga(),
+    partnerDetailsSaga(),
   ]);
 }
 
