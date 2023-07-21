@@ -67,6 +67,7 @@ export default function partnerDetailsReducer(
     case PARTNERDETAILS_SUCCESS:
       return {
         ...state,
+        //@ts-ignore
         response: action.response,
         error: null,
         isLoading: false,

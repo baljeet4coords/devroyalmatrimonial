@@ -68,9 +68,6 @@ const MyProfile: React.FC = () => {
   const step4Response = myProfileObject?.step4.jsonResponse;
   const step5Response = myProfileObject?.step5.jsonResponse;
   const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
-  // console.log(profileCompliteScore,"profileCompliteScore");
-
-
 
   useEffect(() => {
     dispatch(myProfileReq({ actionType: "v", userId: userId }));
@@ -201,6 +198,7 @@ const MyProfile: React.FC = () => {
         ) : (
           <>
             <MyProfilePageCard
+            //@ts-ignore
               step1Response={step1Response}
               onPreviewAlbum={onPreviewAlbum}
               AuthSuccess={AuthSuccess?.jsonResponse}

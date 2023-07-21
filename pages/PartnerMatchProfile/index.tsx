@@ -37,16 +37,17 @@ const PartnerMatchProfile: React.FC = () => {
     const [step3Response, setstep3Response] = useState<IPartnerDetailsP3Response | null>(partnerDetailsResponse?.jsonResponse.step3 != undefined ? partnerDetailsResponse?.jsonResponse.step3 : null)
     const [step4Response, setstep4Response] = useState<IPartnerDetailsP4Response | null>(partnerDetailsResponse?.jsonResponse.step4 != undefined ? partnerDetailsResponse?.jsonResponse.step4 : null)
     const [step5Response, setstep5Response] = useState<IPartnerDetailsP5Response | null>(partnerDetailsResponse?.jsonResponse.step5 != undefined ? partnerDetailsResponse?.jsonResponse.step5 : null)
+    //@ts-ignore
     const [interest, setInterest] = useState<IPartnerDetailsInterestResponse | null>(partnerDetailsResponse?.jsonResponse.interest != undefined ? partnerDetailsResponse?.jsonResponse.interest : null)
     const [privacyResponse, setprivacyResponse] = useState<IPartnerDetailsPrivacyResponse | null>(partnerDetailsResponse?.jsonResponse.Privacy != undefined ? partnerDetailsResponse?.jsonResponse.Privacy : null)
 
     useEffect(() => {
-
         partnerDetailsResponse?.jsonResponse.step1 && setstep1Response(partnerDetailsResponse?.jsonResponse.step1)
         partnerDetailsResponse?.jsonResponse.step2 && setstep2Response(partnerDetailsResponse?.jsonResponse.step2)
         partnerDetailsResponse?.jsonResponse.step3 && setstep3Response(partnerDetailsResponse?.jsonResponse.step3)
         partnerDetailsResponse?.jsonResponse.step4 && setstep4Response(partnerDetailsResponse?.jsonResponse.step4)
         partnerDetailsResponse?.jsonResponse.step5 && setstep5Response(partnerDetailsResponse?.jsonResponse.step5)
+        //@ts-ignore
         partnerDetailsResponse?.jsonResponse.interest && setInterest(partnerDetailsResponse?.jsonResponse.interest)
         partnerDetailsResponse?.jsonResponse.Privacy && setprivacyResponse(partnerDetailsResponse?.jsonResponse.Privacy)
         partnerDetailsResponse?.jsonResponse.Privacy && console.log(partnerDetailsResponse?.jsonResponse.Privacy, partnerDetailsResponse?.jsonResponse.Privacy);

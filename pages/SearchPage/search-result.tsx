@@ -100,6 +100,7 @@ const SearchResult: React.FC = () => {
         <div className={classes.card_container}>
           {allUserData && allUserData.map((user) => {
             return (
+              //@ts-ignore
               <TestProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} ShortlistedUser={Shortlisted} SendInterestUser={sendInterest} BlockedUser={block} setShortlisted={setShortlisted} setSendInterest={setSendInterest} setBlock={setBlock} />
             )
           })}
