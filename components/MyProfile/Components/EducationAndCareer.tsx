@@ -46,7 +46,7 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       ? stateOfCountry[step2Response?.state - 1]?.isoCode
       : "AS"
   );
-  const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+
   const allCitiesOfCountry: ICity[] = City.getCitiesOfCountry(countryCode) || [];
 
   useEffect(() => {
@@ -57,7 +57,6 @@ const EducationAndCareer: FC<MyComponentProps> = ({
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
       setStateCode(stateOfCountry[step2Response?.state - 1].isoCode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
@@ -69,7 +68,6 @@ const EducationAndCareer: FC<MyComponentProps> = ({
   function getCity() {
     return step2Response?.city !== (undefined || null) && allCitiesOfCountry[step2Response?.city - 1]?.name;
   }
-
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
       if (val === value) {
@@ -152,29 +150,21 @@ const EducationAndCareer: FC<MyComponentProps> = ({
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
             return (
-              <>
-                <div className={classes.UserdetailsSec} key={item.name}>
-                  <p className={classes.input_Name}>{item.name}</p>
-                  <p
-                    className={
-                      item.value === "NA"
-                        ? classes.input_Value_NotFilled
-                        : classes.input_Value
-                    }
-                  >
-                    {item.value === "NA" ? "Not Field in" : item.value}{" "}
-                  </p>
-                </div>
-              </>
+              <div className={classes.UserdetailsSec} key={item.name}>
+                <p className={classes.input_Name}>{item.name}</p>
+                <p
+                  className={
+                    item.value === "NA"
+                      ? classes.input_Value_NotFilled
+                      : classes.input_Value
+                  }
+                >
+                  {item.value === "NA" ? "Not Field in" : item.value}{" "}
+                </p>
+              </div>
             );
           })}
         </div>
-        {/* {BasicDetails.pin && (
-          <div className={classes.pin}>
-            <BsPinAngle />
-            {BasicDetails.pinValue}
-          </div>
-        )} */}
       </div>
     </>
   );

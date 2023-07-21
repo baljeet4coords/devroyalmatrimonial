@@ -12,14 +12,15 @@ import { useSelector } from "react-redux";
 import { ICardViewResponseInterest } from "../../types/short-Block-Interest";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
-import SendInterest from "./Components/SendInterest";
+import SendInterest from "./Components/InterestSent/SendInterest";
 import { showInterestReq } from "../../ducks/showInterest/actions";
 import { selectshowInterestSuccess } from "../../ducks/showInterest/selectors";
-import CancleInterest from "./Components/CancleInterest";
-import ReciveInterest from "./Components/ReciveInterest";
-import AcceptedInterest from "./Components/AcceptedInterest";
-import DeclineInterest from "./Components/DeclineInterest";
+import ReciveInterest from "./Components/InterestSent/ReciveInterest";
+import AcceptedInterest from "./Components/InterestSent/AcceptedInterest";
+import DeclineInterest from "./Components/InterestSent/DeclineInterest";
 import { selectshortListSuccess } from "../../ducks/userShortList/selectors";
+import InterestSentByYou from "./Components/InterestSentByYou";
+import InterestReciveToYou from "./Components/InterestRecivedToYou";
 
 const ShowInterest: React.FC = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,8 @@ const ShowInterest: React.FC = () => {
 
 
   const handleInterest = (id: number) => {
+    console.log(id);
+    
     dispatch(showInterestReq({
       userId: userId ? userId : -1,
     }));
@@ -93,51 +96,25 @@ const ShowInterest: React.FC = () => {
 
   const Components = [
     {
-      Component: <SendInterest key={1} data={sentInterest} userId={userId} handleUpdateds={handleInterest} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
+      Component: <InterestSentByYou data={sentInterest} userId={userId} handleUpdateds={handleInterest} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
       key: 1,
     },
     {
-      Component: <CancleInterest key={2} data={sentInterest} userId={userId} handleUpdateds={handleInterest} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
+      Component: <InterestReciveToYou data={reciveInterest} userId={userId} handleUpdateds={handleInterest} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
       key: 2,
-    },
-    {
-      Component: <ReciveInterest key={3} data={reciveInterest} userId={userId} handleUpdateds={handleInterest} />,
-      key: 3,
-    },
-    {
-      Component: <AcceptedInterest key={4} data={reciveInterest} userId={userId} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
-      key: 4,
-    },
-    {
-      Component: <DeclineInterest key={5} data={reciveInterest} userId={userId} BlockedUser={Blocklisted_Id} handleBlockedUser={handleBlockedUser} />,
-      key: 5,
     }
   ]
 
   const buttons = [
     {
-      title: 'Interest Sent',
+      title: 'Interest Sent by you',
       key: 1
     },
     {
-      title: ' Interest Recalled',
+      title: ' Interest Recived to you',
       key: 2
-    },
-    {
-      title: '  Interest Received',
-      key: 3
-    },
-    {
-      title: ' Interest Accepted',
-      key: 4
-    },
-    {
-      title: ' Interest Decline',
-      key: 5
     }
   ]
-
-
 
 
   return (

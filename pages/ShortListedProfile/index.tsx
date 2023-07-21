@@ -70,24 +70,35 @@ const ShortlistedProfile: React.FC = () => {
     }))
   }
 
+  const shortlistedProfilesComponent = () => {
+    return <ShortVisitorProfile
+      title={"0 Shortlisted Profiles"}
+      subtitle={"People you shortlist will appear here"}
+    />
+  };
+
+
+
+
   return (
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
           <LoginHeader />
         </Container>
+
         {
-          shortListedUser === null && <ShortVisitorProfile
-            title={"0 Shortlisted Profiles"}
-            subtitle={"People you shortlist will appear here"}
-          />
+          shortListedUser === null &&
+          shortlistedProfilesComponent()
         }
-        {shortListedUser && shortListedUser.every(value => blockList.includes(value.userid)) ?
-          <ShortVisitorProfile
+
+        {shortListedUser && shortListedUser?.length < 1 && shortListedUser?.every(value => blockList.includes(value.userid)) ?
+          < ShortVisitorProfile
             title={"0 Shortlisted Profiles"}
             subtitle={"People you shortlist will appear here"}
           />
           :
+          shortListedUser != null &&
           <>
             <PageHeading heading="Profile that you have shorlist show here !!" />
             <div className={classes.card_container}>

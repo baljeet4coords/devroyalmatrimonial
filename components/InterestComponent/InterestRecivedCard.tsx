@@ -144,15 +144,15 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, hand
             <div className={classes.CardMain} key={key}  >
 
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData?.userid + userData?.user_RM_ID}`) }}>
-                    <Image className={`${classes.profile_Photo} `} src={userData?.privacy_photo === 'I' && userData?.interest?.Send != 'A' ? blurredPhotoUrl : `https://beta.royalmatrimonial.com/api/${userData?.photo}`} alt="Profile Photo" ref={imageRef} />
+                    <Image className={`${classes.profile_Photo} `}
+                        src={`${process.env.NEXT_PUBLIC_URL}/${userData?.photo}`
+                        } alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
                         <h5 className={`${classes.name_Heading} `}>
-                            {userData?.privacy_name === 'I' && userData?.interest?.Send != 'A'
-                                ? reptNameHide()
-                                : userData?.fullname.length > 16
-                                    ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
-                                    : userData?.fullname.toLocaleLowerCase()
+                            {userData?.fullname.length > 16
+                                ? (userData?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+                                : userData?.fullname.toLocaleLowerCase()
                             }
                         </h5>
                         <div>
