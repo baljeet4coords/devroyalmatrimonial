@@ -135,11 +135,14 @@ const BasicDetails: FC<MyComponentProps> = ({
         <div className={classes.Username}>
           <p>
             Full name{" "}
-            <span> - {privacySetting?.privacy_show_name === 'P'
-                    ? ShowNameONConditions
-                    : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
-                      ShowNameONConditions
-                      : reptNameHide()}</span>{" "}
+            <span> - {privacySetting 
+                      ? privacySetting?.privacy_show_name === 'P'
+                        ? ShowNameONConditions
+                        : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' 
+                        ? ShowNameONConditions
+                        : reptNameHide()
+                      :ShowNameONConditions
+                    }</span>{" "}
           </p>
         </div>
         <div className={classes.Userdetails}>

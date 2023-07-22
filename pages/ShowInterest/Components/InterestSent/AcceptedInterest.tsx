@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
-import classes from "./Interest.module.scss";
-import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/short-Block-Interest";
-import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
-import ProfileCard from "../../../components/ProfileCard/ProfileCard";
-import PageHeading from "../../../components/PageHeading";
+import classes from "../Interest.module.scss";
+import { ICardViewResponse, ICardViewResponseInterest } from "../../../../types/short-Block-Interest";
+import ShortVisitorProfile from "../../../../components/ShortVisitorProfile";
+import ProfileCard from "../../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -23,7 +23,11 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId, Bloc
 
 
     useEffect(() => {
-        const AcceptedData = data && data?.filter((user) => { if (user.status === 'S' && user.usercard.interest.Send === 'A') return user })
+        const AcceptedData = data && data?.filter((user) => {
+            if (user?.status === 'S'
+                && user?.usercard?.interest?.Send === 'A')
+                return user
+        })
         setAcceptedInterestUser(AcceptedData);
     }, [data])
 
@@ -41,7 +45,9 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId, Bloc
     return (
         <React.Fragment key={key}>
             {!AcceptedInterestUser || AcceptedInterestUser.length < 1 ?
-                <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="./Images/accept_request.svg" />
+                <div className={classes.componentMain}>
+                    <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="./Images/accept_request.svg" />
+                </div>
                 :
                 <>
                     <PageHeading heading="you have Accept interest of these profile  !!" />

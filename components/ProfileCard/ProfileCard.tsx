@@ -225,7 +225,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const ullDay = ull && ull[2].split(" ")[0];
 
 
-    const reptNameHide = () => <>{userData?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
+    const reptNameHide = () => <>{userData?.fullname.slice(0, 3).toLocaleLowerCase()}<span>{'*'.repeat(8)}</span></>;
 
 
     const handleInterestPopupHide = () => {
@@ -258,12 +258,13 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             <div className={classes.CardMain} key={key}  >
 
                 < div className={classes.profileSection} onClick={(e) => { e?.preventDefault(), router.push(`/PartnerMatchProfile?uid=${userData?.userid + userData?.user_RM_ID}`) }}>
-                    <Image className={`${classes.profile_Photo} `} src={userData?.privacy_photo === 'P'
-                        ? `https://beta.royalmatrimonial.com/api/${userData?.photo}`
-                        : userData?.interest?.Send === 'A' || userData?.interest?.Receive === 'A' ?
-                            `https://beta.royalmatrimonial.com/api/${userData?.photo}`
-                            : blurredPhotoUrl
-                    } alt="Profile Photo" ref={imageRef} />
+                    <Image className={`${classes.profile_Photo} `}
+                        src={userData?.privacy_photo === 'P'
+                            ? `${process.env.NEXT_PUBLIC_URL}/${userData?.photo}`
+                            : userData?.interest?.Send === 'A' || userData?.interest?.Receive === 'A' ?
+                                `${process.env.NEXT_PUBLIC_URL}/${userData?.photo}`
+                                : blurredPhotoUrl
+                        } alt="Profile Photo" ref={imageRef} />
                     <div className={classes.profiler_Name}>
 
                         <h5 className={`${classes.name_Heading} `}>
@@ -357,8 +358,14 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
                                 <Button disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleInterestPopupShow(userData?.userid)} className={userData?.interest.Send === 'S' ? classes.activebtn : ''}>
-                                    <BiHeartCircle className={userData?.interest.Send === 'S' ? classes.activesvg : ''} />
-                                    {userData?.interest.Send === 'S' ? 'Intrest Sent' : 'Send Intrest'}
+                                    <BiHeartCircle className={userData?.interest?.Send === 'S' ? classes.activesvg : ''} />
+                                    {userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S'
+                                        ? userData?.interest?.Receive === 'A' || userData?.interest.Send === 'A'
+                                            ? 'Interest Accepted'
+                                            : userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
+                                                ? 'Interest Declined'
+                                                : 'Intrest Sent'
+                                        : 'Send Intrest'}
                                 </Button>
                                 <Button disabled={BlockedUser?.includes(userData?.userid)} className={userData?.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
                                     <MdStars className={userData?.shortlist && shortlistUser ? classes.activesvg : ''} />

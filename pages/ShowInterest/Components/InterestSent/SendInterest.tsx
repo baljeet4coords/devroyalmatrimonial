@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
-// import ProfileCard from "../../components/ProfileCard";
-import classes from "./Interest.module.scss";
+import classes from "../Interest.module.scss";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getUserId } from "../../../ducks/auth/selectors";
-import { selectshortListSuccess } from "../../../ducks/userShortList/selectors";
-import { shortListReq } from "../../../ducks/userShortList/actions";
-import { ICardViewResponse, ICardViewResponseInterest } from "../../../types/short-Block-Interest";
-import ShortVisitorProfile from "../../../components/ShortVisitorProfile";
-import ProfileCard from "../../../components/ProfileCard/ProfileCard";
-import PageHeading from "../../../components/PageHeading";
+import { getUserId } from "../../../../ducks/auth/selectors";
+import { selectshortListSuccess } from "../../../../ducks/userShortList/selectors";
+import { shortListReq } from "../../../../ducks/userShortList/actions";
+import { ICardViewResponse, ICardViewResponseInterest } from "../../../../types/short-Block-Interest";
+import ShortVisitorProfile from "../../../../components/ShortVisitorProfile";
+import ProfileCard from "../../../../components/ProfileCard/ProfileCard";
+import PageHeading from "../../../../components/PageHeading";
 
 interface ShowInterestProps {
     key: number;
@@ -28,7 +27,13 @@ const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUp
     const [sendInterest, setSendInterest] = useState<number[]>([]);
 
     useEffect(() => {
-        const cancleData = data && data?.filter((user) => { if (user.status === 'S') return user })
+        const cancleData = data && data?.filter((user) => {
+            if (user.status === 'S'
+                && user?.usercard?.interest?.Send === "S"
+                && user?.usercard?.interest?.Receive != "A"
+                && user?.usercard?.interest?.Receive != "D")
+                return user
+        })
         setSentInterestUser(cancleData);
     }, [data])
 
@@ -46,7 +51,10 @@ const SendInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUp
     return (
         <React.Fragment key={key}>
             {!sentInterestUser || sentInterestUser.length < 1 ?
-                <ShortVisitorProfile title="0 Sent Interest " subtitle="People you Send Interest will appear here" />
+                <div className={classes.componentMain}>
+                    <ShortVisitorProfile title="0 Sent Interest " subtitle="People you Send Interest will appear here" />
+                </div>
+
                 :
                 // <div className={classes.card_container_main}>
                 <>
