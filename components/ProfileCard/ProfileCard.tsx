@@ -42,44 +42,10 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     const [loading, setLoading] = useState(false);
 
 
-    const blurredPhotoUrl = './Images/blured-img.webp';
+    const blurredPhotoUrl = '/Images/blured-img.webp';
+    const matchProfile = '/Images/matchProfile2.svg';
+
     const imageRef = useRef<HTMLImageElement>(null);
-
-
-
-    // useEffect(() => {
-    //     const blurImage = () => {
-    //         if (userData?.privacy_photo === 'I') {
-    //             const image = imageRef.current;
-    //             if (image) {
-    //                 const canvas = document.createElement('canvas');
-    //                 const ctx = canvas.getContext('2d');
-    //                 const imageWidth = image.width;
-    //                 const imageHeight = image.height;
-
-    //                 canvas.width = imageWidth;
-    //                 canvas.height = imageHeight;
-
-    //                 ctx.filter = 'blur(2px)';
-    //                 ctx.drawImage(image, 0, 0, imageWidth, imageHeight);
-
-    //                 console.log(canvas,'/');
-
-    //                 canvas.toBlob((blob) => {
-    //                     if (blob) {
-    //                         const blurredDataUrl = URL.createObjectURL(blob);
-    //                         console.log(blurredDataUrl);
-
-    //                         setBlurredPhotoUrl(blurredDataUrl);
-    //                     }
-    //                 });
-    //             }
-    //         }
-    //     };
-
-    //     blurImage();
-    // }, [userData?.privacy_photo]);
-
 
 
     const countries: ICountry[] = Country.getAllCountries();
@@ -196,6 +162,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         updateBlockListedUser && updateBlockListedUser(cardId);
         updateShortListedUser && updateShortListedUser(cardId);
         if (mutationResult.output == 1) {
+            handleUpdateds && handleUpdateds(cardId);
             setBlock && setBlock(cardId);
             setBlockPopup(false);
         }
@@ -357,8 +324,13 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
-                                <Button disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleInterestPopupShow(userData?.userid)} className={userData?.interest.Send === 'S' ? classes.activebtn : ''}>
-                                    <BiHeartCircle className={userData?.interest?.Send === 'S' ? classes.activesvg : ''} />
+                                <Button disabled={
+                                    BlockedUser?.includes(userData?.userid)
+                                    || userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
+                                    || userData?.interest?.Receive === 'A' || userData?.interest?.Send === 'A'}
+                                    onClick={() => handleInterestPopupShow(userData?.userid)}
+                                    className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activebtn : ''}>
+                                    <BiHeartCircle className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activesvg : ''} />
                                     {userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S'
                                         ? userData?.interest?.Receive === 'A' || userData?.interest.Send === 'A'
                                             ? 'Interest Accepted'
@@ -377,7 +349,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                 </Button>
                             </div>
                             <div className={classes.profileMatchSection}>
-                                <Image className={classes.profileMatch} src='Images/matchProfile2.svg' alt='profile Match' />
+                                <Image className={classes.profileMatch} src={matchProfile} alt='profile Match' />
                                 <span>{(userData?.matching_score * 100 / 21).toFixed(1)} %</span>
                             </div>
                         </div>

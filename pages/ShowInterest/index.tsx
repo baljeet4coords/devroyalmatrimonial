@@ -65,8 +65,6 @@ const ShowInterest: React.FC = () => {
     dispatch(showInterestReq({
       userId: userId ? userId : -1,
     }));
-
-
     dispatch(blockListReq({
       userId: userId ? userId : -1,
     }));
@@ -76,10 +74,11 @@ const ShowInterest: React.FC = () => {
 
 
 
-  const handleInterest = (id: number) => {
-    console.log(id);
-    
+  const handleInterest = (id: number) => {    
     dispatch(showInterestReq({
+      userId: userId ? userId : -1,
+    }));
+    dispatch(blockListReq({
       userId: userId ? userId : -1,
     }));
   }
@@ -111,7 +110,7 @@ const ShowInterest: React.FC = () => {
       key: 1
     },
     {
-      title: ' Interest Recived to you',
+      title: ' Interest Received to you',
       key: 2
     }
   ]

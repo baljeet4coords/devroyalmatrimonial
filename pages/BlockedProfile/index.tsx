@@ -12,6 +12,7 @@ import { ICardViewResponse } from "../../types/short-Block-Interest";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 import { blockListReq } from "../../ducks/userBlocklist/actions";
 import PageHeading from "../../components/PageHeading";
+import InterestRecivedCard from "../../components/InterestComponent/InterestRecivedCard";
 
 const BlockedProfile: React.FC = () => {
   const dispatch = useDispatch();
@@ -70,13 +71,19 @@ const BlockedProfile: React.FC = () => {
           <>
             <PageHeading heading="Profile that you have Blocked show here !!" />
 
-          <div className={classes.card_container}>
-            {blockListedUser && blockListedUser.map((user) => {
-              return (
-                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={Blocklisted_Id} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={updateBlockListedUser} />
-              )
-            })}
-          </div>
+            <div className={classes.card_container}>
+              {blockListedUser && blockListedUser.map((user) => {
+                if (user.usercard.interest.Receive === 'S' && user.usercard.interest.Send === null) {
+                  return (
+                    <InterestRecivedCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID}  BlockedUser={Blocklisted_Id} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={updateBlockListedUser} />
+                  )
+                } else {
+                  return (
+                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={Blocklisted_Id} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={updateBlockListedUser} />
+                  )
+                }
+              })}
+            </div>
           </>
         }
         <Footer />

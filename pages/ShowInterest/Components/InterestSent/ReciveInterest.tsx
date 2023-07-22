@@ -12,11 +12,15 @@ interface ShowInterestProps {
     key: number;
     userId?: number;
     data: ICardViewResponseInterest[] | null;
-    handleUpdateds: (id: number) => void;
+    BlockedUser: number[];
+    handleBlockedUser?: (val: number) => void;
+    updateShortListedUser?: (val: number) => void;
+    updateBlockListedUser?: (val: number) => void;
+    handleUpdateds?: (val: number) => void;
 }
 
 
-const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds }) => {
+const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds,handleBlockedUser,BlockedUser,updateBlockListedUser,updateShortListedUser }) => {
     const [reciveInterestUser, setReciveInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -44,7 +48,7 @@ const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handle
                     <div className={`${classes.card_container_main} ${classes.flexrowMar} `}>
                         {reciveInterestUser && reciveInterestUser.map((user) => {
                             return (
-                                <InterestRecivedCard userID={userId} key={user?.userid + user?.usercard?.user_RM_ID} userData={user.usercard} handleUpdateds={handleUpdateds} />
+                                <InterestRecivedCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} BlockedUser={BlockedUser} handleUpdateds={handleUpdateds} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateBlockListedUser} />
                             )
                         })}
                     </div>

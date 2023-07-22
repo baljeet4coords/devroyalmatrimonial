@@ -16,7 +16,7 @@ const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handle
             <div className={classes.ResetForm} >
 
                 <div className={classes.ImageSection}>
-                    <Image src={popuptype ? './Images/send-interest.webp' : './Images/user-blocked.png'} alt='user photo' />
+                    <Image src={popuptype ? '/Images/send-interest.webp' : '/Images/user-blocked.png'} alt='user photo' />
                 </div>
                 <div className={classes.ResetHeader}>
                     <h4>Are you sure ?</h4>

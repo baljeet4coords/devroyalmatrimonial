@@ -10,23 +10,38 @@ import { useDispatch } from 'react-redux';
 import { City, Country, ICity, ICountry, IState, State } from 'country-state-city';
 import { ICardResponse } from '../../types/cardResponse/cardResponse';
 import { useAcceptDecline } from '../../hooks/useAcceptDeclineInterest/useAcceptDeclineInterest';
-import { MdCancel, MdLocationOn } from "react-icons/md";
+import { MdBlock, MdCancel, MdLocationOn, MdStars } from "react-icons/md";
 import { IoMdPersonAdd } from "react-icons/io";
+import { useShortlist } from '../../hooks/useSortlisted/useShortlist';
+import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
+import ConfirMationsPopup from '../ConfirmationsPopup';
+import { useBlockUser } from '../../hooks/useBlockUser/useBlockUser';
+import Hashing from 'next/dist/shared/lib/bloom-filter/hashing';
 interface MyComponentProps {
     userData: ICardResponse;
     userID?: number;
     key: string;
-    handleUpdateds: (val: number) => void;
+    BlockedUser: number[];
+    setSendInterest: (val: number[]) => void;
+    setBlock?: (val: number) => void;
+    updateShortListedUser?: (val: number) => void;
+    updateBlockListedUser?: (val: number) => void;
+    handleUpdateds?: (val: number) => void;
 }
 
-const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, handleUpdateds }) => {
+const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setBlock, handleUpdateds, BlockedUser, updateShortListedUser, updateBlockListedUser }) => {
     const router = useRouter()
     const { useAcceptDeclineMutation, AcceptDeclineQuery } = useAcceptDecline();
     const dispatch = useDispatch();
 
     const blurredPhotoUrl = './Images/blured-img.webp';
     const imageRef = useRef<HTMLImageElement>(null);
-
+    const { useShortlistMutation, ShortlistQuery } = useShortlist();
+    const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
+    const [shortlistUser, setShortlistedUser] = useState(userData?.shortlist === 1 ? true : false);
+    const [blockPopup, setBlockPopup] = useState<boolean>(false);
+    const [cardId, setCardId] = useState<number>(-1);
+    const [loading, setLoading] = useState(false);
 
     const countries: ICountry[] = Country.getAllCountries();
     const [btn, setbtn] = useState(false);
@@ -120,10 +135,6 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, hand
     const ullDay = ull && ull[2].split(" ")[0];
 
 
-    const reptNameHide = () => <>{userData?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
-
-
-
 
     const handleInterestAcceptDecline = async (id: number) => {
 
@@ -133,10 +144,51 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, hand
             status: id === 1 ? 'A' : 'D'
         });
         if (mutationResult.output === 1) {
-            handleUpdateds(1);
+            handleUpdateds && handleUpdateds(1);
         }
     }
 
+    const handleSortlisted = async (id: number) => {
+        setShortlistedUser(!shortlistUser)
+        const mutationResult = await useShortlistMutation.mutateAsync({
+            userId: userID,
+            useridShortlist: id,
+            status: !userData?.shortlist ? 'Y' : 'N'
+        });
+        dispatch(matchMakingSuccess(mutationResult));
+        updateShortListedUser && updateShortListedUser(id);
+        if (mutationResult.output === 1) {
+            handleUpdateds && handleUpdateds(id);
+        }
+        setLoading(false);
+    }
+
+
+    const handleBlock = async () => {
+        setLoading(true);
+        const mutationResult = await useBlockUserMutation.mutateAsync({
+            userId: userID,
+            userIdToBlock: cardId,
+            status: !BlockedUser?.includes(cardId) ? 'Y' : 'N'
+        });
+        dispatch(matchMakingSuccess(mutationResult));
+        updateBlockListedUser && updateBlockListedUser(cardId);
+        updateShortListedUser && updateShortListedUser(cardId);
+        if (mutationResult.output == 1) {
+            handleUpdateds && handleUpdateds(1);
+            setBlock && setBlock(cardId);
+            setBlockPopup(false);
+        }
+        setLoading(false);
+    }
+
+    const handleBlockPopupShow = (id: number) => {
+        setBlockPopup(true);
+        setCardId(id);
+    }
+    const handleBlockPopupHide = () => {
+        setBlockPopup(false);
+    }
 
 
     return (
@@ -245,6 +297,14 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, hand
                                     <MdCancel />
                                     {!btn ? 'Decline Interest' : 'Interest Declined'}
                                 </Button>
+                                <Button disabled={BlockedUser?.includes(userData?.userid)} className={userData?.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
+                                    <MdStars className={userData?.shortlist && shortlistUser ? classes.activesvg : ''} />
+                                    {userData?.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
+                                </Button>
+                                <Button className={BlockedUser?.includes(userData?.userid) ? classes.activebtn : ''} onClick={() => handleBlockPopupShow(userData?.userid)}>
+                                    <MdBlock className={BlockedUser?.includes(userData?.userid) ? classes.activesvg : ''} />
+                                    {BlockedUser?.includes(userData?.userid) ? 'Unblock' : 'Block'}
+                                </Button>
                             </div>
                             <div className={classes.profileMatchSection}>
                                 <Image className={classes.profileMatch} src='Images/matchProfile2.svg' alt='profile Match' />
@@ -255,6 +315,7 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, hand
                 </div>
             </div >
 
+            {blockPopup && <ConfirMationsPopup loading={loading} popuptype={false} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} />}
 
         </>
     )

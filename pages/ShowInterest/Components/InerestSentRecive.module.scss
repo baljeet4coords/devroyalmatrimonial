@@ -35,3 +35,58 @@
     }
   }
 }
+
+@media only screen and (max-width: 1124px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        margin: auto;
+        margin-top: 3rem;
+        transform: translateX(-0%);
+        flex-wrap: nowrap;
+        position: initial;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 691px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        position: initial;
+        overflow-x: scroll;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 424px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        gap: 1rem;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin: 1rem;
+        width: auto;
+        margin-top: 3rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        gap: 1rem;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-top: 3rem;
+      }
+    }
+  }
+}

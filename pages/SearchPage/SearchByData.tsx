@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import {
   DropdownGridSingleSelect,
 } from "../../components";
@@ -45,7 +45,7 @@ const SearchByData: React.FC = () => {
   const router = useRouter();
   const userId = useSelector(getUserId);
 
-
+  const [loading, setLoading] = useState(false);
 
   const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>("");
   const [selectedAgeTo, setSelectedAgeTo] = useState<string>('');
@@ -113,51 +113,52 @@ const SearchByData: React.FC = () => {
 
   const savePartnerPref = async (event: any) => {
     event.preventDefault();
+    setLoading(true)
 
     const partnerPrefPostReq: SearchByData = {
-      userId: 400,
-      ageGreaterThan: +selectedAgeFrom,
-      ageLessThan: +selectedAgeTo,
-      heightGreaterThan: (Math.trunc(+selectedHeightFrom)),
-      heightLessThan: (Math.trunc(+selectedHeightTo)),
-      country: (country && country.map((str) => +str)),
-      state: (state && state.map((str) => +str)),
-      city: (city && city.map((str) => +str)),
-      education: (education && education.map((str) => +str)),
-      occupation: (occupation && occupation.map((str) => +str)),
-      annualIncome: annualIncome.id && +annualIncome.id,
-      maritalStatus: (
+      userId: String(userId),
+      ageGreaterThan: selectedAgeFrom,
+      ageLessThan: selectedAgeTo,
+      heightGreaterThan: String(Math.trunc(+selectedHeightFrom)),
+      heightLessThan: String(Math.trunc(+selectedHeightTo)),
+      country: JSON.stringify(country && country.map((str) => +str)),
+      state: JSON.stringify(state && state.map((str) => +str)),
+      city: JSON.stringify(city && city.map((str) => +str)),
+      education: JSON.stringify(education && education.map((str) => +str)),
+      occupation: JSON.stringify(occupation && occupation.map((str) => +str)),
+      annualIncome: annualIncome.id ? annualIncome.id : '0',
+      maritalStatus: JSON.stringify(
         maritalStatus && maritalStatus.map((str) => +str)
       ),
-      religion: (religion && religion.map((str) => +str)),
-      motherTongue: (
+      religion: JSON.stringify(religion && religion.map((str) => +str)),
+      motherTongue: JSON.stringify(
         motherTongue && motherTongue.map((str) => +str)
       ),
-      caste: (caste && caste.map((str) => +str)),
-      residentialStatus: (
+      caste: JSON.stringify(caste && caste.map((str) => +str)),
+      residentialStatus: JSON.stringify(
         residentialStatus && residentialStatus.map((str) => +str)
       ),
-      manglik: (manglik && manglik.map((str) => +str)),
-      diet: diet.id ? +diet.id : 0,
-      smoking: smoke.id ? +smoke.id : 0,
-      drinking: drink.id ? +drink.id : 0,
-      readyToSettleAbroad: readyToSettleAbroad.id ? +readyToSettleAbroad.id : 0,
-      challenged: (challenged && challenged.map((str) => +str)),
-      childrenStatus: (
+      manglik: JSON.stringify(manglik && manglik.map((str) => +str)),
+      diet: diet.id ? diet.id : '0',
+      smoking: smoke.id ? smoke.id : '0',
+      drinking: drink.id ? drink.id : '0',
+      readyToSettleAbroad: readyToSettleAbroad.id ? readyToSettleAbroad.id : '0',
+      challenged: JSON.stringify(challenged && challenged.map((str) => +str)),
+      childrenStatus: JSON.stringify(
         childrenStatus && childrenStatus.map((str) => +str)
       ),
-      hiv: 2,
-      mandatoryFields: [],
-      maxUserId: -1,
-      limit: 40,
-      viceVersaFlag: 0,
-      excludedUsers: [],
+      hiv: String(2),
+      mandatoryFields: `[]`,
+      maxUserId: String(-1),
+      limit: String(10),
+      viceVersaFlag: String(0),
+      excludedUsers: `[]`,
     };
 
-    console.log(partnerPrefPostReq, 'data');
+    // console.log(partnerPrefPostReq, 'data');
+    router.push(`/SearchPage/Search-result?searchdata=${JSON.stringify(partnerPrefPostReq)}`)
 
     dispatch(searchByDataReq(partnerPrefPostReq));
-    // router.push(`SearchPage/search-result`)
 
   };
 
@@ -362,6 +363,13 @@ const SearchByData: React.FC = () => {
                     className={classes.savePartnerBtn}
                     onClick={savePartnerPref}
                   >
+                    {loading && (
+                      <Spinner
+                        className={classes.loginSpiner}
+                        animation="border"
+                        variant="light"
+                      />
+                    )}
                     Search
                   </Button>
                 </div>

@@ -132,16 +132,15 @@ const ProfileMatch: React.FC = () => {
   // to remove item from matchmaking when click on block 
 
   const handleUpDateBlockuser = (id: number) => {
-    console.log(allUserData,'beforre');
     
     const updatedUserWithoutBlock = allUserData?.filter((user) => {
       return user.userid != id;
     })
     
     setAllUserData(updatedUserWithoutBlock);
-    console.log(allUserData,'after');
-
+    
   }
+  // console.log(allUserData,'/////');
 
   return (
     <React.Fragment>
@@ -151,7 +150,7 @@ const ProfileMatch: React.FC = () => {
         </Container>
         <PageHeading heading="Profile that match your desire partner Details show here !!" />
         <div className={classes.card_container}>
-          {allUserData != null && allUserData?.map((user) => {
+          {allUserData != null && allUserData && allUserData?.map((user) => {
             if (block != null && !block.includes(user.userid)) {
               return (
                 <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />

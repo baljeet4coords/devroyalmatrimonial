@@ -18,16 +18,17 @@ interface InterestSentByYouProps {
     handleUpdateds: (id: number) => void;
     handleBlockedUser: (val: number) => void;
     BlockedUser: number[];
+    setSendInterest?: (val: number[]) => void;
+    setBlock?: (val: number) => void;
+    updateShortListedUser?: (val: number) => void;
+    updateBlockListedUser?: (val: number) => void;
 }
 
 const InterestSentByYou: React.FC<InterestSentByYouProps> = ({ data, userId, handleUpdateds, BlockedUser, handleBlockedUser }) => {
 
     const [sentInterest, setSentInterest] = useState<ICardViewResponseInterest[] | null>(data || []);
     const [interestPage, setInterestPage] = useState<number>(1);
-    //   const [reciveInterest, setReciveInterest] = useState<ICardViewResponseInterest[] | null>(showInterestSuccessResponse?.reciveInterestCard ? showInterestSuccessResponse?.reciveInterestCard.jsonResponse : []);
-    //   const [Blocklisted_Id, setBlocklisted_Id] = useState<number[]>(blocklistSuccessResponse ? blocklistSuccessResponse?.blocklistedID?.jsonResponse : []);
-    //   const [Shortlisted_Id, setShortlisted_Id] = useState<number[]>(shortlistSuccessResponse ? shortlistSuccessResponse?.shotlistedID?.jsonResponse : []);
-
+   
     const DataOnclick = (searchtype: number) => {
         return setInterestPage(searchtype);
     };
@@ -74,7 +75,7 @@ const InterestSentByYou: React.FC<InterestSentByYouProps> = ({ data, userId, han
 
     const Components = [
         {
-            Component: <SendInterest key={1} data={sentInterest} userId={userId} handleUpdateds={() => { }} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,
+            Component: <SendInterest key={1} data={sentInterest} userId={userId} handleUpdateds={handleUpdateds} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,
             key: 1,
         },
         {

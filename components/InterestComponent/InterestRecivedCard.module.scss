@@ -1,72 +1,30 @@
 @import "../../styles/constants.scss";
 @import "../ProfileCard/ProfileCard.module.scss";
 
-// .card_container {
-//   background-color: #ffffff;
-//   display: flex;
-//   flex-direction: column;
-//   padding: 20px;
-//   border-radius: 5px;
-//   width: 28%;
-//   height: 100%;
-//   align-items: center;
-//   gap: 0.5rem;
-//   justify-content: flex-start;
-
-
-//   table {
-//     tbody {
-//       tr {
-//         td {
-//           text-transform: capitalize;
-//         }
-//       }
-//     }
-//   }
-
-//   .profileInfoSec {
-//     display: flex;
-//     flex-direction: column;
-//     .profile_Name {
-//       display: flex;
-//       gap: 1rem;
-//       align-items: center;
-
-//       h6 {
-//         margin: 0%;
-//         font-size: 16px;
-//       }
-//       p {
-//         margin: 0%;
-//         font-size: 16px;
-//         font-weight: 600;
-//       }
-//     }
-//   }
-
-// }
 .InterestBtnGroup {
   display: flex;
   gap: 10px;
   margin-top: 10px;
   flex-wrap: wrap;
   justify-content: center;
+
   Button {
     display: flex;
     gap: 5px;
     align-items: center;
+    color: black;
     font-weight: 600;
     border: none;
     outline: none;
     font-size: 14px;
+    background: #dc354517;
     border-radius: 30px;
     height: 36px;
-    color: rgb(5 5 5 / 73%);
 
     svg {
-      height: 20px;
-      width: 20px;
-      color: rgb(5 5 5 / 73%);
+      height: 22px;
+      width: 22px;
+      color: #dc3545;
     }
     .loginSpiner {
       height: 20px;
@@ -75,21 +33,47 @@
       color: #dc3545 !important;
     }
   }
+  Button:hover {
+    color: #dc3545;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    background: #dc354517;
+  }
+
+  .activebtn {
+    background-color: #dc3545;
+    color: #fff;
+
+    .activesvg {
+      color: #fff;
+    }
+  }
+  .activebtn:hover {
+    color: #fff;
+    background-color: #dc3545;
+  }
 
   .acceptBtn {
     background-color: rgb(205 240 212 / 81%);
-  }
-  .declineBtn {
-    background: #dc354517;
-  }
-  .acceptBtn:hover {
     color: #19ac23;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
     svg {
       color: #19ac23;
     }
   }
+  .declineBtn {
+    background: #dc354517;
+  }
+
+  .acceptBtn:hover {
+    color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    background-color: #19ac23;
+    svg {
+      color: #ffffff;
+    }
+  }
+
   .declineBtn:hover {
     color: #dc3545;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
@@ -99,16 +83,29 @@
     }
   }
 
-  .activebtn {
-    background-color: #35dc59;
-    color: #fff;
+  // .activebtn {
+  //   background-color: #35dc59;
+  //   color: #fff;
 
-    .activesvg {
-      color: #fff;
+  //   .activesvg {
+  //     color: #fff;
+  //   }
+  // }
+  // .activebtn:hover {
+  //   color: #fff;
+  // }
+  .activebtn:disabled {
+    background: #dc354517;
+    color: #dc3545;
+    svg {
+      color: #dc3545;
     }
   }
-  .activebtn:hover {
-    color: #fff;
+  Button:disabled {
+    background: #dc354517;
+    color: #dc3545;
+    svg {
+      color: #dc3545;
+    }
   }
 }
-

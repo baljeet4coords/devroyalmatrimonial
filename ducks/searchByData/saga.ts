@@ -9,10 +9,9 @@ import {
 } from "./actions";
 
 function* SearchByDataSaga(action: SearchbyDataActions): any {
-  // const previousSearchByDataSuccess = yield select(
-  //   (state) => state.searchByData?.response?.jsonResponse
-  // );
-  // const output = yield select((state) => state.matchmaking?.response);
+  const previousSearchByDataSuccess = yield select(
+    (state) => state.searchByData?.response?.jsonResponse
+  );
   try {
     if (action.type === SEARCHBYDATA) {
       const response = yield call(
@@ -23,21 +22,21 @@ function* SearchByDataSaga(action: SearchbyDataActions): any {
       const responseData = response.data;
       console.log(responseData, "sagaResponseData");
 
-      // const updatedData = previousSearchByDataSuccess && {
-      //   ...responseData,
-      //   jsonResponse: [
-      //     ...previousSearchByDataSuccess,
-      //     ...responseData.jsonResponse,
-      //   ],
-      // };
-      // previousSearchByDataSuccess != null &&
-      //   console.log(updatedData, "updatedData");
+      const updatedData = previousSearchByDataSuccess && {
+        ...responseData,
+        jsonResponse: [
+          ...previousSearchByDataSuccess,
+          ...responseData.jsonResponse,
+        ],
+      };
+      previousSearchByDataSuccess != null &&
+        console.log(updatedData, "updatedData");
 
-      // if (previousSearchByDataSuccess === null) {
-      //   yield put(searchByDataSuccess(responseData));
-      // } else {
-      //   yield put(searchByDataSuccess(updatedData));
-      // }
+      if (previousSearchByDataSuccess === null) {
+        yield put(searchByDataSuccess(responseData));
+      } else {
+        yield put(searchByDataSuccess(updatedData));
+      }
     }
   } catch (error) {
     yield put(searchByDataFailure(error));
