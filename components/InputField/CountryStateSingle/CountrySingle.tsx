@@ -23,7 +23,7 @@ const CountrySingle: React.FC<CountryProps> = ({
     let Defaultcountry =
       (defaultValueCountry != (undefined && null) &&
         defaultValueCountry != -1 &&
-        countries[defaultValueCountry - 1].name) ||
+        countries[defaultValueCountry - 1]?.name) ||
       "Select Country";
     setSelecedData(Defaultcountry);
   }, [defaultValueCountry]);
@@ -36,7 +36,7 @@ const CountrySingle: React.FC<CountryProps> = ({
   const [selecedData, setSelecedData] = useState(
     (defaultValueCountry != (undefined && null) &&
       defaultValueCountry != -1 &&
-      countries[defaultValueCountry].name) ||
+      countries[defaultValueCountry]?.name) ||
     "Select Country"
   );
 

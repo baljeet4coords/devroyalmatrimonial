@@ -138,7 +138,7 @@ const BasicDetails: FC<MyComponentProps> = ({
             <span> - {privacySetting 
                       ? privacySetting?.privacy_show_name === 'P'
                         ? ShowNameONConditions
-                        : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' 
+                        : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A'  || interestResponse?.Recieve === 'S' 
                         ? ShowNameONConditions
                         : reptNameHide()
                       :ShowNameONConditions

@@ -29,7 +29,7 @@ const CitySingle: React.FC<CitySingle> = ({
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     defaultValueCountry != (undefined && null)
-      ? countries[defaultValueCountry - 1].isoCode
+      ? countries[defaultValueCountry - 1]?.isoCode
       : "IN"
   );
 
@@ -102,11 +102,11 @@ const CitySingle: React.FC<CitySingle> = ({
   useEffect(() => {
     defaultValueCountry !== undefined &&
       countries[defaultValueCountry] !== undefined &&
-      setCountryCode(countries[defaultValueCountry - 1].isoCode);
+      setCountryCode(countries[defaultValueCountry - 1]?.isoCode);
     defaultValueState != undefined &&
       stateOfCountry[defaultValueState] !== undefined &&
       defaultValueState >= 0 &&
-      setStateCode(stateOfCountry[defaultValueState - 1].isoCode);
+      setStateCode(stateOfCountry[defaultValueState - 1]?.isoCode);
     UpdatesearchHostedArray(cityOfState);
     defaultValueCity != undefined &&
       defaultValueCity >= 0 &&
@@ -137,7 +137,7 @@ const CitySingle: React.FC<CitySingle> = ({
   useEffect(() => {
     if (defaultValueCountry != undefined) {
       setCountryCode(
-        countries[defaultValueCountry && defaultValueCountry - 1].isoCode
+        countries[defaultValueCountry && defaultValueCountry - 1]?.isoCode
       );
     }
     if (defaultValueState != undefined) {

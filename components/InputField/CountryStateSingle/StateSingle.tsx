@@ -20,7 +20,7 @@ const StateSingle: React.FC<StateProps> = ({
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     defaultValueCountry != (undefined && null)
-      ? countries[defaultValueCountry - 1].isoCode
+      ? countries[defaultValueCountry - 1]?.isoCode
       : "IN"
   );
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
@@ -34,11 +34,11 @@ const StateSingle: React.FC<StateProps> = ({
   const [selectedData, setSelectedData] = useState("Select State");
   useEffect(() => {
     defaultValueCountry != undefined &&
-      setCountryCode(countries[defaultValueCountry - 1].isoCode);
+      setCountryCode(countries[defaultValueCountry - 1]?.isoCode);
     UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
     defaultValueState != undefined &&
       stateOfCountry[defaultValueState] != undefined &&
-      setSelectedData(stateOfCountry[defaultValueState - 1].name);
+      setSelectedData(stateOfCountry[defaultValueState - 1]?.name);
   }, [defaultValueState, defaultValueCountry, countries, countryCode]);
 
   // useEffect(() => {

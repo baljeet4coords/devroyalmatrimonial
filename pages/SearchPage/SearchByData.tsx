@@ -34,7 +34,7 @@ import {
   PartnerPreferrence, SearchByData,
 } from "../../ducks/partnerPreferrence/types";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
-import router, { useRouter } from "next/router";
+import  { useRouter } from "next/router";
 import { searchByDataReq } from "../../ducks/searchByData/actions";
 import { useDispatch } from "react-redux";
 
@@ -155,9 +155,7 @@ const SearchByData: React.FC = () => {
       excludedUsers: `[]`,
     };
 
-    // console.log(partnerPrefPostReq, 'data');
-    router.push(`/SearchPage/Search-result?searchdata=${JSON.stringify(partnerPrefPostReq)}`)
-
+    router.push(`/SearchPage/SearchResult?searchdata=${JSON.stringify(partnerPrefPostReq)}`)
     dispatch(searchByDataReq(partnerPrefPostReq));
 
   };
@@ -370,7 +368,7 @@ const SearchByData: React.FC = () => {
                         variant="light"
                       />
                     )}
-                    Search
+                    {loading ? 'Searching'  : 'Search'}
                   </Button>
                 </div>
               </form>

@@ -146,21 +146,22 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
 
 
   const ShowNameONConditions = userProfilerName && userProfilerName?.length > 16
-    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...')
-    : userProfilerName?.toLocaleLowerCase();
-
-
+    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...')+ "'s" + ' Photo'
+    : userProfilerName?.toLocaleLowerCase()  + "'s" + ' Photo';
 
 
   return (
     <div className={classes.imageGallery} ref={galleryRef}>
       <div className="d-flex justify-content-between mb-5">
-        <h5>{userProfilerName ? privacySetting?.privacy_show_name === 'P'
-          ? ShowNameONConditions
-          : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
-            ShowNameONConditions
-            : reptNameHide()
-            + "'s" + ' Photo' : 'Your Photos'}</h5>
+        <h5>{userProfilerName
+          ? privacySetting
+            ? privacySetting?.privacy_show_name === 'P'
+              ? ShowNameONConditions
+              : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A'  || interestResponse?.Recieve === 'S' ?
+                ShowNameONConditions
+                : reptNameHide()
+            : ShowNameONConditions
+          : 'Your Photos'}</h5>
         {
           EditHide ? null :
             <div>
@@ -179,7 +180,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
           multiple
         />
       </div>
-      {privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A'
+      {privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' && interestResponse?.Receive === null
         ?
         <div className="d-flex justify-content-between mb-5">
           <div className={classes.galleryProcted}>

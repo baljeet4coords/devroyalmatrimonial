@@ -4,17 +4,14 @@ import LoginHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import classes from "../ProfileMatch/ProfileMatch.module.scss";
 import { CustomButton, Footer } from "../../components";
-import TestProfileCard from "../../components/ProfileCard/ProfileCard";
 import { useDispatch } from "react-redux";
-import { matchMakingReq } from "../../ducks/matchMaking/actions";
-import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
-import { ICardResponse } from "../../types/cardResponse/cardResponse";
 import { useRouter } from "next/router";
 import { selectsearchByDataSuccess } from "../../ducks/searchByData/selectors";
 import { ISearchByDataResponse } from "../../types/searchMatchmaking/searchMatchMaking";
-import { searchByDataReq } from "../../ducks/searchByData/actions";
+import { searchByDataReq, searchByDataSuccess } from "../../ducks/searchByData/actions";
 import { SearchByData } from "../../ducks/partnerPreferrence/types";
+import ShortVisitorProfile from "../../components/ShortVisitorProfile";
 
 const userId = 480;
 
@@ -40,6 +37,11 @@ const SearchResult: React.FC = () => {
   const [block, setBlock] = useState<number[]>([]);
 
   useEffect(() => {
+    setSearchUserData(searchDataResponse)
+    userSearchData?.jsonResponse && setAllUserData(userSearchData?.jsonResponse)
+  }, [searchDataResponse])
+
+  useEffect(() => {
     if (userSearchData && userSearchData.jsonResponse) {
       userSearchData.jsonResponse.map((user) => {
         if (!userAlreadyGetId.includes(user.userid)) {
@@ -48,20 +50,11 @@ const SearchResult: React.FC = () => {
             user.userid,
           ]);
         }
-
         let maxid = Math.min(...userAlreadyGetId);
         setMaxUserId(maxid);
       });
-
     }
   }, [userSearchData, userAlreadyGetId, userSearchData?.output]);
-
-  useEffect(() => {
-    if (searchDataResponse) {
-      setSearchUserData(searchDataResponse)
-      searchDataResponse?.jsonResponse && setAllUserData(searchDataResponse?.jsonResponse)
-    }
-  }, [searchDataResponse])
 
 
   const loadMoreHandler = () => {
@@ -77,7 +70,25 @@ const SearchResult: React.FC = () => {
     }
   }
 
-  userSearchData && console.log(userSearchData?.output, +previousSearchPayload?.limit);
+  const handleBlockList_ID = (val: number) => {
+    setBlock([...block, val])
+  }
+
+  const handleUpDateBlockuser = (mutationResult: any, id: number) => {
+
+    dispatch(searchByDataSuccess(mutationResult));
+    const updatedUserWithoutBlock = allUserData?.filter((user) => {
+      return user.userid != id;
+    })
+
+    setAllUserData(updatedUserWithoutBlock);
+
+  }
+
+  const handleUpDateShortlistUser = (id: number, mutationResult: any) => {
+    dispatch(searchByDataSuccess(mutationResult));
+  }
+
 
   return (
     <React.Fragment>
@@ -86,25 +97,38 @@ const SearchResult: React.FC = () => {
           <LoginHeader />
           <h3>Search Results </h3>
         </Container>
-        <div className={classes.card_container}>
-          {allUserData != null && allUserData && allUserData?.map((user) => {
-            return (
-              <ProfileCard userData={user} userID={userId} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} updateShortListedUser={() => { }} setSendInterest={setSendInterest} setBlock={() => { }} />
-            )
-          })}
-        </div>
-        {userSearchData && userSearchData?.output >= +previousSearchPayload?.limit &&
-          <div className="m-5 d-flex" >
-            <CustomButton onClick={loadMoreHandler} >
-              {loading && (
-                <Spinner
-                  className={classes.loginSpiner}
-                  animation="border"
-                  variant="light"
-                />
-              )}
-              Load More </CustomButton>
-          </div>}
+
+        {allUserData && allUserData?.length < 1 ?
+          < ShortVisitorProfile
+            title={"No Search Result Found !!"}
+            subtitle={"Search Data will apper here. "}
+            image="/Images/search-not-found.png"
+          />
+          :
+          <>
+            <div className={classes.card_container}>
+              {allUserData != null && allUserData && allUserData?.map((user) => {
+                if (block != null && !block.includes(user.userid)) {
+                  return (
+                    <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} updateShortListedUser={handleUpDateShortlistUser} />
+                  )
+                }
+              })}
+            </div>
+            {userSearchData && userSearchData?.output >= +previousSearchPayload?.limit &&
+              <div className="m-5 d-flex" >
+                <CustomButton onClick={loadMoreHandler} >
+                  {loading && (
+                    <Spinner
+                      className={classes.loginSpiner}
+                      animation="border"
+                      variant="light"
+                    />
+                  )}
+                  Load More </CustomButton>
+              </div>}
+          </>
+        }
         <Footer />
       </div>
     </React.Fragment>

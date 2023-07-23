@@ -93,7 +93,7 @@ const ShortlistedProfile: React.FC = () => {
           shortlistedProfilesComponent()
         }
 
-        {shortListedUser && shortListedUser?.length < 1 && shortListedUser?.every(value => blockList.includes(value.userid)) ?
+        {shortListedUser && shortListedUser?.length < 1 || shortListedUser?.every(value => blockList.includes(value.userid)) ?
           < ShortVisitorProfile
             title={"0 Shortlisted Profiles"}
             subtitle={"People you shortlist will appear here"}

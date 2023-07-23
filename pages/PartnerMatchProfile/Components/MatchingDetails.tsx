@@ -359,7 +359,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                             <th>Your Profile</th>
                             <th className='text-Capitalize'>{privacySetting?.privacy_show_name === 'P'
                                 ? ShowNameONConditions
-                                : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
+                                : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S' ?
                                     ShowNameONConditions
                                     : reptNameHide()} </th>
                             <th>Status</th>

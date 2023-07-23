@@ -24,8 +24,8 @@ interface MyComponentProps {
     BlockedUser: number[];
     setSendInterest: (val: number[]) => void;
     setBlock?: (val: number) => void;
-    updateShortListedUser?: (val: number) => void;
-    updateBlockListedUser?: (val: number) => void;
+    updateShortListedUser?: (id: number, val?: any) => void;
+    updateBlockListedUser?: (val: any, id: number) => void;
     handleUpdateds?: (val: number) => void;
 }
 
@@ -127,10 +127,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             status: !userData?.shortlist ? 'Y' : 'N'
         });
         dispatch(matchMakingSuccess(mutationResult));
-        updateShortListedUser && updateShortListedUser(id);
+        updateShortListedUser && updateShortListedUser(id, mutationResult);
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(id);
-            setInterestPopup(false)
         }
         setLoading(false);
     }
@@ -146,8 +145,11 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         if (mutationResult.apiResponse.output === 1) {
             handleUpdateds && handleUpdateds(cardId);
             dispatch(matchMakingSuccess(mutationResult.matchmaking));
+            updateShortListedUser && updateShortListedUser(cardId, mutationResult)
         }
         setInterestPopup(false);
+        setLoading(false);
+
     }
 
 
@@ -158,15 +160,19 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             userIdToBlock: cardId,
             status: !BlockedUser?.includes(cardId) ? 'Y' : 'N'
         });
-        dispatch(matchMakingSuccess(mutationResult));
-        updateBlockListedUser && updateBlockListedUser(cardId);
+        console.log(mutationResult,'mutationResult');
+        
+        updateBlockListedUser && updateBlockListedUser(mutationResult, cardId);
         updateShortListedUser && updateShortListedUser(cardId);
-        if (mutationResult.output == 1) {
+        if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(cardId);
             setBlock && setBlock(cardId);
             setBlockPopup(false);
+            setLoading(false);
+        }else{
+            setBlockPopup(false);
+            setLoading(false);
         }
-        setLoading(false);
     }
 
 
@@ -339,9 +345,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                                 : 'Intrest Sent'
                                         : 'Send Intrest'}
                                 </Button>
-                                <Button disabled={BlockedUser?.includes(userData?.userid)} className={userData?.shortlist && shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
-                                    <MdStars className={userData?.shortlist && shortlistUser ? classes.activesvg : ''} />
-                                    {userData?.shortlist && shortlistUser ? 'Shortlisted' : 'Shortlist'}
+                                <Button disabled={BlockedUser?.includes(userData?.userid)} className={shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
+                                    <MdStars className={shortlistUser ? classes.activesvg : ''} />
+                                    {shortlistUser ? 'Shortlisted' : 'Shortlist'}
                                 </Button>
                                 <Button className={BlockedUser?.includes(userData?.userid) ? classes.activebtn : ''} onClick={() => handleBlockPopupShow(userData?.userid)}>
                                     <MdBlock className={BlockedUser?.includes(userData?.userid) ? classes.activesvg : ''} />

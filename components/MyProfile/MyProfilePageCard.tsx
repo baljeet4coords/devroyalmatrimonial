@@ -94,6 +94,8 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
     ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
     : step1Response?.emailid.toLocaleLowerCase();
 
+
+
   return (
     <Container className={classes.cardWrapper}>
       <Row className={classes.mobileRow}>
@@ -101,10 +103,10 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
           <Image
             src={privacySetting ? privacySetting?.privacy_show_photo === 'P'
               ? `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
-              : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
-                `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
+              : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                ? `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
                 : blurredPhotoUrl
-              : `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}` || "https://hospital.vallhebron.com/sites/hospital/files/styles/curriculum/public/AVATAR-home.jpg?itok=7-n4HvCf"
+              : `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
             }
             className={classes.mobileAvatar}
             alt="avatar"
@@ -115,28 +117,37 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
             <div className={classes.MiddleLeft}>
               <div>
                 <p className={classes.MiddleLeftHeading}>
-                  Name : <span> {privacySetting ? privacySetting?.privacy_show_name === 'P'
-                    ? ShowNameONConditions
-                    : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A' ?
-                      ShowNameONConditions
-                      : reptNameHide()
-                    : ShowNameONConditions}</span>{" "}
+                  Name : <span> {
+                    privacySetting
+                      ? privacySetting?.privacy_show_name === 'P'
+                        ? ShowNameONConditions
+                        : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                          ? ShowNameONConditions
+                          : reptNameHide()
+                      : ShowNameONConditions
+                  }</span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
                   RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
                   Mobile No : <span> {privacySetting ? privacySetting?.privacy_show_contact === 'P' ?
-                    step1Response?.mobile : interestResponse?.Send === 'A' || interestResponse?.Receive === 'A'
-                      ? step1Response?.mobile : reptPhoneHide()
+                    step1Response?.mobile
+                    : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                      ? step1Response?.mobile
+                      : reptPhoneHide()
                     : step1Response?.mobile
                   } </span>{" "}
                 </p>
                 <p className={`${classes.MiddleLeftHeading} `}>
-                  Email Id : <span className="text-lowercase"> {privacySetting ? privacySetting?.privacy_show_contact === 'P' ? ShowEmainONConditions : interestResponse?.Send != 'A' || interestResponse?.Receive != 'A'
-                    ? ShowEmainONConditions : reptEmailHide()
-                    : ShowEmainONConditions
-                  } </span>{" "}
+                  Email Id : <span className="text-lowercase">
+                    {privacySetting ? privacySetting?.privacy_show_contact === 'P' ?
+                      ShowEmainONConditions
+                      : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                        ? ShowEmainONConditions
+                        : reptEmailHide()
+                      : ShowEmainONConditions
+                    } </span>{" "}
                 </p>
               </div>
 

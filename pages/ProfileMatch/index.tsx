@@ -4,7 +4,7 @@ import LoginHeader from "../../components/LoginHeader/Loginheader";
 import classes from "./ProfileMatch.module.scss";
 import { CustomButton, Footer } from "../../components";
 import { useDispatch } from "react-redux";
-import { matchMakingReq } from "../../ducks/matchMaking/actions";
+import { matchMakingReq, matchMakingSuccess } from "../../ducks/matchMaking/actions";
 import { selectmatchMakingSuccess } from "../../ducks/matchMaking/selectors";
 import { useSelector } from "react-redux";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
@@ -14,6 +14,7 @@ import { blockListReq } from "../../ducks/userBlocklist/actions";
 import { selectblockListSuccess } from "../../ducks/userBlocklist/selectors";
 import { ICardResponse } from "../../types/cardResponse/cardResponse";
 import PageHeading from "../../components/PageHeading";
+import ShortVisitorProfile from "../../components/ShortVisitorProfile";
 
 
 const ProfileMatch: React.FC = () => {
@@ -131,16 +132,17 @@ const ProfileMatch: React.FC = () => {
 
   // to remove item from matchmaking when click on block 
 
-  const handleUpDateBlockuser = (id: number) => {
-    
+  const handleUpDateBlockuser = async (mutationResult: any, id: number) => {
+
+    // dispatch(matchMakingSuccess(mutationResult));
     const updatedUserWithoutBlock = allUserData?.filter((user) => {
       return user.userid != id;
     })
     
-    setAllUserData(updatedUserWithoutBlock);
-    
+    setAllUserData(updatedUserWithoutBlock)
   }
-  // console.log(allUserData,'/////');
+
+
 
   return (
     <React.Fragment>
@@ -148,19 +150,29 @@ const ProfileMatch: React.FC = () => {
         <Container fluid className={classes.background_header}>
           <LoginHeader />
         </Container>
-        <PageHeading heading="Profile that match your desire partner Details show here !!" />
-        <div className={classes.card_container}>
-          {allUserData != null && allUserData && allUserData?.map((user) => {
-            if (block != null && !block.includes(user.userid)) {
-              return (
-                <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
-              )
-            }
-          })}
-        </div>
-        {userMatchData && userMatchData?.output != -4000 && <div className="m-5 d-flex" >
-          <CustomButton onClick={loadMoreHandler} >Load More </CustomButton>
-        </div>}
+        {allUserData && allUserData?.length < 1 ?
+          < ShortVisitorProfile
+            title={"No Search Result Found !!"}
+            subtitle={"Search Data will apper here. "}
+            image="/Images/search-not-found.png"
+          />
+          :
+          <>
+            <PageHeading heading="Profile that match your desire partner Details show here !!" />
+            <div className={classes.card_container}>
+              {allUserData && allUserData != null && allUserData?.map((user) => {
+                if (block != null && !block.includes(user.userid)) {
+                  return (
+                    <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
+                  )
+                }
+              })}
+            </div>
+            {userMatchData && userMatchData?.output != -4000 && <div className="m-5 d-flex" >
+              <CustomButton onClick={loadMoreHandler} >Load More </CustomButton>
+            </div>}
+          </>
+        }
         <Footer />
       </div>
     </React.Fragment>
