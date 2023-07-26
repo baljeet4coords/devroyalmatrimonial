@@ -74,7 +74,9 @@ const ShowInterest: React.FC = () => {
 
 
 
-  const handleInterest = (id: number) => {    
+  const handleInterest = (id: number) => { 
+    console.log(id, 'handle interest in index');
+       
     dispatch(showInterestReq({
       userId: userId ? userId : -1,
     }));

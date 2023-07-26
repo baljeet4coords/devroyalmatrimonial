@@ -127,13 +127,13 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
             title={
               <Image
                 className={classes.circleImg}
-                src={`${process.env.NEXT_PUBLIC_URL}/${profilePicture}`}
+                src={profilePicture ? `${process.env.NEXT_PUBLIC_URL}/${profilePicture}` : `/Images/no-avatar.png`}
                 alt="avatar"
               />
             }
             id="ProfileDropdown"
             menuVariant="dark"
-            show={show === 2 ? true : false}
+            show={userId && show === 2 ? true : false}
             onMouseEnter={() => showDropdown(2)}
             onMouseLeave={hideDropdown}
             className={classes.profileAvtarDrop}

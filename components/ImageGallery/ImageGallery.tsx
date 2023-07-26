@@ -146,8 +146,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
 
 
   const ShowNameONConditions = userProfilerName && userProfilerName?.length > 16
-    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...')+ "'s" + ' Photo'
-    : userProfilerName?.toLocaleLowerCase()  + "'s" + ' Photo';
+    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...') + "'s" + ' Photo'
+    : userProfilerName?.toLocaleLowerCase() + "'s" + ' Photo';
 
 
   return (
@@ -157,8 +157,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
           ? privacySetting
             ? privacySetting?.privacy_show_name === 'P'
               ? ShowNameONConditions
-              : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A'  || interestResponse?.Recieve === 'S' ?
-                ShowNameONConditions
+              : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                  ? reptNameHide()
+                  : ShowNameONConditions
                 : reptNameHide()
             : ShowNameONConditions
           : 'Your Photos'}</h5>
@@ -180,40 +182,70 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
           multiple
         />
       </div>
-      {privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' && interestResponse?.Receive === null
-        ?
-        <div className="d-flex justify-content-between mb-5">
-          <div className={classes.galleryProcted}>
-            <Image src="./Images/galleryProcted.png" alt="galleryProtected" className={classes.protectedGalleryImg} />
-            <h5>Please Send interest first to open gallery !! </h5>
-          </div>
-        </div>
-        : <>
-          <LightGallery
-            onInit={onInit}
-            speed={500}
-            plugins={[lgThumbnail, lgZoom]}
-            elementClassNames="text-center"
-          >
-            {imageResponse && imageResponse.galleryImages?.length
-              ? imageResponse.galleryImages.map((img, index) => {
-                return (
-                  <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
-                    <Image
-                      alt={"RM"}
-                      src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
-                    />
-                  </a>
-                );
-              })
-              :
-              <div className={classes.noImageSec}>
-                <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
-                <h3>No Image Found !!</h3>
+      {
+        userProfilerName ?
+          privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' && interestResponse?.Recieve === null &&
+            interestResponse.Recieve === 'D' || interestResponse?.Send === 'D'
+            ?
+            <div className="d-flex justify-content-between mb-5">
+              <div className={classes.galleryProcted}>
+                <Image src="./Images/galleryProcted.png" alt="galleryProtected" className={classes.protectedGalleryImg} />
+                <h5>Please Send interest first to open gallery !! </h5>
               </div>
-            }
-          </LightGallery>
-        </>
+            </div>
+            : <>
+              <LightGallery
+                onInit={onInit}
+                speed={500}
+                plugins={[lgThumbnail, lgZoom]}
+                elementClassNames="text-center"
+              >
+                {imageResponse && imageResponse.galleryImages?.length
+                  ? imageResponse.galleryImages.map((img, index) => {
+                    return (
+                      <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                        <Image
+                          alt={"RM"}
+                          src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                        />
+                      </a>
+                    );
+                  })
+                  :
+                  <div className={classes.noImageSec}>
+                    <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
+                    <h3>No Image Found !!</h3>
+                  </div>
+                }
+              </LightGallery>
+            </>
+
+          : <>
+            <LightGallery
+              onInit={onInit}
+              speed={500}
+              plugins={[lgThumbnail, lgZoom]}
+              elementClassNames="text-center"
+            >
+              {imageResponse && imageResponse.galleryImages?.length
+                ? imageResponse.galleryImages.map((img, index) => {
+                  return (
+                    <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
+                      <Image
+                        alt={"RM"}
+                        src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                      />
+                    </a>
+                  );
+                })
+                :
+                <div className={classes.noImageSec}>
+                  <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/album-zero-8311961-6631670.mp4" typeof='video/mp4' autoPlay loop={true}></video>
+                  <h3>No Image Found !!</h3>
+                </div>
+              }
+            </LightGallery>
+          </>
       }
     </div>
   );

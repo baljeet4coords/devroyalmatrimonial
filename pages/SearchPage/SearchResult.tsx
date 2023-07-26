@@ -3,7 +3,7 @@ import { Button, Container, Spinner } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import classes from "../ProfileMatch/ProfileMatch.module.scss";
-import { CustomButton, Footer } from "../../components";
+import { CustomButton, Footer, Header } from "../../components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ import { ISearchByDataResponse } from "../../types/searchMatchmaking/searchMatch
 import { searchByDataReq, searchByDataSuccess } from "../../ducks/searchByData/actions";
 import { SearchByData } from "../../ducks/partnerPreferrence/types";
 import ShortVisitorProfile from "../../components/ShortVisitorProfile";
+import { getUserId } from "../../ducks/auth/selectors";
 
 const userId = 480;
 
@@ -21,9 +22,10 @@ const SearchResult: React.FC = () => {
   const router = useRouter();
   const { searchdata } = router.query;
   const dispatch = useDispatch();
+  const loginUserId = useSelector(getUserId);
   const searchDataResponse = useSelector(selectsearchByDataSuccess)
 
-  let previousSearchPayload: SearchByData = searchdata ? JSON.parse(searchdata) : {};
+  let previousSearchPayload : SearchByData = searchdata ? JSON.parse(searchdata) : {};
   // const [previousSearchPayload, setPreviousSearchPayload] = useState(searchdata);
 
   const [loading, setLoading] = useState(false);
@@ -94,7 +96,7 @@ const SearchResult: React.FC = () => {
     <React.Fragment>
       <div className={classes.bg}>
         <Container fluid className={classes.background_header}>
-          <LoginHeader />
+          {loginUserId ? <LoginHeader /> : <Header />}
           <h3>Search Results </h3>
         </Container>
 

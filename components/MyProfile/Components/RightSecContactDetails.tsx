@@ -41,6 +41,12 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
     );
   }
 
+
+  const ShowEmainONConditions = step1Response && step1Response?.emailid.length > 16
+    ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
+    : step1Response?.emailid.toLocaleLowerCase();
+
+
   const reptPhoneHide = () => {
     const mobileNumber = step1Response?.mobile.toLocaleString(); // Convert the mobile number to a string
     const hiddenDigits = mobileNumber && mobileNumber.slice(6); // Get the portion of the number to hide
@@ -49,7 +55,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
     return (
       <>
         <span>{hiddenPlaceholder}
-        {mobileNumber && mobileNumber.slice(-3)} {/* Display the last 4 digits of the mobile number */}
+          {mobileNumber && mobileNumber.slice(-3)} {/* Display the last 4 digits of the mobile number */}
         </span>
       </>
     );
@@ -62,11 +68,16 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
     data: [
       {
         name: "Email id",
-        value: privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
-          ? reptEmailHide()
-            : step1Response && step1Response?.emailid.length > 22
-              ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
-            : step1Response?.emailid.toLocaleLowerCase()
+        value: privacySetting
+          ? privacySetting?.privacy_show_contact === 'P' ?
+            ShowEmainONConditions
+            : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+              ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                ? reptEmailHide()
+                : ShowEmainONConditions
+              : reptEmailHide()
+          : ShowEmainONConditions
+
         ,
         verify: true,
         isVerify: false,
@@ -77,8 +88,14 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Mobile No.",
-        value: privacySetting?.privacy_show_contact === 'I' && interestResponse?.Send != 'A'
-          ? reptPhoneHide()
+        value: privacySetting
+          ? privacySetting?.privacy_show_contact === 'P' ?
+            step1Response?.mobile
+            : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+              ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                ? reptPhoneHide()
+                : step1Response?.mobile
+              : reptPhoneHide()
           : step1Response?.mobile
         ,
         verify: true,

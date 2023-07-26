@@ -12,12 +12,11 @@ $light_grey_bg: #f0f2f7;
 
 //Text Color
 $white_txt: #fff;
-$lightGrey_txt: #8A9DB0;
+$lightGrey_txt: #8a9db0;
 $red_txt: #d9475c;
 $dark_txt: #4444;
 $browser_text: #909090;
 $lighter_text: #34495e;
-
 
 //Font weights
 $fw400: 400;
@@ -27,5 +26,11 @@ $fw700: 700;
 $fw800: 800;
 
 //border
-$light_border: #DFE6ED;
+$light_border: #dfe6ed;
 
+.loginSpiner {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+  color: #ffffff !important;
+}

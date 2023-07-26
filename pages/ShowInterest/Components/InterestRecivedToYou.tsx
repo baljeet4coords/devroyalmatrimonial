@@ -23,64 +23,10 @@ interface InterestReciveToYouProps {
 const InterestReciveToYou: React.FC<InterestReciveToYouProps> = ({ data, userId, handleUpdateds, BlockedUser, handleBlockedUser }) => {
     const [interestPage, setInterestPage] = useState<number>(1);
 
-    //   const [sentInterest, setSentInterest] = useState<ICardViewResponseInterest[] | null>(showInterestSuccessResponse?.sentInterestCard ? showInterestSuccessResponse?.sentInterestCard.jsonResponse : []);
-    //   const [reciveInterest, setReciveInterest] = useState<ICardViewResponseInterest[] | null>(showInterestSuccessResponse?.reciveInterestCard ? showInterestSuccessResponse?.reciveInterestCard.jsonResponse : []);
-    //   const [Blocklisted_Id, setBlocklisted_Id] = useState<number[]>(blocklistSuccessResponse ? blocklistSuccessResponse?.blocklistedID?.jsonResponse : []);
-    //   const [Shortlisted_Id, setShortlisted_Id] = useState<number[]>(shortlistSuccessResponse ? shortlistSuccessResponse?.shotlistedID?.jsonResponse : []);
-
     const DataOnclick = (searchtype: number) => {
         return setInterestPage(searchtype);
     };
 
-
-    //   useEffect(() => {
-    //     if (showInterestSuccessResponse?.sentInterestCard) {
-    //       setSentInterest(showInterestSuccessResponse?.sentInterestCard.jsonResponse);
-    //     }
-    //     if (showInterestSuccessResponse?.reciveInterestCard) {
-    //       setReciveInterest(showInterestSuccessResponse?.reciveInterestCard?.jsonResponse)
-    //     }
-
-    //     if (blocklistSuccessResponse) {
-    //       setBlocklisted_Id(blocklistSuccessResponse?.blocklistedID?.jsonResponse)
-    //     }
-    //     if (shortlistSuccessResponse) {
-    //       setShortlisted_Id(shortlistSuccessResponse?.shotlistedID?.jsonResponse)
-    //     }
-
-    //   }, [showInterestSuccessResponse, blocklistSuccessResponse, shortlistSuccessResponse])
-
-
-    //   useEffect(() => {
-    //     dispatch(showInterestReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-
-
-    //     dispatch(blockListReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-
-    //   }, [userId, dispatch,])
-
-
-
-
-    //   const handleInterest = (id: number) => {
-    //     dispatch(showInterestReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-    //   }
-
-    //   const handleBlockedUser = (id: number) => {
-    //     if (Blocklisted_Id?.includes(id)) {
-    //       const updatedBlocklist = Blocklisted_Id.filter((blocked_ID) => blocked_ID != id)
-
-    //       setBlocklisted_Id(updatedBlocklist)
-    //     } else {
-    //       Blocklisted_Id && setBlocklisted_Id([...Blocklisted_Id, id])
-    //     }
-    //   }
 
     const Components = [
         {

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import classes from "./InterestRecivedCard.module.scss";
 import { GiBodyHeight, GiBriefcase, GiCottonFlower, GiGraduateCap, GiLovers, GiSpellBook } from 'react-icons/gi';
 import { BiCalendar, BiHeartCircle } from 'react-icons/bi';
-import { Button, Image } from 'react-bootstrap';
+import { Button, Image, Spinner } from 'react-bootstrap';
 import { EducationTypeAndVal, MaritalStatus, Occupation, Religion } from '../../types/enums';
 import { CastListArray } from '../../constants/CastListArray';
 import { useRouter } from 'next/router';
@@ -34,12 +34,13 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
     const { useAcceptDeclineMutation, AcceptDeclineQuery } = useAcceptDecline();
     const dispatch = useDispatch();
 
-    const blurredPhotoUrl = './Images/blured-img.webp';
     const imageRef = useRef<HTMLImageElement>(null);
     const { useShortlistMutation, ShortlistQuery } = useShortlist();
     const { useBlockUserMutation, BlockUserQuery } = useBlockUser();
     const [shortlistUser, setShortlistedUser] = useState(userData?.shortlist === 1 ? true : false);
     const [blockPopup, setBlockPopup] = useState<boolean>(false);
+    const [acceptPopup, setAcceptPopup] = useState<boolean>(false);
+    const [declinPopup, setDeclinPopup] = useState<boolean>(false);
     const [cardId, setCardId] = useState<number>(-1);
     const [loading, setLoading] = useState(false);
 
@@ -137,7 +138,7 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
 
 
     const handleInterestAcceptDecline = async (id: number) => {
-
+        setLoading(true)
         const mutationResult = await useAcceptDeclineMutation.mutateAsync({
             fromUserid: userID,
             toUserid: userData.userid,
@@ -146,6 +147,7 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(1);
         }
+        setLoading(false)
     }
 
     const handleSortlisted = async (id: number) => {
@@ -186,10 +188,34 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
         setBlockPopup(true);
         setCardId(id);
     }
+
+    const handleAcceptPopupShow = (id: number) => {
+        setAcceptPopup(true);
+        setCardId(id);
+    }
+    const handleDeclinePopupShow = (id: number) => {
+        setDeclinPopup(true);
+        setCardId(id);
+    }
+
+
     const handleBlockPopupHide = () => {
         setBlockPopup(false);
     }
+    const handleDeclinePopupHide = () => {
+        setDeclinPopup(false);
+    }
+    const handleAcceptPopupHide = () => {
+        setAcceptPopup(false);
+    }
 
+
+    const handleAcceptConfirmations = () => {
+        handleInterestAcceptDecline(1)
+    }
+    const handleDeclineConfirmations = () => {
+        handleInterestAcceptDecline(2)
+    }
 
     return (
         <>
@@ -289,11 +315,20 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.InterestBtnGroup}>
-                                <Button className={classes.acceptBtn} onClick={() => handleInterestAcceptDecline(1)}>
-                                    <IoMdPersonAdd />
-                                    {!btn ? 'Accept Interest' : 'Interest Accepted'}
+                                <Button className={classes.acceptBtn} onClick={() => handleAcceptPopupShow(userData?.userid)}>
+                                    {loading ? (
+                                        <Spinner
+                                            className={classes.loginSpiner}
+                                            animation="border"
+                                            variant="light"
+                                        />
+                                    )
+                                        : <IoMdPersonAdd />
+                                    }
+                                    {!loading ? !btn ? 'Accept Interest' : 'Interest Accepted'
+                                        : 'Accepting...'}
                                 </Button>
-                                <Button className={classes.declineBtn} onClick={() => handleInterestAcceptDecline(2)}>
+                                <Button className={classes.declineBtn} onClick={() => handleDeclinePopupShow(userData?.userid)}>
                                     <MdCancel />
                                     {!btn ? 'Decline Interest' : 'Interest Declined'}
                                 </Button>
@@ -315,8 +350,9 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
                 </div>
             </div >
 
-            {blockPopup && <ConfirMationsPopup loading={loading} popuptype={false} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} />}
-
+            {blockPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} index={1} />}
+            {acceptPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleAcceptConfirmations} handleInterestPopupHide={handleAcceptPopupHide} index={2} />}
+            {declinPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleDeclineConfirmations} handleInterestPopupHide={handleDeclinePopupHide} index={3} />}
         </>
     )
 }

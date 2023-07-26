@@ -5,22 +5,43 @@ import { Button, Form, Image, Spinner } from 'react-bootstrap';
 type ComponentProps = {
     confirmationsFun: () => void;
     handleInterestPopupHide: () => void;
-    popuptype: boolean;
     loading: boolean;
+    index: number;
 }
 
-const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handleInterestPopupHide, popuptype, loading }) => {
+const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handleInterestPopupHide, loading, index }) => {
+
+    const contentPopup = [
+        {
+            img: '/Images/send-interest.webp',
+            content: 'send Interest to'
+        },
+        {
+            img: '/Images/user-blocked.png',
+            content: 'block'
+        },
+        {
+            img: '/Images/accept_interest.webp',
+            content: 'accept interest of'
+        },
+        {
+            img: '/Images/decline_interest.webp',
+            content: 'decline interest of'
+        },
+    ]
+
+
 
     return (
         <div className={classes.modal_form}>
             <div className={classes.ResetForm} >
 
                 <div className={classes.ImageSection}>
-                    <Image src={popuptype ? '/Images/send-interest.webp' : '/Images/user-blocked.png'} alt='user photo' />
+                    <Image src={contentPopup[index]?.img} alt='user photo' />
                 </div>
                 <div className={classes.ResetHeader}>
                     <h4>Are you sure ?</h4>
-                    <p>Are you sure you want to {popuptype ? <span>send Interest to</span> : <span>block</span>} this user ?</p>
+                    <p>Are you sure you want to <span>{contentPopup[index]?.content}</span> this user ?</p>
                 </div>
                 <div className={classes.FormDiv}>
                     <div className={classes.ButtonSection}>

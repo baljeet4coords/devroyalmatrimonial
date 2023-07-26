@@ -160,8 +160,8 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             userIdToBlock: cardId,
             status: !BlockedUser?.includes(cardId) ? 'Y' : 'N'
         });
-        console.log(mutationResult,'mutationResult');
-        
+        console.log(mutationResult, 'mutationResult');
+
         updateBlockListedUser && updateBlockListedUser(mutationResult, cardId);
         updateShortListedUser && updateShortListedUser(cardId);
         if (mutationResult.output === 1) {
@@ -169,7 +169,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             setBlock && setBlock(cardId);
             setBlockPopup(false);
             setLoading(false);
-        }else{
+        } else {
             setBlockPopup(false);
             setLoading(false);
         }
@@ -332,18 +332,18 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                             <div className={classes.button_section}>
                                 <Button disabled={
                                     BlockedUser?.includes(userData?.userid)
-                                    || userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
+                                    || userData?.interest?.Receive === 'D' || userData?.interest?.Receive === 'S' || userData?.interest?.Send === 'D'
                                     || userData?.interest?.Receive === 'A' || userData?.interest?.Send === 'A'}
                                     onClick={() => handleInterestPopupShow(userData?.userid)}
                                     className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activebtn : ''}>
                                     <BiHeartCircle className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activesvg : ''} />
-                                    {userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S'
+                                    {userData?.interest.Send === 'S' || userData?.interest?.Receive === 'A'
                                         ? userData?.interest?.Receive === 'A' || userData?.interest.Send === 'A'
                                             ? 'Interest Accepted'
                                             : userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
                                                 ? 'Interest Declined'
                                                 : 'Intrest Sent'
-                                        : 'Send Intrest'}
+                                        : userData?.interest?.Receive === 'S' && userData?.interest?.Send != 'D' ? 'Interest Recived' : userData?.interest?.Send === 'D' ? 'Interest Declined' : 'Send Intrest'}
                                 </Button>
                                 <Button disabled={BlockedUser?.includes(userData?.userid)} className={shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
                                     <MdStars className={shortlistUser ? classes.activesvg : ''} />
@@ -364,8 +364,8 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             </div >
 
 
-            {interestPopup && <ConfirMationsPopup loading={loading} popuptype={true} confirmationsFun={handleSendInterest} handleInterestPopupHide={handleInterestPopupHide} />}
-            {blockPopup && <ConfirMationsPopup loading={loading} popuptype={false} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} />}
+            {interestPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleSendInterest} handleInterestPopupHide={handleInterestPopupHide} index={0} />}
+            {blockPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} index={1} />}
         </>
     )
 }

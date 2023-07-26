@@ -13,7 +13,7 @@
   .ResetForm {
     // width: 35%;
     margin: 0 auto;
-    padding: 1.5rem !important;
+    padding: 1.5rem;
     border-radius: 7px;
     background: #ffffff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -95,11 +95,13 @@
 }
 
 @media screen and (max-width: 515px) {
-  .ResetForm {
-    padding: 1rem !important;
-    .ResetHeader {
-      h4 {
-        padding-right: 2rem;
+  .modal_form {
+    .ResetForm {
+      padding: 1rem;
+      .ResetHeader {
+        h4 {
+          padding-right: 2rem;
+        }
       }
     }
 

@@ -4,11 +4,12 @@
   background: url("../../public/Images/cover-image-register.jpg") no-repeat
     center center;
   padding: 3rem  0;
+  padding-bottom: 5rem;
   background-size: cover;
   height: 22rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   h3{
     color: #fff;

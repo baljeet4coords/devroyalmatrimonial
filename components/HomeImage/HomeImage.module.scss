@@ -1,21 +1,17 @@
-
 .homeImage {
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 622px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 622px;
 }
 
-
 @media only screen and (max-width: 500px) {
-
-    .homeImage{
-        background: url(../../public/Images/responsive_header_image.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        min-height: 360px;
-        height: auto;
-        background-position: center center;
-        margin-top: 3.8rem;
-    }
-   
+  .homeImage {
+    background: url(../../public/Images/responsive_header_image.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    min-height: 360px;
+    background-position: center center;
+    margin-top: 3.8rem;
   }
+}

@@ -102,9 +102,13 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
         <Col sm={3} md={4} lg={3} className={`${classes.Profile_section} p-0 d-flex justify-content-end`}>
           <Image
             src={privacySetting ? privacySetting?.privacy_show_photo === 'P'
-              ? `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
+              ? `http://dev.royalmatrimonial.com/api/${step1Response?.photo}`
               : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
-                ? `https://beta.royalmatrimonial.com/api/${step1Response?.photo}`
+                ?
+                interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                  ? blurredPhotoUrl
+                  : `http://dev.royalmatrimonial.com/api/${step1Response?.photo}`
+
                 : blurredPhotoUrl
               : `${process.env.NEXT_PUBLIC_URL}/${step1Response?.photo}`
             }
@@ -122,7 +126,9 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
                       ? privacySetting?.privacy_show_name === 'P'
                         ? ShowNameONConditions
                         : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
-                          ? ShowNameONConditions
+                          ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                            ? reptNameHide()
+                            : ShowNameONConditions
                           : reptNameHide()
                       : ShowNameONConditions
                   }</span>{" "}
@@ -131,21 +137,27 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
                   RM ID : <span>{AuthSuccess?.user_RM_ID || "NA"} </span>{" "}
                 </p>
                 <p className={classes.MiddleLeftHeading}>
-                  Mobile No : <span> {privacySetting ? privacySetting?.privacy_show_contact === 'P' ?
-                    step1Response?.mobile
-                    : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
-                      ? step1Response?.mobile
-                      : reptPhoneHide()
+                  Mobile No : <span> {privacySetting
+                    ? privacySetting?.privacy_show_contact === 'P' ?
+                      step1Response?.mobile
+                      : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                        ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                          ? reptPhoneHide()
+                          : step1Response?.mobile
+                        : reptPhoneHide()
                     : step1Response?.mobile
                   } </span>{" "}
                 </p>
                 <p className={`${classes.MiddleLeftHeading} `}>
                   Email Id : <span className="text-lowercase">
-                    {privacySetting ? privacySetting?.privacy_show_contact === 'P' ?
-                      ShowEmainONConditions
-                      : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
-                        ? ShowEmainONConditions
-                        : reptEmailHide()
+                    {privacySetting
+                      ? privacySetting?.privacy_show_contact === 'P' ?
+                        ShowEmainONConditions
+                        : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                          ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                            ? reptEmailHide()
+                            : ShowEmainONConditions
+                          : reptEmailHide()
                       : ShowEmainONConditions
                     } </span>{" "}
                 </p>
