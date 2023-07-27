@@ -92,6 +92,7 @@
         display: flex;
         align-items: center;
         font-weight: 500;
+        min-width: auto;
 
         svg {
           position: initial;
@@ -197,6 +198,7 @@
   .singleBox {
     flex-direction: column;
     width: 100%;
+    gap: 10px;
 
     .inputBox {
       margin: 0.6rem 0;

@@ -23,7 +23,7 @@ const CountrySingle: React.FC<CountryProps> = ({
     let Defaultcountry =
       (defaultValueCountry != (undefined && null) &&
         defaultValueCountry != -1 &&
-        countries[defaultValueCountry].name) ||
+        countries[defaultValueCountry - 1]?.name) ||
       "Select Country";
     setSelecedData(Defaultcountry);
   }, [defaultValueCountry]);
@@ -36,7 +36,7 @@ const CountrySingle: React.FC<CountryProps> = ({
   const [selecedData, setSelecedData] = useState(
     (defaultValueCountry != (undefined && null) &&
       defaultValueCountry != -1 &&
-      countries[defaultValueCountry].name) ||
+      countries[defaultValueCountry]?.name) ||
     "Select Country"
   );
 
@@ -63,11 +63,11 @@ const CountrySingle: React.FC<CountryProps> = ({
     setSearchInput("");
     UpdatesearchHostedArray(countries);
     activeList && setErrorState !== undefined && setErrorState(false);
-    setErrorStateDefault && setErrorStateDefault(false)
+    setErrorStateDefault && setErrorStateDefault(false);
     setTimeout(() => {
       setActiveList(false);
     }, 100);
-    setSelectedCountry(getIndex);
+    setSelectedCountry(getIndex + 1);
   };
 
   // To Find the country Which is get defaultValueCountry

@@ -27,14 +27,7 @@ const ProtectedRouting = <P extends ProtectedRoutingHOCProps>(
 
     // to get privacyState bydefault 
     const persist = useSelector(selectAuthSuccess)
-
-    // console.log(,'>>>');
     
-    // const persistAuth = localStorage.getItem('persist:auth');
-    // const parsedPersistAuth = persistAuth && JSON.parse(persistAuth);
-    // const parsedPersistAuthResponse = parsedPersistAuth && JSON.parse(parsedPersistAuth?.response)
-    // const parsedPersistAuthResponseJsonResponse = parsedPersistAuthResponse && parsedPersistAuthResponse?.jsonResponse;
-
     const [privacyModal, setPrivacyModal] = useState(true);
 
     const handleClose = () => {

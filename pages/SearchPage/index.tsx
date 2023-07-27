@@ -1,55 +1,42 @@
 import classes from "./Search.module.scss";
-import { Container } from "react-bootstrap";
-import { Footer, LoginHeader } from "../../components/";
+import { Col, Container, Row } from "react-bootstrap";
+import { Footer, Header, LoginHeader } from "../../components/";
 import React, { useState } from "react";
+import SearchByData from "./SearchByData";
+import SearchById from "./SearchByProfile";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../ducks/auth/selectors";
 
 const Search: React.FC = () => {
-  const [searchData, setSearchData] = useState<string>("searchByData");
+  const [searchData, setSearchData] = useState<string>("searchbydata");
+  const userId = useSelector(getUserId);
 
-  // const DataOnclick = (searchtype: string) => {
-  //   setSearchData(searchtype);
-  // };
+  const DataOnclick = (searchtype: string) => {
+    return setSearchData(searchtype);
+  };
+
+  console.log(userId, 'id');
+
   return (
     <>
       <div className={classes.bg}>
         <Container fluid className={classes.background_banner}>
-          <LoginHeader />
+          {userId ? <LoginHeader /> : <Header />}
         </Container>
-        <h1 className="text-center text-danger py-5 my-5">
-          This Feature Is Coming Soon!
-        </h1>
-        {/* <div className={`${classes.bg_gray} w-100 pb-5`}>
-        <Container className={`${classes.search_main} w-75`}>
-          <Row>
-            <Col sm={6} className="px-0">
-              <div
-                className={
-                  searchData == "searchByData"
-                    ? classes.activeSearchType
-                    : classes.search_box
-                }
-                onClick={() => DataOnclick("searchByData")}
-              >
-                Search
-              </div>
-            </Col>
-            <Col sm={6} className="px-0">
-              <div
-                className={
-                  searchData == "searchById"
-                    ? classes.activeSearchType
-                    : classes.search_box
-                }
-                onClick={() => DataOnclick("searchById")}
-              >
-                Search By Id
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        <div className={`${classes.bg_gray} w-100 pb-5`}>
+          <div className={`${classes.search_main}`}>
+            <Row className={`${classes.tabSection} row`}>
+              <button onClick={() => DataOnclick('searchbydata')} className={`${classes.TabButton} ${searchData === 'searchbydata' && classes.TabButtonActive} `}>
+                Search by Data
+              </button>
+              <button onClick={() => DataOnclick('searchbyid')} className={`${classes.TabButton} ${searchData === 'searchbyid' && classes.TabButtonActive} `}>
+                Search by id
+              </button>
+            </Row>
+          </div>
 
-        {searchData == "searchByData" ? <SearchByData /> : <SearchById />}
-      </div> */}
+          {searchData === "searchbydata" ? <SearchByData /> : <SearchById />}
+        </div>
       </div>
       <Footer />
     </>

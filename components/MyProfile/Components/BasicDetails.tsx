@@ -11,14 +11,21 @@ import {
   Religion,
 } from "../../../types/enums";
 import { CastListArray } from "../../../constants/CastListArray";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../../types/PartnerDetails/partnerDetails";
 
 interface MyComponentProps {
   setBasicDetails: (details: boolean) => void;
   step1Response: any;
+  EditHide?: boolean;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 const BasicDetails: FC<MyComponentProps> = ({
   step1Response,
   setBasicDetails,
+  EditHide,
+  privacySetting,
+  interestResponse
 }) => {
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -57,6 +64,10 @@ const BasicDetails: FC<MyComponentProps> = ({
 
     return castname;
   }
+
+
+  const reptNameHide = () => <>{step1Response?.fullname.slice(0, 3)}<span>{'*'.repeat(8)}</span></>;
+
 
   const BasicDetails = [
     {
@@ -101,6 +112,11 @@ const BasicDetails: FC<MyComponentProps> = ({
   ];
 
 
+  const ShowNameONConditions = step1Response && step1Response?.fullname.length > 16
+    ? (step1Response?.fullname).toLocaleLowerCase().substring(0, 15).concat('...')
+    : step1Response?.fullname.toLocaleLowerCase();
+
+
   return (
     <>
       <div className={classes.content}>
@@ -109,22 +125,29 @@ const BasicDetails: FC<MyComponentProps> = ({
             <FiUser />
             Basic Details
           </div>
-          <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setBasicDetails(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Username}>
           <p>
             Full name{" "}
-            <span> - {step1Response?.fullname || "NA"}</span>{" "}
+            <span> - {
+              privacySetting
+                ? privacySetting?.privacy_show_name === 'P'
+                  ? ShowNameONConditions
+                  : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+                    ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                      ? reptNameHide()
+                      : ShowNameONConditions
+                    : reptNameHide()
+                : ShowNameONConditions
+            }</span>{" "}
           </p>
         </div>
-
-        {/* <div className={classes.UserVerified}>
-          <MdVerified />
-          your profile verification is pending...
-          <span>Get verified NOW</span>
-        </div> */}
         <div className={classes.Userdetails}>
           <div className={classes.UserdetailsSec}>
             <p className={classes.input_Name}>Age</p>
@@ -163,7 +186,7 @@ const BasicDetails: FC<MyComponentProps> = ({
             );
           })}
         </div>
-      </div>
+      </div >
     </>
   );
 };

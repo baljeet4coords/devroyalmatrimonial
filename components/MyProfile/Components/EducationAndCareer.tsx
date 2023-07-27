@@ -20,15 +20,17 @@ import {
 interface MyComponentProps {
   setEudcationAndCareer: (details: boolean) => void;
   step2Response: any;
+  EditHide: boolean;
 }
 const EducationAndCareer: FC<MyComponentProps> = ({
   setEudcationAndCareer,
   step2Response,
+  EditHide
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     step2Response?.country != (undefined && null)
-      ? countries[step2Response?.country].isoCode
+      ? countries[step2Response?.country - 1].isoCode
       : "IN"
   );
 
@@ -41,32 +43,31 @@ const EducationAndCareer: FC<MyComponentProps> = ({
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
   const [stateCode, setStateCode] = useState<string>(
     step2Response?.state != (undefined && null)
-      ? stateOfCountry[step2Response?.state]?.isoCode
+      ? stateOfCountry[step2Response?.state - 1]?.isoCode
       : "AS"
   );
-  const cityOfState: ICity[] = City.getCitiesOfState(countryCode, stateCode);
+
+  const allCitiesOfCountry: ICity[] = City.getCitiesOfCountry(countryCode) || [];
 
   useEffect(() => {
     step2Response?.country !== undefined &&
       countries[step2Response?.country] !== undefined &&
-      setCountryCode(countries[step2Response?.country].isoCode);
+      setCountryCode(countries[step2Response?.country - 1].isoCode);
     step2Response?.state != undefined &&
       stateOfCountry[step2Response?.state] !== undefined &&
       step2Response?.state >= 0 &&
-      setStateCode(stateOfCountry[step2Response?.state].isoCode);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      setStateCode(stateOfCountry[step2Response?.state - 1].isoCode);
   }, [countryCode, stateCode, step2Response?.country, step2Response?.state]);
 
   function getCountry() {
-    return step2Response?.country !== (undefined || null) && countries[step2Response?.country]?.name;
+    return step2Response?.country !== (undefined || null) && countries[step2Response?.country - 1]?.name;
   }
   function getState() {
-    return step2Response?.state !== (undefined || null) && stateOfCountry[step2Response?.state]?.name;
+    return step2Response?.state !== (undefined || null) && stateOfCountry[step2Response?.state - 1]?.name;
   }
   function getCity() {
-    return step2Response?.city !== (undefined || null) && cityOfState[step2Response?.city]?.name;
+    return step2Response?.city !== (undefined || null) && allCitiesOfCountry[step2Response?.city - 1]?.name;
   }
-
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
       if (val === value) {
@@ -139,39 +140,31 @@ const EducationAndCareer: FC<MyComponentProps> = ({
             <BiBook />
             Education & Career
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setEudcationAndCareer(true)}
-          >
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setEudcationAndCareer(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {
             return (
-              <>
-                <div className={classes.UserdetailsSec} key={item.name}>
-                  <p className={classes.input_Name}>{item.name}</p>
-                  <p
-                    className={
-                      item.value === "NA"
-                        ? classes.input_Value_NotFilled
-                        : classes.input_Value
-                    }
-                  >
-                    {item.value === "NA" ? "Not Field in" : item.value}{" "}
-                  </p>
-                </div>
-              </>
+              <div className={classes.UserdetailsSec} key={item.name}>
+                <p className={classes.input_Name}>{item.name}</p>
+                <p
+                  className={
+                    item.value === "NA"
+                      ? classes.input_Value_NotFilled
+                      : classes.input_Value
+                  }
+                >
+                  {item.value === "NA" ? "Not Field in" : item.value}{" "}
+                </p>
+              </div>
             );
           })}
         </div>
-        {/* {BasicDetails.pin && (
-          <div className={classes.pin}>
-            <BsPinAngle />
-            {BasicDetails.pinValue}
-          </div>
-        )} */}
       </div>
     </>
   );

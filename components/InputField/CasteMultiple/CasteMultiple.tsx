@@ -79,7 +79,6 @@ const CasteMultiple: React.FC<CastMultiple> = ({
         }, 0);
       } else {
         if (!HostedArray.some((item) => Object.is(item, caste))) {
-          console.log(getIndex, castesIds, caste, "getIndex, caste");
           setCastesIds(castesIds.filter((indx) => indx > 0));
           updateHostedArray(HostedArray.filter((item) => item.id != "0"));
           setCastesIds((prev) => [...prev, Number(caste.id)]);

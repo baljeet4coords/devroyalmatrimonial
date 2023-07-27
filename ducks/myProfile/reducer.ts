@@ -36,6 +36,13 @@ interface myProfileState {
       message: string;
       jsonResponse: IRegisterStep5Response | null;
     };
+    profileCompletionScore: {
+      output: number;
+      message: string;
+      jsonResponse: null;
+      status: number;
+      overallScore: number;
+    };
   } | null;
   error: string | null;
 }
@@ -67,6 +74,13 @@ const initialState: myProfileState = {
       output: 0,
       message: "",
       jsonResponse: null,
+    },
+    profileCompletionScore: {
+      output: 0,
+      message: "",
+      jsonResponse: null,
+      status: 500,
+      overallScore: -1,
     },
   },
   error: null,

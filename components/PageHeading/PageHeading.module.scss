@@ -1,0 +1,49 @@
+.headingContainer {
+  // background-color: #e9ecef;
+  width: 75%;
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 0.5rem;
+  //   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+  .PageHeading {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .headingContainer {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .headingContainer {
+    width: 82%;
+  }
+}
+@media only screen and (max-width: 590px) {
+  .headingContainer {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .headingContainer {
+    width: 93%;
+  }
+}
+
+@media only screen and (max-width: 415px) {
+  .headingContainer {
+    width: 91%;
+  }
+}

@@ -23,7 +23,7 @@ const registerUser = async (values: any) => {
   formData.append("profilepic", String(values.profilepic));
   formData.append("image", values.image);
 
-  if (values.isReduxEmpty) {
+  if (values.isReduxEmpty === undefined) {
     formData.append("actionType", "c");
   } else {
     formData.append("actionType", "u");

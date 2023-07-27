@@ -23,18 +23,22 @@ export interface IRegisterStep1Response {
   challenged: number;
   children_status: number;
   dob: string;
+  emailid: string;
   fullname: string;
   gender: string;
   height_cm: number;
   hiv: number;
+  isd_code: number;
   manglik: number;
   marital_status: number;
+  mobile: number;
   mother_tongue: number;
   photo: string;
   profile_for: number;
   profile_handlername: string;
   religion: number;
 }
+
 export interface IRegisterStep2 {
   actionType: "v" | "c" | "u";
   userId?: number;
@@ -137,4 +141,12 @@ export interface IRegisterStep5Response {
   pobCity: number;
   pobCountry: number;
   pobState: number;
+}
+
+export interface IProfileCompletionScore {
+  output: number;
+  message: string;
+  jsonResponse: null;
+  status: number;
+  overallScore: number;
 }

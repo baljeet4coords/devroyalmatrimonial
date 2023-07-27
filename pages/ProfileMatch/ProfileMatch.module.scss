@@ -1,11 +1,66 @@
 @import "../../styles/constants.scss";
 
 .background_header {
-    background: url("../../public/Images/cover-image-register.jpg") no-repeat center center;
-    padding: 3rem 0 15rem 0;
-    background-size: cover;
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
+  padding: 3rem  0;
+  padding-bottom: 5rem;
+  background-size: cover;
+  height: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h3{
+    color: #fff;
+    text-transform: capitalize;
+    text-align: center;
+  }
 }
 
 .bg {
-    background: rgb(231, 230, 230);
+  background: rgb(231, 230, 230);
+
+  .card_container {
+    // width: 75%;
+    margin: auto;
+  }
+}
+
+@media only screen and (max-width: 1091px) and (min-width: 992px) {
+    .bg {
+        .card_container {
+          width: 76%;
+        }
+      }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  .bg {
+    .card_container {
+      width: 90%;
+      padding: 3rem;
+    }
+  }
+}
+@media only screen and (max-width: 767px) and (min-width: 601px) {
+  .bg {
+    .card_container {
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 600px) and (min-width: 350px) {
+  .bg {
+    .card_container {
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 348px) {
+  .bg {
+    .card_container {
+      width: 100%;
+    }
+  }
 }

@@ -1,0 +1,92 @@
+.interestSentRecive {
+  position: relative;
+
+  .search_main {
+    .tabSection {
+      background-color: #fff;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      padding: 15px 20px;
+      border-radius: 5px;
+      flex-direction: row;
+      width: 75%;
+      justify-content: center;
+      margin: auto;
+      margin-bottom: 1rem;
+
+      .TabButton {
+        background-color: transparent;
+        border: 1px solid #d5d5d5;
+        border-radius: 21px;
+        padding: 5px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        outline: none;
+        width: auto;
+        text-transform: capitalize;
+        color: #1d1b1b;
+      }
+      .TabButtonActive {
+        background-color: #dc3545;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1124px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        margin: auto;
+        margin-top: 3rem;
+        transform: translateX(-0%);
+        flex-wrap: nowrap;
+        position: initial;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 691px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        position: initial;
+        overflow-x: scroll;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 424px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        gap: 1rem;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin: 1rem;
+        width: auto;
+        margin-top: 3rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .interestSentRecive {
+    .search_main {
+      .tabSection {
+        gap: 1rem;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-top: 3rem;
+      }
+    }
+  }
+}

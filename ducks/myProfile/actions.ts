@@ -43,6 +43,13 @@ interface MyProfileActionSuccessAction {
       message: string;
       jsonResponse: IRegisterStep5Response;
     };
+    profileCompletionScore: {
+      output: number;
+      message: string;
+      jsonResponse: null;
+      status: number;
+      overallScore: number;
+    };
   } | null;
 }
 

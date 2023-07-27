@@ -8,7 +8,13 @@ import { watchLogin, watchLogout, watchSignup } from "./auth/saga";
 import { partnerPrefferenceSaga } from "./partnerPreferrence";
 import { privacySettingsSaga } from "./PrivacySetting";
 import { myprofileSaga } from "./myProfile";
+import { matchMakingSaga } from "./matchMaking";
 import { gallerySaga, gallerySagaPost } from "./Gallery";
+import { searchByDataSaga } from "./searchByData";
+import { shortlistSaga } from "./userShortList";
+import { blocklistSaga } from "./userBlocklist";
+import { showInterestSaga } from "./showInterest";
+import { partnerDetailsSaga } from "./PartnerDetails";
 
 function* rootSaga() {
   yield all([
@@ -23,8 +29,14 @@ function* rootSaga() {
     partnerPrefferenceSaga(),
     privacySettingsSaga(),
     myprofileSaga(),
+    matchMakingSaga(),
+    searchByDataSaga(),
     gallerySaga(),
     gallerySagaPost(),
+    shortlistSaga(),
+    blocklistSaga(),
+    showInterestSaga(),
+    partnerDetailsSaga(),
   ]);
 }
 

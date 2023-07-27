@@ -5,11 +5,14 @@ import {
   RightSectionHoroScopeMatch,
   RightSectionHoroScopeNotMatch,
 } from "./RightSecHoroScope";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../../types/PartnerDetails/partnerDetails";
 
 interface RightSectionProp {
   myProfileObject: any;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
-const MyProfileRightSec: React.FC<RightSectionProp> = ({ myProfileObject }) => {
+const MyProfileRightSec: React.FC<RightSectionProp> = ({ myProfileObject, privacySetting, interestResponse }) => {
   const [editContact, setEditContact] = useState<boolean>(false);
   const [editHoroscopeMatch, setEditHoroscopeMatch] = useState<boolean>(false);
   const [editHoroscopeNotMatch, setEditHoroscopeNotMatch] =
@@ -24,6 +27,8 @@ const MyProfileRightSec: React.FC<RightSectionProp> = ({ myProfileObject }) => {
         EditDetails={editContact}
         setEditDetails={setEditContact}
         step1Response={step1Response}
+        privacySetting={privacySetting}
+        interestResponse={interestResponse}
       />
 
       <div className={classes.emptyDiv}></div>

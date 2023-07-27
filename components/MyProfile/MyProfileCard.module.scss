@@ -76,10 +76,9 @@
 
       span {
         bottom: 0px;
-        position: absolute;
         color: rgb(255, 60, 60);
         font-size: 1.5rem;
-        font-weight: 500;
+        font-weight: 600;
         line-height: normal;
       }
     }
@@ -90,7 +89,6 @@
       font-size: 16px;
       margin: 0;
       color: #383535;
-      margin-bottom: 1rem;
     }
 
     svg {
@@ -102,6 +100,7 @@
   .mobileRow {
     z-index: 12;
     position: relative;
+    min-height: 15rem;
   }
 }
 
@@ -197,7 +196,6 @@
     }
 
     .cardInfo {
-
       // .UserName_Section {
       //     min-height: 50px;
       // }
@@ -247,7 +245,8 @@
 
         .mobileAvatar {
           width: 200px;
-          margin: 0 auto 1rem;
+          height: 200px;
+          margin: 0 auto;
           border-radius: 100%;
           border: 8px solid #fff;
           position: relative;

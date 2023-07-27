@@ -7,10 +7,12 @@ import { BloodGroup, CarType, Diet, HouseType, SmokeDrink, Thalassemia } from ".
 interface MyComponentProps {
   setEditDetails: (details: boolean) => void;
   step3Response: any;
+  EditHide: boolean;
 }
 const LifeStyleDetails: FC<MyComponentProps> = ({
   step3Response,
   setEditDetails,
+  EditHide,
 }) => {
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
@@ -104,9 +106,12 @@ const LifeStyleDetails: FC<MyComponentProps> = ({
             <CiPillsBottle1 />
             LifeStyle
           </div>
-          <span className={classes.Edit} onClick={() => setEditDetails(true)}>
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setEditDetails(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.Userdetails}>
           {BasicDetails.data.map((item) => {

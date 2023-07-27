@@ -2,24 +2,83 @@ import { FC } from "react";
 import classes from "../Components/RightSectionMyProfile.module.scss";
 import EditContact from "../../EditMyProfile/EditContact";
 import { IoCallOutline } from "react-icons/io5";
+import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../../types/PartnerDetails/partnerDetails";
 
 interface MyComponentProps {
   EditDetails: boolean;
   setEditDetails: (details: boolean) => void;
   step1Response: any;
+  privacySetting?: IPartnerDetailsPrivacyResponse | null;
+  interestResponse?: IPartnerDetailsInterestResponse | null;
 }
 const RightSectionContactDetails: FC<MyComponentProps> = ({
   EditDetails,
   setEditDetails,
   step1Response,
+  privacySetting,
+  interestResponse
 }) => {
+
+
+  const reptEmailHide = () => {
+    const email = step1Response?.emailid; // Retrieve the email address from step1Response object
+
+    if (!email) {
+      return null; // Return null if the email is null or undefined
+    }
+
+    const startuserName = email.slice(0, 4);
+    const atIndex = email.indexOf('@'); // Find the index of the '@' symbol in the email address
+    const username = email.slice(0, atIndex); // Get the username part of the email
+    const hiddenPlaceholder = '*'.repeat(username.length - 5); // Create a placeholder of asterisks with the same length
+
+    return (
+      <>
+        <span className="text-lowercase ">{startuserName.toLocaleLowerCase()} {hiddenPlaceholder}
+          {email.slice(atIndex, email.length).toLocaleLowerCase()}
+        </span>
+      </>
+    );
+  }
+
+
+  const ShowEmainONConditions = step1Response && step1Response?.emailid.length > 16
+    ? (step1Response?.emailid).substring(0, step1Response.emailid.indexOf('@') + 4).concat('...')
+    : step1Response?.emailid.toLocaleLowerCase();
+
+
+  const reptPhoneHide = () => {
+    const mobileNumber = step1Response?.mobile.toLocaleString(); // Convert the mobile number to a string
+    const hiddenDigits = mobileNumber && mobileNumber.slice(6); // Get the portion of the number to hide
+    const hiddenPlaceholder = hiddenDigits && '*'.repeat(hiddenDigits.length); // Create a placeholder of asterisks with the same length
+
+    return (
+      <>
+        <span>{hiddenPlaceholder}
+          {mobileNumber && mobileNumber.slice(-3)} {/* Display the last 4 digits of the mobile number */}
+        </span>
+      </>
+    );
+  };
+
+
   const BasicDetails = {
     pin: false,
     pinValue: "",
     data: [
       {
         name: "Email id",
-        value: step1Response?.emailid || "NA",
+        value: privacySetting
+          ? privacySetting?.privacy_show_contact === 'P' ?
+            ShowEmainONConditions
+            : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+              ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                ? reptEmailHide()
+                : ShowEmainONConditions
+              : reptEmailHide()
+          : ShowEmainONConditions
+
+        ,
         verify: true,
         isVerify: false,
       },
@@ -29,7 +88,16 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
       },
       {
         name: "Mobile No.",
-        value: step1Response?.mobile || "NA",
+        value: privacySetting
+          ? privacySetting?.privacy_show_contact === 'P' ?
+            step1Response?.mobile
+            : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
+              ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
+                ? reptPhoneHide()
+                : step1Response?.mobile
+              : reptPhoneHide()
+          : step1Response?.mobile
+        ,
         verify: true,
         isVerify: true,
       },
@@ -55,6 +123,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
       },
     ],
   };
+
 
   return (
     <>
@@ -96,7 +165,7 @@ const RightSectionContactDetails: FC<MyComponentProps> = ({
             })}
           </ul>
         ) : (
-          <EditContact  step1Response={step1Response} setEditDetails={setEditDetails} />
+          <EditContact step1Response={step1Response} setEditDetails={setEditDetails} />
         )}
       </div>
     </>

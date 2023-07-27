@@ -10,7 +10,7 @@ interface DropdownGridProps {
   title: string;
   data: {};
   nameid: string;
-  selectedDataFn: ({ id, val }: { id?: string; val: string }) => void;
+  selectedDataFn: ({ id, val }: { id?: string ; val: string }) => void;
   defaultValue?: string;
   setErrorState?: (details: boolean) => void;
 }

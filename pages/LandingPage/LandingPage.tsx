@@ -21,6 +21,7 @@ import {
 } from "../../ducks/auth/selectors";
 import { signupRequest } from "../../ducks/auth/actions";
 import axios from "axios";
+import MatchCarusel from "../../components/Carousel/SlickDemoCarusel";
 
 const LandingPage: React.FC = () => {
   const [errorForOTP, setErrorForOTP] = useState<string>("");
@@ -99,7 +100,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    
+
     <>
       <Header />
       <HomeImage addBackground={headimage} />
@@ -314,7 +315,7 @@ const LandingPage: React.FC = () => {
               assist in finding a perfect life partner.
             </p>
           </Col>
-            
+
           <Col sm={12} md={4} className="text-center py-3">
             <Image src="./Images/icons/express-yourself.gif" alt="pic" />
             <h3>Express your preferences</h3>
@@ -337,7 +338,8 @@ const LandingPage: React.FC = () => {
           <h1>
             Matched by <strong>Royal Matrimonial</strong>
           </h1>
-          <DemoCarousel />
+          {/* <DemoCarousel /> */}
+          <MatchCarusel />
         </Row>
         <Row className={classes.Home_colord_body}>
           <Col sm={12} md={6}>

@@ -19,6 +19,7 @@ import EditCustomButton from "../Button/EditCustomButton";
 import { MdVerified } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";
 import { RiLockLine } from "react-icons/ri";
+import dynamic from "next/dynamic";
 // import { useHeightConverter } from "../../hooks/utils/useHeightConvert";
 import CastDataList from "../CastDataList/CastDataList";
 import { CastList } from "../../constants/CastList";
@@ -26,9 +27,16 @@ import { useSelector } from "react-redux";
 import { selectStep1Success } from "../../ducks/regiserUser/step1/selectors";
 import CastListDropDown from "../CastListDropDown/CastListDropDown";
 import { CastListArray } from "../../constants/CastListArray";
-import { convertDateStringTimeStamp, convertServerTimestamp, convertTimeStamp } from "../../utils/dayjs";
+import {
+  convertDateStringTimeStamp,
+  convertServerTimestamp,
+  convertTimeStamp,
+} from "../../utils/dayjs";
 import { getUserId } from "../../ducks/auth/selectors";
-import { DateTimePicker } from "react-rainbow-components";
+const DateTimePicker = dynamic(
+  () => import("react-rainbow-components/components/DateTimePicker"),
+  { ssr: false } as any
+);
 import HeightInput from "../InputField/HeightFeetToCmSingle/HeightFeetToCmSingle";
 import { useStep1Register } from "../../hooks/useRegister/useStep1";
 
@@ -41,14 +49,17 @@ interface Data {
   id?: string;
   val: string;
 }
-const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response, FatchAgain }) => {
+const EditBasicDetials: FC<MyComponentProps> = ({
+  setBasicDetails,
+  step1Response,
+  FatchAgain,
+}) => {
   // const stepOneDefaultValues = useSelector(selectStep1Success);
   // const step1Response = stepOneDefaultValues?.jsonResponse;
   const userId = useSelector(getUserId);
   const isReduxEmpty =
     step1Response && Object.values(step1Response).every((value) => !value);
   const { registerUserMutation, Step1Query } = useStep1Register();
-
 
   const [selectedProfileFor, setSelectedProfileFor] = useState<Data>({
     id: String(step1Response?.profile_for),
@@ -88,9 +99,10 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
   });
   const [selectedPhotoName, setSelectedPhotoName] = useState<string>("");
   const [image, setImage] = useState<Blob | string>("");
-  const [dob, setDob] = useState<Date>(convertTimeStamp(step1Response?.dob) || '');
+  const [dob, setDob] = useState<Date>(
+    convertTimeStamp(step1Response?.dob) || ""
+  );
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
-
 
   const formik = useFormik({
     initialValues: {
@@ -112,15 +124,17 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
       profilepic: selectedPhotoName,
     },
     onSubmit: async (values) => {
-
-      const mutationResult = await registerUserMutation.mutateAsync({ ...values, image, isReduxEmpty });
+      const mutationResult = await registerUserMutation.mutateAsync({
+        ...values,
+        image,
+        isReduxEmpty,
+      });
       if (mutationResult?.output && mutationResult?.output > 0) {
         FatchAgain();
         setBasicDetails(false);
       }
     },
   });
-
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -153,7 +167,6 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
     }
   }, [formik.values, selectedChildrenStatus.id, selectedMaritalStatus.id]);
 
-
   function getKeyByValue(value: string, enumObject: any) {
     for (const [key, val] of Object.entries(enumObject)) {
       if (val === value) {
@@ -179,7 +192,6 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
   useEffect(() => {
     if (step1Response) setDob(convertTimeStamp(step1Response?.dob));
   }, [step1Response, step1Response?.dob]);
-
 
   useEffect(() => {
     if (step1Response && step1Response.fullname) {
@@ -232,7 +244,10 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={getKeyByValue(String(step1Response?.profile_for), ProfileFor)}
+                value={getKeyByValue(
+                  String(step1Response?.profile_for),
+                  ProfileFor
+                )}
                 disabled
                 name="profilefor"
                 placeholder="Enter Gender"
@@ -253,6 +268,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   defaultValue={step1Response?.fullname}
+                  className="text-capitalize"
                 />
               </li>
               <p>
@@ -265,7 +281,7 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
             <div className={classes.EditInputSecDisable}>
               <input
                 type="text"
-                value={step1Response?.gender == 'M' ? 'Male' : 'Female'}
+                value={step1Response?.gender == "M" ? "Male" : "Female"}
                 disabled
                 name="gender"
                 placeholder="Enter Gender"
@@ -373,7 +389,6 @@ const EditBasicDetials: FC<MyComponentProps> = ({ setBasicDetails, step1Response
               />
             </div>
           </div>
-
 
           <div className={classes.EditbuttonGroup}>
             <EditCustomButton

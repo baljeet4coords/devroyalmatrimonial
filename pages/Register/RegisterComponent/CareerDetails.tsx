@@ -212,13 +212,13 @@ const CareerDetails: React.FC<ProfileDetailsProps> = ({
     if (jsonData && jsonData.College) {
       formik.values.college = jsonData.College;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonData, jsonData?.College]);
 
 
   // this is commented bcz when update college it not update there formik value
   //  as formik value change then again update the jsonData?.College in formik value 
-  
+
   // useEffect(() => {
   //   if (jsonData && jsonData.College) {
   //     formik.values.college = jsonData.College;

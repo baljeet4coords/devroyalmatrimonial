@@ -15,17 +15,15 @@ const StateSingle: React.FC<StateProps> = ({
   defaultValueCountry,
   setSelectedState,
   defaultValueState,
-  setErrorState
+  setErrorState,
 }) => {
   const countries: ICountry[] = Country.getAllCountries();
   const [countryCode, setCountryCode] = useState<string>(
     defaultValueCountry != (undefined && null)
-      ? countries[defaultValueCountry].isoCode
+      ? countries[defaultValueCountry - 1]?.isoCode
       : "IN"
   );
-
   const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
-
   const elementRef = useRef<HTMLDivElement>(null);
   const [activeList, setActiveList] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState("");
@@ -34,14 +32,13 @@ const StateSingle: React.FC<StateProps> = ({
   );
 
   const [selectedData, setSelectedData] = useState("Select State");
-
   useEffect(() => {
     defaultValueCountry != undefined &&
-      setCountryCode(countries[defaultValueCountry].isoCode);
+      setCountryCode(countries[defaultValueCountry - 1]?.isoCode);
     UpdatesearchHostedArray(State.getStatesOfCountry(countryCode));
     defaultValueState != undefined &&
       stateOfCountry[defaultValueState] != undefined &&
-      setSelectedData(stateOfCountry[defaultValueState].name);
+      setSelectedData(stateOfCountry[defaultValueState - 1]?.name);
   }, [defaultValueState, defaultValueCountry, countries, countryCode]);
 
   // useEffect(() => {
@@ -87,7 +84,7 @@ const StateSingle: React.FC<StateProps> = ({
     }, 50);
     setSelectedData(item.name);
     const getIndex = stateOfCountry.findIndex((obj) => obj.name === item.name);
-    setSelectedState(getIndex);
+    setSelectedState(getIndex + 1);
     setSearchInput("");
     UpdatesearchHostedArray(stateOfCountry);
   };

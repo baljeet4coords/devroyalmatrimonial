@@ -12,7 +12,6 @@ import Errors from "../Errors/Errors";
 import CountrySingle from "../InputField/CountryStateSingle/CountrySingle";
 import StateSingle from "../InputField/CountryStateSingle/StateSingle";
 import CitySingle from "../InputField/CountryStateSingle/CitySingle";
-import { selectStep5Success } from "../../ducks/regiserUser/step5/selectors";
 import { useStep5Register } from "../../hooks/useRegister/useStep5";
 
 interface MyComponentProps {
@@ -147,6 +146,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
     setSelectedBirthCity(
       step5Response?.pobCity != undefined ? step5Response?.pobCity : selectedBirthCity
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step5Response?.pobCity, step5Response?.pobCountry, step5Response?.pobState]);
 
 
@@ -162,7 +162,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             About Me
           </div>
         </div>
-        <div className={classes.typeInHindiSec}>
+        {/* <div className={classes.typeInHindiSec}>
           <Form.Check
             type="switch"
             id="login_with"
@@ -176,7 +176,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             onChange={() => setTypeInHindi(!typeInHindi)}
           />
           <p>Need help writing?</p>
-        </div>
+        </div> */}
         <Form className={classes.formEdit} onSubmit={formik.handleSubmit}>
           <div className={classes.EditsingleBox}>
             <Form.Label>About Career</Form.Label>
@@ -201,7 +201,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             />
             {formik.touched.aboutCareer && formik.errors.aboutCareer ? (
               <div className="pt-1">
-                <Errors error={formik.errors.aboutCareer} />
+                <Errors error={String(formik.errors.aboutCareer)} />
               </div>
             ) : null}
           </div>
@@ -229,7 +229,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             />
             {formik.touched.aboutFamily && formik.errors.aboutFamily ? (
               <div className="pt-1">
-                <Errors error={formik.errors.aboutFamily} />
+                <Errors error={String(formik.errors.aboutFamily)} />
               </div>
             ) : null}
           </div>
@@ -258,7 +258,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
               formik.errors.aboutEducation ? (
               console.log(formik.errors.aboutEducation),
               <div className="pt-1">
-                <Errors error={formik.errors.aboutEducation} />
+                <Errors error={String(formik.errors.aboutEducation)} />
               </div>
             ) : null}
           </div>
@@ -285,7 +285,7 @@ const EditAboutMe: FC<MyComponentProps> = ({ setAboutMeDetails, step5Response, F
             />
             {formik.touched.basicIntro && formik.errors.basicIntro ? (
               <div className="pt-1">
-                <Errors error={formik.errors.basicIntro} />
+                <Errors error={String(formik.errors.basicIntro)} />
               </div>
             ) : null}
           </div>

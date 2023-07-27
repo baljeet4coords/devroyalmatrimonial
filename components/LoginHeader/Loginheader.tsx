@@ -42,7 +42,7 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
 
   const handleShow = () => setPrivacyModal(true);
 
- 
+
 
   const showDropdown = (indx: number) => {
     setShow(indx);
@@ -96,6 +96,12 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
                   <Link href="/ShortListedProfile">Shortlisted Profiles</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item as="li">
+                  <Link href="/BlockedProfile">Blocked Profiles</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item as="li">
+                  <Link href="/ShowInterest">Show Interest</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item as="li">
                   <Link href="/ProfileVisitor">Profile Visitors</Link>
                 </NavDropdown.Item>
               </NavDropdown>
@@ -116,23 +122,18 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
               </NavDropdown>
               <Link href="/HelpPage">HELP</Link>
             </Nav>
-            {/* <Nav className="ms-auto">
-              <Link href="#">
-                <FiBell />
-              </Link>
-            </Nav> */}
           </Navbar.Collapse>
           <NavDropdown
             title={
               <Image
                 className={classes.circleImg}
-                src={`${process.env.NEXT_PUBLIC_URL}/${profilePicture}`}
+                src={profilePicture ? `${process.env.NEXT_PUBLIC_URL}/${profilePicture}` : `/Images/no-avatar.png`}
                 alt="avatar"
               />
             }
             id="ProfileDropdown"
             menuVariant="dark"
-            show={show === 2 ? true : false}
+            show={userId && show === 2 ? true : false}
             onMouseEnter={() => showDropdown(2)}
             onMouseLeave={hideDropdown}
             className={classes.profileAvtarDrop}
@@ -143,9 +144,6 @@ const LoginHeader: React.FC<LoginHeaderProps> = ({ }) => {
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               <Link href="/DesiredProfile">Desired Partner preference</Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item as="li">
-              <Link href="/Register">Edit Profile </Link>
             </NavDropdown.Item>
             <NavDropdown.Item as="li">
               <Link href="" onClick={handleShow}>

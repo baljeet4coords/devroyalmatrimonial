@@ -1,4 +1,39 @@
-.heightInput {
-  width: 33%;
-  padding: 8px 10px;
+form {
+  .heightInput {
+    width: 33%;
+    padding: 8px 10px;
+  }
+
+  .heightlabel {
+    margin-left: -10.6rem;
+    position: absolute;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  form {
+    .heightInput {
+      width: 33%;
+      padding: 8px 10px;
+    }
+
+    .heightlabel {
+      margin-left: 0;
+      position: initial;
+    }
+  }
+}
+
+@media only screen and (max-width: 667px) {
+  form {
+    .heightInput {
+      width: 33%;
+      padding: 8px 10px;
+    }
+
+    .heightlabel {
+      margin-left: 0;
+      position: initial;
+    }
+  }
 }

@@ -5,10 +5,12 @@ import classes from "./GlobalDetails.module.scss";
 interface MyComponentProps {
   setAboutMeDetails: (details: boolean) => void;
   step5Response: any;
+  EditHide : boolean;
 }
 const AboutMeDetails: FC<MyComponentProps> = ({
   step5Response,
   setAboutMeDetails,
+  EditHide
 }) => {
   const BasicDetails = [
     {
@@ -32,17 +34,17 @@ const AboutMeDetails: FC<MyComponentProps> = ({
             <FiUser />
             About Me
           </div>
-          <span
-            className={classes.Edit}
-            onClick={() => setAboutMeDetails(true)}
-          >
-            Edit
-          </span>
+          {
+            EditHide ? null :
+              <span className={classes.Edit} onClick={() => setAboutMeDetails(true)}>
+                Edit
+              </span>
+          }
         </div>
         <div className={classes.userDiscription}>
           <p>{step5Response?.basic_intro || "NA"}</p>
         </div>
-        <div className={classes.Userdetails}>
+        <div className={`${classes.Userdetails} ${classes.aboutUSerDetails} `}>
           {BasicDetails.map((item) => {
             return (
               <div className={classes.UserdetailsSec} key={item.name}>
