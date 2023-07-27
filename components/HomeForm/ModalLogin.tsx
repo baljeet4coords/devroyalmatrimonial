@@ -83,7 +83,7 @@ const ModalForm: React.FC<ModalLoginProps> = ({
               <h4>Welcome to <span>Royal Matrimonial</span></h4>
               <div className={classes.ImageSection}>
                 {/* <Image src='Images/update-password.svg' alt='reset password' /> */}
-                <video muted src="https://cdnl.iconscout.com/lottie/premium/thumb/man-doing-secure-login-8629127-6888102.mp4?h=198" typeof='video/mp4' autoPlay loop={true}></video>
+                <video muted src="/Images/login_video.mp4" typeof='video/mp4' autoPlay loop={true}></video>
               </div>
 
               <FormControl className="px-4 w-100">

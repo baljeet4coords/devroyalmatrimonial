@@ -59,6 +59,11 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         }
     }, []);
 
+    useEffect(() => {
+        setShortlistedUser(userData.shortlist === 1 ? true : false)
+    }, [userData]);
+
+
 
     const stateOfCountry: IState[] = State.getStatesOfCountry(countryCode);
     const [stateCode, setStateCode] = useState<string>(

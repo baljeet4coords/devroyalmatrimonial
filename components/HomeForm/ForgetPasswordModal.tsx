@@ -52,7 +52,7 @@ const ResetPasswordModal: React.FC<ComponentProps> = ({ setState }) => {
             </div>
             <div className={classes.ImageSection}>
                 {/* <Image src='Images/ResetPasswordModal.svg' alt='reset password' /> */}
-                <video  muted src="Images/forgot-password.mp4" typeof='video/mp4' autoPlay loop={true}></video>
+                <video  muted src="/Images/forgot-password.mp4" typeof='video/mp4' autoPlay loop={true}></video>
             </div>
             <div className={classes.FormDiv}>
                 <div className={classes.FormInputDiv}>

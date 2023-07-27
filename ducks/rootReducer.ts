@@ -18,6 +18,7 @@ import { shortlistReducer } from "./userShortList";
 import blockListReducer from "./userBlocklist/reducer";
 import { showInterestReducer } from "./showInterest";
 import { partnerDetailsReducer } from "./PartnerDetails";
+import { profileVisitorReducer } from "./profileVisitors";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   blockList: blockListReducer,
   showInterest: showInterestReducer,
   partnerDetails: partnerDetailsReducer,
+  profileVisitor: profileVisitorReducer,
 });
 
 export default rootReducer;

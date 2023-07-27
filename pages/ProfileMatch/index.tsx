@@ -20,6 +20,7 @@ import ShortVisitorProfile from "../../components/ShortVisitorProfile";
 const ProfileMatch: React.FC = () => {
   const matchMakingResponse = useSelector(selectmatchMakingSuccess);
   const getUserBlockList = useSelector(selectblockListSuccess);
+  const limit = 5;
 
 
   const dispatch = useDispatch();
@@ -34,9 +35,7 @@ const ProfileMatch: React.FC = () => {
   // const [Shortlisted, setShortlisted] = useState<number[]>([]);
   const [sendInterest, setSendInterest] = useState<number[]>([]);
   const [block, setBlock] = useState<number[]>(getUserBlockList && getUserBlockList.blocklistedID.jsonResponse != null ? getUserBlockList?.blocklistedID?.jsonResponse : []);
-  const limit = 5;
   const userId = useSelector(getUserId);
-  // const userId = 473;
 
 
   const handleBlockList_ID = (val: number) => {
