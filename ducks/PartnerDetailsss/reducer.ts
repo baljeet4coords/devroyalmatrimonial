@@ -14,8 +14,6 @@ import {
 
 interface partnerDetailsState {
   isLoading: boolean;
-  output: number;
-  message: string;
   response: {
     P1: IPartnerDetailsP1Response | null;
     P2: IPartnerDetailsP2Response | null;
@@ -29,14 +27,11 @@ interface partnerDetailsState {
     };
     interest: { Send: string | null; Recieve: string | null };
   } | null;
-  status: number;
   error: string | null;
 }
 
 const initialState: partnerDetailsState = {
   isLoading: true,
-  output: 0,
-  message: "",
   response: {
     P1: null,
     P2: null,
@@ -50,7 +45,6 @@ const initialState: partnerDetailsState = {
     },
     interest: { Send: null, Recieve: null },
   },
-  status: 0,
   error: null,
 };
 

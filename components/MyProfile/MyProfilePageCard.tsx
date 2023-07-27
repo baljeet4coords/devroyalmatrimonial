@@ -2,12 +2,11 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import classes from "./MyProfileCard.module.scss";
 import HalfCircleProgressBar from "./HalfCircleProgressBar";
 import { useState, useEffect } from "react";
-import { PackageType } from "../../types/enums";
 import CustomButton from "../Button/CustomButton";
 import { IPartnerDetailsInterestResponse, IPartnerDetailsP1Response, IPartnerDetailsPrivacyResponse } from "../../types/PartnerDetails/partnerDetails";
 
 interface Step1DataResponse {
-  step1Response: IPartnerDetailsP1Response | null;
+  step1Response: IPartnerDetailsP1Response | null | undefined;
   AuthSuccess: any;
   onPreviewAlbum: (visible: boolean) => void;
   profileCompliteScore: number | undefined;

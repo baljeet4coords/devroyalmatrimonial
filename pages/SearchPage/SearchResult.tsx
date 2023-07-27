@@ -14,19 +14,27 @@ import { SearchByData } from "../../ducks/partnerPreferrence/types";
 import ShortVisitorProfile from "../../components/ShortVisitorProfile";
 import { getUserId } from "../../ducks/auth/selectors";
 
-const userId = 480;
-
-// gir id 413
 
 const SearchResult: React.FC = () => {
   const router = useRouter();
   const { searchdata } = router.query;
+  const userId = useSelector(getUserId);
   const dispatch = useDispatch();
   const loginUserId = useSelector(getUserId);
   const searchDataResponse = useSelector(selectsearchByDataSuccess)
 
-  let previousSearchPayload : SearchByData = searchdata ? JSON.parse(searchdata) : {};
-  // const [previousSearchPayload, setPreviousSearchPayload] = useState(searchdata);
+  let previousSearchPayload: SearchByData = {
+    maxUserId: "",
+    limit: "",
+    viceVersaFlag: "",
+    excludedUsers: ""
+  };
+
+  if (typeof searchdata === 'string') {
+    previousSearchPayload = JSON.parse(searchdata);
+  } else {
+    previousSearchPayload = searchdata && searchdata.length > 0 ? JSON.parse(searchdata[0]) : {};
+  }
 
   const [loading, setLoading] = useState(false);
 

@@ -1,10 +1,15 @@
-import { IPartnerDetailsP1Response, IPartnerDetailsP2Response, IPartnerDetailsP3Response, IPartnerDetailsP4Response, IPartnerDetailsP5Response } from "../../types/PartnerDetails/partnerDetails";
+import {
+  IPartnerDetailsP1Response,
+  IPartnerDetailsP2Response,
+  IPartnerDetailsP3Response,
+  IPartnerDetailsP4Response,
+  IPartnerDetailsP5Response,
+} from "../../types/PartnerDetails/partnerDetails";
 import {
   PARTNERDETAILS,
   PARTNERDETAILS_SUCCESS,
   PARTNERDETAILS_FAILURE,
 } from "./constants";
-
 
 interface PartnerDetailsAction {
   type: typeof PARTNERDETAILS;
@@ -17,22 +22,17 @@ interface PartnerDetailsAction {
 interface PartnerDetailsActionSuccessAction {
   type: typeof PARTNERDETAILS_SUCCESS;
   response: {
-    output: number;
-    message: string;
-    jsonResponse: {
-      P1: IPartnerDetailsP1Response | null;
-      P2: IPartnerDetailsP2Response | null;
-      P3: IPartnerDetailsP3Response | null;
-      P4: IPartnerDetailsP4Response | null;
-      P5: IPartnerDetailsP5Response | null;
-      privacy: {
-        privacy_show_name: string | null;
-        privacy_show_photo: string | null;
-        privacy_show_contact: string | null;
-      };
-      interest: { Send: string | null; Recieve: string | null };
+    P1: IPartnerDetailsP1Response | null;
+    P2: IPartnerDetailsP2Response | null;
+    P3: IPartnerDetailsP3Response | null;
+    P4: IPartnerDetailsP4Response | null;
+    P5: IPartnerDetailsP5Response | null;
+    privacy: {
+      privacy_show_name: string | null;
+      privacy_show_photo: string | null;
+      privacy_show_contact: string | null;
     };
-    status?: number;
+    interest: { Send: string | null; Recieve: string | null };
   } | null;
 }
 
