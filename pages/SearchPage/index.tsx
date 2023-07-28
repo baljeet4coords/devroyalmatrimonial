@@ -15,7 +15,6 @@ const Search: React.FC = () => {
     return setSearchData(searchtype);
   };
 
-  console.log(userId, 'id');
 
   return (
     <>

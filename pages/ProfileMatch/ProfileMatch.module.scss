@@ -3,7 +3,7 @@
 .background_header {
   background: url("../../public/Images/cover-image-register.jpg") no-repeat
     center center;
-  padding: 3rem  0;
+  padding: 3rem 0;
   padding-bottom: 5rem;
   background-size: cover;
   height: 22rem;
@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  h3{
+  h3 {
     color: #fff;
     text-transform: capitalize;
     text-align: center;
@@ -28,11 +28,11 @@
 }
 
 @media only screen and (max-width: 1091px) and (min-width: 992px) {
-    .bg {
-        .card_container {
-          width: 76%;
-        }
-      }
+  .bg {
+    .card_container {
+      width: 76%;
+    }
+  }
 }
 
 @media only screen and (max-width: 991px) and (min-width: 768px) {
