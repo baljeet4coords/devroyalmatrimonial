@@ -1,32 +1,34 @@
 export interface IProfileVisitorsResponse {
   row: number;
-  userid: 481;
-  usercard: {
-    dob: "1992-05-15 15:15:00.000000";
-    city: 3208;
-    caste: 33;
-    photo: "uploads/404/1685780330725.jpeg";
-    state: 21;
-    userid: 404;
-    country: 101;
-    fullname: "dummy_Munna bhiya";
-    interest: {
-      Send: "A";
-      Receive: "S";
-    };
-    religion: 1;
-    education: 3;
-    height_cm: 178;
-    shortlist: 0;
-    occupation: 4;
-    user_RM_ID: "RME1943A";
-    privacy_name: "I";
-    annual_income: 8;
-    privacy_photo: "I";
-    marital_status: 1;
-    matching_score: 20;
-    privacy_contact: "I";
-    user_last_login: "2023-07-26 07:47:50.000000";
+  userid: number;
+  usercard: IProfileVisitorsResponseCard;
+  visitorid: number;
+}
+
+export interface IProfileVisitorsResponseCard {
+  dob: string;
+  city: number;
+  caste: number;
+  photo: string;
+  state: number;
+  userid: number;
+  country: number;
+  fullname: string;
+  interest: {
+    Send: string;
+    Receive: string;
   };
-  visitorid: 404;
+  religion: number;
+  education: number;
+  height_cm: number;
+  shortlist: number;
+  occupation: number;
+  user_RM_ID: string;
+  privacy_name: string;
+  annual_income: number;
+  privacy_photo: string;
+  marital_status: number;
+  matching_score: number;
+  privacy_contact: string;
+  user_last_login: string;
 }
