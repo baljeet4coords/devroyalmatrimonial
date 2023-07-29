@@ -10,7 +10,7 @@ export const navOptionsList: NavOptions[] = [
       },
       {
         title: "Hindi Delhi Punjabi",
-        uri: "/Hindi_Delhi_Punjabi",
+        uri: "/Hindi Delhi Punjabi",
       },
       {
         title: "Konkani",
@@ -22,15 +22,15 @@ export const navOptionsList: NavOptions[] = [
       },
       {
         title: "Hindi MP CG",
-        uri: "/Hindi_MP_CG",
+        uri: "/Hindi MP CG",
       },
       {
         title: "Hindi UP UK",
-        uri: "/Hindi_UP_UK",
+        uri: "/Hindi UP UK",
       },
       {
         title: "Hindi Rajasthan",
-        uri: "/Hindi_Rajasthan",
+        uri: "/Hindi Rajasthan",
       },
       {
         title: "Haryanvi",
@@ -71,7 +71,7 @@ export const navOptionsList: NavOptions[] = [
       },
       {
         title: "Sikkim or Nepali",
-        uri: "/Sikkim_or_Nepali",
+        uri: "/Sikkim or Nepali",
       },
       {
         title: "English",
@@ -82,20 +82,20 @@ export const navOptionsList: NavOptions[] = [
   {
     category: "Caste",
     subCategory: [
-      { title: "Jain: Shwetamber", uri: "/Jain_Shwetamber" },
-      { title: "Hindu: Kokanastha", uri: "/Hindu_96K_Kokanastha" },
-      { title: "Hindu: Banik", uri: "/Hindu_Banik" },
-      { title: "Hindu: Lodhi Rajput", uri: "/Hindu_Lodhi_Rajput" },
-      { title: "Hindu: Brahmin", uri: "/Hindu_Brahmin" },
-      { title: "Hindu Arora", uri: "/Hindu_Arora" },
-      { title: "Hindu: Brahmin Gaur", uri: "/Hindu_Brahmin_Gaur" },
-      { title: "Hindu: Khatri", uri: "/Hindu_Khatri" },
-      { title: "Hindu: Aggarwal", uri: "/Hindu_Aggarwal" },
-      { title: "Hindu: Kashyap", uri: "/Hindu_Kashyap" },
-      { title: "Hindu: Mahajan", uri: "/Hindu_Mahajan" },
-      { title: "Hindu: Brahmin Saraswat", uri: "/Hindu_Brahmin_Saraswat" },
-      { title: "Hindu: Sindhi", uri: "/Hindu: Sindhi" },
-      { title: "Hindu: Ad Dharmi", uri: "/Hindu_Ad_Dharmi" },
+      { title: "Jain: Shwetamber", uri: "/Jain Shwetamber" },
+      { title: "Hindu: Kokanastha", uri: "/Hindu 96K Kokanastha" },
+      { title: "Hindu: Banik", uri: "/Hindu Banik" },
+      { title: "Hindu: Lodhi Rajput", uri: "/Hindu Lodhi Rajput" },
+      { title: "Hindu: Brahmin", uri: "/Hindu Brahmin" },
+      { title: "Hindu Arora", uri: "/Hindu Arora" },
+      { title: "Hindu: Brahmin Gaur", uri: "/Hindu Brahmin Gaur" },
+      { title: "Hindu: Khatri", uri: "/Hindu Khatri" },
+      { title: "Hindu: Aggarwal", uri: "/Hindu Aggarwal" },
+      { title: "Hindu: Kashyap", uri: "/Hindu Kashyap" },
+      { title: "Hindu: Mahajan", uri: "/Hindu Mahajan" },
+      { title: "Hindu: Brahmin Saraswat", uri: "/Hindu Brahmin Saraswat" },
+      { title: "Hindu: Sindhi", uri: "/Hindu Sindhi" },
+      { title: "Hindu: Ad Dharmi", uri: "/Hindu Ad Dharmi" },
     ],
   },
   {
@@ -132,7 +132,7 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "New Delhi",
-        uri: "/new_delhi",
+        uri: "/new delhi",
       },
       {
         title: "Gurgaon",
@@ -193,7 +193,7 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "IT Software",
-        uri: "/it_software",
+        uri: "/it software",
       },
       {
         title: "Teacher",
@@ -217,15 +217,15 @@ export const navOptionsList: NavOptions[] = [
       },
       {
         title: "Marketing Manager",
-        uri: "/marketing_manager",
+        uri: "/marketing manager",
       },
       {
         title: "Sales Representative",
-        uri: "/sales_representative",
+        uri: "/sales representative",
       },
       {
         title: "Graphic Designer",
-        uri: "/graphic_designer",
+        uri: "/graphic designer",
       },
       {
         title: "Nurse",
@@ -233,19 +233,19 @@ export const navOptionsList: NavOptions[] = [
       },
       {
         title: "Software Developer",
-        uri: "/software_developer",
+        uri: "/software developer",
       },
       {
         title: "Business Analyst",
-        uri: "/business_analyst",
+        uri: "/business analyst",
       },
       {
         title: "Project Manager",
-        uri: "/project_manager",
+        uri: "/project manager",
       },
       {
         title: "Data Scientist",
-        uri: "/data_scientist",
+        uri: "/data scientist",
       },
       {
         title: "Chef",
@@ -257,18 +257,18 @@ export const navOptionsList: NavOptions[] = [
     category: "State",
     subCategory: [
       { title: "Delhi", uri: "/delhi" },
-      { title: "Uttar Pradesh", uri: "/uttar_pradesh" },
+      { title: "Uttar Pradesh", uri: "/uttar pradesh" },
       { title: "Haryana", uri: "/haryana" },
       { title: "Punjab", uri: "/punjab" },
       { title: "Rajasthan", uri: "/rajasthan" },
       { title: "Uttarakhand", uri: "/uttarakhand" },
-      { title: "Himachal Pradesh", uri: "/himachal_pradesh" },
-      { title: "Jammu and Kashmir", uri: "/jammu_and_kashmir" },
+      { title: "Himachal Pradesh", uri: "/himachal pradesh" },
+      { title: "Jammu and Kashmir", uri: "/jammu and kashmir" },
       { title: "Bihar", uri: "/bihar" },
       { title: "Jharkhand", uri: "/jharkhand" },
-      { title: "Madhya Pradesh", uri: "/madhya_pradesh" },
+      { title: "Madhya Pradesh", uri: "/madhya pradesh" },
       { title: "Chhattisgarh", uri: "/chhattisgarh" },
-      { title: "West Bengal", uri: "/west_bengal" },
+      { title: "West Bengal", uri: "/west bengal" },
       { title: "Assam", uri: "/assam" },
     ],
   },
@@ -277,63 +277,63 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "Punjabi NRIs",
-        uri: "/punjabi_nris",
+        uri: "/punjabi nris",
       },
       {
         title: "Gujarati NRIs",
-        uri: "/gujarati_nris",
+        uri: "/gujarati nris",
       },
       {
         title: "South Indian NRIs",
-        uri: "/south_indian_nris",
+        uri: "/south indian nris",
       },
       {
         title: "Keralite NRIs",
-        uri: "/keralite_nris",
+        uri: "/keralite nris",
       },
       {
         title: "Bengali NRIs",
-        uri: "/bengali_nris",
+        uri: "/bengali nris",
       },
       {
         title: "Telugu NRIs",
-        uri: "/telugu_nris",
+        uri: "/telugu nris",
       },
       {
         title: "Marathi NRIs",
-        uri: "/marathi_nris",
+        uri: "/marathi nris",
       },
       {
         title: "Tamil NRIs",
-        uri: "/tamil_nris",
+        uri: "/tamil nris",
       },
       {
         title: "Kannadiga NRIs",
-        uri: "/kannadiga_nris",
+        uri: "/kannadiga nris",
       },
       {
         title: "Sindhi NRIs",
-        uri: "/sindhi_nris",
+        uri: "/sindhi nris",
       },
       {
         title: "Malayali NRIs",
-        uri: "/malayali_nris",
+        uri: "/malayali nris",
       },
       {
         title: "NRI Students",
-        uri: "/nri_students",
+        uri: "/nri students",
       },
       {
         title: "NRI Professionals",
-        uri: "/nri_professionals",
+        uri: "/nri professionals",
       },
       {
         title: "NRI Entrepreneurs",
-        uri: "/nri_entrepreneurs",
+        uri: "/nri entrepreneurs",
       },
       {
         title: "NRI Technologists",
-        uri: "/nri_technologists",
+        uri: "/nri technologists",
       },
     ],
   },

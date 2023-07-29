@@ -56,7 +56,7 @@ const NavOptions: NextPage = () => {
           {navState.map((item) => {
             return (
               <span 
-               onClick={() => router.push(`/BrowseProfile/${item.title}`)}
+               onClick={() => router.push(`/BrowseProfile/${(item.uri).replaceAll(' ','-').toLocaleLowerCase()}`)}
                key={item.title}>
                 {item.title}
               </span>

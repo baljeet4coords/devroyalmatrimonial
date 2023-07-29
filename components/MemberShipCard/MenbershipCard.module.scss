@@ -3,7 +3,7 @@
   height: fit-content;
   background-color: #fff;
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 7px;
   cursor: pointer;
   transition: all ease-in-out 100ms;
 
@@ -21,9 +21,6 @@
     }
 
     .MOfferType {
-      // background-color: rgba(83, 244, 166, 0.885);
-      background-color: #fbc1da;
-
       width: auto;
       display: flex;
       justify-content: center;
@@ -114,16 +111,36 @@
       width: 100%;
     }
     p {
-      font-size: 14px;
+      font-size: 12px;
       color: #2e334d;
-      font-weight: 600;
-      text-decoration: underline;
-      cursor: pointer;
+      font-weight: 500;
+      span {
+        margin-left: 3px;
+        text-decoration: underline;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+      }
     }
   }
 }
 
 .MCardContainer:hover {
-  // transform: scale(1.02);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+
+@media only screen and (max-width: 992px) {
+  .MCardContainer {
+    width: 48%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .MCardContainer {
+    width: -webkit-fill-available;
+  }
+}
+// @media only screen and (max-width: 992px) {
+//   .MCardContainer {
+//     width: -webkit-fill-available;
+//   }
+// }
