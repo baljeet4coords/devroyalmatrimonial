@@ -14,6 +14,7 @@ const BrowseProfile: NextPage = () => {
   const headimage = "cover-image-register.jpg";
 
   const { BrowseProfile } = router.query;
+  
 
   return (
     <div style={{ background: "#e7e6e6" }}>
