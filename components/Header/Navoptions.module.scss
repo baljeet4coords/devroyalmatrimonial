@@ -1,9 +1,9 @@
 @import "../../styles/constants.scss";
 
 .sideBar {
-  background: $more_transparent_maroon;
+  background: $transparent_maroon;
   height: -webkit-fill-available;
-  width: 400px;
+  min-width: 500px;
   position: absolute;
   top: 0;
   left: 220px;
@@ -12,8 +12,9 @@
   grid-template-columns: repeat(3, auto);
   align-items: start;
   padding: 0.75rem;
-  grid-template-rows: repeat(6, 1fr);
-
+  grid-template-rows: repeat(5, 2fr);
+  height: 100%;
+  
   a {
     color: #fff;
     height: -webkit-fill-available;
@@ -32,12 +33,11 @@
     cursor: pointer;
     font-size: 14px;
     display: flex;
-    line-height: 35px;
-    white-space: nowrap;
+    // line-height: 35px;
+    // white-space: nowrap;
     overflow: hidden;
     padding: 0.5rem 0.5rem !important;
-    height: fit-content;
-    min-width: 100px;
+    min-width: 33%;
     display: flex;
     justify-content: center;
     align-items: center;

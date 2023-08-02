@@ -516,6 +516,49 @@
   }
 }
 
+//----------------------------------- search by profile id -----------------------------------
+
+.Search_body {
+  form {
+    .search_group {
+      .search_lable {
+        color: #1d1c1c;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .buttonWrapper {
+    width: 66%;
+    padding: 0.6rem;
+    text-align: center;
+    margin: auto;
+
+    Button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .loginSpiner {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+        color: #ffffff !important;
+      }
+    }
+    .savePartnerBtn {
+      padding: 0.75rem 2.5rem;
+      font-weight: 500;
+      outline: none;
+      border: 0;
+      border-radius: 0.25rem;
+      background-color: #d9475c;
+      color: #fff;
+      width: auto;
+      margin: auto;
+    }
+  }
+}
+
 .active {
   visibility: visible !important;
 }
@@ -588,7 +631,25 @@
         margin-bottom: 0%;
       }
     }
+
+    .Search_body {
+      form {
+        .search_group {
+          flex-direction: column;
+          gap: 1rem;
+          .search_lable {
+            width: 100%;
+            margin: auto;
+            text-align: initial;
+          }
+          input {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
+
 }
 @media only screen and (max-width: 424px) {
   .SearchWrapperMain {

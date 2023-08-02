@@ -15,7 +15,6 @@ const Search: React.FC = () => {
     return setSearchData(searchtype);
   };
 
-  console.log(userId, 'id');
 
   return (
     <>
@@ -30,7 +29,7 @@ const Search: React.FC = () => {
                 Search by Data
               </button>
               <button onClick={() => DataOnclick('searchbyid')} className={`${classes.TabButton} ${searchData === 'searchbyid' && classes.TabButtonActive} `}>
-                Search by id
+                Search by profile ID
               </button>
             </Row>
           </div>

@@ -1,0 +1,46 @@
+@import "../../styles/constants.scss";
+
+.background_header {
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
+  padding: 3rem 0 15rem 0;
+  background-size: cover;
+}
+
+.bg {
+  background: rgb(231, 230, 230);
+
+  .card_container {
+    width: 75%;
+    margin: auto;
+    padding: 2rem 0;
+    height: fit-content;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .card_main {
+      width: 32%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1065px) {
+  .bg {
+    .card_container {
+      .card_main {
+        width: 48%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .bg {
+    .card_container {
+      .card_main {
+        width: -webkit-fill-available;
+      }
+    }
+  }
+}

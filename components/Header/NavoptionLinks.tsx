@@ -5,102 +5,97 @@ export const navOptionsList: NavOptions[] = [
     category: "Mother Tongue",
     subCategory: [
       {
-        title: "Bihari",
-        uri: "/TheStart",
-      },
-      {
-        title: "Bengali",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Hindi Delhi",
-        uri: "/OurFactories",
-      },
-      {
         title: "Hindi",
-        uri: "/TheStart",
+        uri: "/Hindi",
       },
       {
-        title: "Gujarati",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Kannada",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Marathi",
-        uri: "/TheStart",
-      },
-      {
-        title: "Oriya",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Punjabi",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Rajasthani",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Tamil",
-        uri: "/TheStart",
-      },
-      {
-        title: "Telugu",
-        uri: "/AboutUs",
+        title: "Hindi Delhi Punjabi",
+        uri: "/Hindi Delhi Punjabi",
       },
       {
         title: "Konkani",
-        uri: "/OurFactories",
+        uri: "/Konkani",
+      },
+      {
+        title: "Punjabi",
+        uri: "/Punjabi",
+      },
+      {
+        title: "Hindi MP CG",
+        uri: "/Hindi MP CG",
+      },
+      {
+        title: "Hindi UP UK",
+        uri: "/Hindi UP UK",
+      },
+      {
+        title: "Hindi Rajasthan",
+        uri: "/Hindi Rajasthan",
+      },
+      {
+        title: "Haryanvi",
+        uri: "/Haryanvi",
+      },
+      {
+        title: "Himachali",
+        uri: "/Himachali",
+      },
+      {
+        title: "Kashmiri",
+        uri: "/Kashmiri",
+      },
+      {
+        title: "Marathi",
+        uri: "/Marathi",
+      },
+      {
+        title: "Gujarati",
+        uri: "/Gujarati",
+      },
+      {
+        title: "Kutchi",
+        uri: "/Kutchi",
+      },
+
+      {
+        title: "Bengali",
+        uri: "/Bengali",
+      },
+      {
+        title: "Oriya",
+        uri: "/Oriya",
+      },
+      {
+        title: "Assamese",
+        uri: "/Assamese",
+      },
+      {
+        title: "Sikkim or Nepali",
+        uri: "/Sikkim or Nepali",
+      },
+      {
+        title: "English",
+        uri: "/English",
       },
     ],
   },
   {
     category: "Caste",
     subCategory: [
-      {
-        title: "Brahmin",
-        uri: "/TheStart",
-      },
-      {
-        title: "Jat",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Kayastha",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Khatri",
-        uri: "/TheStart",
-      },
-      {
-        title: "Kshatriya",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Maratha",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Rajput",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Sindhi",
-        uri: "/TheStart",
-      },
-      {
-        title: "Sunni",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Arora",
-        uri: "/OurFactories",
-      },
+      { title: "Jain: Shwetamber", uri: "/Jain Shwetamber" },
+      { title: "Hindu: Kokanastha", uri: "/Hindu 96K Kokanastha" },
+      { title: "Hindu: Banik", uri: "/Hindu Banik" },
+      { title: "Hindu: Lodhi Rajput", uri: "/Hindu Lodhi Rajput" },
+      { title: "Hindu: Brahmin", uri: "/Hindu Brahmin" },
+      { title: "Hindu Arora", uri: "/Hindu Arora" },
+      { title: "Hindu: Brahmin Gaur", uri: "/Hindu Brahmin Gaur" },
+      { title: "Hindu: Khatri", uri: "/Hindu Khatri" },
+      { title: "Hindu: Aggarwal", uri: "/Hindu Aggarwal" },
+      { title: "Hindu: Kashyap", uri: "/Hindu Kashyap" },
+      { title: "Hindu: Mahajan", uri: "/Hindu Mahajan" },
+      { title: "Hindu: Brahmin Saraswat", uri: "/Hindu Brahmin Saraswat" },
+      { title: "Hindu: Sindhi", uri: "/Hindu Sindhi" },
+      { title: "Hindu: Ad Dharmi", uri: "/Hindu Ad Dharmi" },
     ],
   },
   {
@@ -108,27 +103,27 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "Hindu",
-        uri: "/TheStart",
+        uri: "/hindu",
       },
       {
         title: "Muslim",
-        uri: "/AboutUs",
+        uri: "/muslim",
       },
       {
         title: "Christian",
-        uri: "/OurFactories",
+        uri: "/christian",
       },
       {
         title: "Sikh",
-        uri: "/TheStart",
+        uri: "/sikh",
       },
       {
         title: "Buddhist",
-        uri: "/AboutUs",
+        uri: "/buddhist",
       },
       {
         title: "Jain",
-        uri: "/OurFactories",
+        uri: "/jain",
       },
     ],
   },
@@ -137,47 +132,59 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "New Delhi",
-        uri: "/TheStart",
+        uri: "/new delhi",
       },
       {
-        title: "Seattle",
-        uri: "/AboutUs",
+        title: "Gurgaon",
+        uri: "/gurgaon",
       },
       {
-        title: "Panvel",
-        uri: "/OurFactories",
+        title: "Noida",
+        uri: "/noida",
       },
       {
-        title: "Navi Mumbai",
-        uri: "/TheStart",
+        title: "Chandigarh",
+        uri: "/chandigarh",
       },
       {
-        title: "Los Angeles",
-        uri: "/AboutUs",
+        title: "Jaipur",
+        uri: "/jaipur",
       },
       {
-        title: "Illinois",
-        uri: "/OurFactories",
+        title: "Lucknow",
+        uri: "/lucknow",
       },
       {
-        title: "Denver",
-        uri: "/AboutUs",
+        title: "Kanpur",
+        uri: "/kanpur",
       },
       {
-        title: "Delhi",
-        uri: "/OurFactories",
+        title: "Agra",
+        uri: "/agra",
       },
       {
-        title: "Mumbai",
-        uri: "/TheStart",
+        title: "Varanasi",
+        uri: "/varanasi",
+      },
+      {
+        title: "Dehradun",
+        uri: "/dehradun",
+      },
+      {
+        title: "Haridwar",
+        uri: "/haridwar",
+      },
+      {
+        title: "Amritsar",
+        uri: "/amritsar",
+      },
+      {
+        title: "Ludhiana",
+        uri: "/ludhiana",
       },
       {
         title: "Kolkata",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Chennai",
-        uri: "/OurFactories",
+        uri: "/kolkata",
       },
     ],
   },
@@ -186,126 +193,147 @@ export const navOptionsList: NavOptions[] = [
     subCategory: [
       {
         title: "IT Software",
-        uri: "/TheStart",
+        uri: "/it software",
       },
       {
         title: "Teacher",
-        uri: "/AboutUs",
+        uri: "/teacher",
       },
       {
-        title: "CA Accountant",
-        uri: "/OurFactories",
+        title: "Engineer",
+        uri: "/engineer",
       },
       {
-        title: "Businessman",
-        uri: "/TheStart",
+        title: "Doctor",
+        uri: "/doctor",
       },
       {
-        title: "Doctors Nurse",
-        uri: "/AboutUs",
+        title: "Accountant",
+        uri: "/accountant",
       },
       {
-        title: "Govt. Services",
-        uri: "/OurFactories",
+        title: "Lawyer",
+        uri: "/lawyer",
       },
       {
-        title: "Defence",
-        uri: "/OurFactories",
+        title: "Marketing Manager",
+        uri: "/marketing manager",
       },
       {
-        title: "IAS",
-        uri: "/TheStart",
+        title: "Sales Representative",
+        uri: "/sales representative",
       },
       {
-        title: "Engineers",
-        uri: "/AboutUs",
+        title: "Graphic Designer",
+        uri: "/graphic designer",
       },
       {
         title: "Nurse",
-        uri: "/OurFactories",
+        uri: "/nurse",
       },
       {
-        title: "Security",
-        uri: "/TheStart",
+        title: "Software Developer",
+        uri: "/software developer",
       },
       {
-        title: "Police",
-        uri: "/AboutUs",
+        title: "Business Analyst",
+        uri: "/business analyst",
       },
       {
-        title: "Services",
-        uri: "/OurFactories",
+        title: "Project Manager",
+        uri: "/project manager",
+      },
+      {
+        title: "Data Scientist",
+        uri: "/data scientist",
+      },
+      {
+        title: "Chef",
+        uri: "/chef",
       },
     ],
   },
   {
     category: "State",
     subCategory: [
-      {
-        title: "Illinois",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Denver",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Delhi",
-        uri: "/OurFactories",
-      },
-      {
-        title: "Mumbai",
-        uri: "/TheStart",
-      },
-      {
-        title: "Kolkata",
-        uri: "/AboutUs",
-      },
-      {
-        title: "Chennai",
-        uri: "/OurFactories",
-      },
+      { title: "Delhi", uri: "/delhi" },
+      { title: "Uttar Pradesh", uri: "/uttar pradesh" },
+      { title: "Haryana", uri: "/haryana" },
+      { title: "Punjab", uri: "/punjab" },
+      { title: "Rajasthan", uri: "/rajasthan" },
+      { title: "Uttarakhand", uri: "/uttarakhand" },
+      { title: "Himachal Pradesh", uri: "/himachal pradesh" },
+      { title: "Jammu and Kashmir", uri: "/jammu and kashmir" },
+      { title: "Bihar", uri: "/bihar" },
+      { title: "Jharkhand", uri: "/jharkhand" },
+      { title: "Madhya Pradesh", uri: "/madhya pradesh" },
+      { title: "Chhattisgarh", uri: "/chhattisgarh" },
+      { title: "West Bengal", uri: "/west bengal" },
+      { title: "Assam", uri: "/assam" },
     ],
   },
   {
     category: "NRI",
     subCategory: [
       {
-        title: "Sikh",
-        uri: "/TheStart",
+        title: "Punjabi NRIs",
+        uri: "/punjabi nris",
       },
       {
-        title: "Buddhist",
-        uri: "/AboutUs",
+        title: "Gujarati NRIs",
+        uri: "/gujarati nris",
       },
       {
-        title: "Jain",
-        uri: "/OurFactories",
-      },
-    ],
-  },
-  {
-    category: "College",
-    subCategory: [
-      {
-        title: "CA Accountant",
-        uri: "/OurFactories",
+        title: "South Indian NRIs",
+        uri: "/south indian nris",
       },
       {
-        title: "Businessman",
-        uri: "/TheStart",
+        title: "Keralite NRIs",
+        uri: "/keralite nris",
       },
       {
-        title: "Doctors Nurse",
-        uri: "/AboutUs",
+        title: "Bengali NRIs",
+        uri: "/bengali nris",
       },
       {
-        title: "Govt. Services",
-        uri: "/OurFactories",
+        title: "Telugu NRIs",
+        uri: "/telugu nris",
       },
       {
-        title: "Defence",
-        uri: "/OurFactories",
+        title: "Marathi NRIs",
+        uri: "/marathi nris",
+      },
+      {
+        title: "Tamil NRIs",
+        uri: "/tamil nris",
+      },
+      {
+        title: "Kannadiga NRIs",
+        uri: "/kannadiga nris",
+      },
+      {
+        title: "Sindhi NRIs",
+        uri: "/sindhi nris",
+      },
+      {
+        title: "Malayali NRIs",
+        uri: "/malayali nris",
+      },
+      {
+        title: "NRI Students",
+        uri: "/nri students",
+      },
+      {
+        title: "NRI Professionals",
+        uri: "/nri professionals",
+      },
+      {
+        title: "NRI Entrepreneurs",
+        uri: "/nri entrepreneurs",
+      },
+      {
+        title: "NRI Technologists",
+        uri: "/nri technologists",
       },
     ],
   },

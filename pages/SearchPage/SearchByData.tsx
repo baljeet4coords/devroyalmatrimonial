@@ -34,7 +34,7 @@ import {
   PartnerPreferrence, SearchByData,
 } from "../../ducks/partnerPreferrence/types";
 import HeightFromTo from "../../components/InputField/DoubleInputField/HeightFromTo";
-import  { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { searchByDataReq } from "../../ducks/searchByData/actions";
 import { useDispatch } from "react-redux";
 
@@ -47,10 +47,10 @@ const SearchByData: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>("");
-  const [selectedAgeTo, setSelectedAgeTo] = useState<string>('');
-  const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>('');
-  const [selectedHeightTo, setSelectedHeightTo] = useState<string>('');
+  const [selectedAgeFrom, setSelectedAgeFrom] = useState<string>("20");
+  const [selectedAgeTo, setSelectedAgeTo] = useState<string>('40');
+  const [selectedHeightFrom, setSelectedHeightFrom] = useState<string>('121');
+  const [selectedHeightTo, setSelectedHeightTo] = useState<string>('214');
 
   const [country, setCountry] = useState<number[]>([101]);
   const [state, setState] = useState<number[]>([4]);
@@ -116,7 +116,7 @@ const SearchByData: React.FC = () => {
     setLoading(true)
 
     const partnerPrefPostReq: SearchByData = {
-      userId: String(userId),
+      userId: String(userId||1),
       ageGreaterThan: selectedAgeFrom,
       ageLessThan: selectedAgeTo,
       heightGreaterThan: String(Math.trunc(+selectedHeightFrom)),
@@ -173,10 +173,10 @@ const SearchByData: React.FC = () => {
                   onDataFrom={setSelectedAgeFrom}
                   onDataTo={setSelectedAgeTo}
                   defaultValueFrom={
-                    "Age Greater than"
+                    selectedAgeFrom
                   }
                   defaultValueTo={
-                    "Age Less than"
+                    selectedAgeTo
                   }
                 />
                 <HeightFromTo
@@ -184,9 +184,8 @@ const SearchByData: React.FC = () => {
                   inputName={"Height in feet"}
                   onDataFrom={setSelectedHeightFrom}
                   onDataTo={setSelectedHeightTo}
-                  defaultValueFrom={"Height Greater than"}
-                  defaultValueTo={"Height Less than"
-                  }
+                  defaultValueFrom={selectedHeightFrom}
+                  defaultValueTo={selectedHeightTo}
                 />
                 <CountryMultiple
                   onChangeCountry={setCountry}
@@ -368,7 +367,7 @@ const SearchByData: React.FC = () => {
                         variant="light"
                       />
                     )}
-                    {loading ? 'Searching'  : 'Search'}
+                    {loading ? 'Searching' : 'Search'}
                   </Button>
                 </div>
               </form>

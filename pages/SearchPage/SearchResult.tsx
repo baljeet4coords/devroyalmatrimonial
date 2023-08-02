@@ -49,7 +49,7 @@ const SearchResult: React.FC = () => {
   useEffect(() => {
     setSearchUserData(searchDataResponse)
     userSearchData?.jsonResponse && setAllUserData(userSearchData?.jsonResponse)
-  }, [searchDataResponse])
+  }, [searchDataResponse, userSearchData])
 
   useEffect(() => {
     if (userSearchData && userSearchData.jsonResponse) {

@@ -15,11 +15,22 @@ import { LoginType, SignUpType } from "../../ducks/auth/types";
 import { loginRequest, signupRequest } from "../../ducks/auth/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthSuccess } from "../../ducks/auth/selectors";
+import router from "next/router";
+
 
 const Header: React.FC = () => {
   const [errors, setErrors] = useState<string>("");
   const authSuccess = useSelector(selectAuthSuccess);
   const [loginSpiner, setloginSpiner] = useState(false);
+
+  const dispatch = useDispatch();
+  const [show, setShow] = useState<any>(-1);
+  const [stateSize, setSize] = useState(
+    window.innerWidth <= 992 ? true : false
+  );
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isActive, setActive] = useState(false);
+
 
   useEffect(() => {
     if (authSuccess?.status === false) {
@@ -39,17 +50,10 @@ const Header: React.FC = () => {
     authSuccess,
   ]);
 
-  const onSubmitFormSignUp = (values: SignUpType) => {
+  const onSubmitFormSignUp = async (values: SignUpType) => {
     dispatch(signupRequest(values));
   };
 
-  const dispatch = useDispatch();
-  const [show, setShow] = useState<any>(-1);
-  const [stateSize, setSize] = useState(
-    window.innerWidth <= 992 ? true : false
-  );
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isActive, setActive] = useState(false);
 
   const showDropdown = () => {
     setShow(1);
