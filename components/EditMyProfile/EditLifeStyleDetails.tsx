@@ -45,6 +45,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
   const { registerUserMutation, Step3Query } = useStep3Register();
 
 
+
   const [diet, setDiet] = useState<Data>({
     id: String(step3Response?.diet),
     val: "",
@@ -117,7 +118,7 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
     onSubmit: async (values) => {
       const mutationResult = await registerUserMutation.mutateAsync({
         ...values,
-        actionType: isReduxEmpty ? "c" : "u",
+        actionType: isReduxEmpty === undefined ? "c" : "u",
         housetype: JSON.stringify(housetype),
         cartype: JSON.stringify(cartype),
       });
@@ -218,9 +219,9 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
               />
             </div>
           </div>
-          <div className={classes.singleBoxWrapper}>
-            <div className={classes.singleBox}>
-              {ownsHouse && ownsHouse?.id == "1" && (
+          {ownsHouse && ownsHouse?.id == "1" && (
+            <div className={classes.singleBoxWrapper}>
+              <div className={classes.singleBox}>
                 <SingleInput
                   data={HouseType}
                   inputName={"Type of House"}
@@ -229,9 +230,9 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
                   }
                   isFromRegistered={true}
                 />
-              )}
+              </div>
             </div>
-          </div>
+          )}
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect
@@ -243,9 +244,9 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
               />
             </div>
           </div>
-          <div className={classes.singleBoxWrapper}>
-            <div className={classes.singleBox}>
-              {ownsCar && ownsCar?.id == "1" && (
+          {ownsCar && ownsCar?.id == "1" && (
+            <div className={classes.singleBoxWrapper}>
+              <div className={classes.singleBox}>
                 <SingleInput
                   data={CarType}
                   inputName={"Type of car"}
@@ -254,9 +255,9 @@ const EditLifeStyle: FC<MyComponentProps> = ({ setEditDetails, step3Response, Fa
                   }
                   isFromRegistered={true}
                 />
-              )}
+              </div>
             </div>
-          </div>
+          )}
           <div className={classes.singleBoxWrapper}>
             <div className={classes.singleBox}>
               <DropdownGridSingleSelect

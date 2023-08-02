@@ -72,41 +72,41 @@ const BasicDetails: FC<MyComponentProps> = ({
   const BasicDetails = [
     {
       name: "Caste",
-      vlaue: castGet(step1Response?.caste) || "NA",
+      vlaue: castGet(step1Response?.caste) || "Na",
     },
     {
       name: "Height",
-      vlaue: HeightConvertr(step1Response?.height_cm) || "NA",
+      vlaue: HeightConvertr(step1Response?.height_cm) || "Na",
     },
     {
       name: "challenged",
       vlaue:
-        getKeyByValue(String(step1Response?.challenged), Challenged) || "NA",
+        getKeyByValue(String(step1Response?.challenged), Challenged) || "Na",
     },
     {
       name: "HIV",
-      vlaue: step1Response?.hiv == 1 ? "Yes" : "No" || "NA",
+      vlaue: step1Response?.hiv == 1 ? "Yes" : "No" || "Na",
     },
     {
       name: "mother tongue",
       vlaue:
         getKeyByValue(String(step1Response?.mother_tongue), MotherTongue) ||
-        "NA",
+        "Na",
     },
     {
       name: "Religion",
-      vlaue: getKeyByValue(String(step1Response?.religion), Religion) || "NA",
+      vlaue: getKeyByValue(String(step1Response?.religion), Religion) || "Na",
     },
 
     {
       name: "Manglic",
-      vlaue: getKeyByValue(String(step1Response?.manglik), Manglik) || "NA",
+      vlaue: getKeyByValue(String(step1Response?.manglik), Manglik) || "Na",
     },
 
     {
       name: "Profile Manage by",
       vlaue: `${step1Response?.gender == "M" ? "His" : "Her"
-        } profile is managed by ${step1Response?.profile_for == "2" || step1Response?.profile_for == "3" ? "parents" : step1Response?.profile_for == "4" || step1Response?.profile_for == "5" ? "siblings" : getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "NA"
+        } profile is managed by ${step1Response?.profile_for == "2" || step1Response?.profile_for == "3" ? "parents" : step1Response?.profile_for == "4" || step1Response?.profile_for == "5" ? "siblings" : getKeyByValue(String(step1Response?.profile_for), ProfileFor) || "Na"
         }`,
     },
   ];
@@ -174,12 +174,12 @@ const BasicDetails: FC<MyComponentProps> = ({
                   <p className={classes.input_Name}>{item.name}</p>
                   <p
                     className={
-                      item.vlaue === "NA"
+                      item.vlaue === "Na"
                         ? classes.input_Value_NotFilled
                         : classes.input_Value
                     }
                   >
-                    {item.vlaue === "NA" ? "Not Field in" : item.vlaue}{" "}
+                    {item.vlaue === "Na" ? "Not Field in" : item.vlaue}{" "}
                   </p>
                 </div>
               </>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router';
-import { ImageGallery, LoginHeader } from '../../components';
+import { Header, ImageGallery, LoginHeader } from '../../components';
 import classes from "./PartnerMatchProfile.module.scss";
 import { Col, Container, Row } from 'react-bootstrap';
 import MyProfilePageCard from '../../components/MyProfile/MyProfilePageCard';
@@ -92,7 +92,7 @@ const PartnerMatchProfile: React.FC = () => {
 
     return (
         <div className={classes.bg}>
-            <LoginHeader />
+             {userId ? <LoginHeader /> : <Header />}
             <Container fluid className={classes.background_header}
                 style={
                     {

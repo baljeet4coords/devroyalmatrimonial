@@ -218,7 +218,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                 return getCityArr(city) ? getCityArr(city)?.concat(index < partnerPreferenceJson.city.length - 1 ? ' , ' : ' ') : 'Does Not Matter'
             }),
             val2: Step4Data && Step4Data?.family_native_city !== (undefined || null) && getCity(Step4Data?.family_native_city) || 'not filed',
-            Status: partnerPreferenceJson && Step4Data && isValMatch(partnerPreferenceJson?.country, Step4Data?.family_native_country) || partnerPreferenceJson?.city[0] === 0 ? 'Match' : 'Not Match',
+            Status: partnerPreferenceJson && Step4Data && isValMatch(partnerPreferenceJson?.city, Step4Data?.family_native_city) || partnerPreferenceJson?.city[0] === 0 ? 'Match' : 'Not Match',
         },
         {
             title: 'Education',
@@ -356,7 +356,6 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                     <thead className='text-center'>
                         <tr>
                             <th>Matching Field</th>
-                            <th>Your Profile</th>
                             <th className='text-Capitalize'>{
                                 privacySetting
                                     ? privacySetting?.privacy_show_name === 'P'
@@ -368,6 +367,7 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                                             : reptNameHide()
                                     : ShowNameONConditions
                             } </th>
+                            <th>Your Profile</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -375,8 +375,8 @@ const MatchingDetails: React.FC<MyProfileCompProps> = ({ partnerProfileAllData, 
                         {matchingData.map((data) => {
                             return (<tr className='text-center ' key={data.title} >
                                 <td width={'30%'}>{data.title}</td>
-                                <td width={'30%'}>{data.Val1}</td>
                                 <td width={'30%'}>{data.val2} </td>
+                                <td width={'30%'}>{data.Val1}</td>
                                 <td width={'10%'}>{data.Status != 'null' && <Image src={data.Status == 'Match' ? "./done.svg" : "./error-icon.svg"} width={data.Status == 'Match' ? 23 : 25} height={data.Status == 'Match' ? 23 : 25} alt="done" className="pe-1" />}</td>
                             </tr>)
                         })}

@@ -20,7 +20,7 @@ interface ShowInterestProps {
 }
 
 
-const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds,handleBlockedUser,BlockedUser,updateBlockListedUser,updateShortListedUser }) => {
+const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handleUpdateds, handleBlockedUser, BlockedUser, updateBlockListedUser, updateShortListedUser }) => {
     const [reciveInterestUser, setReciveInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -40,16 +40,18 @@ const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handle
         <React.Fragment key={key}>
             {!reciveInterestUser || reciveInterestUser.length < 1 ?
                 <div className={classes.componentMain}>
-                    <ShortVisitorProfile title="0 Interst Recive " subtitle="People Who Sent you Interest will appear here" image="./Images/interest_recive.svg" />
+                    <ShortVisitorProfile title="0 Interst Recive " subtitle="People Who Sent you Interest will appear here" image="/Images/interest_recive.svg" />
                 </div>
                 :
                 <>
                     <PageHeading heading="You have recived interest these profile !!" />
                     <div className={`${classes.card_container_main} ${classes.flexrowMar} `}>
                         {reciveInterestUser && reciveInterestUser.map((user) => {
-                            return (
-                                <InterestRecivedCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} BlockedUser={BlockedUser} handleUpdateds={handleUpdateds} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateBlockListedUser} />
-                            )
+                            if (user.usercard) {
+                                return (
+                                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
+                                )
+                            }
                         })}
                     </div>
                 </>

@@ -74,7 +74,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   const reptPhoneHide = () => {
     const mobileNumber = step1Response?.mobile.toLocaleString(); // Convert the mobile number to a string
     const hiddenDigits = mobileNumber && mobileNumber.slice(6); // Get the portion of the number to hide
-    const hiddenPlaceholder = hiddenDigits && '*'.repeat(hiddenDigits.length); // Create a placeholder of asterisks with the same length
+    const hiddenPlaceholder = hiddenDigits && 'X'.repeat(hiddenDigits.length); // Create a placeholder of asterisks with the same length
 
     return (
       <>

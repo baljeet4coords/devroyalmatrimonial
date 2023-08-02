@@ -60,7 +60,7 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     }, []);
 
     useEffect(() => {
-        setShortlistedUser(userData.shortlist === 1 ? true : false)
+        setShortlistedUser(userData?.shortlist === 1 ? true : false)
     }, [userData]);
 
 
@@ -342,13 +342,19 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                                     onClick={() => handleInterestPopupShow(userData?.userid)}
                                     className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activebtn : ''}>
                                     <BiHeartCircle className={userData?.interest.Send === 'S' || userData?.interest?.Receive === 'S' ? classes.activesvg : ''} />
-                                    {userData?.interest.Send === 'S' || userData?.interest?.Receive === 'A'
-                                        ? userData?.interest?.Receive === 'A' || userData?.interest.Send === 'A'
-                                            ? 'Interest Accepted'
-                                            : userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
-                                                ? 'Interest Declined'
-                                                : 'Intrest Sent'
-                                        : userData?.interest?.Receive === 'S' && userData?.interest?.Send != 'D' ? 'Interest Recived' : userData?.interest?.Send === 'D' ? 'Interest Declined' : 'Send Intrest'}
+                                    {
+                                        userData?.interest.Send === 'S' || userData?.interest?.Receive === 'A'
+                                            ? userData?.interest?.Receive === 'A' || userData?.interest.Send === 'A'
+                                                ? 'Interest Accepted'
+                                                : userData?.interest?.Receive === 'D' || userData?.interest?.Send === 'D'
+                                                    ? 'Interest Declined'
+                                                    : 'Intrest Sent'
+                                            : userData?.interest?.Receive === 'S' && userData?.interest?.Send != 'D'
+                                                ? 'Interest Recived'
+                                                : userData?.interest?.Send === 'D'
+                                                    ? 'Interest Declined'
+                                                    : 'Send Intrest'
+                                    }
                                 </Button>
                                 <Button disabled={BlockedUser?.includes(userData?.userid)} className={shortlistUser ? classes.activebtn : ''} onClick={() => handleSortlisted(userData?.userid)}>
                                     <MdStars className={shortlistUser ? classes.activesvg : ''} />
