@@ -315,7 +315,7 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.InterestBtnGroup}>
-                                <Button className={classes.acceptBtn} onClick={() => handleAcceptPopupShow(userData?.userid)}>
+                                <Button className={classes.acceptBtn} disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleAcceptPopupShow(userData?.userid)}>
                                     {loading ? (
                                         <Spinner
                                             className={classes.loginSpiner}
@@ -328,7 +328,7 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
                                     {!loading ? !btn ? 'Accept Interest' : 'Interest Accepted'
                                         : 'Accepting...'}
                                 </Button>
-                                <Button className={classes.declineBtn} onClick={() => handleDeclinePopupShow(userData?.userid)}>
+                                <Button className={classes.declineBtn} disabled={BlockedUser?.includes(userData?.userid)} onClick={() => handleDeclinePopupShow(userData?.userid)}>
                                     <MdCancel />
                                     {!btn ? 'Decline Interest' : 'Interest Declined'}
                                 </Button>

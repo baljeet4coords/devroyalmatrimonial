@@ -109,9 +109,11 @@ const ProfileVisitor: React.FC = () => {
             <PageHeading heading="Profile that visit your profile will appear here !!" />
             <div className={classes.card_container}>
               {profileVisitorSuccessResponse?.jsonResponse != null && profileVisitorSuccessResponse?.jsonResponse.map((user) => {
-                return (
-                  <ProfileCard userData={user.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
-                )
+                if (user.usercard) {
+                  return (
+                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
+                  )
+                }
               })}
             </div>
 

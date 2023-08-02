@@ -45,16 +45,18 @@ const DeclineInterestOfYou: React.FC<ComponentsProps> = ({ key, data, userId, Bl
         <React.Fragment key={key}>
             {!DeclineInterestUser || DeclineInterestUser.length < 1 ?
                 <div className={classes.componentMain}>
-                    <ShortVisitorProfile title="0 Interest Decline" subtitle="People you Reject Interest will appear here" image="./Images/Reject_interest.svg " />
+                    <ShortVisitorProfile title="0 Interest Decline" subtitle="People you Reject Interest will appear here" image="/Images/Reject_interest.svg " />
                 </div>
                 :
                 <>
                     <PageHeading heading="you have Decline interest of these profile !!" />
                     <div className={classes.card_container}>
                         {DeclineInterestUser && DeclineInterestUser.map((user) => {
-                            return (
-                                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
-                            )
+                            if (user.usercard) {
+                                return (
+                                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
+                                )
+                            }
                         })}
                     </div>
                 </>

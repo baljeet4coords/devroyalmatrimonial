@@ -105,14 +105,14 @@ const ShortlistedProfile: React.FC = () => {
             <div className={classes.card_container}>
               {shortListedUser && shortListedUser.map((user) => {
                 if (blockList && !blockList.includes(user.userid)) {
-                  if (user.usercard.interest.Receive === 'S' && user.usercard.interest.Send === null) {
+                  if (user?.usercard?.interest?.Receive === 'S' && user?.usercard?.interest?.Send === null) {
                     return (
-                      <InterestRecivedCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
+                      <InterestRecivedCard userData={user?.usercard} userID={userId || 0}  key={user?.usercard?.userid + user?.usercard?.user_RM_ID} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
                     )
                   }
                   else {
                     return (
-                      <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.usercard.userid + user.usercard.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
+                      <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.usercard?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleShortList_ID} updateShortListedUser={updateShortListedUser} />
                     )
                   }
                 }

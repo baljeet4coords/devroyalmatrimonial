@@ -46,7 +46,7 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId, Bloc
         <React.Fragment key={key}>
             {!AcceptedInterestUser || AcceptedInterestUser.length < 1 ?
                 <div className={classes.componentMain}>
-                    <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="./Images/accept_request.svg" />
+                    <ShortVisitorProfile title="0 Interest Accepted " subtitle="Interest that you Accept will appear here" image="/Images/accept_request.svg" />
                 </div>
                 :
                 <>
@@ -54,9 +54,11 @@ const AcceptedInterest: React.FC<ShowInterestProps> = ({ key, data, userId, Bloc
 
                     <div className={classes.card_container}>
                         {AcceptedInterestUser && AcceptedInterestUser.map((user) => {
-                            return (
-                                <ProfileCard userData={user?.usercard} userID={userId || 0} key={user.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
-                            )
+                            if (user.usercard) {
+                                return (
+                                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
+                                )
+                            }
                         })}
                     </div>
                 </>
