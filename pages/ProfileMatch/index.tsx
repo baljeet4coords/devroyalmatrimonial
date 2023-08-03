@@ -133,7 +133,7 @@ const ProfileMatch: React.FC = () => {
 
   const handleUpDateBlockuser = async (mutationResult: any, id: number) => {
 
-    // dispatch(matchMakingSuccess(mutationResult));
+    dispatch(matchMakingSuccess(mutationResult));
     const updatedUserWithoutBlock = allUserData?.filter((user) => {
       return user.userid != id;
     })

@@ -47,7 +47,6 @@ type FormValues = {
   profilepic: string;
 };
 
-
 import {
   convertDateStringTimeStamp,
   convertServerTimestamp,
@@ -74,7 +73,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const stepOneDefaultValues = useSelector(selectStep1Success);
   const isLoading = useSelector(selectStep1Loading);
   const userId = useSelector(getUserId);
-
 
   const jsonData = stepOneDefaultValues?.jsonResponse;
 
@@ -163,7 +161,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   const [heightSelectedVal, setheightSelectedVal] = useState<number | null>(0);
   const { registerUserMutation, Step1Query } = useStep1Register();
 
-
   if (selectedPhotoName?.includes("uploads")) {
     const imgsplt = selectedPhotoName.split("/");
     setSelectedPhotoName(imgsplt[imgsplt.length - 1]);
@@ -199,7 +196,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     }),
     onSubmit: async (values) => {
       setloginSpiner(true);
-      const mutationResult = await registerUserMutation.mutateAsync({ ...values, image, isReduxEmpty });
+      const mutationResult = await registerUserMutation.mutateAsync({
+        ...values,
+        image,
+        isReduxEmpty,
+      });
       if (mutationResult?.output && mutationResult?.output > 0) {
         nextPage(1);
         setloginSpiner(false);
@@ -208,7 +209,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
       }
     },
   });
-
 
   const onChangeGender = (gender: string) => {
     setGender(gender);
@@ -226,7 +226,23 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
     if ((selectedMaritalStatus.id || "") >= "2") {
       setChildrenStatusTouched(false);
     }
+
   }, [selectedMaritalStatus]);
+
+  // useEffect(() => {
+  //   if (selectedReligion?.id && ['2', '4', '5', '7', '8', '9', '10'].includes(selectedReligion?.id)) {
+  //     setSelectedMaritalStatus({
+  //       id: '4',
+  //       val: ''
+  //     })
+  //   } else {
+  //     setSelectedMaritalStatus({
+  //       id: '',
+  //       val: ''
+  //     })
+  //   }
+
+  // }, [selectedReligion]);
 
   useEffect(() => {
     formik.values.profilefor = selectedProfileFor.id || "";
@@ -493,6 +509,69 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                     )}
                   </div>
                   <div>
+                    <DropdownGridSingleSelect
+                      title="Marital Status"
+                      data={MaritalStatus}
+                      nameid="maritalstatus"
+                      selectedDataFn={setSelectedMaritalStatus}
+                      defaultValue={String(jsonData?.marital_status)}
+                      setErrorState={setMaritalStatusTouched}
+                    />
+                    {maritalStatusTouched &&
+                      selectedMaritalStatus.id == "undefined" ? (
+                      <div>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  {(selectedMaritalStatus.id || 1) >= "2" && (
+                    <div>
+                      <DropdownGridSingleSelect
+                        title="Children Status"
+                        data={ChildrenStatus}
+                        nameid="childrenstatus"
+                        selectedDataFn={setSelectedChildrenStatus}
+                        defaultValue={String(jsonData?.children_status)}
+                        setErrorState={setChildrenStatusTouched}
+                      />
+                      {childrenStatusTouched &&
+                        selectedChildrenStatus.id == "undefined" ? (
+                        <div>
+                          <span className={classes.errorMessage}>
+                            Please select value from dropdown
+                          </span>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  )}
+
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Religion"
+                      data={Religion}
+                      nameid="religion"
+                      selectedDataFn={setSelectedReligion}
+                      defaultValue={String(jsonData?.religion)}
+                      setErrorState={setReligionTouched}
+                    />
+                    {religionTouched && selectedReligion.id == "undefined" ? (
+                      <div>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div>
                     <CastListDropDown
                       data={CastListArray}
                       selectedDataFn={setSelectedCast}
@@ -527,6 +606,28 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       ""
                     )}
                   </div>
+
+                  <div>
+                    <DropdownGridSingleSelect
+                      title="Mother Tongue"
+                      data={MotherTongue}
+                      nameid="mothertongue"
+                      selectedDataFn={setSelectedMotherTongue}
+                      defaultValue={String(jsonData?.mother_tongue)}
+                      setErrorState={setMotherToungeTouched}
+                    />
+                    {motherToungeTouched &&
+                      selectedMotherTongue.id == "undefined" ? (
+                      <div>
+                        <span className={classes.errorMessage}>
+                          Please select value from dropdown
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
                   <div>
                     <DropdownGridSingleSelect
                       title="Challenged"
@@ -566,45 +667,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       ""
                     )}
                   </div>
-                  <div>
-                    <DropdownGridSingleSelect
-                      title="Mother Tongue"
-                      data={MotherTongue}
-                      nameid="mothertongue"
-                      selectedDataFn={setSelectedMotherTongue}
-                      defaultValue={String(jsonData?.mother_tongue)}
-                      setErrorState={setMotherToungeTouched}
-                    />
-                    {motherToungeTouched &&
-                      selectedMotherTongue.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div>
-                    <DropdownGridSingleSelect
-                      title="Religion"
-                      data={Religion}
-                      nameid="religion"
-                      selectedDataFn={setSelectedReligion}
-                      defaultValue={String(jsonData?.religion)}
-                      setErrorState={setReligionTouched}
-                    />
-                    {religionTouched && selectedReligion.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
+
                   <div>
                     <DropdownGridSingleSelect
                       title="Manglik"
@@ -624,48 +687,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
                       ""
                     )}
                   </div>
-                  <div>
-                    <DropdownGridSingleSelect
-                      title="Marital Status"
-                      data={MaritalStatus}
-                      nameid="maritalstatus"
-                      selectedDataFn={setSelectedMaritalStatus}
-                      defaultValue={String(jsonData?.marital_status)}
-                      setErrorState={setMaritalStatusTouched}
-                    />
-                    {maritalStatusTouched &&
-                      selectedMaritalStatus.id == "undefined" ? (
-                      <div>
-                        <span className={classes.errorMessage}>
-                          Please select value from dropdown
-                        </span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  {(selectedMaritalStatus.id || "") >= "2" && (
-                    <div>
-                      <DropdownGridSingleSelect
-                        title="Children Status"
-                        data={ChildrenStatus}
-                        nameid="childrenstatus"
-                        selectedDataFn={setSelectedChildrenStatus}
-                        defaultValue={String(jsonData?.children_status)}
-                        setErrorState={setChildrenStatusTouched}
-                      />
-                      {childrenStatusTouched &&
-                        selectedChildrenStatus.id == "undefined" ? (
-                        <div>
-                          <span className={classes.errorMessage}>
-                            Please select value from dropdown
-                          </span>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  )}
+
                   <Button
                     variant="danger"
                     type="submit"

@@ -148,6 +148,8 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
             handleUpdateds && handleUpdateds(1);
         }
         setLoading(false)
+        setAcceptPopup(false);
+        setDeclinPopup(false);
     }
 
     const handleSortlisted = async (id: number) => {
@@ -350,9 +352,9 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
                 </div>
             </div >
 
-            {blockPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} index={1} />}
-            {acceptPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleAcceptConfirmations} handleInterestPopupHide={handleAcceptPopupHide} index={2} />}
-            {declinPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleDeclineConfirmations} handleInterestPopupHide={handleDeclinePopupHide} index={3} />}
+            {blockPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} index={1} title={BlockedUser?.includes(userData?.userid) ? 'Unblock' : 'Block'} />}
+            {acceptPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleAcceptConfirmations} handleInterestPopupHide={handleAcceptPopupHide} index={2}  title='Accept Interest'  />}
+            {declinPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleDeclineConfirmations} handleInterestPopupHide={handleDeclinePopupHide} index={3}  title='Decline Interest' />}
         </>
     )
 }

@@ -48,6 +48,7 @@ export interface ISearchByDataResponse {
   shortlist: number;
   occupation: number;
   user_RM_ID: string;
+  basic_intro: string | null;
   privacy_name: null | string;
   annual_income: number;
   privacy_photo: null | string;

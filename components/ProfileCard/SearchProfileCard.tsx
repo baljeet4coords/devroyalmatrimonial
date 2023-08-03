@@ -15,6 +15,7 @@ import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
 import { City, Country, ICity, ICountry, IState, State } from 'country-state-city';
 import { ICardResponse } from '../../types/cardResponse/cardResponse';
 import ConfirMationsPopup from '../ConfirmationsPopup';
+import { searchByDataSuccess } from '../../ducks/searchByData/actions';
 
 interface MyComponentProps {
     userData: ICardResponse;
@@ -24,12 +25,11 @@ interface MyComponentProps {
     BlockedUser: number[];
     setSendInterest: (val: number[]) => void;
     setBlock?: (val: number) => void;
-    updateShortListedUser?: (id: number, val?: any) => void;
     updateBlockListedUser?: (val: any, id: number) => void;
     handleUpdateds?: (val: number) => void;
 }
 
-const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, updateShortListedUser, handleUpdateds }) => {
+const SearchProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, handleUpdateds }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
@@ -131,8 +131,6 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             useridShortlist: id,
             status: !userData?.shortlist ? 'Y' : 'N'
         });
-        dispatch(matchMakingSuccess(mutationResult));
-        updateShortListedUser && updateShortListedUser(id, mutationResult);
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(id);
         }
@@ -147,9 +145,9 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
             toUserid: cardId,
             status: userData?.interest.Send != 'S' ? 'S' : 'C'
         });
+        dispatch(searchByDataSuccess(mutationResult as any));
         if (mutationResult.apiResponse.output === 1) {
             handleUpdateds && handleUpdateds(cardId);
-            updateShortListedUser && updateShortListedUser(cardId, mutationResult)
         }
         setInterestPopup(false);
         setLoading(false);
@@ -167,7 +165,6 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
         console.log(mutationResult, 'mutationResult');
 
         updateBlockListedUser && updateBlockListedUser(mutationResult, cardId);
-        updateShortListedUser && updateShortListedUser(cardId);
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(cardId);
             setBlock && setBlock(cardId);
@@ -323,16 +320,18 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
                             </div>
                         </div>
 
-                        {userData?.basic_intro &&
+                        {/* {userData?.basic_intro && */}
                             <div className={classes.mySelf}>
                                 <p>
                                     <span>
                                         MySelf : {' '}
                                     </span>
-                                    {userData?.basic_intro.length > 175 ? userData?.basic_intro.slice(0, 175) + '...' : userData?.basic_intro}
+                                    {/* {userData?.basic_intro.length > 175 ? userData?.basic_intro.slice(0, 175) + '...' : userData?.basic_intro} */}
+                                    I You Can Copy And Paste The Essay Or Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help An AI Language Model....
                                 </p>
                             </div>
-                        }
+                        {/* } */}
+
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>
                                 <Button disabled={
@@ -381,5 +380,5 @@ const ProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterest
     )
 }
 
-export default ProfileCard
+export default SearchProfileCard
 

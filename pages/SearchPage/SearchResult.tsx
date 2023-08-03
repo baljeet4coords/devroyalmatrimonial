@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Spinner } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import classes from "../ProfileMatch/ProfileMatch.module.scss";
 import { CustomButton, Footer, Header } from "../../components";
 import { useDispatch } from "react-redux";
@@ -13,6 +12,7 @@ import { searchByDataReq, searchByDataSuccess } from "../../ducks/searchByData/a
 import { SearchByData } from "../../ducks/partnerPreferrence/types";
 import ShortVisitorProfile from "../../components/ShortVisitorProfile";
 import { getUserId } from "../../ducks/auth/selectors";
+import SearchProfileCard from "../../components/ProfileCard/SearchProfileCard";
 
 
 const SearchResult: React.FC = () => {
@@ -95,10 +95,6 @@ const SearchResult: React.FC = () => {
 
   }
 
-  const handleUpDateShortlistUser = (id: number, mutationResult: any) => {
-    dispatch(searchByDataSuccess(mutationResult));
-  }
-
 
   return (
     <React.Fragment>
@@ -120,7 +116,7 @@ const SearchResult: React.FC = () => {
               {allUserData != null && allUserData && allUserData?.map((user) => {
                 if (block != null && !block.includes(user.userid)) {
                   return (
-                    <ProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} updateShortListedUser={handleUpDateShortlistUser} />
+                    <SearchProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
                   )
                 }
               })}
