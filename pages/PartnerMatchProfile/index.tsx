@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router';
 import { Header, ImageGallery, LoginHeader } from '../../components';
 import classes from "./PartnerMatchProfile.module.scss";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Modal, Row } from 'react-bootstrap';
 import MyProfilePageCard from '../../components/MyProfile/MyProfilePageCard';
 import { myProfileReq } from '../../ducks/myProfile/actions';
 import { useDispatch } from 'react-redux';
@@ -76,23 +76,27 @@ const PartnerMatchProfile: React.FC = () => {
         dispatch(myProfileReq({ actionType: "v", userId: Number(partnerId) }));
     }, [dispatch, partnerId]);
 
-    const onPreviewAlbum = (visible: boolean) => {
-        setShowGallery(visible);
-        if (galleryRef.current === null) {
-            window.innerWidth <= 667
-                ? window.scrollTo(0, 1000)
-                : window.scrollTo(0, 700);
-        }
+    const onPreviewAlbum = () => {
+        setShowGallery(!showGallery);
+        // if (galleryRef.current === null) {
+        //     window.innerWidth <= 667
+        //         ? window.scrollTo(0, 1000)
+        //         : window.scrollTo(0, 700);
+        // }
     };
 
     const handleSwitchTabs = (val: number) => {
         setButtonType(val)
     }
 
+    const modalClose = () => {
+        setShowGallery(!showGallery);
+    }
+
 
     return (
         <div className={classes.bg}>
-             {userId ? <LoginHeader /> : <Header />}
+            {userId ? <LoginHeader /> : <Header />}
             <Container fluid className={classes.background_header}
                 style={
                     {
@@ -110,82 +114,96 @@ const PartnerMatchProfile: React.FC = () => {
                 interestResponse={interest}
             />
             <Container className={classes.detailsWrapper}>
-                {showGallery ? (
+                {/* {showGallery ? (
                     <ImageGallery userProfilerName={step1Response?.fullname} galleryRef={galleryRef} images={[]} EditHide={true} privacySetting={privacyResponse}
                         interestResponse={interest} />
-                ) : (
-                    <>
-                        <Row className={`${classes.tabSection} row`}>
-                            <button onClick={() => handleSwitchTabs(1)} className={`${classes.TabButton} ${buttonType === 1 && classes.TabButtonActive} `}>
-                                Details
-                            </button>
-                            <button onClick={() => handleSwitchTabs(2)} className={`${classes.TabButton} ${buttonType === 2 && classes.TabButtonActive} `}>
-                                Profile Comparison
-                            </button>
+                ) : ( */}
+                <>
+                    <Row className={`${classes.tabSection} row`}>
+                        <button onClick={() => handleSwitchTabs(1)} className={`${classes.TabButton} ${buttonType === 1 && classes.TabButtonActive} `}>
+                            Details
+                        </button>
+                        <button onClick={() => handleSwitchTabs(2)} className={`${classes.TabButton} ${buttonType === 2 && classes.TabButtonActive} `}>
+                            Profile Comparison
+                        </button>
+                    </Row>
+                    {buttonType == 1 ?
+                        <Row style={{
+                            width: "100%",
+                            margin: 'auto'
+                        }}>
+                            <Col sm={9} md={8} className="p-0">
+                                <BasicDetails
+                                    step1Response={step1Response}
+                                    EditHide={true}
+                                    setBasicDetails={setShowGallery}
+                                    privacySetting={privacyResponse}
+                                    interestResponse={interest}
+                                />
+                                <hr />
+                                <AboutMeDetails
+                                    step5Response={step5Response}
+                                    setAboutMeDetails={setShowGallery}
+                                    EditHide={true}
+                                />
+                                <hr />
+                                <EducationAndCareer
+                                    step2Response={step2Response}
+                                    setEudcationAndCareer={setShowGallery}
+                                    EditHide={true}
+                                />
+
+                                <hr />
+                                <FamilydetailsInfo
+                                    step4Response={step4Response}
+                                    setFamilyDetails={setShowGallery}
+                                    EditHide={true}
+                                />
+                                <hr />
+
+                                <LifeStyleDetails
+                                    step3Response={step3Response}
+                                    setEditDetails={setShowGallery}
+                                    EditHide={true}
+
+                                />
+
+                            </Col>
+                            <Col sm={3} md={4} className="p-0">
+                                <MyProfileRightSec myProfileObject={myProfileObject} privacySetting={privacyResponse}
+                                    interestResponse={interest} />
+                            </Col>
                         </Row>
-                        {buttonType == 1 ?
-                            <Row style={{
-                                width: "100%",
-                                margin: 'auto'
-                            }}>
-                                <Col sm={9} md={8} className="p-0">
-                                    <BasicDetails
-                                        step1Response={step1Response}
-                                        EditHide={true}
-                                        setBasicDetails={setShowGallery}
-                                        privacySetting={privacyResponse}
-                                        interestResponse={interest}
-                                    />
-                                    <hr />
-                                    <AboutMeDetails
-                                        step5Response={step5Response}
-                                        setAboutMeDetails={setShowGallery}
-                                        EditHide={true}
-                                    />
-                                    <hr />
-                                    <EducationAndCareer
-                                        step2Response={step2Response}
-                                        setEudcationAndCareer={setShowGallery}
-                                        EditHide={true}
-                                    />
-
-                                    <hr />
-                                    <FamilydetailsInfo
-                                        step4Response={step4Response}
-                                        setFamilyDetails={setShowGallery}
-                                        EditHide={true}
-                                    />
-                                    <hr />
-
-                                    <LifeStyleDetails
-                                        step3Response={step3Response}
-                                        setEditDetails={setShowGallery}
-                                        EditHide={true}
-
-                                    />
-
-                                </Col>
-                                <Col sm={3} md={4} className="p-0">
-                                    <MyProfileRightSec myProfileObject={myProfileObject} privacySetting={privacyResponse}
-                                        interestResponse={interest} />
-                                </Col>
-                            </Row>
-                            :
-                            <Row style={{
-                                width: "100%",
-                                margin: 'auto'
-                            }}>
-                                <Col xl={12} className="p-0">
-                                    <MatchingDetails partnerProfileAllData={myProfileObject} PartnerPreferenceJson={PartnerPreferenceJson} privacySetting={privacyResponse}
-                                        interestResponse={interest} />
-                                </Col>
-                            </Row>
-                        }
-                    </>
-                )}
+                        :
+                        <Row style={{
+                            width: "100%",
+                            margin: 'auto'
+                        }}>
+                            <Col xl={12} className="p-0">
+                                <MatchingDetails partnerProfileAllData={myProfileObject} PartnerPreferenceJson={PartnerPreferenceJson} privacySetting={privacyResponse}
+                                    interestResponse={interest} />
+                            </Col>
+                        </Row>
+                    }
+                </>
+                {/* )} */}
             </Container>
 
+            {
+                showGallery && (
+                    <Modal className={classes.galleryModel} show={showGallery} size="lg" centered scrollable >
+                        <Modal.Header closeButton onHide={modalClose}>
+                            {/* <Modal.Title>Gallery</Modal.Title> */}
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <ImageGallery userProfilerName={step1Response?.fullname} galleryRef={galleryRef} images={[]} EditHide={true} privacySetting={privacyResponse}
+                                interestResponse={interest} />
+                        </Modal.Body>
+                    </Modal>
+                )}
         </div >
+
     )
 }
 

@@ -8,7 +8,7 @@ import { IPartnerDetailsInterestResponse, IPartnerDetailsP1Response, IPartnerDet
 interface Step1DataResponse {
   step1Response: IPartnerDetailsP1Response | null | undefined;
   AuthSuccess: any;
-  onPreviewAlbum: (visible: boolean) => void;
+  onPreviewAlbum: () => void;
   profileCompliteScore: number | undefined;
   privacySetting?: IPartnerDetailsPrivacyResponse | null;
   interestResponse?: IPartnerDetailsInterestResponse | null;
@@ -23,11 +23,12 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
   privacySetting
 }) => {
   const blurredPhotoUrl = './Images/blured-img.webp';
-  const [showGallery, setShowGallery] = useState<boolean>(false);
+  // const [showGallery, setShowGallery] = useState<boolean>(false);
   const [profileCompliteScorePersent, setProfileCompliteScorePersent] = useState<number>(profileCompliteScore && profileCompliteScore * 100 || -1)
+
   const showGalleryClickHandler = () => {
-    setShowGallery(!showGallery);
-    onPreviewAlbum(!showGallery);
+    // setShowGallery(!showGallery);
+    onPreviewAlbum();
   };
 
   useEffect(() => {
@@ -163,7 +164,7 @@ const MyProfilePageCard: React.FC<Step1DataResponse> = ({
               </div>
 
               <CustomButton onClick={showGalleryClickHandler}>
-                {!showGallery ? "Preview Album" : "Back to profile"}
+                Preview Album
               </CustomButton>
             </div>
           </div>

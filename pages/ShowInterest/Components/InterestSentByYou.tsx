@@ -42,37 +42,6 @@ const InterestSentByYou: React.FC<InterestSentByYouProps> = ({ data, userId, han
       }, [data])
 
 
-    //   useEffect(() => {
-    //     dispatch(showInterestReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-
-
-    //     dispatch(blockListReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-
-    //   }, [userId, dispatch,])
-
-
-
-
-    //   const handleInterest = (id: number) => {
-    //     dispatch(showInterestReq({
-    //       userId: userId ? userId : -1,
-    //     }));
-    //   }
-
-    //   const handleBlockedUser = (id: number) => {
-    //     if (Blocklisted_Id?.includes(id)) {
-    //       const updatedBlocklist = Blocklisted_Id.filter((blocked_ID) => blocked_ID != id)
-
-    //       setBlocklisted_Id(updatedBlocklist)
-    //     } else {
-    //       Blocklisted_Id && setBlocklisted_Id([...Blocklisted_Id, id])
-    //     }
-    //   }
-
     const Components = [
         {
             Component: <SendInterest key={1} data={sentInterest} userId={userId} handleUpdateds={handleUpdateds} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,

@@ -16,7 +16,8 @@ import { useShortlist } from '../../hooks/useSortlisted/useShortlist';
 import { matchMakingSuccess } from '../../ducks/matchMaking/actions';
 import ConfirMationsPopup from '../ConfirmationsPopup';
 import { useBlockUser } from '../../hooks/useBlockUser/useBlockUser';
-import Hashing from 'next/dist/shared/lib/bloom-filter/hashing';
+
+
 interface MyComponentProps {
     userData: ICardResponse;
     userID?: number;
@@ -138,7 +139,6 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
 
 
     const handleInterestAcceptDecline = async (id: number) => {
-        setLoading(true)
         const mutationResult = await useAcceptDeclineMutation.mutateAsync({
             fromUserid: userID,
             toUserid: userData.userid,
@@ -147,7 +147,6 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(1);
         }
-        setLoading(false)
         setAcceptPopup(false);
         setDeclinPopup(false);
     }
@@ -164,12 +163,10 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(id);
         }
-        setLoading(false);
     }
 
 
     const handleBlock = async () => {
-        setLoading(true);
         const mutationResult = await useBlockUserMutation.mutateAsync({
             userId: userID,
             userIdToBlock: cardId,
@@ -183,7 +180,6 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
             setBlock && setBlock(cardId);
             setBlockPopup(false);
         }
-        setLoading(false);
     }
 
     const handleBlockPopupShow = (id: number) => {
@@ -353,8 +349,8 @@ const InterestRecivedCard: FC<MyComponentProps> = ({ userData, userID, key, setB
             </div >
 
             {blockPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleBlock} handleInterestPopupHide={handleBlockPopupHide} index={1} title={BlockedUser?.includes(userData?.userid) ? 'Unblock' : 'Block'} />}
-            {acceptPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleAcceptConfirmations} handleInterestPopupHide={handleAcceptPopupHide} index={2}  title='Accept Interest'  />}
-            {declinPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleDeclineConfirmations} handleInterestPopupHide={handleDeclinePopupHide} index={3}  title='Decline Interest' />}
+            {acceptPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleAcceptConfirmations} handleInterestPopupHide={handleAcceptPopupHide} index={2} title='Accept Interest' />}
+            {declinPopup && <ConfirMationsPopup loading={loading} confirmationsFun={handleDeclineConfirmations} handleInterestPopupHide={handleDeclinePopupHide} index={3} title='Decline Interest' />}
         </>
     )
 }

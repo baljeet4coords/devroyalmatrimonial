@@ -25,11 +25,10 @@ interface MyComponentProps {
     BlockedUser: number[];
     setSendInterest: (val: number[]) => void;
     setBlock?: (val: number) => void;
-    updateBlockListedUser?: (val: any, id: number) => void;
     handleUpdateds?: (val: number) => void;
 }
 
-const SearchProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, updateBlockListedUser, handleUpdateds }) => {
+const SearchProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendInterestUser, BlockedUser, setBlock, setSendInterest, handleUpdateds }) => {
     const router = useRouter()
     const dispatch = useDispatch();
     const { useSendInterestMutation, SendInterestQuery } = useSendInterest();
@@ -164,7 +163,6 @@ const SearchProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendIn
         });
         console.log(mutationResult, 'mutationResult');
 
-        updateBlockListedUser && updateBlockListedUser(mutationResult, cardId);
         if (mutationResult.output === 1) {
             handleUpdateds && handleUpdateds(cardId);
             setBlock && setBlock(cardId);
@@ -320,17 +318,16 @@ const SearchProfileCard: FC<MyComponentProps> = ({ userData, userID, key, SendIn
                             </div>
                         </div>
 
-                        {/* {userData?.basic_intro && */}
+                        {userData?.basic_intro &&
                             <div className={classes.mySelf}>
                                 <p>
                                     <span>
                                         MySelf : {' '}
                                     </span>
-                                    {/* {userData?.basic_intro.length > 175 ? userData?.basic_intro.slice(0, 175) + '...' : userData?.basic_intro} */}
-                                    I You Can Copy And Paste The Essay Or Do My Best To Assist You.Id Be Happy To Help You With Your Friends Essay. However, Please Note You.Id Be Happy To Help An AI Language Model....
+                                    {userData?.basic_intro.length > 175 ? userData?.basic_intro.slice(0, 175) + '...' : userData?.basic_intro}
                                 </p>
                             </div>
-                        {/* } */}
+                        }
 
                         <div className={classes.card_Button_Wrapper}>
                             <div className={classes.button_section}>

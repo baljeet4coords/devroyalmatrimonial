@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image, Alert } from "react-bootstrap";
+import { Container, Row, Col, Image, Alert, Modal } from "react-bootstrap";
 import LoginHeader from "../../components/LoginHeader/Loginheader";
 import React, { useState, useRef, useEffect } from "react";
 import classes from "./MyProfile.module.scss";
@@ -136,13 +136,13 @@ const MyProfile: React.FC = () => {
     getImages();
   }, [userId]);
 
-  const onPreviewAlbum = (visible: boolean) => {
-    setShowGallery(visible);
-    if (galleryRef.current === null) {
-      window.innerWidth <= 667
-        ? window.scrollTo(0, 1000)
-        : window.scrollTo(0, 700);
-    }
+  const onPreviewAlbum = () => {
+    setShowGallery(!showGallery);
+    // if (galleryRef.current === null) {
+    //   window.innerWidth <= 667
+    //     ? window.scrollTo(0, 1000)
+    //     : window.scrollTo(0, 700);
+    // }
   };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -156,6 +156,10 @@ const MyProfile: React.FC = () => {
       setSelectedFiles(fileList);
     }
   };
+
+  const modalClose = () => {
+    setShowGallery(!showGallery);
+  }
 
   return (
     <React.Fragment>
@@ -208,12 +212,13 @@ const MyProfile: React.FC = () => {
             />
             <Container className={classes.detailsWrapper}>
               <Row>
-                {showGallery ? (
+                {/* {showGallery ? (
+                  null
                   <ImageGallery galleryRef={galleryRef} images={[]} EditHide={false} />
-                ) : (
-                  <>
-                    <Col sm={9} md={8} className="p-0">
-                      {/* {criticalDetails ? (
+                ) : ( */}
+                <>
+                  <Col sm={9} md={8} className="p-0">
+                    {/* {criticalDetails ? (
                         <EditCriticalDetials
                           step1Response={step1Response}
                           setCriticalDetails={setCriticalDetails}
@@ -224,92 +229,103 @@ const MyProfile: React.FC = () => {
                           setCriticalDetails={setCriticalDetails}
                         />
                       )} */}
-                      <hr />
-                      {basicDetails ? (
-                        <EditBasicDetials
-                          step1Response={step1Response}
-                          setBasicDetails={setBasicDetails}
-                          FatchAgain={FatchAgain}
-                        />
-                      ) : (
-                        <BasicDetails
-                          step1Response={step1Response}
-                          setBasicDetails={setBasicDetails}
-                        />
-                      )}
-                      <hr />
-                      {aboutMeDetails ? (
-                        <EditAboutMe
-                          step5Response={step5Response}
-                          setAboutMeDetails={setAboutMeDetails}
-                          FatchAgain={FatchAgain}
-                        />
-                      ) : (
-                        <AboutMeDetails
-                          step5Response={step5Response}
-                          setAboutMeDetails={setAboutMeDetails}
-                          EditHide={false}
-                        />
-                      )}
-                      <hr />
-                      {eudcationAndCareer ? (
-                        <EditEducationAmdCareer
-                          step2Response={step2Response}
-                          setEudcationAndCareer={setEudcationAndCareer}
-                          FatchAgain={FatchAgain}
-                        />
-                      ) : (
-                        <EducationAndCareer
-                          step2Response={step2Response}
-                          setEudcationAndCareer={setEudcationAndCareer}
-                          EditHide={false}
+                    <hr />
+                    {basicDetails ? (
+                      <EditBasicDetials
+                        step1Response={step1Response}
+                        setBasicDetails={setBasicDetails}
+                        FatchAgain={FatchAgain}
+                      />
+                    ) : (
+                      <BasicDetails
+                        step1Response={step1Response}
+                        setBasicDetails={setBasicDetails}
+                      />
+                    )}
+                    <hr />
+                    {aboutMeDetails ? (
+                      <EditAboutMe
+                        step5Response={step5Response}
+                        setAboutMeDetails={setAboutMeDetails}
+                        FatchAgain={FatchAgain}
+                      />
+                    ) : (
+                      <AboutMeDetails
+                        step5Response={step5Response}
+                        setAboutMeDetails={setAboutMeDetails}
+                        EditHide={false}
+                      />
+                    )}
+                    <hr />
+                    {eudcationAndCareer ? (
+                      <EditEducationAmdCareer
+                        step2Response={step2Response}
+                        setEudcationAndCareer={setEudcationAndCareer}
+                        FatchAgain={FatchAgain}
+                      />
+                    ) : (
+                      <EducationAndCareer
+                        step2Response={step2Response}
+                        setEudcationAndCareer={setEudcationAndCareer}
+                        EditHide={false}
 
-                        />
-                      )}
-                      <hr />
-                      {familyDetails ? (
-                        <EditFamilyDetails
-                          step4Response={step4Response}
-                          setFamilyDetails={setFamilyDetails}
-                          FatchAgain={FatchAgain}
-                        />
-                      ) : (
-                        <FamilydetailsInfo
-                          step4Response={step4Response}
-                          setFamilyDetails={setFamilyDetails}
-                          EditHide={false}
+                      />
+                    )}
+                    <hr />
+                    {familyDetails ? (
+                      <EditFamilyDetails
+                        step4Response={step4Response}
+                        setFamilyDetails={setFamilyDetails}
+                        FatchAgain={FatchAgain}
+                      />
+                    ) : (
+                      <FamilydetailsInfo
+                        step4Response={step4Response}
+                        setFamilyDetails={setFamilyDetails}
+                        EditHide={false}
 
-                        />
-                      )}
-                      <hr />
-                      {lifeStyleDetails ? (
-                        <EditLifeStyle
-                          step3Response={step3Response}
-                          setEditDetails={setLifeStyleDetails}
-                          FatchAgain={FatchAgain}
-                        />
-                      ) : (
-                        <LifeStyleDetails
-                          step3Response={step3Response}
-                          setEditDetails={setLifeStyleDetails}
-                          EditHide={false}
-                        />
-                      )}
-                      <hr />
-                      <div className={classes.datecont}>
-                        {/* <p>Last updated on 15th Feb, 2023</p> */}
-                      </div>
-                    </Col>
-                    <Col sm={3} md={4} className="p-0">
-                      <MyProfileRightSec myProfileObject={myProfileObject} />
-                    </Col>
-                  </>
-                )}
+                      />
+                    )}
+                    <hr />
+                    {lifeStyleDetails ? (
+                      <EditLifeStyle
+                        step3Response={step3Response}
+                        setEditDetails={setLifeStyleDetails}
+                        FatchAgain={FatchAgain}
+                      />
+                    ) : (
+                      <LifeStyleDetails
+                        step3Response={step3Response}
+                        setEditDetails={setLifeStyleDetails}
+                        EditHide={false}
+                      />
+                    )}
+                    <hr />
+                    <div className={classes.datecont}>
+                      {/* <p>Last updated on 15th Feb, 2023</p> */}
+                    </div>
+                  </Col>
+                  <Col sm={3} md={4} className="p-0">
+                    <MyProfileRightSec myProfileObject={myProfileObject} />
+                  </Col>
+                </>
+                {/* )} */}
               </Row>
             </Container>
           </>
         )}
       </div>
+      {showGallery && (
+        <Modal show={showGallery} size="lg" centered scrollable >
+          <Modal.Header closeButton onHide={modalClose}>
+            {/* <Modal.Title>Gallery</Modal.Title> */}
+          </Modal.Header>
+
+          <Modal.Body>
+            <ImageGallery galleryRef={galleryRef} images={[]} EditHide={false} />
+          </Modal.Body>
+        </Modal>
+      )}
     </React.Fragment>
   );
 };

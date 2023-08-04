@@ -29,7 +29,7 @@ const ReciveInterest: React.FC<ShowInterestProps> = ({ key, data, userId, handle
     useEffect(() => {
         const cancleData = data && data?.filter((user) => {
             if (user?.status === 'S'
-                && user?.usercard?.interest?.Send === null)
+                && user?.usercard?.interest?.Receive === 'S' && user.usercard.interest.Send != 'D' && user.usercard.interest.Send != 'A')
                 return user
         })
         setReciveInterestUser(cancleData);

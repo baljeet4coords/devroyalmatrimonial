@@ -20,8 +20,6 @@ function* SearchByDataSaga(action: SearchbyDataActions): any {
         action.payload
       );
       const responseData = response.data;
-      console.log(responseData, "sagaResponseData");
-
       const updatedData = previousSearchByDataSuccess && {
         ...responseData,
         jsonResponse: [

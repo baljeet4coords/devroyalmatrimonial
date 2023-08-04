@@ -84,15 +84,24 @@ const SearchResult: React.FC = () => {
     setBlock([...block, val])
   }
 
-  const handleUpDateBlockuser = (mutationResult: any, id: number) => {
 
-    dispatch(searchByDataSuccess(mutationResult));
-    const updatedUserWithoutBlock = allUserData?.filter((user) => {
-      return user.userid != id;
-    })
+  const handleUpdatedsInterest = (id: number) => {
+    const updatedSearchResult = allUserData.map((user) => {
+      if (user.userid === id) {
+        return {
+          ...user,
+          interest: {
+            ...user.interest,
+            Send: user.interest.Send != 'S' ? 'S' : 'C',
+          },
+        };
+      }
+      return user;
+    });
 
-    setAllUserData(updatedUserWithoutBlock);
-
+    setTimeout(() => {
+      setAllUserData(updatedSearchResult);
+    }, 500);
   }
 
 
@@ -116,7 +125,7 @@ const SearchResult: React.FC = () => {
               {allUserData != null && allUserData && allUserData?.map((user) => {
                 if (block != null && !block.includes(user.userid)) {
                   return (
-                    <SearchProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} updateBlockListedUser={handleUpDateBlockuser} />
+                    <SearchProfileCard userData={user} userID={userId || 0} key={user.userid + user.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={block} setSendInterest={setSendInterest} setBlock={handleBlockList_ID} handleUpdateds={handleUpdatedsInterest} />
                   )
                 }
               })}

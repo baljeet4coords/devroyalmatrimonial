@@ -23,8 +23,8 @@ const DeclineInterestOfYou: React.FC<ComponentsProps> = ({ key, data, userId, Bl
 
     useEffect(() => {
         const AcceptedData = data && data?.filter((user) => {
-            if (user?.status === 'D'
-                || user?.usercard?.interest?.Receive === 'D')
+            if (user?.status === 'S'
+                && user?.usercard?.interest?.Receive === 'D')
                 return user
         })
         setDeclineInterestUser(AcceptedData);

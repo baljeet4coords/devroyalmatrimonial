@@ -146,13 +146,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
 
 
   const ShowNameONConditions = userProfilerName && userProfilerName?.length > 16
-    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...') + "'s" + ' Photo'
-    : userProfilerName?.toLocaleLowerCase() + "'s" + ' Photo';
+    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...') + "'s" + ' Photos'
+    : userProfilerName?.toLocaleLowerCase() + "'s" + ' Photos';
 
 
   return (
     <div className={classes.imageGallery} ref={galleryRef}>
-      <div className="d-flex justify-content-between mb-5">
+      <div className="d-flex justify-content-between mb-3">
         <h5>{userProfilerName
           ? privacySetting
             ? privacySetting?.privacy_show_name === 'P'
@@ -232,8 +232,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
                   return (
                     <a href={`${process.env.NEXT_PUBLIC_URL}/${img}`} key={index}>
                       <Image
-                        alt={"RM"}
+                        alt={img}
                         src={`${process.env.NEXT_PUBLIC_URL}/${img}`}
+                        rounded
                       />
                     </a>
                   );
