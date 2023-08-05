@@ -2,27 +2,50 @@
   background-color: #fff;
   border-radius: 2px;
   padding: 2rem;
-  h5{
-    text-transform: capitalize;
-  }
+  padding-top: 0;
 
-  .addMorePhoto {
-    background-color: rgba(0, 0, 0, 0.623);
-    width: auto;
-    padding: 0.3rem 1rem;
-    color: white;
+  .imageGallery_addPhoto {
+    // background-color: #eeeeee;
+    // display: flex;
+    // flex-direction: row-reverse;
+    // justify-content: flex-start;
+    // align-items: center;
+    // margin: 1rem 0;
+    // gap: 1rem;
+    // margin-bottom: 2rem;
+
+
     display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+
+    .addMorePhoto {
+      background-color: rgba(0, 0, 0, 0.623);
+      width: auto;
+      padding: 0.3rem 1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    span{
+      font-size: 12px;
+      margin-top: 0.5rem;
+      min-width: 170px;
+      padding: 0 8px;
+      font-weight: 400;
+    }
   }
 
   :last-child {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: flex-start;
 
     a {
@@ -69,7 +92,7 @@
     }
   }
 
-  .galleryProcted{
+  .galleryProcted {
     height: 20rem;
     width: 100%;
     // background-color: bisque;
@@ -79,7 +102,7 @@
     justify-content: center;
     align-items: center;
 
-    .protectedGalleryImg{
+    .protectedGalleryImg {
       width: 200px;
       height: 200px;
     }

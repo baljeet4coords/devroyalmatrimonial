@@ -49,7 +49,7 @@ const DeclineInterestOfYou: React.FC<ComponentsProps> = ({ key, data, userId, Bl
                 </div>
                 :
                 <>
-                    <PageHeading heading="you have Decline interest of these profile !!" />
+                    <PageHeading heading="Your Interest Has Been Decline By These Profiles !! !!" />
                     <div className={classes.card_container}>
                         {DeclineInterestUser && DeclineInterestUser.map((user) => {
                             if (user.usercard) {

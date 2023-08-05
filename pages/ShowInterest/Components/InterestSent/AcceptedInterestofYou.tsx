@@ -12,10 +12,11 @@ interface ComponentsProps {
     BlockedUser: number[];
     handleBlockedUser: (val: number) => void;
     data: ICardViewResponseInterest[] | null;
+    handleUpdateds?: (id: number) => void;
 }
 
 
-const AcceptedInterestOFYou: React.FC<ComponentsProps> = ({ key, data, userId, BlockedUser, handleBlockedUser }) => {
+const AcceptedInterestOFYou: React.FC<ComponentsProps> = ({ key, data, userId, BlockedUser, handleBlockedUser,handleUpdateds }) => {
     const [AcceptedInterestUser, setAcceptedInterestUser] = useState<ICardViewResponseInterest[] | null>(data);
 
     const [sendInterest, setSendInterest] = useState<number[]>([]);
@@ -50,13 +51,13 @@ const AcceptedInterestOFYou: React.FC<ComponentsProps> = ({ key, data, userId, B
                 </div>
                 :
                 <>
-                    <PageHeading heading="you have Accept interest of these profile  !!" />
+                    <PageHeading heading="Your interest has been accepted by these profiles !!" />
 
                     <div className={classes.card_container}>
                         {AcceptedInterestUser && AcceptedInterestUser.map((user) => {
                             if (user.usercard) {
                                 return (
-                                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} />
+                                    <ProfileCard userData={user?.usercard} userID={userId || 0} key={user?.userid + user?.usercard?.user_RM_ID} SendInterestUser={sendInterest} BlockedUser={BlockedUser} setBlock={handleBlockedUser} setSendInterest={setSendInterest} updateBlockListedUser={updateShortListedUser} handleUpdateds={handleUpdateds} />
                                 )
                             }
                         })}

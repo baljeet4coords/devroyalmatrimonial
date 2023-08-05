@@ -53,7 +53,6 @@ const MyProfile: React.FC = () => {
   const [imageResponse, setImageResponse] = useState<ImageResponse>();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
@@ -212,10 +211,6 @@ const MyProfile: React.FC = () => {
             />
             <Container className={classes.detailsWrapper}>
               <Row>
-                {/* {showGallery ? (
-                  null
-                  <ImageGallery galleryRef={galleryRef} images={[]} EditHide={false} />
-                ) : ( */}
                 <>
                   <Col sm={9} md={8} className="p-0">
                     {/* {criticalDetails ? (
@@ -309,7 +304,6 @@ const MyProfile: React.FC = () => {
                     <MyProfileRightSec myProfileObject={myProfileObject} />
                   </Col>
                 </>
-                {/* )} */}
               </Row>
             </Container>
           </>
@@ -318,11 +312,13 @@ const MyProfile: React.FC = () => {
       {showGallery && (
         <Modal show={showGallery} size="lg" centered scrollable >
           <Modal.Header closeButton onHide={modalClose}>
-            {/* <Modal.Title>Gallery</Modal.Title> */}
+            <Modal.Title className={classes.galleryModel_title}>
+              Your Photos
+            </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <ImageGallery galleryRef={galleryRef} images={[]} EditHide={false} />
+            <ImageGallery EditHide={false} />
           </Modal.Body>
         </Modal>
       )}

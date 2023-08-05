@@ -48,7 +48,7 @@ const InterestSentByYou: React.FC<InterestSentByYouProps> = ({ data, userId, han
             key: 1,
         },
         {
-            Component: <AcceptedInterestOFYou key={2} data={sentInterest} userId={userId} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,
+            Component: <AcceptedInterestOFYou key={2} data={sentInterest} userId={userId} handleUpdateds={handleUpdateds} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,
             key: 2,
         },
         {

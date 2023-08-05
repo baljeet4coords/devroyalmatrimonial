@@ -7,10 +7,10 @@ type ComponentProps = {
     handleInterestPopupHide: () => void;
     loading: boolean;
     index: number;
-    title : string;
+    title: string;
 }
 
-const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handleInterestPopupHide, loading, index,title }) => {
+const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handleInterestPopupHide, loading, index, title }) => {
 
     const contentPopup = [
         {
@@ -29,6 +29,10 @@ const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handle
             img: '/Images/decline_interest.webp',
             content: 'decline interest of'
         },
+        {
+            img: '/Images/recall_Interest.png',
+            content: 'recall interest of'
+        },
     ]
 
 
@@ -38,7 +42,7 @@ const ConfirMationsPopup: React.FC<ComponentProps> = ({ confirmationsFun, handle
             <div className={classes.ResetForm} >
 
                 <div className={classes.ImageSection}>
-                    <Image src={contentPopup[index]?.img} alt='user photo' />
+                    <Image src={contentPopup[index]?.img} alt={contentPopup[index]?.content} />
                 </div>
                 <div className={classes.ResetHeader}>
                     <h4>Are you sure ?</h4>

@@ -34,3 +34,10 @@ $light_border: #dfe6ed;
   margin-right: 10px;
   color: #ffffff !important;
 }
+
+.lg-container.lg-show {
+  display: block;
+  z-index: 5000;
+  position: relative;
+}
+

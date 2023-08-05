@@ -55,7 +55,6 @@ const PartnerMatchProfile: React.FC = () => {
 
 
     const profileCompliteScore = myProfileObject?.profileCompletionScore?.overallScore;
-    const galleryRef = useRef<HTMLDivElement>(null);
 
     const [showGallery, setShowGallery] = useState<boolean>(false);
 
@@ -78,11 +77,6 @@ const PartnerMatchProfile: React.FC = () => {
 
     const onPreviewAlbum = () => {
         setShowGallery(!showGallery);
-        // if (galleryRef.current === null) {
-        //     window.innerWidth <= 667
-        //         ? window.scrollTo(0, 1000)
-        //         : window.scrollTo(0, 700);
-        // }
     };
 
     const handleSwitchTabs = (val: number) => {
@@ -92,6 +86,17 @@ const PartnerMatchProfile: React.FC = () => {
     const modalClose = () => {
         setShowGallery(!showGallery);
     }
+
+
+    //for gallery header
+
+    const reptNameHide = () => <>{step1Response?.fullname && step1Response?.fullname.slice(0, 3)}<>{'*'.repeat(8) + ("`s Photos").toLocaleLowerCase()}</></>;
+
+
+    const ShowNameONConditions = step1Response?.fullname && step1Response?.fullname?.length > 16
+        ? step1Response?.fullname?.toLocaleLowerCase().substring(0, 15).concat('...') + "'s" + ' Photos'
+        : step1Response?.fullname?.toLocaleLowerCase() + "'s" + ' Photos';
+
 
 
     return (
@@ -193,11 +198,23 @@ const PartnerMatchProfile: React.FC = () => {
                 showGallery && (
                     <Modal className={classes.galleryModel} show={showGallery} size="lg" centered scrollable >
                         <Modal.Header closeButton onHide={modalClose}>
-                            {/* <Modal.Title>Gallery</Modal.Title> */}
+                            <Modal.Title className={classes.galleryModel_title}>
+                                {step1Response?.fullname
+                                    ? privacyResponse
+                                        ? privacyResponse?.privacy_show_name === 'P'
+                                            ? ShowNameONConditions
+                                            : interest?.Send === 'A' || interest?.Recieve === 'A' || interest?.Recieve === 'S'
+                                                ? interest?.Send === 'D' || interest?.Recieve === 'D'
+                                                    ? reptNameHide()
+                                                    : ShowNameONConditions
+                                                : reptNameHide()
+                                        : ShowNameONConditions
+                                    : 'Your Photos'}
+                            </Modal.Title>
                         </Modal.Header>
 
                         <Modal.Body>
-                            <ImageGallery userProfilerName={step1Response?.fullname} galleryRef={galleryRef} images={[]} EditHide={true} privacySetting={privacyResponse}
+                            <ImageGallery userProfilerName={step1Response?.fullname} EditHide={true} privacySetting={privacyResponse}
                                 interestResponse={interest} />
                         </Modal.Body>
                     </Modal>

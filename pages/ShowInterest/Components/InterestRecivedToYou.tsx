@@ -34,7 +34,7 @@ const InterestReciveToYou: React.FC<InterestReciveToYouProps> = ({ data, userId,
             key: 1,
         },
         {
-            Component: <AcceptedInterest key={2} data={data} userId={userId} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} />,
+            Component: <AcceptedInterest key={2} data={data} userId={userId} BlockedUser={BlockedUser} handleBlockedUser={handleBlockedUser} handleUpdateds={handleUpdateds}  />,
             key: 2,
         },
         {

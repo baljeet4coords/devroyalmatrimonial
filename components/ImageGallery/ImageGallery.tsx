@@ -21,11 +21,6 @@ import { useRouter } from "next/router";
 import { IPartnerDetailsInterestResponse, IPartnerDetailsPrivacyResponse } from "../../types/PartnerDetails/partnerDetails";
 
 interface ImageGalleryProps {
-  images: {
-    src: string;
-    alt: string;
-  }[];
-  galleryRef: React.RefObject<HTMLDivElement>;
   EditHide: boolean;
   userProfilerName?: string;
   privacySetting?: IPartnerDetailsPrivacyResponse | null;
@@ -34,7 +29,7 @@ interface ImageGalleryProps {
 interface ImageResponse {
   galleryImages?: string[];
 }
-const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRef, userProfilerName, privacySetting, interestResponse }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, userProfilerName, privacySetting, interestResponse }) => {
   const dispatch = useDispatch();
   const userId = useSelector(getUserId);
   const router = useRouter();
@@ -43,6 +38,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
   const gallerySuccessResponse = useSelector(selectGallerySuccess);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [protectedGallery, setProtectedGallery] = useState('hh')
+
+  const protectedGalleryContent = [
+    "The user has declined your interest, which means you won't be able to view their gallery !!",
+    "You have declined the user's interest, which means you won't be able to view their gallery !!",
+    "You have sent an interest to this user. Once they accept your interest, you will be able to see their gallery !!",
+    "First, send an interest to this user. If they accept your interest, you will be able to see their gallery !!",
+
+  ]
+
   const [uploadStatus, setUploadStatus] = useState<string>(
     "JPG, JPEG, or PNG type"
   );
@@ -127,6 +132,27 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
     }
   }, [gallerySuccessResponse?.jsonResponse]);
 
+
+  useEffect(() => {
+    if (interestResponse?.Send === 'S' && interestResponse?.Recieve === 'D') {
+      setProtectedGallery(protectedGalleryContent[0])
+    }
+    else if (interestResponse?.Send === 'D' && interestResponse?.Recieve === 'S') {
+      setProtectedGallery(protectedGalleryContent[1])
+    }
+    else if (interestResponse?.Send === 'S' && interestResponse?.Recieve === null || interestResponse?.Recieve === '') {
+      setProtectedGallery(protectedGalleryContent[2])
+
+    }
+    else if (interestResponse?.Send === null || interestResponse?.Send === '') {
+      setProtectedGallery(protectedGalleryContent[3])
+    }
+    else {
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
+    }
+  }, [interestResponse])
+
   const onInit = () => { };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -141,38 +167,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
     }
   };
 
-  const reptNameHide = () => <>{userProfilerName && userProfilerName.slice(0, 3)}<>{'*'.repeat(8) + ("`s Photos").toLocaleLowerCase()}</></>;
-
-
-
-  const ShowNameONConditions = userProfilerName && userProfilerName?.length > 16
-    ? userProfilerName?.toLocaleLowerCase().substring(0, 15).concat('...') + "'s" + ' Photos'
-    : userProfilerName?.toLocaleLowerCase() + "'s" + ' Photos';
-
-
   return (
-    <div className={classes.imageGallery} ref={galleryRef}>
-      <div className="d-flex justify-content-between mb-3">
-        <h5>{userProfilerName
-          ? privacySetting
-            ? privacySetting?.privacy_show_name === 'P'
-              ? ShowNameONConditions
-              : interestResponse?.Send === 'A' || interestResponse?.Recieve === 'A' || interestResponse?.Recieve === 'S'
-                ? interestResponse?.Send === 'D' || interestResponse?.Recieve === 'D'
-                  ? reptNameHide()
-                  : ShowNameONConditions
-                : reptNameHide()
-            : ShowNameONConditions
-          : 'Your Photos'}</h5>
+    <div className={classes.imageGallery} >
+      <div className={classes.imageGallery_addPhoto}>
         {
           EditHide ? null :
-            <div>
+            <>
               <div className={classes.addMorePhoto} onClick={handleButtonClick}>
                 Add more photos
                 <ImImage />
               </div>
-              <span className="mt-2 text-muted">{uploadStatus}</span>
-            </div>
+              {/* <span>{uploadStatus}</span> */}
+            </>
         }
         <input
           type="file"
@@ -183,14 +189,21 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ EditHide, images, galleryRe
         />
       </div>
       {
-        userProfilerName ?
-          privacySetting?.privacy_show_photo === 'I' && interestResponse?.Send != 'A' && interestResponse?.Recieve === null &&
-            interestResponse.Recieve === 'D' || interestResponse?.Send === 'D'
+        userProfilerName && interestResponse ?
+          privacySetting?.privacy_show_photo != 'P' &&
+            interestResponse != undefined && interestResponse?.Recieve != 'A' && interestResponse.Send != 'A'
+
+            // privacySetting?.privacy_show_photo != 'P' && interestResponse?.Send != 'A' && interestResponse?.Recieve === null &&
+            //   interestResponse.Recieve === 'D' || interestResponse?.Send === 'D'
             ?
             <div className="d-flex justify-content-between mb-5">
               <div className={classes.galleryProcted}>
                 <Image src="./Images/galleryProcted.png" alt="galleryProtected" className={classes.protectedGalleryImg} />
-                <h5>Please Send interest first to open gallery !! </h5>
+
+                <h5 className="text-center">
+                  {protectedGallery}
+                </h5>
+
               </div>
             </div>
             : <>
