@@ -1,0 +1,160 @@
+@import "../../styles/constants.scss";
+
+.background_header {
+  background: url("../../public/Images/cover-image-register.jpg") no-repeat
+    center center;
+  padding: 3rem 0 15rem 0;
+  background-size: cover;
+}
+
+.bg {
+  background: rgb(231, 230, 230);
+
+  .card_container {
+    width: 75%;
+    margin: 3rem auto;
+    padding: 2rem 0;
+    height: fit-content;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #fff;
+    justify-content: center;
+
+    .card_main {
+      width: 45%;
+      border-radius: 3%;
+      padding-bottom: 2rem;
+      background-color: #fff;
+
+      .ImageSection {
+        text-align: center;
+        img {
+          height: 150px;
+          width: 150px;
+        }
+        video {
+          height: 200px;
+          width: 200px;
+        }
+      }
+
+      .card_Heading {
+        text-align: center;
+
+        h4 {
+          font-weight: 600;
+          font-size: 33px;
+          color: #42af33;
+          margin: 0%;
+          margin-bottom: 1rem;
+        }
+
+        p {
+          margin: 0%;
+          text-transform: capitalize;
+          color: #c5c9d4;
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+
+      .card_HeadingError {
+        text-align: center;
+
+        h4 {
+          font-weight: 600;
+          font-size: 33px;
+          color: #dc3545;
+          margin: 0%;
+          margin-bottom: 1rem;
+        }
+
+        p {
+          margin: 0%;
+          text-transform: capitalize;
+          color: #e65c39;
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+
+      .paymentDetails {
+        margin: 0 2rem;
+        border-top: 1px dashed #c5c9d4;
+        margin-top: 2rem;
+        padding: 1rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        p {
+          display: flex;
+          justify-content: space-between;
+          margin: 0%;
+          text-transform: capitalize;
+          color: #c5c9d4;
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .card_Right {
+      background-color: #ffffff;
+      width: 50%;
+      height: 27rem;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1065px) {
+  .bg {
+    .card_container {
+      .card_main {
+        width: 48%;
+      }
+
+      .card_Right {
+        height: auto;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .bg {
+    .card_container {
+      width: 90%;
+      .card_main {
+        width: -webkit-fill-available;
+
+        .card_Heading {
+          padding: 0 1rem;
+        }
+        .card_HeadingError {
+          padding: 0 1rem;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 415px) {
+  .bg {
+    .card_container {
+      width: 90%;
+      .card_Right {
+        width: inherit;
+        height: auto;
+      }
+    }
+  }
+}
